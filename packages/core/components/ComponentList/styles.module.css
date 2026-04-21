@@ -17,36 +17,37 @@
 .ComponentList-title {
   background-color: transparent;
   border: 0;
-  color: var(--puck-color-grey-04);
+  color: var(--puck-text-secondary);
   cursor: pointer;
   display: flex;
   font: inherit;
   font-size: var(--puck-font-size-xxs);
   font-weight: 600;
   list-style: none;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   padding: 8px;
-  transition: background-color 50ms ease-in, color 50ms ease-in;
+  transition: background-color var(--puck-motion-fast) var(--puck-ease),
+    color var(--puck-motion-fast) var(--puck-ease);
   gap: 4px;
-  border-radius: 4px;
+  border-radius: var(--puck-radius-md);
   width: 100%;
 }
 
 .ComponentList-title:focus-visible {
-  outline: 2px solid var(--puck-color-azure-05);
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: var(--puck-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ComponentList-title:hover {
-    background-color: var(--puck-color-azure-11);
-    color: var(--puck-color-azure-04);
+    background-color: var(--puck-surface-hover);
+    color: var(--puck-text-accent);
     transition: none;
   }
 }
 
 .ComponentList-title:active {
-  background-color: var(--puck-color-azure-10);
+  background-color: var(--puck-accent-soft);
   transition: none;
 }
 

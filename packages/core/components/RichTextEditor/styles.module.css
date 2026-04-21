@@ -17,13 +17,13 @@
 .RichTextEditor :global(.rich-text blockquote) {
   margin: 1em 0;
   padding: 0 1em;
-  border-left: 4px solid var(--puck-color-grey-09);
+  border-left: 4px solid var(--puck-border-default);
 }
 
 .RichTextEditor :global(.rich-text code) {
-  background-color: var(--puck-color-grey-11);
+  background-color: var(--puck-surface-sunken);
   padding: 4px 8px;
-  border-radius: 4px;
+  border-radius: var(--puck-radius-sm);
 }
 
 .RichTextEditor :global(.rich-text p:empty::before) {
@@ -48,11 +48,11 @@
 }
 
 .RichTextEditor--editor {
-  background: var(--puck-color-white);
+  background: var(--puck-surface-panel);
   border-width: 1px;
   border-style: solid;
-  border-color: var(--puck-color-grey-09);
-  border-radius: 4px;
+  border-color: var(--puck-border-default);
+  border-radius: var(--puck-radius-md);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -60,7 +60,8 @@
   font-size: var(--puck-font-size-xxs);
   resize: vertical;
   text-align: initial;
-  transition: border-color 50ms ease-in;
+  transition: border-color var(--puck-motion-fast) var(--puck-ease),
+    box-shadow var(--puck-motion-fast) var(--puck-ease);
   width: 100%;
   max-width: 100%;
   min-height: 128px;
@@ -99,13 +100,14 @@
 }
 
 .RichTextEditor--editor:focus-within {
-  border-color: var(--puck-color-grey-05);
-  outline: 2px solid var(--puck-color-azure-05);
+  border-color: var(--puck-accent);
+  outline: none;
+  box-shadow: var(--puck-ring);
   transition: none;
 }
 
 .RichTextEditor--editor.RichTextEditor--disabled {
-  background: var(--puck-color-grey-11);
+  background: var(--puck-surface-sunken);
 }
 
 .RichTextEditor:not(:focus-within):not(.RichTextEditor--isActive)
@@ -115,12 +117,12 @@
 }
 
 .RichTextEditor-menu {
-  border-bottom: 1px solid var(--puck-color-grey-10);
+  border-bottom: 1px solid var(--puck-border-subtle);
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
 .RichTextEditor--disabled .RichTextEditor-menu {
-  border-bottom: 1px solid var(--puck-color-grey-09);
+  border-bottom: 1px solid var(--puck-border-subtle);
 }

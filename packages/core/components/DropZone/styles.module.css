@@ -23,25 +23,26 @@
 
 .DropZone--isAreaSelected,
 .DropZone--hoveringOverArea:not(.DropZone--isRootZone) {
-  background: color-mix(in srgb, var(--puck-color-azure-09) 30%, transparent);
-  outline: 2px dashed var(--puck-color-azure-08);
+  background: var(--puck-accent-soft);
+  outline: 1px dashed var(--puck-accent);
+  border-radius: var(--puck-radius-md);
 }
 
 .DropZone:empty {
-  background: color-mix(in srgb, var(--puck-color-azure-09) 30%, transparent);
-  outline: 2px dashed var(--puck-color-azure-08);
+  background: var(--puck-surface-sunken);
+  outline: 1px dashed var(--puck-border-default);
+  border-radius: var(--puck-radius-md);
+  transition: background-color var(--puck-motion-base) var(--puck-ease),
+    outline-color var(--puck-motion-base) var(--puck-ease);
 }
 
 .DropZone--isDestination {
-  outline: 2px dashed var(--puck-color-azure-04) !important;
+  outline: 1px dashed var(--puck-accent-strong) !important;
+  border-radius: var(--puck-radius-md);
 }
 
 .DropZone--isDestination:not(.DropZone--isRootZone) {
-  background: color-mix(
-    in srgb,
-    var(--puck-color-azure-09) 30%,
-    transparent
-  ) !important;
+  background: var(--puck-accent-soft) !important;
 }
 
 .DropZone-item {
@@ -57,7 +58,8 @@
 }
 
 [data-puck-dragging] .DropZone--isEnabled {
-  outline: 2px dashed var(--puck-color-azure-06);
+  outline: 1px dashed var(--puck-accent);
+  border-radius: var(--puck-radius-md);
 }
 
 .DropZone > *:not([data-puck-component]) {

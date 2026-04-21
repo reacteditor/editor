@@ -8,7 +8,7 @@
 }
 
 .PuckFields-loadingOverlay {
-  background: var(--puck-color-white);
+  background: var(--puck-surface-panel);
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
@@ -34,13 +34,11 @@
 }
 
 .PuckFields--wrapFields .PuckFields-field {
-  color: var(--puck-color-grey-04);
-  padding: 16px;
-  padding-bottom: 12px;
+  color: var(--puck-text-secondary);
+  padding: 14px 16px;
   display: block;
 }
 
 .PuckFields--wrapFields .PuckFields-field + .PuckFields-field {
-  border-top: 1px solid var(--puck-color-grey-09);
-  margin-top: 8px;
+  border-top: 1px solid var(--puck-border-subtle);
 }

@@ -7,51 +7,53 @@
   gap: 8px;
   align-items: center;
   justify-content: center;
-  background-color: var(--puck-color-white);
-  border: 1px solid var(--puck-color-grey-09);
-  border-radius: 4px;
-  color: var(--puck-color-azure-04);
-  padding: 12px 16px;
+  background-color: var(--puck-surface-panel);
+  border: 1px solid var(--puck-border-default);
+  border-radius: var(--puck-radius-md);
+  color: var(--puck-text-accent);
+  padding: 10px 12px;
   font-weight: 500;
   white-space: nowrap;
   text-overflow: ellipsis;
-  transition: background-color 50ms ease-in;
+  transition: background-color var(--puck-motion-fast) var(--puck-ease),
+    border-color var(--puck-motion-fast) var(--puck-ease);
   position: relative;
   overflow: hidden;
   flex-grow: 1;
 }
 
 .ExternalInput--dataSelected .ExternalInput-button {
-  color: var(--puck-color-grey-03);
+  color: var(--puck-text-primary);
   display: block;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
 
 .ExternalInput--readOnly .ExternalInput-button {
-  background-color: var(--puck-color-grey-11);
+  background-color: var(--puck-surface-sunken);
 }
 
 .ExternalInput-detachButton {
-  border: 1px solid var(--puck-color-grey-09);
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  background-color: var(--puck-color-grey-12);
-  color: var(--puck-color-grey-05);
+  border: 1px solid var(--puck-border-default);
+  border-top-right-radius: var(--puck-radius-md);
+  border-bottom-right-radius: var(--puck-radius-md);
+  background-color: var(--puck-surface-sunken);
+  color: var(--puck-text-tertiary);
   display: flex;
   gap: 8px;
   align-items: center;
   justify-content: center;
   padding: 8px 12px;
   position: relative;
-  transition: background-color 50ms ease-in, color 50ms ease-in;
+  transition: background-color var(--puck-motion-fast) var(--puck-ease),
+    color var(--puck-motion-fast) var(--puck-ease);
   margin-inline-start: -1px;
 }
 
 .ExternalInput-button:focus-visible,
 .ExternalInput-detachButton:focus-visible {
-  outline: 2px solid var(--puck-color-azure-05);
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: var(--puck-ring);
   z-index: 1;
 }
 
@@ -59,20 +61,21 @@
   .ExternalInput:not(.ExternalInput--readOnly) .ExternalInput-button:hover,
   .ExternalInput:not(.ExternalInput--readOnly)
     .ExternalInput-detachButton:hover {
-    background: var(--puck-color-azure-12);
+    background: var(--puck-surface-hover);
+    border-color: var(--puck-border-strong);
     transition: none;
   }
 
   .ExternalInput:not(.ExternalInput--readOnly)
     .ExternalInput-detachButton:hover {
-    color: var(--puck-color-azure-04);
+    color: var(--puck-text-accent);
   }
 }
 
 .ExternalInput:not(.ExternalInput--readOnly) .ExternalInput-button:active,
 .ExternalInput:not(.ExternalInput--readOnly)
   .ExternalInput-detachButton:active {
-  background: var(--puck-color-azure-11);
+  background: var(--puck-accent-soft);
   transition: none;
 }
 
@@ -103,7 +106,7 @@
 }
 
 .ExternalInputModal-filters {
-  border-bottom: 1px solid var(--puck-color-grey-09);
+  border-bottom: 1px solid var(--puck-border-subtle);
 }
 
 .ExternalInputModal--filtersToggled .ExternalInputModal-filters {
@@ -112,7 +115,7 @@
 
 @media (min-width: 458px) {
   .ExternalInputModal-filters {
-    border-inline-end: 1px solid var(--puck-color-grey-09);
+    border-inline-end: 1px solid var(--puck-border-subtle);
     display: none;
   }
 
@@ -122,8 +125,8 @@
 }
 
 .ExternalInputModal-masthead {
-  background-color: var(--puck-color-grey-12);
-  border-bottom: 1px solid var(--puck-color-grey-09);
+  background-color: var(--puck-surface-sunken);
+  border-bottom: 1px solid var(--puck-border-subtle);
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
@@ -140,29 +143,29 @@
 .ExternalInputModal-table {
   border-collapse: unset;
   border-spacing: 0px;
-  color: var(--puck-color-grey-02);
+  color: var(--puck-text-primary);
   position: relative;
   z-index: 0;
   min-width: 100%;
 }
 
 .ExternalInputModal-thead {
-  background-color: var(--puck-color-white);
+  background-color: var(--puck-surface-panel);
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
 .ExternalInputModal-th {
-  border-bottom: 1px solid var(--puck-color-grey-09);
-  color: var(--puck-color-grey-04);
+  border-bottom: 1px solid var(--puck-border-subtle);
+  color: var(--puck-text-secondary);
   font-weight: 500;
   font-size: 14px;
   padding: 16px 24px;
 }
 
 .ExternalInputModal-td {
-  border-bottom: 1px solid var(--puck-color-grey-10);
+  border-bottom: 1px solid var(--puck-border-subtle);
   padding: 16px 24px;
 }
 
@@ -174,8 +177,8 @@
 
 @media (hover: hover) and (pointer: fine) {
   .ExternalInputModal-tbody .ExternalInputModal-tr:hover {
-    background: var(--puck-color-azure-12);
-    color: var(--puck-color-azure-04);
+    background: var(--puck-surface-hover);
+    color: var(--puck-text-accent);
     cursor: pointer;
     position: relative;
     margin-inline-start: -5px;
@@ -184,7 +187,7 @@
   .ExternalInputModal-tbody
     .ExternalInputModal-tr:hover
     .ExternalInputModal-td:first-of-type {
-    border-inline-start: 4px solid var(--puck-color-azure-04);
+    border-inline-start: 4px solid var(--puck-text-accent);
     padding-inline-start: 20px;
   }
 }
@@ -207,7 +210,7 @@
   display: none;
   background-color: color-mix(
     in srgb,
-    var(--puck-color-white) 90%,
+    var(--puck-surface-panel) 90%,
     transparent
   );
   padding: 64px;
@@ -239,35 +242,35 @@
 
 .ExternalInputModal-search {
   display: flex;
-  background: var(--puck-color-white);
+  background: var(--puck-surface-panel);
   border-width: 1px;
   border-style: solid;
-  border-color: var(--puck-color-grey-09);
+  border-color: var(--puck-border-subtle);
   border-radius: 4px;
   flex-grow: 1;
   transition: border-color 50ms ease-in;
 }
 
 .ExternalInputModal-search:focus-within {
-  border-color: var(--puck-color-grey-05);
-  outline: 2px solid var(--puck-color-azure-05);
+  border-color: var(--puck-border-strong);
+  outline: 2px solid var(--puck-accent);
   transition: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ExternalInputModal-search:hover {
-    border-color: var(--puck-color-grey-05);
+    border-color: var(--puck-border-strong);
     transition: none;
   }
 }
 
 .ExternalInputModal-searchIcon {
   align-items: center;
-  background: var(--puck-color-grey-12);
+  background: var(--puck-surface-sunken);
   border-bottom-left-radius: 4px;
   border-top-left-radius: 4px;
-  border-inline-end: 1px solid var(--puck-color-grey-09);
-  color: var(--puck-color-grey-07);
+  border-inline-end: 1px solid var(--puck-border-subtle);
+  color: var(--puck-text-tertiary);
   display: flex;
   justify-content: center;
   padding: 12px 15px;
@@ -275,13 +278,13 @@
 }
 
 .ExternalInputModal-search:focus-within .ExternalInputModal-searchIcon {
-  color: var(--puck-color-grey-04);
+  color: var(--puck-text-secondary);
   transition: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ExternalInputModal-search:hover .ExternalInputModal-searchIcon {
-    color: var(--puck-color-grey-04);
+    color: var(--puck-text-secondary);
     transition: none;
   }
 }
@@ -299,7 +302,7 @@
 .ExternalInputModal-searchInput {
   border: none;
   border-radius: 4px;
-  background: var(--puck-color-white);
+  background: var(--puck-surface-panel);
   font-family: inherit;
   font-size: 14px;
   padding: 12px 15px;
@@ -328,9 +331,9 @@
 }
 
 .ExternalInputModal-footerContainer {
-  background-color: var(--puck-color-grey-12);
-  border-top: 1px solid var(--puck-color-grey-09);
-  color: var(--puck-color-grey-04);
+  background-color: var(--puck-surface-sunken);
+  border-top: 1px solid var(--puck-border-subtle);
+  color: var(--puck-text-secondary);
   padding: 16px;
 }
 
@@ -341,7 +344,7 @@
 }
 
 .ExternalInputModal-field {
-  color: var(--puck-color-grey-04);
+  color: var(--puck-text-secondary);
   margin: 16px;
   margin-bottom: 12px;
   display: block;

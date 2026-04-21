@@ -2,20 +2,22 @@
   appearance: none;
   background: none;
   border: 1px solid transparent;
-  border-radius: 4px;
-  color: var(--puck-color-white);
+  border-radius: var(--puck-radius-md);
+  color: var(--puck-primary-foreground);
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  letter-spacing: 0.05ch;
+  letter-spacing: 0.01ch;
   font-family: var(--puck-font-family);
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 13px;
+  font-weight: 500;
   box-sizing: border-box;
   line-height: 1;
   text-align: center;
   text-decoration: none;
-  transition: background-color 50ms ease-in;
+  transition: background-color var(--puck-motion-fast) var(--puck-ease),
+    box-shadow var(--puck-motion-fast) var(--puck-ease),
+    transform var(--puck-motion-fast) var(--puck-ease);
   cursor: pointer;
   white-space: nowrap;
   margin: 0;
@@ -46,39 +48,41 @@
 }
 
 .Button--primary {
-  background: var(--puck-color-azure-04);
+  background: var(--puck-primary);
+  color: var(--puck-primary-foreground);
 }
 
 .Button:focus-visible {
-  outline: 2px solid var(--puck-color-azure-05);
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: var(--puck-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .Button--primary:hover {
-    background-color: var(--puck-color-azure-03);
+    background-color: var(--puck-primary-hover);
   }
 }
 
 .Button--primary:active {
-  background-color: var(--puck-color-azure-02);
+  background-color: var(--puck-primary-hover);
+  transform: translateY(1px);
 }
 
 .Button--secondary {
-  border: 1px solid currentColor;
-  color: currentColor;
+  border: 1px solid var(--puck-border-default);
+  color: var(--puck-text-primary);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .Button--secondary:hover {
-    background-color: var(--puck-color-azure-12);
-    color: var(--puck-color-black);
+    background-color: var(--puck-surface-hover);
+    color: var(--puck-text-primary);
   }
 }
 
 .Button--secondary:active {
-  background-color: var(--puck-color-azure-11);
-  color: var(--puck-color-black);
+  background-color: var(--puck-accent-soft);
+  color: var(--puck-text-primary);
 }
 
 .Button--flush {
@@ -87,9 +91,10 @@
 
 .Button--disabled,
 .Button--disabled:hover {
-  background-color: var(--puck-color-grey-07);
-  color: var(--puck-color-grey-03);
+  background-color: var(--puck-border-subtle);
+  color: var(--puck-text-tertiary);
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .Button--fullWidth {

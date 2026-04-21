@@ -1,6 +1,6 @@
 import styles from "./styles.module.css";
 import getClassNameFactory from "../../lib/get-class-name-factory";
-import { DragIcon } from "../DragIcon";
+import { GripVertical } from "lucide-react";
 import { ReactElement, ReactNode, Ref, useMemo, useState } from "react";
 import { generateId } from "../../lib/generate-id";
 import { useDragListener } from "../DragDropContext";
@@ -44,7 +44,7 @@ export const DrawerItemInner = ({
         <div className={getClassNameItem("draggableWrapper")}>
           <div className={getClassNameItem("draggable")}>
             <div className={getClassNameItem("icon")}>
-              <DragIcon />
+              <GripVertical size={14} />
             </div>
             <div className={getClassNameItem("name")}>{label ?? name}</div>
           </div>

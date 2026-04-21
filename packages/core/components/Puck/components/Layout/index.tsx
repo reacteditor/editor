@@ -20,7 +20,7 @@ import { Sidebar } from "../Sidebar";
 import { useDeleteHotkeys } from "../../../../lib/use-delete-hotkeys";
 import { MenuItem, Nav } from "../Nav";
 import { IconButton } from "../../../IconButton";
-import { Maximize2, Minimize2, ToyBrick } from "lucide-react";
+import { Maximize2, Minimize2, Moon, Sun, ToyBrick } from "lucide-react";
 import { PluginInternal } from "../../../../types/Internal";
 import { blocksPlugin } from "../../../../plugins/blocks";
 import { outlinePlugin } from "../../../../plugins/outline";
@@ -181,6 +181,30 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
     "toggle" | "min-content"
   >("toggle");
 
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    if (typeof window === "undefined") return "light";
+    const stored = window.localStorage.getItem("puck-theme");
+    if (stored === "light" || stored === "dark") return stored;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem("puck-theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((t) => (t === "dark" ? "light" : "dark"));
+  };
+
+  const themeIcon =
+    theme === "dark" ? <Sun size={18} /> : <Moon size={18} />;
+
+  const themeLabel =
+    theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
+
   const hasLegacySideBarPlugin = useMemo(
     () => !!plugins?.find((p) => p.name === "legacy-side-bar"),
     [plugins]
@@ -266,6 +290,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
         hidePlugins: hasLegacySideBarPlugin,
       })}`}
       id={instanceId}
+      data-theme={theme}
       style={{ height }}
     >
       <DragDropContext disableAutoScroll={dnd?.disableAutoScroll}>
@@ -314,6 +339,15 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
                             )}
                           </IconButton>
                         )
+                      }
+                      footer={
+                        <IconButton
+                          type="button"
+                          title={themeLabel}
+                          onClick={toggleTheme}
+                        >
+                          {themeIcon}
+                        </IconButton>
                       }
                     />
                   </div>

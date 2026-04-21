@@ -1,7 +1,8 @@
 .Heading {
   display: block;
-  color: var(--puck-color-black);
-  font-weight: 700;
+  color: var(--puck-text-primary);
+  font-weight: 600;
+  letter-spacing: -0.01em;
   margin: 0;
 }
 

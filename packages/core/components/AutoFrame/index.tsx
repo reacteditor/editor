@@ -240,6 +240,13 @@ const CopyHostStyles = ({
     const parentBody = parentDocument.getElementsByTagName("body")[0];
     syncAttributes(parentBody, doc.body);
 
+    // Force iframe preview to render in light mode regardless of the user's
+    // system color-scheme preference or any attributes synced from the parent.
+    // Also set an opaque light background so the (possibly dark) chrome
+    // behind the iframe doesn't bleed through a transparent body.
+    doc.documentElement.style.colorScheme = "light";
+    doc.documentElement.style.background = "#ffffff";
+
     Promise.all(
       collectedStyles.map(async (styleNode, i) => {
         if (styleNode.nodeName === "LINK") {

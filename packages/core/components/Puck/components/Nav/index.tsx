@@ -43,9 +43,11 @@ export const MenuItem = ({
 export const Nav = ({
   items,
   mobileActions,
+  footer,
 }: {
   items: Record<string, MenuItem>;
   mobileActions?: ReactNode;
+  footer?: ReactNode;
 }) => {
   return (
     <nav className={getClassName()}>
@@ -57,6 +59,7 @@ export const Nav = ({
       {mobileActions && (
         <div className={getClassName("mobileActions")}>{mobileActions}</div>
       )}
+      {footer && <div className={getClassName("footer")}>{footer}</div>}
     </nav>
   );
 };

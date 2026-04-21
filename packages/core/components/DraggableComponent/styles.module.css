@@ -4,7 +4,7 @@
 
   --overlay-background: color-mix(
     in srgb,
-    var(--puck-color-azure-08) 30%,
+    var(--puck-color-azure-05) 14%,
     transparent
   );
 }
@@ -22,19 +22,22 @@
 .DraggableComponent-overlay {
   cursor: pointer;
   height: 100%;
-  outline: 2px var(--puck-color-azure-09) solid;
-  outline-offset: -2px;
+  outline: 1.5px var(--puck-accent) solid;
+  outline-offset: -1.5px;
   width: 100%;
+  transition: outline-color var(--puck-motion-fast) var(--puck-ease),
+    background-color var(--puck-motion-fast) var(--puck-ease);
 }
 
 .DraggableComponent:focus-visible > .DraggableComponent-overlayWrapper {
-  outline: 1px solid var(--puck-color-azure-05);
+  outline: 1px solid var(--puck-accent);
 }
 
 .DraggableComponent-loadingOverlay {
-  background: var(--puck-color-white);
-  color: var(--puck-color-grey-03);
-  border-radius: 4px;
+  background: var(--puck-surface-panel);
+  color: var(--puck-text-primary);
+  border-radius: var(--puck-radius-md);
+  box-shadow: var(--puck-shadow-sm);
   display: flex;
   padding: 8px;
   top: 8px;
@@ -43,7 +46,7 @@
   z-index: 1;
   pointer-events: all;
   box-sizing: border-box;
-  opacity: 0.8;
+  opacity: 0.85;
   z-index: 1;
 }
 
@@ -51,13 +54,14 @@
   > .DraggableComponent-overlayWrapper
   > .DraggableComponent-overlay {
   background: var(--overlay-background);
-  outline: 2px var(--puck-color-azure-09) solid;
+  outline: 1.5px var(--puck-accent) solid;
 }
 
 .DraggableComponent--isSelected
   > .DraggableComponent-overlayWrapper
   > .DraggableComponent-overlay {
-  outline-color: var(--puck-color-azure-07);
+  outline-color: var(--puck-accent-strong);
+  outline-width: 2px;
 }
 
 /* Won't work in FF */

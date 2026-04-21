@@ -1,5 +1,5 @@
 .Sidebar {
-  border-block-start: 1px solid var(--puck-color-grey-09);
+  border-block-start: 1px solid var(--puck-border-subtle);
   position: relative;
   display: none;
   flex-direction: column;
@@ -11,26 +11,26 @@
 }
 
 .Sidebar--left {
-  background: var(--puck-color-grey-12);
+  background: var(--puck-surface-panel);
   grid-area: left;
 }
 
 @media (min-width: 766px) {
   .Sidebar--left {
     border-block-start: 0;
-    border-inline-end: 1px solid var(--puck-color-grey-09);
+    border-inline-end: 1px solid var(--puck-border-subtle);
   }
 }
 
 .Sidebar--right {
-  background: var(--puck-color-white);
+  background: var(--puck-surface-panel);
   grid-area: right;
 }
 
 @media (min-width: 766px) {
   .Sidebar--right {
     border-block-start: 0;
-    border-inline-start: 1px solid var(--puck-color-grey-09);
+    border-inline-start: 1px solid var(--puck-border-subtle);
   }
 }
 

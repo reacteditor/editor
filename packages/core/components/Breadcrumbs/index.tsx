@@ -28,7 +28,7 @@ export const Breadcrumbs = ({
           >
             {breadcrumb.label}
           </button>
-          <ChevronRight size={16} />
+          <ChevronRight size={14} />
         </div>
       ))}
       {children}

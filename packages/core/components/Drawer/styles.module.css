@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   font-family: var(--puck-font-family);
-  gap: 12px;
+  gap: 6px;
 }
 
 .Drawer-draggable {
@@ -20,21 +20,31 @@
 }
 
 .DrawerItem-draggable {
-  background: var(--puck-color-white);
+  background: var(--puck-surface-panel);
   cursor: grab;
-  padding: 12px;
+  padding: 8px 10px;
   display: flex;
-  border: 1px var(--puck-color-grey-09) solid;
-  border-radius: 4px;
+  border: 1px var(--puck-border-subtle) solid;
+  border-radius: var(--puck-radius-md);
   font-size: var(--puck-font-size-xxs);
+  color: var(--puck-text-primary);
   gap: 8px;
   align-items: center;
-  transition: background-color 50ms ease-in, color 50ms ease-in;
+  transition: background-color var(--puck-motion-fast) var(--puck-ease),
+    color var(--puck-motion-fast) var(--puck-ease),
+    border-color var(--puck-motion-fast) var(--puck-ease),
+    box-shadow var(--puck-motion-fast) var(--puck-ease);
+}
+
+.DrawerItem-icon {
+  color: var(--puck-text-tertiary);
+  display: flex;
+  transition: color var(--puck-motion-fast) var(--puck-ease);
 }
 
 .DrawerItem--disabled .DrawerItem-draggable {
-  background: var(--puck-color-grey-11);
-  color: var(--puck-color-grey-05);
+  background: var(--puck-surface-sunken);
+  color: var(--puck-text-tertiary);
   cursor: not-allowed; /** Move this out of inline styles */
 }
 
@@ -45,18 +55,25 @@
 .Drawer:not(.Drawer--isDraggingFrom)
   .DrawerItem:focus-visible
   .DrawerItem-draggable {
-  border-radius: 4px;
-  outline: 2px solid var(--puck-color-azure-05);
-  outline-offset: 2px;
+  border-radius: var(--puck-radius-md);
+  outline: none;
+  box-shadow: var(--puck-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .Drawer:not(.Drawer--isDraggingFrom)
     .DrawerItem:not(.DrawerItem--disabled)
     .DrawerItem-draggable:hover {
-    background-color: var(--puck-color-azure-12);
-    color: var(--puck-color-azure-04);
+    background-color: var(--puck-surface-hover);
+    border-color: var(--puck-border-default);
+    color: var(--puck-text-accent);
+    box-shadow: var(--puck-shadow-sm);
     transition: none;
+  }
+  .Drawer:not(.Drawer--isDraggingFrom)
+    .DrawerItem:not(.DrawerItem--disabled)
+    .DrawerItem-draggable:hover .DrawerItem-icon {
+    color: var(--puck-text-accent);
   }
 }
 
@@ -64,4 +81,5 @@
   overflow-x: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-weight: 500;
 }

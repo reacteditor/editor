@@ -17,26 +17,29 @@
 
 .ViewportControls--fullScreen .ViewportControls-toggleButton {
   align-items: center;
-  background-color: var(--puck-color-grey-02);
-  border: 1px solid var(--puck-color-grey-04);
+  background-color: var(--puck-surface-panel);
+  border: 1px solid var(--puck-border-default);
   border-radius: 30px;
   cursor: pointer;
-  color: var(--puck-color-grey-11);
+  color: var(--puck-text-primary);
   display: flex;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   z-index: 1;
+  box-shadow: var(--puck-shadow-md);
+  transition: background-color var(--puck-motion-fast) var(--puck-ease),
+    color var(--puck-motion-fast) var(--puck-ease);
 }
 
 .ViewportControls--fullScreen .ViewportControls-toggleButton:hover {
-  background-color: var(--puck-color-grey-02);
-  border: 1px solid var(--puck-color-azure-04);
-  color: var(--puck-color-azure-07);
+  background-color: var(--puck-surface-hover);
+  color: var(--puck-text-accent);
 }
 
 .ViewportControls--isExpanded .ViewportControls-toggleButton {
-  background-color: var(--puck-color-grey-03);
+  background-color: var(--puck-accent-soft);
+  color: var(--puck-text-accent);
 }
 
 .ViewportControls-actions {
@@ -54,12 +57,13 @@
 }
 
 .ViewportControls--fullScreen .ViewportControls-actionsInner {
-  background: var(--puck-color-grey-11);
-  border: 1px solid var(--puck-color-grey-09);
+  background: var(--puck-surface-panel);
+  border: 1px solid var(--puck-border-default);
   border-radius: 30px;
+  box-shadow: var(--puck-shadow-md);
   margin-left: none;
   margin-right: none;
-  padding-right: 42px;
+  padding-right: 38px;
 }
 
 .ViewportControls--fullScreen .ViewportControls-actionsInner {
@@ -69,11 +73,11 @@
 
 .ViewportControls--fullScreen.ViewportControls--isExpanded
   .ViewportControls-actionsInner {
-  transform: translateX(42px);
+  transform: translateX(38px);
 }
 
 .ViewportControls-divider {
-  border-inline-end: 1px solid var(--puck-color-grey-09);
+  border-inline-end: 1px solid var(--puck-border-subtle);
   margin-bottom: 8px;
   margin-top: 8px;
 }
@@ -117,5 +121,5 @@
 }
 
 .ViewportButton--isActive .ViewportButton-inner {
-  color: var(--puck-color-azure-04);
+  color: var(--puck-text-accent);
 }

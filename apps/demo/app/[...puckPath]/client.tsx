@@ -67,7 +67,7 @@ export function Client({ path, isEdit }: { path: string; isEdit: boolean }) {
               <>
                 <div>
                   <Button href={path} newTab variant="secondary">
-                    View page
+                    View
                   </Button>
                 </div>
 

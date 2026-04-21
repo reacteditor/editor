@@ -2,7 +2,7 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  color: var(--puck-color-black);
+  color: var(--puck-text-primary);
 }
 
 .SidebarSection:last-of-type {
@@ -10,10 +10,10 @@
 }
 
 .SidebarSection-title {
-  background: var(--puck-color-white);
-  padding: 16px;
-  border-bottom: 1px solid var(--puck-color-grey-09);
-  border-top: 1px solid var(--puck-color-grey-09);
+  background: var(--puck-surface-panel);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--puck-border-subtle);
+  border-top: 1px solid var(--puck-border-subtle);
   overflow-x: auto;
 }
 
@@ -33,29 +33,29 @@
 .SidebarSection-breadcrumbLabel {
   background: none;
   border: 0;
-  border-radius: 2px;
-  color: var(--puck-color-azure-04);
+  border-radius: var(--puck-radius-sm);
+  color: var(--puck-text-accent);
   cursor: pointer;
   font: inherit;
   flex-shrink: 0;
   padding: 0;
-  transition: color 50ms ease-in;
+  transition: color var(--puck-motion-fast) var(--puck-ease);
 }
 
 .SidebarSection-breadcrumbLabel:focus-visible {
-  outline: 2px solid var(--puck-color-azure-05);
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: var(--puck-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .SidebarSection-breadcrumbLabel:hover {
-    color: var(--puck-color-azure-03);
+    color: var(--puck-accent-strong);
     transition: none;
   }
 }
 
 .SidebarSection-breadcrumbLabel:active {
-  color: var(--puck-color-azure-02);
+  color: var(--puck-accent-strong);
   transition: none;
 }
 
@@ -73,10 +73,20 @@
 
 .SidebarSection-heading {
   padding-inline-end: 16px;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.SidebarSection-heading h1,
+.SidebarSection-heading h2,
+.SidebarSection-heading h3 {
+  font-size: inherit;
+  font-weight: 500;
+  letter-spacing: 0;
 }
 
 .SidebarSection-loadingOverlay {
-  background: var(--puck-color-white);
+  background: var(--puck-surface-panel);
   display: flex;
   justify-content: center;
   align-items: center;

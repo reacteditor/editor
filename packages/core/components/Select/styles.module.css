@@ -7,13 +7,15 @@
   align-items: center;
   background: transparent;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--puck-radius-sm);
   display: flex;
   justify-content: center;
   gap: 0px;
   height: 100%;
   padding: 4px;
   padding-right: 2px;
+  transition: background-color var(--puck-motion-fast) var(--puck-ease),
+    color var(--puck-motion-fast) var(--puck-ease);
 }
 
 .Select--hasOptions .Select-button {
@@ -42,26 +44,27 @@
 
 .Select--hasOptions:not(.Select--disabled) .Select-button:hover,
 .Select--hasValue .Select-button {
-  background: var(--puck-color-grey-10);
-  color: var(--puck-color-azure-04);
+  background: var(--puck-surface-hover);
+  color: var(--puck-text-accent);
 }
 
 .Select--disabled .Select-button {
-  color: var(--puck-color-grey-07);
+  color: var(--puck-text-tertiary);
 }
 
 .Select--actionBar {
   &.Select--hasOptions .Select-button:hover,
   &.Select--hasValue .Select-button {
-    background: none;
-    color: var(--puck-color-azure-07);
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--puck-text-inverse);
   }
 }
 
 .Select-items {
-  background: white;
-  border: 1px solid var(--puck-color-grey-09);
-  border-radius: 8px;
+  background: var(--puck-surface-panel);
+  border: 1px solid var(--puck-border-subtle);
+  border-radius: var(--puck-radius-lg);
+  box-shadow: var(--puck-shadow-lg);
   margin: 10px 8px;
   margin-left: 0;
   padding: 4px;
@@ -71,9 +74,9 @@
 
 .SelectItem {
   background: transparent;
-  border-radius: 4px;
+  border-radius: var(--puck-radius-sm);
   border: none;
-  color: var(--puck-color-grey-04);
+  color: var(--puck-text-secondary);
   cursor: pointer;
   display: flex;
   gap: 8px;
@@ -82,19 +85,21 @@
   margin: 0;
   padding: 8px 12px;
   width: 100%;
+  transition: background-color var(--puck-motion-fast) var(--puck-ease),
+    color var(--puck-motion-fast) var(--puck-ease);
 }
 
 .SelectItem--isSelected {
-  background: var(--puck-color-azure-11);
-  color: var(--puck-color-azure-04);
+  background: var(--puck-accent-soft);
+  color: var(--puck-text-accent);
   font-weight: 500;
 }
 
 .SelectItem--isSelected .SelectItem-icon {
-  color: var(--puck-color-azure-04);
+  color: var(--puck-text-accent);
 }
 
 .SelectItem:hover {
-  background: var(--puck-color-azure-11);
-  color: var(--puck-color-azure-04);
+  background: var(--puck-surface-hover);
+  color: var(--puck-text-accent);
 }

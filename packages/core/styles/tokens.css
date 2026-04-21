@@ -1,0 +1,140 @@
+:root {
+  /* Radius */
+  --puck-radius-sm: 4px;
+  --puck-radius-md: 6px;
+  --puck-radius-lg: 8px;
+  --puck-radius-xl: 12px;
+
+  /* Elevation */
+  --puck-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04),
+    0 1px 1px rgba(15, 23, 42, 0.03);
+  --puck-shadow-md: 0 2px 4px rgba(15, 23, 42, 0.05),
+    0 1px 2px rgba(15, 23, 42, 0.04);
+  --puck-shadow-lg: 0 8px 16px rgba(15, 23, 42, 0.08),
+    0 2px 4px rgba(15, 23, 42, 0.04);
+  --puck-shadow-xl: 0 20px 40px rgba(15, 23, 42, 0.12),
+    0 4px 8px rgba(15, 23, 42, 0.06);
+
+  /* Motion */
+  --puck-motion-fast: 120ms;
+  --puck-motion-base: 150ms;
+  --puck-motion-slow: 220ms;
+  --puck-ease: cubic-bezier(0.2, 0, 0.1, 1);
+
+  /* Focus ring */
+  --puck-ring-color: var(--puck-color-azure-05);
+  --puck-ring-offset: 2px;
+  --puck-ring-width: 2px;
+  --puck-ring: 0 0 0 var(--puck-ring-width) var(--puck-ring-color);
+
+  /* Semantic surface/border tokens (light) */
+  --puck-surface-app: #fafafb;
+  --puck-surface-panel: #ffffff;
+  --puck-surface-raised: #ffffff;
+  --puck-surface-sunken: #f4f5f7;
+  --puck-surface-hover: var(--puck-color-azure-11);
+
+  --puck-border-subtle: #ececf0;
+  --puck-border-default: #e2e3e8;
+  --puck-border-strong: #cfd1d8;
+
+  --puck-text-primary: #1b1d22;
+  --puck-text-secondary: #555863;
+  --puck-text-tertiary: #878a93;
+  --puck-text-inverse: #ffffff;
+  --puck-text-accent: var(--puck-color-azure-04);
+
+  --puck-accent: var(--puck-color-azure-05);
+  --puck-accent-strong: var(--puck-color-azure-04);
+  --puck-accent-soft: var(--puck-color-azure-11);
+
+  /* Neutral primary (shadcn-style): dark in light theme, light in dark theme.
+     Use for strong high-contrast surfaces like the action bar and Publish
+     button — inverts with theme instead of tracking the blue accent. */
+  --puck-primary: #1b1d22;
+  --puck-primary-hover: #2a2d34;
+  --puck-primary-foreground: #ffffff;
+}
+
+/* Warmer, slightly-tinted greys (overrides of base palette) */
+:root {
+  --puck-color-grey-01: #1b1d22;
+  --puck-color-grey-02: #2a2d34;
+  --puck-color-grey-03: #42454d;
+  --puck-color-grey-04: #555863;
+  --puck-color-grey-05: #747780;
+  --puck-color-grey-06: #9093a0;
+  --puck-color-grey-07: #abaeba;
+  --puck-color-grey-08: #c5c7d0;
+  --puck-color-grey-09: #dcdee3;
+  --puck-color-grey-10: #eceef2;
+  --puck-color-grey-11: #f4f5f7;
+  --puck-color-grey-12: #fafafb;
+}
+
+/* Dark mode token overrides — applied at `.Puck[data-theme="dark"]` root so
+   all chrome cascades. The iframe preview is a separate document and does
+   NOT inherit CSS custom properties across its boundary, so it stays light
+   on its own. Dark mode is driven by the theme toggle (stored in
+   localStorage) which also reflects system preference when set to "system". */
+.Puck[data-theme="dark"] {
+  color: var(--puck-text-primary);
+    --puck-surface-app: #0f1115;
+    --puck-surface-panel: #161a20;
+    --puck-surface-raised: #1c2028;
+    --puck-surface-sunken: #0b0d11;
+    --puck-surface-hover: #1f2834;
+
+    --puck-border-subtle: #1f232b;
+    --puck-border-default: #262c35;
+    --puck-border-strong: #353c48;
+
+    --puck-text-primary: #e7e9ee;
+    --puck-text-secondary: #a7abb5;
+    --puck-text-tertiary: #70747f;
+    --puck-text-inverse: #0f1115;
+    --puck-text-accent: #8ab3ee;
+
+    --puck-accent: #6f9fe3;
+    --puck-accent-strong: #8ab3ee;
+    --puck-accent-soft: #192233;
+
+    --puck-primary: #f4f5f7;
+    --puck-primary-hover: #dcdee3;
+    --puck-primary-foreground: #0f1115;
+
+    --puck-ring-color: #8ab3ee;
+
+    --puck-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --puck-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.5);
+    --puck-shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.55);
+    --puck-shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.6);
+
+    /* Remap grey scale to dark-mode-appropriate values so existing components
+       (that reference --puck-color-grey-*) still look correct. */
+    --puck-color-grey-01: #f4f5f7;
+    --puck-color-grey-02: #e7e9ee;
+    --puck-color-grey-03: #cfd1d8;
+    --puck-color-grey-04: #a7abb5;
+    --puck-color-grey-05: #8a8e99;
+    --puck-color-grey-06: #70747f;
+    --puck-color-grey-07: #555863;
+    --puck-color-grey-08: #3a3e48;
+    --puck-color-grey-09: #262c35;
+    --puck-color-grey-10: #1c2028;
+    --puck-color-grey-11: #161a20;
+    --puck-color-grey-12: #0f1115;
+
+    --puck-color-white: #0f1115;
+    --puck-color-black: #e7e9ee;
+
+    --puck-color-azure-11: #192233;
+    --puck-color-azure-12: #121a28;
+    --puck-color-azure-10: #1e2a40;
+    --puck-color-azure-09: #24344f;
+    --puck-color-azure-08: #2c4166;
+    --puck-color-azure-07: #3a5684;
+    --puck-color-azure-06: #5375a3;
+    --puck-color-azure-05: #6f9fe3;
+    --puck-color-azure-04: #8ab3ee;
+}

@@ -19,9 +19,10 @@
 .Modal-inner {
   width: 100%;
   max-width: 1024px;
-  border-radius: 8px;
+  border-radius: var(--puck-radius-lg);
   overflow: hidden;
-  background: var(--puck-color-white);
+  background: var(--puck-surface-panel);
+  box-shadow: var(--puck-shadow-xl);
   display: flex;
   flex-direction: column;
   max-height: 90dvh;

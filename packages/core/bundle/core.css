@@ -1,4 +1,5 @@
 @import "../styles/color.css";
+@import "../styles/tokens.css";
 @import "../styles/typography.css";
 
 #frame-root {
@@ -10,4 +11,19 @@
   /* Reset stacking context */
   position: relative;
   z-index: 0;
+}
+
+/* Force iframe preview content to render in light mode, regardless of the
+   user's system color-scheme preference. Dark mode applies only to the
+   editor chrome (scoped to `.Puck`). Two-layer guardrail:
+   1) `html:not(:has(.Puck))` — iframe doc has no `.Puck` descendant, parent does.
+   2) Inline `color-scheme: light` is also set on iframe <html> by AutoFrame
+      as a fallback for engines/caches where (1) is slow to apply. */
+html:not(:has(.Puck)) {
+  color-scheme: light;
+  background: #ffffff;
+}
+
+[data-puck-entry] {
+  color-scheme: light;
 }

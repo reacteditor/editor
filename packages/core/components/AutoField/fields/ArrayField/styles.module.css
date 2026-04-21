@@ -5,54 +5,56 @@
 .ArrayField {
   display: flex;
   flex-direction: column;
-  background: var(--puck-color-azure-11);
-  border: 1px solid var(--puck-color-grey-09);
-  border-radius: 4px;
+  background: var(--puck-surface-sunken);
+  border: 1px solid var(--puck-border-subtle);
+  border-radius: var(--puck-radius-md);
+  overflow: hidden;
 }
 
 .ArrayField--isDraggingFrom {
-  background-color: var(--puck-color-azure-11);
+  background-color: var(--puck-accent-soft);
   overflow: hidden;
 }
 
 .ArrayField-addButton {
-  background-color: var(--puck-color-white);
+  background-color: var(--puck-surface-panel);
   border: none;
-  border-radius: 3px;
   display: flex;
-  color: var(--puck-color-azure-05);
+  color: var(--puck-text-accent);
   justify-content: center;
   cursor: pointer;
   width: 100%;
   margin: 0;
-  padding: 14px; /* Retain same height as other items */
+  padding: 10px; /* Retain same height as other items */
   text-align: left;
-  transition: background-color 50ms ease-in;
+  font-weight: 500;
+  transition: background-color var(--puck-motion-fast) var(--puck-ease),
+    color var(--puck-motion-fast) var(--puck-ease);
 }
 
 .ArrayField--hasItems > .ArrayField-addButton {
-  border-top: 1px solid var(--puck-color-grey-09);
+  border-top: 1px solid var(--puck-border-subtle);
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
 .ArrayField-addButton:focus-visible {
-  outline: 2px solid var(--puck-color-azure-05);
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: var(--puck-ring);
   position: relative;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ArrayField:not(.ArrayField--isDraggingFrom) > .ArrayField-addButton:hover {
-    background: var(--puck-color-azure-12);
-    color: var(--puck-color-azure-04);
+    background: var(--puck-surface-hover);
+    color: var(--puck-accent-strong);
     transition: none;
   }
 }
 
 .ArrayField:not(.ArrayField--isDraggingFrom) > .ArrayField-addButton:active {
-  background: var(--puck-color-azure-11);
-  color: var(--puck-color-azure-04);
+  background: var(--puck-accent-soft);
+  color: var(--puck-accent-strong);
   transition: none;
 }
 
@@ -65,14 +67,12 @@
  */
 
 .ArrayFieldItem {
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
   display: block;
   position: relative;
 }
 
 .ArrayFieldItem {
-  border-top: 1px solid var(--puck-color-grey-09);
+  border-top: 1px solid var(--puck-border-subtle);
 }
 
 .ArrayFieldItem--isDragging {
@@ -85,27 +85,22 @@
 
 .ArrayFieldItem--isExpanded {
   border-bottom: 0;
-  outline-offset: 0px !important; /* Important helps to override Nextra docs */
-  outline: 1px solid var(--puck-color-azure-07) !important; /* Important helps to override Nextra docs */
+  outline-offset: 0px !important;
+  outline: 1px solid var(--puck-accent) !important;
   z-index: 2;
 }
 
 .ArrayFieldItem--isDragging {
-  outline: 2px var(--puck-color-azure-09) solid !important;
+  outline: 1px var(--puck-accent) solid !important;
 }
 
 .ArrayFieldItem--isDragging .ArrayFieldItem-summary:active {
-  background-color: var(--puck-color-white);
-}
-
-.ArrayFieldItem + .ArrayFieldItem {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  background-color: var(--puck-surface-panel);
 }
 
 .ArrayFieldItem-summary {
-  background: var(--puck-color-white);
-  color: var(--puck-color-grey-04);
+  background: var(--puck-surface-panel);
+  color: var(--puck-text-secondary);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -113,62 +108,44 @@
   justify-content: space-between;
   font-size: var(--puck-font-size-xxs);
   list-style: none;
-  padding: 12px 15px;
+  padding: 10px 12px;
   position: relative;
   overflow: hidden;
-  transition: background-color 50ms ease-in;
+  transition: background-color var(--puck-motion-fast) var(--puck-ease),
+    color var(--puck-motion-fast) var(--puck-ease);
 }
 
 .ArrayFieldItem--noFields > .ArrayFieldItem-summary {
   cursor: grab;
 }
 
-.ArrayFieldItem:first-of-type > .ArrayFieldItem-summary {
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-}
-
-.ArrayField--addDisabled
-  > .ArrayField-inner
-  > .ArrayFieldItem:last-of-type:not(.ArrayFieldItem--isExpanded)
-  > .ArrayFieldItem-summary {
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-
-.ArrayField--addDisabled
-  > .ArrayField-inner
-  > .ArrayFieldItem--isExpanded:last-of-type {
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-
 .ArrayFieldItem-summary:focus-visible {
-  outline: 2px solid var(--puck-color-azure-05);
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: var(--puck-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ArrayFieldItem-summary:hover {
-    background-color: var(--puck-color-azure-12);
+    background-color: var(--puck-surface-hover);
+    color: var(--puck-text-primary);
     transition: none;
   }
 }
 
 .ArrayFieldItem-summary:active {
-  background-color: var(--puck-color-azure-11);
+  background-color: var(--puck-accent-soft);
   transition: none;
 }
 
 .ArrayFieldItem--isExpanded > .ArrayFieldItem-summary {
-  background: var(--puck-color-azure-11);
-  color: var(--puck-color-azure-04);
+  background: var(--puck-accent-soft);
+  color: var(--puck-text-accent);
   font-weight: 600;
   transition: none;
 }
 
 .ArrayFieldItem-body {
-  background: var(--puck-color-white);
+  background: var(--puck-surface-panel);
   display: none;
 }
 
@@ -178,10 +155,10 @@
 
 .ArrayFieldItem-fieldset {
   border: none;
-  border-top: 1px solid var(--puck-color-grey-09);
+  border-top: 1px solid var(--puck-border-subtle);
   margin: 0;
-  min-width: 0; /* Needed to ensure External input doesn't overflow, see https://stackoverflow.com/a/53784508 */
-  padding: 16px 15px;
+  min-width: 0;
+  padding: 14px 12px;
 }
 
 .ArrayFieldItem-rhs {
@@ -191,10 +168,11 @@
 }
 
 .ArrayFieldItem-actions {
-  color: var(--puck-color-grey-04);
+  color: var(--puck-text-tertiary);
   display: flex;
   gap: 4px;
   opacity: 0;
+  transition: opacity var(--puck-motion-fast) var(--puck-ease);
 }
 
 .ArrayFieldItem-summary:focus-within

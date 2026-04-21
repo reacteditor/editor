@@ -5,10 +5,10 @@
 }
 
 .RichTextMenu--form {
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  border-top-left-radius: var(--puck-radius-md);
+  border-top-right-radius: var(--puck-radius-md);
   padding: 6px 6px;
-  background-color: var(--puck-color-grey-12);
+  background-color: var(--puck-surface-sunken);
   position: relative;
   scrollbar-width: none;
   overflow-x: auto;
@@ -33,15 +33,16 @@
 }
 
 .RichTextMenu--inline .RichTextMenu-group {
-  color: var(--puck-color-grey-08);
+  color: var(--puck-text-inverse);
+  opacity: 0.85;
   gap: 0px;
   flex-wrap: nowrap;
 }
 
 .RichTextMenu-group + .RichTextMenu-group {
-  border-left: 1px solid var(--puck-color-grey-10);
+  border-left: 1px solid var(--puck-border-subtle);
 }
 
 .RichTextMenu--inline .RichTextMenu-group + .RichTextMenu-group {
-  border-left: 0.5px solid var(--puck-color-grey-05); /* Match actionbar separator */
+  border-left: 0.5px solid rgba(255, 255, 255, 0.2);
 }

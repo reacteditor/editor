@@ -27,7 +27,6 @@ export const FieldLabel = ({
   return (
     <El className={className}>
       <div className={getClassName("label")}>
-        {icon ? <div className={getClassName("labelIcon")}>{icon}</div> : <></>}
         {label}
 
         {readOnly && (

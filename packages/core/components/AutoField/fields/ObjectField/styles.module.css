@@ -5,14 +5,14 @@
 .ObjectField {
   display: flex;
   flex-direction: column;
-  background-color: var(--puck-color-white);
-  border: 1px solid var(--puck-color-grey-09);
-  border-radius: 4px;
+  background-color: var(--puck-surface-panel);
+  border: 1px solid var(--puck-border-subtle);
+  border-radius: var(--puck-radius-md);
 }
 
 .ObjectField-fieldset {
   border: none;
   margin: 0;
-  min-width: 0; /* Needed to ensure External input doesn't overflow, see https://stackoverflow.com/a/53784508 */
-  padding: 16px 15px;
+  min-width: 0;
+  padding: 14px 12px;
 }

@@ -153,7 +153,7 @@ const HeaderInner = <
                 }}
                 title="Toggle left sidebar"
               >
-                <PanelLeft focusable="false" />
+                <PanelLeft focusable="false" size={18} />
               </IconButton>
             </div>
             <div className={getClassName("rightSideBarToggle")}>
@@ -164,7 +164,7 @@ const HeaderInner = <
                 }}
                 title="Toggle right sidebar"
               >
-                <PanelRight focusable="false" />
+                <PanelRight focusable="false" size={18} />
               </IconButton>
             </div>
           </div>
