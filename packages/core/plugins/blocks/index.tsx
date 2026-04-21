@@ -1,4 +1,4 @@
-import { Hammer } from "lucide-react";
+import { Layers } from "lucide-react";
 import { Plugin } from "../../types";
 import { Components } from "../../components/Puck/components/Components";
 import styles from "./styles.module.css";
@@ -14,5 +14,5 @@ export const blocksPlugin: () => Plugin = () => ({
       <Components />
     </div>
   ),
-  icon: <Hammer />,
+  icon: <Layers />,
 });
