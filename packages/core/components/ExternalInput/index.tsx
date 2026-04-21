@@ -8,7 +8,7 @@ import {
 import styles from "./styles.module.css";
 import getClassNameFactory from "../../lib/get-class-name-factory";
 import { ExternalField } from "../../types";
-import { Link, Search, SlidersHorizontal, Unlock } from "lucide-react";
+import { Search, SlidersHorizontal, X } from "lucide-react";
 import { Modal } from "../Modal";
 import { Heading } from "../Heading";
 import { Loader } from "../Loader";
@@ -142,10 +142,7 @@ export const ExternalInput = ({
               "External item"
             )
           ) : (
-            <>
-              <Link size="16" />
-              <span>{field.placeholder}</span>
-            </>
+            <span>{field.placeholder}</span>
           )}
         </button>
         {value && (
@@ -157,7 +154,7 @@ export const ExternalInput = ({
             }}
             disabled={readOnly}
           >
-            <Unlock size={16} />
+            <X size={16} />
           </button>
         )}
       </div>

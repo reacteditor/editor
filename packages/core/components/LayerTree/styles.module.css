@@ -65,11 +65,8 @@
   }
 }
 
-.Layer--isSelected {
-  border-color: var(--puck-color-azure-08);
-}
-
 .Layer--isSelected > .Layer-inner {
+  border-color: var(--puck-color-azure-08);
   background: var(--puck-color-azure-10);
 }
 
@@ -90,7 +87,7 @@
 
 .Layer-zones {
   display: none;
-  margin-inline-start: 28px;
+  margin-inline-start: 30px;
 }
 
 .Layer--isSelected > .Layer-zones,
@@ -99,7 +96,7 @@
 }
 
 .Layer-zones > .LayerTree {
-  margin-inline-start: 24px;
+  margin-inline-start: 26px;
 }
 
 .Layer-title,

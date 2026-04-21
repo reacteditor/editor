@@ -1,12 +1,6 @@
 import { memo, useCallback, useMemo, useState } from "react";
 import { useAppStore, useAppStoreApi } from "../../../../store";
-import {
-  ChevronDown,
-  ChevronUp,
-  Globe,
-  PanelLeft,
-  PanelRight,
-} from "lucide-react";
+import { ChevronDown, ChevronUp, PanelLeft, PanelRight } from "lucide-react";
 import { Heading } from "../../../Heading";
 import { IconButton } from "../../../IconButton/IconButton";
 import { MenuBar } from "../../../MenuBar";
@@ -135,7 +129,6 @@ const HeaderInner = <
                 const data = appStore.getState().state.data;
                 onPublish && onPublish(data as G["UserData"]);
               }}
-              icon={<Globe size="14px" />}
             >
               Publish
             </Button>
@@ -214,7 +207,6 @@ const HeaderInner = <
                         .data as G["UserData"];
                       onPublish && onPublish(data);
                     }}
-                    icon={<Globe size="14px" />}
                   >
                     Publish
                   </Button>

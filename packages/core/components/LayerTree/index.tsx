@@ -2,7 +2,7 @@ import styles from "./styles.module.css";
 import getClassNameFactory from "../../lib/get-class-name-factory";
 import { Config } from "../../types";
 import { ItemSelector } from "../../lib/data/get-item";
-import { ChevronRight, Component } from "lucide-react";
+import { ChevronRight, Component, CornerDownRight } from "lucide-react";
 import { rootAreaId } from "../../lib/root-droppable-id";
 import {
   ForwardedRef,
@@ -305,7 +305,7 @@ const LayerTreeZone = ({
       {tree.label && (
         <div className={getClassName("zoneTitle")}>
           <div className={getClassName("zoneIcon")}>
-            <Component size="16" />
+            <CornerDownRight size="16" />
           </div>
           {tree.label}
         </div>

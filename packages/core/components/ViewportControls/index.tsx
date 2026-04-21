@@ -1,15 +1,7 @@
-import {
-  Expand,
-  Monitor,
-  Smartphone,
-  Tablet,
-  X,
-  ZoomIn,
-  ZoomOut,
-} from "lucide-react";
+import { Expand, Monitor, Smartphone, Tablet, X } from "lucide-react";
 import { IconButton } from "../IconButton";
 import { useAppStore } from "../../store";
-import { ReactNode, SyntheticEvent, useEffect, useMemo, useState } from "react";
+import { ReactNode, SyntheticEvent, useEffect, useState } from "react";
 import { getClassNameFactory } from "../../lib";
 
 import styles from "./styles.module.css";
@@ -53,54 +45,15 @@ const ActionButton = ({
   );
 };
 
-// Based on Chrome dev tools
-const defaultZoomOptions = [
-  { label: "25%", value: 0.25 },
-  { label: "50%", value: 0.5 },
-  { label: "75%", value: 0.75 },
-  { label: "100%", value: 1 },
-  { label: "125%", value: 1.25 },
-  { label: "150%", value: 1.5 },
-  { label: "200%", value: 2 },
-];
-
 export const ViewportControls = ({
-  autoZoom,
-  zoom,
   onViewportChange,
-  onZoom,
   fullScreen,
 }: {
-  autoZoom: number;
-  zoom: number;
   onViewportChange: (viewport: Viewport) => void;
-  onZoom: (zoom: number) => void;
   fullScreen?: boolean;
 }) => {
   const viewports = useAppStore((s) => s.viewports);
   const uiViewports = useAppStore((s) => s.state.ui.viewports);
-
-  const defaultsContainAutoZoom = defaultZoomOptions.find(
-    (option) => option.value === autoZoom
-  );
-
-  const zoomOptions = useMemo(
-    () =>
-      [
-        ...defaultZoomOptions,
-        ...(defaultsContainAutoZoom
-          ? []
-          : [
-              {
-                value: autoZoom,
-                label: `${(autoZoom * 100).toFixed(0)}% (Auto)`,
-              },
-            ]),
-      ]
-        .filter((a) => a.value <= autoZoom)
-        .sort((a, b) => (a.value > b.value ? 1 : -1)),
-    [autoZoom]
-  );
 
   const [activeViewport, setActiveViewport] = useState(
     uiViewports.current.width
@@ -138,66 +91,6 @@ export const ViewportControls = ({
                 : viewport.icon || icons.Smartphone}
             </ActionButton>
           ))}
-          <div className={getClassName("divider")} />
-          <ActionButton
-            title="Zoom viewport out"
-            disabled={zoom <= zoomOptions[0]?.value}
-            onClick={(e) => {
-              e.stopPropagation();
-              onZoom(
-                zoomOptions[
-                  Math.max(
-                    zoomOptions.findIndex((option) => option.value === zoom) -
-                      1,
-                    0
-                  )
-                ].value
-              );
-            }}
-          >
-            <ZoomOut size={16} />
-          </ActionButton>
-          <ActionButton
-            title="Zoom viewport in"
-            disabled={zoom >= zoomOptions[zoomOptions.length - 1]?.value}
-            onClick={(e) => {
-              e.stopPropagation();
-
-              onZoom(
-                zoomOptions[
-                  Math.min(
-                    zoomOptions.findIndex((option) => option.value === zoom) +
-                      1,
-                    zoomOptions.length - 1
-                  )
-                ].value
-              );
-            }}
-          >
-            <ZoomIn size={16} />
-          </ActionButton>
-
-          <div className={getClassName("zoom")}>
-            <div className={getClassName("divider")} />
-            <select
-              className={getClassName("zoomSelect")}
-              value={zoom.toString()}
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-              onChange={(e) => {
-                onZoom(parseFloat(e.currentTarget.value));
-              }}
-            >
-              {zoomOptions.map((option) => (
-                <option
-                  key={option.label}
-                  value={option.value}
-                  label={option.label}
-                />
-              ))}
-            </select>
-          </div>
         </div>
       </div>
 

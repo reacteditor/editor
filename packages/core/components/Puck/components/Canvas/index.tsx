@@ -10,7 +10,7 @@ import {
 import { useAppStore, useAppStoreApi } from "../../../../store";
 import { ViewportControls } from "../../../ViewportControls";
 import styles from "./styles.module.css";
-import { getClassNameFactory, useResetAutoZoom } from "../../../../lib";
+import { getClassNameFactory } from "../../../../lib";
 import { Preview } from "../Preview";
 import { UiState } from "../../../../types";
 import { Loader } from "../../../Loader";
@@ -21,12 +21,10 @@ import { defaultViewports } from "../../../ViewportControls/default-viewports";
 
 const getClassName = getClassNameFactory("PuckCanvas", styles);
 
-const ZOOM_ON_CHANGE = true;
 const TRANSITION_DURATION = 150;
 
 export const Canvas = () => {
   const { frameRef } = useCanvasFrame();
-  const resetAutoZoom = useResetAutoZoom(frameRef);
 
   const { viewports: viewportOptions = defaultViewports, ui: uiProp } =
     usePropsContext();
@@ -52,21 +50,7 @@ export const Canvas = () => {
       _experimentalFullScreenCanvas: s._experimentalFullScreenCanvas,
     }))
   );
-  const {
-    leftSideBarVisible,
-    rightSideBarVisible,
-    leftSideBarWidth,
-    rightSideBarWidth,
-    viewports,
-  } = useAppStore(
-    useShallow((s) => ({
-      leftSideBarVisible: s.state.ui.leftSideBarVisible,
-      rightSideBarVisible: s.state.ui.rightSideBarVisible,
-      leftSideBarWidth: s.state.ui.leftSideBarWidth,
-      rightSideBarWidth: s.state.ui.rightSideBarWidth,
-      viewports: s.state.ui.viewports,
-    }))
-  );
+  const viewports = useAppStore((s) => s.state.ui.viewports);
 
   const [showTransition, setShowTransition] = useState(false);
   const isResizingRef = useRef(false);
@@ -98,53 +82,14 @@ export const Canvas = () => {
     return { width: 0, height: 0 };
   }, [frameRef]);
 
-  // Auto zoom
-  useEffect(() => {
-    resetAutoZoom();
-  }, [
-    frameRef,
-    leftSideBarVisible,
-    rightSideBarVisible,
-    leftSideBarWidth,
-    rightSideBarWidth,
-    viewports,
-  ]);
-
-  // Constrain height
+  // Keep zoom at 100% and constrain root height to frame
   useEffect(() => {
     const { height: frameHeight } = getFrameDimensions();
 
     if (viewports.current.height === "auto") {
-      setZoomConfig({
-        ...zoomConfig,
-        rootHeight: frameHeight / zoomConfig.zoom,
-      });
+      setZoomConfig({ ...zoomConfig, zoom: 1, rootHeight: frameHeight });
     }
-  }, [zoomConfig.zoom, getFrameDimensions, setZoomConfig]);
-
-  // Zoom whenever state changes, even if external driver
-  useEffect(() => {
-    if (ZOOM_ON_CHANGE) {
-      resetAutoZoom();
-    }
-  }, [viewports.current.width, viewports]);
-
-  // Resize based on frame size
-  useEffect(() => {
-    if (!frameRef.current) return;
-
-    const resizeObserver = new ResizeObserver(() => {
-      if (!isResizingRef.current) {
-        resetAutoZoom();
-      }
-    });
-
-    resizeObserver.observe(frameRef.current);
-
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [frameRef.current]);
+  }, [getFrameDimensions, setZoomConfig, viewports.current.height]);
 
   const [showLoader, setShowLoader] = useState(false);
 
@@ -261,8 +206,6 @@ export const Canvas = () => {
         <div className={getClassName("controls")}>
           <ViewportControls
             fullScreen={_experimentalFullScreenCanvas}
-            autoZoom={zoomConfig.autoZoom}
-            zoom={zoomConfig.zoom}
             onViewportChange={(viewport) => {
               setShowTransition(true);
               isResizingRef.current = true;
@@ -270,7 +213,7 @@ export const Canvas = () => {
               const uiViewport = {
                 ...viewport,
                 height: viewport.height || "auto",
-                zoom: zoomConfig.zoom,
+                zoom: 1,
               };
 
               const newUi: Partial<UiState> = {
@@ -278,18 +221,6 @@ export const Canvas = () => {
               };
 
               setUi(newUi);
-
-              if (ZOOM_ON_CHANGE) {
-                resetAutoZoom({
-                  viewports: { ...viewports, current: uiViewport },
-                });
-              }
-            }}
-            onZoom={(zoom) => {
-              setShowTransition(true);
-              isResizingRef.current = true;
-
-              setZoomConfig({ ...zoomConfig, zoom });
             }}
           />
         </div>

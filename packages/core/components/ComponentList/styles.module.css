@@ -17,15 +17,15 @@
 .ComponentList-title {
   background-color: transparent;
   border: 0;
-  color: var(--puck-color-grey-05);
+  color: var(--puck-color-grey-04);
   cursor: pointer;
   display: flex;
   font: inherit;
-  font-size: var(--puck-font-size-xxxs);
+  font-size: var(--puck-font-size-xxs);
+  font-weight: 600;
   list-style: none;
   margin-bottom: 6px;
   padding: 8px;
-  text-transform: uppercase;
   transition: background-color 50ms ease-in, color 50ms ease-in;
   gap: 4px;
   border-radius: 4px;
