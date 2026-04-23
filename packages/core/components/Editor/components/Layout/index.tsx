@@ -136,7 +136,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   const overrides = useAppStore((s) => s.overrides);
 
   const CustomEditor = useMemo(
-    () => overrides.puck || DefaultOverride,
+    () => overrides.editor || DefaultOverride,
     [overrides]
   );
 
@@ -183,7 +183,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
 
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window === "undefined") return "light";
-    const stored = window.localStorage.getItem("puck-theme");
+    const stored = window.localStorage.getItem("editor-theme");
     if (stored === "light" || stored === "dark") return stored;
     return window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
@@ -192,7 +192,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    window.localStorage.setItem("puck-theme", theme);
+    window.localStorage.setItem("editor-theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
@@ -388,7 +388,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
           )}
         </CustomEditor>
       </DragDropContext>
-      <div id="puck-portal-root" className={getClassName("portal")} />
+      <div id="editor-portal-root" className={getClassName("portal")} />
     </div>
   );
 };

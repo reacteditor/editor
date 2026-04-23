@@ -3,7 +3,7 @@ title: <Puck.Preview>
 ---
 
 import { PuckPreview } from "@/docs/components/Preview";
-import { Puck } from "@/puck";
+import { Puck } from "@/editor";
 
 # \<Puck.Preview\>
 
@@ -28,7 +28,7 @@ Render a drag-and-drop preview for the current data when composing a custom Puck
 </PuckPreview>
 
 ```tsx {17} showLineNumbers copy
-import { Puck } from "@puckeditor/core";
+import { Puck } from "@editoreditor/core";
 
 export function Editor() {
   return (
@@ -49,10 +49,10 @@ export function Editor() {
 
 ### `id`
 
-A unique identifier for the preview frame. Default: `puck-preview`.
+A unique identifier for the preview frame. Default: `editor-preview`.
 
 ```tsx {6} copy
-import { Puck } from "@puckeditor/core";
+import { Puck } from "@editoreditor/core";
 
 export function Editor() {
   return (

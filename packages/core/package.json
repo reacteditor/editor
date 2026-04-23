@@ -3,11 +3,11 @@
   "version": "0.21.2",
   "description": "The open-source visual editor for React",
   "author": "Chris Villa <chris@puckeditor.com>",
-  "repository": "puckeditor/puck",
-  "bugs": "https://github.com/puckeditor/puck/issues",
+  "repository": "puckeditor/editor",
+  "bugs": "https://github.com/puckeditor/editor/issues",
   "homepage": "https://puckeditor.com",
   "keywords": [
-    "puck",
+    "editor",
     "visual",
     "editor",
     "react",
@@ -50,7 +50,7 @@
       "import": "./dist/internal.mjs",
       "require": "./dist/internal.js"
     },
-    "./puck.css": "./dist/index.css",
+    "./editor.css": "./dist/index.css",
     "./no-external.css": "./dist/no-external.css",
     "./dist/index.css": "./dist/index.css",
     "./package.json": "./package.json"

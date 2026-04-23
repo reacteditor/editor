@@ -25,7 +25,7 @@ export function useSidebarResize(
   useEffect(() => {
     if (typeof window !== "undefined" && !storeWidth) {
       try {
-        const savedWidths = localStorage.getItem("puck-sidebar-widths");
+        const savedWidths = localStorage.getItem("editor-sidebar-widths");
         if (savedWidths) {
           const widths = JSON.parse(savedWidths);
           const savedWidth = widths[position];
@@ -70,7 +70,7 @@ export function useSidebarResize(
       // Save to localStorage
       let widths = {};
       try {
-        const savedWidths = localStorage.getItem("puck-sidebar-widths");
+        const savedWidths = localStorage.getItem("editor-sidebar-widths");
         widths = savedWidths ? JSON.parse(savedWidths) : {};
       } catch (error) {
         console.error(
@@ -79,7 +79,7 @@ export function useSidebarResize(
         );
       } finally {
         localStorage.setItem(
-          "puck-sidebar-widths",
+          "editor-sidebar-widths",
           JSON.stringify({
             ...widths,
             [position]: width,

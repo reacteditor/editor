@@ -3,6 +3,6 @@ import { route, index } from "@react-router/dev/routes";
 
 export default [
   index("routes/_index.tsx"),
-  route("api/puck/*", "routes/api.puck.ts"),
-  route("*", "routes/puck-splat.tsx"),
+  route("api/editor/*", "routes/api.editor.ts"),
+  route("*", "routes/editor-splat.tsx"),
 ] satisfies RouteConfig;

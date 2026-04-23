@@ -4,10 +4,10 @@ title: useGetPuck
 
 # useGetPuck
 
-A hook that returns a function that retrieves the latest [`PuckApi`](/docs/api-reference/puck-api) at call time. This is useful in callbacks, effects, or any logic that runs outside the component render lifecycle.
+A hook that returns a function that retrieves the latest [`PuckApi`](/docs/api-reference/editor-api) at call time. This is useful in callbacks, effects, or any logic that runs outside the component render lifecycle.
 
 ```tsx copy
-import { useGetPuck } from "@puckeditor/core";
+import { useGetPuck } from "@editoreditor/core";
 
 const Example = () => {
   const getPuck = useGetPuck();
@@ -21,8 +21,8 @@ const Example = () => {
 };
 ```
 
-If you need to react to changes to `PuckApi`, try the [`usePuck` hook](use-puck).
+If you need to react to changes to `PuckApi`, try the [`usePuck` hook](use-editor).
 
 ## Returns
 
-A function to retrieve the latest [`PuckApi`](/docs/api-reference/puck-api) data at call time.
+A function to retrieve the latest [`PuckApi`](/docs/api-reference/editor-api) data at call time.

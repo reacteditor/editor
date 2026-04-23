@@ -36,7 +36,7 @@ export const TemplateInternal: ComponentConfig<TemplateProps> = {
     template: {
       type: "custom",
       render: ({ name, value, onChange }) => {
-        const templateKey = `puck-demo-templates:${componentKey}`;
+        const templateKey = `editor-demo-templates:${componentKey}`;
 
         const props = useEditor((s) => s.selectedItem?.props) as
           | TemplateProps
@@ -121,7 +121,7 @@ export const TemplateInternal: ComponentConfig<TemplateProps> = {
   resolveData: async (data, { changed, trigger }) => {
     if (!changed.template || trigger === "load") return data;
 
-    const templateKey = `puck-demo-templates:${componentKey}`;
+    const templateKey = `editor-demo-templates:${componentKey}`;
 
     const templates: TemplateData = {
       ...JSON.parse(localStorage.getItem(templateKey) ?? "{}"),

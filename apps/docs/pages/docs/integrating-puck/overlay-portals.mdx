@@ -3,7 +3,7 @@ import {
   OverlayPortalPreview,
   OverlayPortalTabsPreview,
 } from "@/docs/components/Preview";
-import { Puck } from "@/puck";
+import { Puck } from "@/editor";
 
 # Overlay Portals
 
@@ -12,7 +12,7 @@ Overlay Portals enable you to disable the Puck overlay when hovering over specif
 Use the [`registerOverlayPortal` API](/docs/api-reference/functions/register-overlay-portal) to mark an element as a portal.
 
 ```tsx
-import { registerOverlayPortal } from "@puckeditor/core";
+import { registerOverlayPortal } from "@editoreditor/core";
 
 const Example = () => {
   const ref = useRef<HTMLButtonElement>(null);
@@ -57,7 +57,7 @@ const Example = () => {
   <Puck.Preview />
 </PuckPreview>
 
-Portals can be used to create interactive functionality for previewing, such as to paginate through tabs, or combined with [`usePuck()`](/docs/extending-puck/internal-puck-api) to create an inline form input.
+Portals can be used to create interactive functionality for previewing, such as to paginate through tabs, or combined with [`usePuck()`](/docs/extending-editor/internal-editor-api) to create an inline form input.
 
 ## Example: Tabs
 

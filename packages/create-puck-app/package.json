@@ -1,15 +1,15 @@
 {
-  "name": "create-puck-app",
+  "name": "create-editor-app",
   "version": "0.21.2",
   "author": "Chris Villa <chris@puckeditor.com>",
-  "repository": "puckeditor/puck",
-  "bugs": "https://github.com/puckeditor/puck/issues",
+  "repository": "puckeditor/editor",
+  "bugs": "https://github.com/puckeditor/editor/issues",
   "homepage": "https://puckeditor.com",
   "private": false,
   "license": "MIT",
   "type": "module",
   "bin": {
-    "create-puck-app": "./index.js"
+    "create-editor-app": "./index.js"
   },
   "files": [
     "templates",

@@ -29,7 +29,7 @@ export const SiteHeader: ComponentConfig<SiteHeaderProps> = {
       ],
     },
   },
-  render: ({ logo, navItems, puck }) => {
+  render: ({ logo, navItems, editor }) => {
     const navPath =
       typeof window !== "undefined"
         ? window.location.pathname.replace("/edit", "") || "/"
@@ -41,7 +41,7 @@ export const SiteHeader: ComponentConfig<SiteHeaderProps> = {
           <div className={getClassName("logo")}>{logo}</div>
           <nav className={getClassName("items")}>
             {navItems.map((item, i) => {
-              const href = puck.isEditing ? "" : item.href;
+              const href = editor.isEditing ? "" : item.href;
               const isActive = navPath === (item.href || "/");
               const El = href ? "a" : "span";
               return (

@@ -191,8 +191,8 @@ export const Canvas = () => {
         const el = e.target as Element;
 
         if (
-          !el.hasAttribute("data-puck-component") &&
-          !el.hasAttribute("data-puck-dropzone")
+          !el.hasAttribute("data-editor-component") &&
+          !el.hasAttribute("data-editor-dropzone")
         ) {
           dispatch({
             type: "setUi",
@@ -238,7 +238,7 @@ export const Canvas = () => {
             overflow: iframe.enabled ? undefined : "auto",
           }}
           suppressHydrationWarning // Suppress hydration warning as frame is not visible until after load
-          id="puck-canvas-root"
+          id="editor-canvas-root"
           onTransitionEnd={() => {
             setShowTransition(false);
             isResizingRef.current = false;

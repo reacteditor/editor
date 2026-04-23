@@ -4,21 +4,21 @@ title: Internal Puck API
 
 # Internal Puck API
 
-Puck exposes its internal API as [`PuckApi`](/docs/api-reference/puck-api) for extending Puck with custom functionality within [custom fields](/docs/extending-puck/custom-fields), [compositional interfaces](/docs/extending-puck/composition) or [UI overrides](/docs/extending-puck/ui-overrides).
+Puck exposes its internal API as [`PuckApi`](/docs/api-reference/editor-api) for extending Puck with custom functionality within [custom fields](/docs/extending-editor/custom-fields), [compositional interfaces](/docs/extending-editor/composition) or [UI overrides](/docs/extending-editor/ui-overrides).
 
 ## Accessing the internal API
 
-You can access [`PuckApi`](/docs/api-reference/puck-api) via two hooks:
+You can access [`PuckApi`](/docs/api-reference/editor-api) via two hooks:
 
-- [`usePuck`](/docs/api-reference/functions/use-puck) - returns `PuckApi` as part of your component render lifecycle
-- [`useGetPuck`](/docs/api-reference/functions/use-get-puck) - returns a function to access the latest `PuckApi` at call time
+- [`usePuck`](/docs/api-reference/functions/use-editor) - returns `PuckApi` as part of your component render lifecycle
+- [`useGetPuck`](/docs/api-reference/functions/use-get-editor) - returns a function to access the latest `PuckApi` at call time
 
 ### Within the render lifecycle
 
 To access the API within your render lifecycle, use the `usePuck` hook. You can use a selector to limit re-rendering to a specific part of the API.
 
 ```tsx copy
-import { createUsePuck } from "@puckeditor/core";
+import { createUsePuck } from "@editoreditor/core";
 
 const usePuck = createUsePuck();
 
@@ -30,14 +30,14 @@ const Example = () => {
 };
 ```
 
-See the [`usePuck`](/docs/api-reference/functions/use-puck) docs for a full API reference.
+See the [`usePuck`](/docs/api-reference/functions/use-editor) docs for a full API reference.
 
 ### Outside of the render lifecycle
 
 Often it's not necessary to re-render your component when the PuckApi changes. Puck provides the `useGetPuck` hook for accessing the latest `PuckApi` at call time.
 
 ```tsx copy
-import { useGetPuck } from "@puckeditor/core";
+import { useGetPuck } from "@editoreditor/core";
 
 const Example = () => {
   const getPuck = useGetPuck();
@@ -53,7 +53,7 @@ const Example = () => {
 };
 ```
 
-See the [`useGetPuck`](/docs/api-reference/functions/use-get-puck) docs for a full API reference.
+See the [`useGetPuck`](/docs/api-reference/functions/use-get-editor) docs for a full API reference.
 
 ## Usage in practice
 
@@ -62,7 +62,7 @@ Generally, you'll want to combine this with composition, UI overrides or custom 
 Here's an example using the internal API to log the page data as JSON while retaining the standard Puck UI:
 
 ```tsx
-import { Puck, createUsePuck } from "@puckeditor/core";
+import { Puck, createUsePuck } from "@editoreditor/core";
 
 const usePuck = createUsePuck();
 
@@ -91,10 +91,10 @@ export function Editor() {
 
 ## Further reading
 
-- [`PuckApi` API reference](/docs/api-reference/puck-api)
-- [`usePuck` API reference](/docs/api-reference/functions/use-puck)
-- [`useGetPuck` API reference](/docs/api-reference/functions/use-get-puck)
-- [`<Puck.Layout>` API reference](/docs/api-reference/components/puck-layout)
-- [Composition](/docs/extending-puck/composition)
-- [Custom fields](/docs/extending-puck/custom-fields)
-- [UI overrides](/docs/extending-puck/ui-overrides)
+- [`PuckApi` API reference](/docs/api-reference/editor-api)
+- [`usePuck` API reference](/docs/api-reference/functions/use-editor)
+- [`useGetPuck` API reference](/docs/api-reference/functions/use-get-editor)
+- [`<Puck.Layout>` API reference](/docs/api-reference/components/editor-layout)
+- [Composition](/docs/extending-editor/composition)
+- [Custom fields](/docs/extending-editor/custom-fields)
+- [UI overrides](/docs/extending-editor/ui-overrides)

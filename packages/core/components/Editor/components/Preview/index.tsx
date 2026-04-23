@@ -65,7 +65,7 @@ const useBubbleIframeEvents = (ref: RefObject<HTMLIFrameElement | null>) => {
   }, [status]);
 };
 
-export const Preview = ({ id = "puck-preview" }: { id?: string }) => {
+export const Preview = ({ id = "editor-preview" }: { id?: string }) => {
   const dispatch = useAppStore((s) => s.dispatch);
   const root = useAppStore((s) => s.state.data.root);
   const config = useAppStore((s) => s.config);
@@ -94,7 +94,7 @@ export const Preview = ({ id = "puck-preview" }: { id?: string }) => {
 
       return config.root?.render ? (
         config.root?.render({
-          id: "puck-root",
+          id: "editor-root",
           ...propsWithSlots,
           ...richtextProps,
         })
@@ -117,7 +117,7 @@ export const Preview = ({ id = "puck-preview" }: { id?: string }) => {
   const inner = !renderData ? (
     <Page
       {...rootProps}
-      puck={{
+      editor={{
         renderDropZone: DropZonePure,
         isEditing: true,
         dragRef: null,
@@ -141,13 +141,13 @@ export const Preview = ({ id = "puck-preview" }: { id?: string }) => {
     <div
       className={getClassName()}
       id={id}
-      data-puck-preview
+      data-editor-preview
       onClick={(e) => {
         const el = e.target as Element;
 
         if (
-          !el.hasAttribute("data-puck-component") &&
-          !el.hasAttribute("data-puck-dropzone")
+          !el.hasAttribute("data-editor-component") &&
+          !el.hasAttribute("data-editor-dropzone")
         ) {
           dispatch({ type: "setUi", ui: { itemSelector: null } });
         }
@@ -181,7 +181,7 @@ export const Preview = ({ id = "puck-preview" }: { id?: string }) => {
           id="preview-frame"
           className={getClassName("frame")}
           ref={ref}
-          data-puck-entry
+          data-editor-entry
         >
           {inner}
         </div>

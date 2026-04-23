@@ -103,7 +103,7 @@ program
       },
       {
         type: "confirm",
-        name: "puckAi",
+        name: "editorAi",
         message: `Puck AI (beta) lets you generate pages using your own components. Learn more: ${ansiColors.cyan}https://puckeditor.com/docs/ai/overview${ansiColors.reset}
 
   Add Puck AI to the editor? (Requires a Puck Cloud account)`,
@@ -124,7 +124,7 @@ program
     }
 
     const recipe = answers.recipe;
-    const usesPuckAi = answers.puckAi;
+    const usesPuckAi = answers.editorAi;
 
     // Copy template files to the new directory
     const recipeName = `${recipe}${usesPuckAi ? "-ai" : ""}`;
@@ -181,7 +181,7 @@ program
         data = template({
           ...answers,
           appName,
-          puckVersion: `^${packageJson.version}`,
+          editorVersion: `^${packageJson.version}`,
         });
       } else {
         data = fs.readFileSync(filePath, "utf-8");
@@ -215,7 +215,7 @@ program
         execSync("git init", { cwd: appPath, stdio: "inherit" });
 
         execSync("git add .", { cwd: appPath, stdio: "inherit" });
-        execSync('git commit -m "build(puck): generate app"', {
+        execSync('git commit -m "build(editor): generate app"', {
           cwd: appPath,
           stdio: "inherit",
         });

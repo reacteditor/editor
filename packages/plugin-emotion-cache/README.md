@@ -5,12 +5,12 @@ Inject [emotion cache](https://emotion.sh/docs/@emotion/cache) into the Puck ifr
 ## Quick start
 
 ```sh
-npm i @puckeditor/plugin-emotion-cache
+npm i @editoreditor/plugin-emotion-cache
 ```
 
 ```jsx
-import { Puck } from "@puckeditor/core";
-import createEmotionCache from "@puckeditor/plugin-emotion-cache";
+import { Puck } from "@editoreditor/core";
+import createEmotionCache from "@editoreditor/plugin-emotion-cache";
 
 // Create your emotion cache plugin. This example configures it for Chakra.
 const chakraEmotionCache = createEmotionCache("cha");
@@ -35,4 +35,4 @@ Key to pass to Emotion's [`createCache` method](https://emotion.sh/docs/@emotion
 
 ## License
 
-MIT © [The Puck Contributors](https://github.com/puckeditor/puck/graphs/contributors)
+MIT © [The Puck Contributors](https://github.com/editoreditor/editor/graphs/contributors)

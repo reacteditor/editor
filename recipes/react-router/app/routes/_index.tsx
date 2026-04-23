@@ -1,6 +1,6 @@
 import type { Route } from "./+types/_index";
-import { EditorRender } from "~/components/puck-render";
-import { resolveEditorPath } from "~/lib/resolve-puck-path.server";
+import { EditorRender } from "~/components/editor-render";
+import { resolveEditorPath } from "~/lib/resolve-editor-path.server";
 import { getPage } from "~/lib/pages.server";
 
 export async function loader() {

@@ -1,13 +1,13 @@
 # `remix-ai` recipe
 
-The `remix-ai` recipe showcases one of the most powerful ways to combine Puck and [Puck AI](https://puckeditor.com/docs/ai/overview): providing an authoring tool with AI page generation capabilities for any route in your Remix app.
+The `remix-ai` recipe showcases one of the most powerful ways to combine Puck and [Puck AI](https://editoreditor.com/docs/ai/overview): providing an authoring tool with AI page generation capabilities for any route in your Remix app.
 
 ## Demonstrates
 
 - Puck AI integration for generating pages with AI
 - Remix Run V2 implementation
 - JSON database implementation with HTTP API
-- Dynamic routes to use puck for any root-level route on the platform
+- Dynamic routes to use editor for any root-level route on the platform
 - Option to disable client-side JavaScript for Puck pages
 
 ## Usage
@@ -15,7 +15,7 @@ The `remix-ai` recipe showcases one of the most powerful ways to combine Puck an
 Run the generator and select `Remix` when prompted
 
 ```
-npx create-puck-app my-app
+npx create-editor-app my-app
 
 ? Which recipe would you like to use?
 ❯ Remix
@@ -36,7 +36,7 @@ yarn dev
 
 ### Set up Puck AI
 
-Create a [Puck account](https://cloud.puckeditor.com) and [obtain an API key](https://cloud.puckeditor.com/api-keys).
+Create a [Puck account](https://cloud.editoreditor.com) and [obtain an API key](https://cloud.editoreditor.com/api-keys).
 
 Create a `.env` file in the root of your project and add your API key:
 
@@ -54,8 +54,8 @@ To adopt this recipe you will need to:
 
 - **IMPORTANT** Add authentication to `/edit` routes. This can be done by modifying the example routes `/app/routes/_index.tsx` and `/app/routes/edit.tsx` or the example model in `/app/models/page.server.ts`. **If you don't do this, Puck will be completely public.**
 - Integrate your database into the API calls in `/app/models/page.server.ts`
-- Implement a custom puck configuration in `/app/puck.config.tsx`
-- Add business context for the AI generation in `/app/routes/api.puck.$.tsx`
+- Implement a custom editor configuration in `/app/editor.config.tsx`
+- Add business context for the AI generation in `/app/routes/api.editor.$.tsx`
 
 By default, this recipe will have JavaScript enable on all routes - like a usual react app. If you know that your Puck content doesn't need react, then you can disable JS uncommenting the relevant code in `/app/root.tsx` and the example route `/app/routes/_index.tsx`. Check the network tab for no JS downloads, and verify that the page still works.
 

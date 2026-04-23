@@ -21,19 +21,19 @@ These plugins are included in the core package:
 
 Puck provides official plugins that can be installed for common use-cases:
 
-- [`ai`](https://puckeditor.com/docs/ai/overview): Use AI to generate pages using your own components.
-- [`emotion-cache`](https://github.com/puckeditor/puck/tree/main/packages/plugin-emotion-cache): Inject emotion cache into the Puck iframe.
-- [`heading-analyzer`](https://github.com/puckeditor/puck/tree/main/packages/plugin-heading-analyzer): Analyze the heading outline of your page and be warned when you're not respecting WCAG 2 accessibility standards.
+- [`ai`](https://editoreditor.com/docs/ai/overview): Use AI to generate pages using your own components.
+- [`emotion-cache`](https://github.com/editoreditor/editor/tree/main/packages/plugin-emotion-cache): Inject emotion cache into the Puck iframe.
+- [`heading-analyzer`](https://github.com/editoreditor/editor/tree/main/packages/plugin-heading-analyzer): Analyze the heading outline of your page and be warned when you're not respecting WCAG 2 accessibility standards.
 
-Please see the [awesome-puck repo](https://github.com/puckeditor/awesome-puck) for a full list of community plugins.
+Please see the [awesome-editor repo](https://github.com/editoreditor/awesome-editor) for a full list of community plugins.
 
 ## Loading a Plugin
 
-To load a plugin, provide it to the [`plugins` prop](/docs/api-reference/components/puck#plugins) on the `<Puck>` component.
+To load a plugin, provide it to the [`plugins` prop](/docs/api-reference/components/editor#plugins) on the `<Puck>` component.
 
 ```tsx showLineNumbers {2,8}
-import { Puck } from "@puckeditor/core";
-import myPlugin from "my-puck-plugin";
+import { Puck } from "@editoreditor/core";
+import myPlugin from "my-editor-plugin";
 
 export function Editor() {
   return (
@@ -64,11 +64,11 @@ const myPlugin = {
 };
 ```
 
-You can leverage the [internal Puck API](internal-puck-api) to integrate Puck behavior with your plugin:
+You can leverage the [internal Puck API](internal-editor-api) to integrate Puck behavior with your plugin:
 
 ```tsx showLineNumbers copy {2, 4, 10-14}
 import { Coffee } from "lucide-react";
-import { createUsePuck } from "@puckeditor/core";
+import { createUsePuck } from "@editoreditor/core";
 
 const usePuck = createUsePuck();
 
@@ -86,7 +86,7 @@ const myPlugin = {
 
 ### Transforming fields
 
-Plugins support [Field Transforms](/docs/extending-puck/field-transforms), enabling you to modify prop data before it's rendered in the `<Puck>` preview.
+Plugins support [Field Transforms](/docs/extending-editor/field-transforms), enabling you to modify prop data before it's rendered in the `<Puck>` preview.
 
 ```tsx showLineNumbers copy
 const plugin = {
@@ -99,7 +99,7 @@ const plugin = {
 
 ### Overriding the UI
 
-Plugins support [UI Overrides](/docs/extending-puck/ui-overrides), enabling you to override discrete section of the Puck interface.
+Plugins support [UI Overrides](/docs/extending-editor/ui-overrides), enabling you to override discrete section of the Puck interface.
 
 ```tsx showLineNumbers copy
 const plugin = {
@@ -125,12 +125,12 @@ This may result in some incompatible plugin combinations. To improve your chance
 
 ### Introducing new field types
 
-Both the field transforms and overrides let you introduce [entirely new field types](/docs/extending-puck/ui-overrides#introducing-new-field-types). Plugins can combine this functionality to bundle up new field behavior in a convenient package.
+Both the field transforms and overrides let you introduce [entirely new field types](/docs/extending-editor/ui-overrides#introducing-new-field-types). Plugins can combine this functionality to bundle up new field behavior in a convenient package.
 
 This example uses [Overlay Portals](overlay-portals) to create an interactive rich text field that can modified directly in the editor preview.
 
 ```tsx showLineNumbers copy {6-8, 12-20}
-import { registerOverlayPortal } from "@puckeditor/core";
+import { registerOverlayPortal } from "@editoreditor/core";
 
 const plugin = {
   overrides: {
@@ -158,4 +158,4 @@ const plugin = {
 
 - [Plugin API reference](/docs/api-reference/plugin)
 - [FieldTransforms API reference](/docs/api-reference/field-transforms)
-- [UI Overrides](/docs/extending-puck/ui-overrides)
+- [UI Overrides](/docs/extending-editor/ui-overrides)

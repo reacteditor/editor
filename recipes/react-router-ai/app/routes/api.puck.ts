@@ -1,10 +1,10 @@
 import type { ActionFunctionArgs } from "react-router";
-import { puckHandler } from "@puckeditor/cloud-client";
+import { editorHandler } from "@puckeditor/cloud-client";
 
 // Handles all requests for Editor AI
 // Learn more: https://puckeditor.com/docs/ai/getting-started
 export async function action(args: ActionFunctionArgs) {
-  return puckHandler(args.request, {
+  return editorHandler(args.request, {
     ai: {
       // Replace with your business context
       context: "We are Google. You create Google landing pages.",

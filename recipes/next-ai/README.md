@@ -1,13 +1,13 @@
 # `next-ai` recipe
 
-The `next-ai` recipe showcases one of the most powerful ways to combine Puck and [Puck AI](https://puckeditor.com/docs/ai/overview): providing an authoring tool with AI page generation capabilities for any route in your Next app.
+The `next-ai` recipe showcases one of the most powerful ways to combine Puck and [Puck AI](https://editoreditor.com/docs/ai/overview): providing an authoring tool with AI page generation capabilities for any route in your Next app.
 
 ## Demonstrates
 
 - Puck AI integration for generating pages with AI
 - Next.js App Router implementation
 - JSON database implementation with HTTP API
-- Catch-all routes to use puck for any route on the platform
+- Catch-all routes to use editor for any route on the platform
 - Incremental static regeneration (ISR) for all Puck pages
 
 ## Usage
@@ -15,7 +15,7 @@ The `next-ai` recipe showcases one of the most powerful ways to combine Puck and
 Run the generator and select `Next.js` when prompted
 
 ```
-npx create-puck-app my-app
+npx create-editor-app my-app
 
 ? Which recipe would you like to use?
 ❯ Next.js
@@ -36,7 +36,7 @@ yarn dev
 
 ### Set up Puck AI
 
-Create a [Puck account](https://cloud.puckeditor.com) and [obtain an API key](https://cloud.puckeditor.com/api-keys).
+Create a [Puck account](https://cloud.editoreditor.com) and [obtain an API key](https://cloud.editoreditor.com/api-keys).
 
 Create a `.env.local` file in the root of your project and add your API key:
 
@@ -52,9 +52,9 @@ You can do this for any route on the application, **even if the page doesn't exi
 
 To adopt this recipe you will need to:
 
-- **IMPORTANT** Add authentication to `/edit` routes. This can be done by modifying the example API routes in `/app/puck/api/route.ts` and server component in `/app/puck/[...puckPath]/page.tsx`. **If you don't do this, Puck will be completely public.**
-- Integrate your database into the API calls in `/app/puck/api/route.ts`
-- Implement a custom puck configuration in `puck.config.tsx`
-- Add business context for the AI generation in `/app/api/puck/[...all]/route.ts`
+- **IMPORTANT** Add authentication to `/edit` routes. This can be done by modifying the example API routes in `/app/editor/api/route.ts` and server component in `/app/editor/[...editorPath]/page.tsx`. **If you don't do this, Puck will be completely public.**
+- Integrate your database into the API calls in `/app/editor/api/route.ts`
+- Implement a custom editor configuration in `editor.config.tsx`
+- Add business context for the AI generation in `/app/api/editor/[...all]/route.ts`
 
-By default, this recipe will generate static pages by setting `dynamic` to [`force-static`](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#dynamic) in the `/app/[...puckPath]/page.tsx`. This will strip headers and cookies. If you need dynamic pages, you can delete this.
+By default, this recipe will generate static pages by setting `dynamic` to [`force-static`](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#dynamic) in the `/app/[...editorPath]/page.tsx`. This will strip headers and cookies. If you need dynamic pages, you can delete this.

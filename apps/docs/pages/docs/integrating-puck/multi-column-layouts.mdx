@@ -3,7 +3,7 @@ title: Multi-column Layouts
 ---
 
 import { PuckPreview } from "@/docs/components/Preview";
-import { Puck } from "@/puck";
+import { Puck } from "@/editor";
 import { Callout } from "nextra/components";
 
 # Multi-column Layouts
@@ -126,7 +126,7 @@ const config = {
   label="Fixed layout example"
   config={{
     root: {
-      render: ({ puck: { renderDropZone: DropZone } }) => (
+      render: ({ editor: { renderDropZone: DropZone } }) => (
         <DropZone zone="default-zone" disallow={["Card"]} />
       ),
     },
@@ -296,7 +296,7 @@ By default, Puck will wrap your components in a `div` element. For some layouts,
 
 For example, this is required if you wish to use CSS rules like `flex-grow`, `grid-column`, or `grid-row`.
 
-Use the [`inline`](/docs/api-reference/configuration/component-config#inline) component parameter to remove the wrapping element. **When using this API, you must also specify which element is draggable by passing the [`puck.dragRef` prop](/docs/api-reference/configuration/component-config#puckdragref) to your element's `ref` prop.**
+Use the [`inline`](/docs/api-reference/configuration/component-config#inline) component parameter to remove the wrapping element. **When using this API, you must also specify which element is draggable by passing the [`editor.dragRef` prop](/docs/api-reference/configuration/component-config#editordragref) to your element's `ref` prop.**
 
 ```tsx {13-14,21,24-28} showLineNumbers copy
 const config = {
@@ -320,9 +320,9 @@ const config = {
     },
     Card: {
       inline: true, // Enable inline mode, removing the Puck wrapper
-      render: ({ text, spanCol, spanRow, puck }) => (
+      render: ({ text, spanCol, spanRow, editor }) => (
         <div
-          ref={puck.dragRef} // Let Puck know this element is draggable
+          ref={editor.dragRef} // Let Puck know this element is draggable
           style={{
             gridColumn: `span ${spanCol}`,
             gridRow: `span ${spanRow}`,
@@ -360,7 +360,7 @@ const config = {
     components: {
       Card: {
         inline: true,
-        render: ({ content, spanCol, spanRow, puck }) => {
+        render: ({ content, spanCol, spanRow, editor }) => {
           return (
             <div
               style={{
@@ -372,7 +372,7 @@ const config = {
                 gridRow: `span ${spanRow}`,
               }}
               // Let Puck know this element is draggable
-              ref={puck.dragRef}
+              ref={editor.dragRef}
             >
               {content}
             </div>
@@ -435,7 +435,7 @@ const config = {
 };
 ```
 
-Combine this with [categories](/docs/integrating-puck/categories) to restrict behavior based on your existing groups.
+Combine this with [categories](/docs/integrating-editor/categories) to restrict behavior based on your existing groups.
 
 ```tsx {2-6,12} showLineNumbers copy
 const config = {

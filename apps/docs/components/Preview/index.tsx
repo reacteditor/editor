@@ -17,7 +17,7 @@ import { AppState, ComponentConfig } from "@/core/types";
 import { getClassNameFactory } from "@/core/lib";
 
 import styles from "./styles.module.css";
-import { createUseEditor } from "@/core/lib/use-puck";
+import { createUseEditor } from "@/core/lib/use-editor";
 
 import { ChevronUp, ChevronDown } from "lucide-react";
 
@@ -155,7 +155,7 @@ export const EditorPreview = ({
   disableOnClick,
   renderInfo,
   renderDrawer,
-  ...puckProps
+  ...editorProps
 }: React.ComponentProps<typeof Editor> & {
   label: string;
   disableOnClick: boolean;
@@ -167,7 +167,7 @@ export const EditorPreview = ({
   const [store] = useState(createStore(() => ({ drawerVisible: false })));
 
   return (
-    <Editor config={{}} data={{}} {...puckProps} iframe={{ enabled: false }}>
+    <Editor config={{}} data={{}} {...editorProps} iframe={{ enabled: false }}>
       <PreviewStoreContext value={store}>
         <PreviewFrame
           label={label}
@@ -199,7 +199,7 @@ const ConfigPreviewInner = ({
           {children ??
             componentConfig.render({
               ...appState.data["content"][0]?.props,
-              puck: {
+              editor: {
                 renderDropZone: () => <div />,
                 isEditing: false,
                 metadata: {},

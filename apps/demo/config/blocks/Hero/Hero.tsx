@@ -33,7 +33,7 @@ export const Hero: EditorComponent<HeroProps> = ({
   buttons,
   padding,
   image,
-  puck,
+  editor,
 }) => {
   return (
     <Section
@@ -68,7 +68,7 @@ export const Hero: EditorComponent<HeroProps> = ({
                 href={button.href}
                 variant={button.variant}
                 size="large"
-                tabIndex={puck.isEditing ? -1 : undefined}
+                tabIndex={editor.isEditing ? -1 : undefined}
               >
                 {button.label}
               </Button>

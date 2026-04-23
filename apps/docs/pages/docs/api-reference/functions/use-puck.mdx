@@ -4,10 +4,10 @@ title: usePuck
 
 # usePuck
 
-A hook for accessing the [`PuckApi`](/docs/api-reference/puck-api) as part of your React render lifecycle.. The best way to access `usePuck` is via the `createUsePuck()` factory.
+A hook for accessing the [`PuckApi`](/docs/api-reference/editor-api) as part of your React render lifecycle.. The best way to access `usePuck` is via the `createUsePuck()` factory.
 
 ```tsx copy
-import { createUsePuck } from "@puckeditor/core";
+import { createUsePuck } from "@editoreditor/core";
 
 const usePuck = createUsePuck();
 
@@ -28,7 +28,7 @@ You can also access `usePuck` as a direct export, but you won't be able to use [
 
 ### `selector(data)`
 
-A selector function that describes what `usePuck` returns. Receives [`PuckApi`](/docs/api-reference/puck-api) and returns anything. Be as granular as possible to minimize re-renders.
+A selector function that describes what `usePuck` returns. Receives [`PuckApi`](/docs/api-reference/editor-api) and returns anything. Be as granular as possible to minimize re-renders.
 
 ```tsx
 // Good: only re-render when the `selectedItem` changes

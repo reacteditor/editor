@@ -38,8 +38,8 @@ export default withNextra({
         permanent: true,
       },
       {
-        source: "/docs/extending-puck/custom-interfaces",
-        destination: "/docs/extending-puck/composition",
+        source: "/docs/extending-editor/custom-interfaces",
+        destination: "/docs/extending-editor/composition",
         permanent: true,
       },
     ];

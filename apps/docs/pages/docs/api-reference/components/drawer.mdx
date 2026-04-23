@@ -3,11 +3,11 @@ title: <Drawer>
 ---
 
 import { PuckPreview } from "@/docs/components/Preview";
-import { Puck, Drawer } from "@/puck";
+import { Puck, Drawer } from "@/editor";
 
 # \<Drawer\>
 
-A list of items that can be dragged into a [`<Puck.Preview>`](puck-preview). Used for composing custom Puck UIs.
+A list of items that can be dragged into a [`<Puck.Preview>`](editor-preview). Used for composing custom Puck UIs.
 
 <PuckPreview
   config={{ components: { Orange: { render: () => <div>Orange</div> } } }}
@@ -19,7 +19,7 @@ A list of items that can be dragged into a [`<Puck.Preview>`](puck-preview). Use
 </PuckPreview>
 
 ```tsx {6-8} /Drawer/1 copy
-import { Puck, Drawer } from "@puckeditor/core";
+import { Puck, Drawer } from "@editoreditor/core";
 
 export function Editor() {
   return (

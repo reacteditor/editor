@@ -42,8 +42,8 @@ const Item = ({
     <Component.render
       {...props}
       {...richtextProps}
-      puck={{
-        ...props.puck,
+      editor={{
+        ...props.editor,
         metadata: metadata || {},
       }}
     />

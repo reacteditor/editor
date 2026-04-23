@@ -3,11 +3,11 @@ import type { Data } from "@puckeditor/core";
 import { Editor, Render } from "@puckeditor/core";
 import { createAiPlugin } from "@puckeditor/plugin-ai";
 
-import type { Route } from "./+types/puck-splat";
-import { config } from "../../puck.config";
-import { resolveEditorPath } from "~/lib/resolve-puck-path.server";
+import type { Route } from "./+types/editor-splat";
+import { config } from "../../editor.config";
+import { resolveEditorPath } from "~/lib/resolve-editor-path.server";
 import { getPage, savePage } from "~/lib/pages.server";
-import editorStyles from "@puckeditor/core/puck.css?url";
+import editorStyles from "@puckeditor/core/editor.css?url";
 import pluginStyles from "@puckeditor/plugin-ai/styles.css?url";
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -65,8 +65,8 @@ function Editor() {
 
   return (
     <>
-      <link rel="stylesheet" href={editorStyles} id="puck-css" />
-      <link rel="stylesheet" href={pluginStyles} id="puck-plugin-ai-css" />
+      <link rel="stylesheet" href={editorStyles} id="editor-css" />
+      <link rel="stylesheet" href={pluginStyles} id="editor-plugin-ai-css" />
       <Editor
         plugins={[aiPlugin]}
         config={config}

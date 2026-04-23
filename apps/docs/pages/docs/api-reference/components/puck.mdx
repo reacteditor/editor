@@ -7,7 +7,7 @@ title: <Puck>
 Render the Puck editor.
 
 ```tsx copy
-import { Puck } from "@puckeditor/core";
+import { Puck } from "@editoreditor/core";
 
 const config = {
   components: {},
@@ -105,7 +105,7 @@ export function Editor() {
 
 ### `children`
 
-Render custom nodes to create [compositional interfaces](/docs/extending-puck/composition).
+Render custom nodes to create [compositional interfaces](/docs/extending-editor/composition).
 
 ```tsx {4} copy
 export function Editor() {
@@ -227,7 +227,7 @@ Defer rendering of the Puck preview until the iframe styles have loaded, showing
 
 ### `initialHistory`
 
-Sets the undo/redo Puck history state when using the `usePuck` [history API](/docs/api-reference/puck-api#history).
+Sets the undo/redo Puck history state when using the `usePuck` [history API](/docs/api-reference/editor-api#history).
 
 ```tsx showLineNumbers copy {12-15}
 const historyState = {
@@ -255,7 +255,7 @@ export function Editor() {
 
 | Param                       | Example             | Type                                                       | Status   |
 | --------------------------- | ------------------- | ---------------------------------------------------------- | -------- |
-| [`histories`](#histories)   | `histories: []`     | [History](/docs/api-reference/puck-api#history-params)\[\] | Required |
+| [`histories`](#histories)   | `histories: []`     | [History](/docs/api-reference/editor-api#history-params)\[\] | Required |
 | [`index`](#index)           | `index: 2`          | Number                                                     | Required |
 | [`appendData`](#appenddata) | `appendData: false` | Boolean                                                    | -        |
 
@@ -275,7 +275,7 @@ When `false`, the Puck `data` prop will be ignored but you must specify at least
 
 ### `onAction(action, appState, prevAppState)`
 
-Callback that triggers when Puck dispatches an [action](https://puckeditor.com/docs/api-reference/actions), like `insert` or `set`. Use this to track changes, perform side effects, or sync with external systems.
+Callback that triggers when Puck dispatches an [action](https://editoreditor.com/docs/api-reference/actions), like `insert` or `set`. Use this to track changes, perform side effects, or sync with external systems.
 
 Receives three arguments:
 
@@ -309,8 +309,8 @@ export function Editor() {
       metadata={{ title: "Hello, world" }}
       config={{
         HeadingBlock: {
-          render: ({ puck }) => {
-            return <h1>{puck.metadata.title}</h1>; // "Hello, world"
+          render: ({ editor }) => {
+            return <h1>{editor.metadata.title}</h1>; // "Hello, world"
           },
         },
       }}
@@ -400,7 +400,7 @@ export function Editor() {
 An array of plugins to enhance Puck's behaviour. See the [Plugin API reference](/docs/api-reference/plugin).
 
 ```tsx {6} copy
-import headingAnalyzer from "@puckeditor/plugin-heading-analyzer";
+import headingAnalyzer from "@editoreditor/plugin-heading-analyzer";
 
 export function Editor() {
   return (

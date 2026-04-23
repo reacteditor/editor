@@ -1,6 +1,6 @@
 # Permissions
 
-Permissions enable the [toggling of Puck features](/docs/integrating-puck/feature-toggling). There are three types of permissions:
+Permissions enable the [toggling of Puck features](/docs/integrating-editor/feature-toggling). There are three types of permissions:
 
 1. **Global permissions** are shared across the entire Puck application. Controlled via the `permissions` prop on the `<Puck>` component.
 2. **Component permissions** allow feature control across for all instances of a given component type. Controlled by the `permissions` component config API.
@@ -10,7 +10,7 @@ Permissions enable the [toggling of Puck features](/docs/integrating-puck/featur
 
 ### Setting permissions
 
-1. Global [`permissions` prop](/docs/api-reference/components/puck#permissions)
+1. Global [`permissions` prop](/docs/api-reference/components/editor#permissions)
 2. Component [`permissions` parameter](/docs/api-reference/configuration/component-config#permissions)
 3. Component [`resolvePermissions` parameter](/docs/api-reference/configuration/component-config#resolvepermissionsdata-params)
 
@@ -52,4 +52,4 @@ Enable insertion of new components. Disabling this will disable the component li
 
 ### `...custom`
 
-Custom permissions enable you to control your own functionality when [extending Puck](/docs/extending-puck/composition).
+Custom permissions enable you to control your own functionality when [extending Puck](/docs/extending-editor/composition).

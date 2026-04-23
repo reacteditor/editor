@@ -163,7 +163,7 @@ const DropZoneChild = ({
     item?.type ? s.config.components[item.type] : null
   );
 
-  const puckProps: EditorContext = useMemo(
+  const editorProps: EditorContext = useMemo(
     () => ({
       renderDropZone: DropZoneEditPure,
       isEditing: true,
@@ -187,10 +187,10 @@ const DropZoneChild = ({
     () => ({
       ...resolveFieldDefaults(componentConfig?.fields),
       ...item?.props,
-      puck: puckProps,
+      editor: editorProps,
       editMode: true, // DEPRECATED
     }),
-    [componentConfig?.fields, item?.props, puckProps]
+    [componentConfig?.fields, item?.props, editorProps]
   );
 
   const defaultedNode = useMemo(
@@ -263,7 +263,7 @@ const DropZoneChild = ({
               Component={Render}
               componentProps={{
                 ...transformedProps,
-                puck: { ...transformedProps.puck, dragRef },
+                editor: { ...transformedProps.editor, dragRef },
               }}
             />
           );
@@ -512,7 +512,7 @@ export const DropZoneEdit = forwardRef<HTMLDivElement, DropZoneProps>(
         })}${className ? ` ${className}` : ""}`}
         ref={setRefs}
         data-testid={`dropzone:${zoneCompound}`}
-        data-puck-dropzone={zoneCompound}
+        data-editor-dropzone={zoneCompound}
         style={
           {
             ...style,
@@ -588,8 +588,8 @@ const DropZoneRenderItem = ({
       <Component.render
         {...props}
         {...richtextProps}
-        puck={{
-          ...props.puck,
+        editor={{
+          ...props.editor,
           renderDropZone: DropZoneRenderPure,
           metadata: { ...metadata, ...Component.metadata },
         }}

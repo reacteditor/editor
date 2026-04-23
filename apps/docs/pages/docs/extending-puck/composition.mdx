@@ -1,16 +1,16 @@
 import { PuckPreview } from "@/docs/components/Preview";
-import { Puck } from "@/puck";
+import { Puck } from "@/editor";
 
 # Composition
 
-Puck uses compositional patterns enable completely custom editor interfaces. [See an example](https://demo.puckeditor.com/custom-ui/edit/).
+Puck uses compositional patterns enable completely custom editor interfaces. [See an example](https://demo.editoreditor.com/custom-ui/edit/).
 
 ## Using composition
 
-Composition can be achieved by providing [`children`](/docs/api-reference/components/puck#children) to the [`<Puck>` component](/docs/api-reference/components/puck):
+Composition can be achieved by providing [`children`](/docs/api-reference/components/editor#children) to the [`<Puck>` component](/docs/api-reference/components/editor):
 
 ```tsx showLineNumbers copy
-import { Puck } from "@puckeditor/core";
+import { Puck } from "@editoreditor/core";
 
 export function Editor() {
   return (
@@ -61,12 +61,12 @@ export function Editor() {
 
 Puck exposes its core components, allowing you to compose them together to create new layouts:
 
-- [`<Puck.Components>`](/docs/api-reference/components/puck-components) - A draggable list of components.
-- [`<Puck.Fields>`](/docs/api-reference/components/puck-fields) - The fields for the currently selected item.
-- [`<Puck.Outline>`](/docs/api-reference/components/puck-outline) - An interactive outline.
-- [`<Puck.Preview>`](/docs/api-reference/components/puck-preview) - A drag-and-drop preview.
+- [`<Puck.Components>`](/docs/api-reference/components/editor-components) - A draggable list of components.
+- [`<Puck.Fields>`](/docs/api-reference/components/editor-fields) - The fields for the currently selected item.
+- [`<Puck.Outline>`](/docs/api-reference/components/editor-outline) - An interactive outline.
+- [`<Puck.Preview>`](/docs/api-reference/components/editor-preview) - A drag-and-drop preview.
 
-The internal UI for these components can also be changed by implementing [UI overrides](/docs/extending-puck/overrides) or [theming](theming).
+The internal UI for these components can also be changed by implementing [UI overrides](/docs/extending-editor/overrides) or [theming](theming).
 
 ### Helper components
 
@@ -78,5 +78,5 @@ Puck also exposes helper components for even deeper customization:
 
 ## Further reading
 
-- [Internal Puck API](/docs/extending-puck/internal-puck-api)
-- [UI overrides](/docs/extending-puck/ui-overrides)
+- [Internal Puck API](/docs/extending-editor/internal-editor-api)
+- [UI overrides](/docs/extending-editor/ui-overrides)

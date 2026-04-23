@@ -17,7 +17,7 @@ export const Modal = ({
   const [rootEl, setRootEl] = useState<any>(null);
 
   useEffect(() => {
-    setRootEl(document.getElementById("puck-portal-root"));
+    setRootEl(document.getElementById("editor-portal-root"));
   }, []);
 
   if (!rootEl) {

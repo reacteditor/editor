@@ -24,10 +24,10 @@ const Example = () => <Puck fieldTransforms={fieldTransforms} />;
 
 ## Making it interactive
 
-Combine transforms with [Overlay Portals](/docs/integrating-puck/overlay-portals) to make them interactive.
+Combine transforms with [Overlay Portals](/docs/integrating-editor/overlay-portals) to make them interactive.
 
 ```tsx
-import { registerOverlayPortal } from "@puckeditor/core";
+import { registerOverlayPortal } from "@editoreditor/core";
 
 const EditableText = ({ value }) => {
   const ref = useRef(null);
@@ -56,7 +56,7 @@ const Example = () => <Puck fieldTransforms={fieldTransforms} />;
 
 ## Define new fields
 
-As with [field type overrides](/docs/extending-puck/ui-overrides#introducing-new-field-types), field transforms let you define your own field types:
+As with [field type overrides](/docs/extending-editor/ui-overrides#introducing-new-field-types), field transforms let you define your own field types:
 
 ```tsx
 const fieldTransforms = {
@@ -88,4 +88,4 @@ const Example = () => <Puck plugins={[plugin]} />;
 ## Further reading
 
 - [Field Transforms API reference](/docs/api-reference/field-transforms)
-- [Overlay Portals API reference](/docs/integrating-puck/overlay-portals)
+- [Overlay Portals API reference](/docs/integrating-editor/overlay-portals)

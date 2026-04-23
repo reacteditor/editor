@@ -110,7 +110,7 @@ export const HeadingAnalyzer = () => {
   useEffect(() => {
     const frame = getFrame();
 
-    let entry = frame?.querySelector(`[data-puck-entry]`);
+    let entry = frame?.querySelector(`[data-editor-entry]`);
 
     const createHierarchy = () => {
       setHierarchy(buildHierarchy(entry!));
@@ -120,7 +120,7 @@ export const HeadingAnalyzer = () => {
     });
 
     const frameObserver = new MutationObserver(() => {
-      entry = frame?.querySelector(`[data-puck-entry]`);
+      entry = frame?.querySelector(`[data-editor-entry]`);
 
       if (entry) {
         registerEntryObserver();
@@ -162,7 +162,7 @@ export const HeadingAnalyzer = () => {
         }}
       >
         Heading analyzer styles not loaded. Please review the{" "}
-        <a href="https://github.com/puckeditor/puck/blob/main/packages/plugin-heading-analyzer/README.md">
+        <a href="https://github.com/puckeditor/editor/blob/main/packages/plugin-heading-analyzer/README.md">
           README
         </a>
         .

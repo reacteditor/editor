@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { createUseEditor } from "./use-puck";
+import { createUseEditor } from "./use-editor";
 import { Plugin } from "../types";
 import { ActionBar } from "../components/ActionBar";
 import { IconButton } from "../components/IconButton";

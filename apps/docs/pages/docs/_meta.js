@@ -5,10 +5,10 @@ const menu = {
   "getting-started": {
     title: "Getting Started",
   },
-  "integrating-puck": {
+  "integrating-editor": {
     title: "Integrating Puck",
   },
-  "extending-puck": {
+  "extending-editor": {
     title: "Extending Puck",
   },
   "api-reference": {

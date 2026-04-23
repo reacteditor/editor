@@ -492,7 +492,7 @@ export function Client({ path, isEdit }: { path: string; isEdit: boolean }) {
             );
           },
           drawer: () => <CustomDrawer />,
-          puck: () => <CustomEditor dataKey={key} />,
+          editor: () => <CustomEditor dataKey={key} />,
         }}
       />
     );

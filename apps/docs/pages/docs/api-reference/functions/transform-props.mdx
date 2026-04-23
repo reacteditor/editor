@@ -4,12 +4,12 @@ title: transformProps
 
 # transformProps
 
-Transform component props stored in a [Data payload](/docs/api-reference/data-model/data). This convenience method can be used for [prop renames and other data migrations](/docs/integrating-puck/data-migration).
+Transform component props stored in a [Data payload](/docs/api-reference/data-model/data). This convenience method can be used for [prop renames and other data migrations](/docs/integrating-editor/data-migration).
 
 This method will modify all data in [`content`](/docs/api-reference/data-model/data#content) and [`zones`](/docs/api-reference/data-model/data#zones).
 
 ```tsx copy showLineNumbers {7-10}
-import { transformProps } from "@puckeditor/core";
+import { transformProps } from "@editoreditor/core";
 
 const data = {
   content: [{ type: "HeadingBlock", props: { title: "Hello, world" } }],

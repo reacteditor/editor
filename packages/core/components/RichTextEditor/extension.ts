@@ -162,7 +162,7 @@ export const defaultEditorRichTextOptions: Partial<EditorRichTextOptions> = {
 };
 
 export const EditorRichText = Extension.create<EditorRichTextOptions>({
-  name: "puckRichText",
+  name: "editorRichText",
   addExtensions() {
     const extensions = [];
 

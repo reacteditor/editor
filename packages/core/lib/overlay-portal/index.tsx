@@ -42,7 +42,7 @@ export const registerOverlayPortal = (
     el.addEventListener("blur", onBlur, { capture: true });
   }
 
-  el.setAttribute("data-puck-overlay-portal", "true");
+  el.setAttribute("data-editor-overlay-portal", "true");
 
   return () => {
     el.removeEventListener("mouseover", stopPropagation, {
@@ -58,6 +58,6 @@ export const registerOverlayPortal = (
       el.removeEventListener("blur", onBlur, { capture: true });
     }
 
-    el.removeAttribute("data-puck-overlay-portal");
+    el.removeAttribute("data-editor-overlay-portal");
   };
 };

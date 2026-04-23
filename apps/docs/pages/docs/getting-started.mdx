@@ -5,20 +5,20 @@
 Install the package
 
 ```sh npm2yarn copy
-npm i @puckeditor/core --save
+npm i @editoreditor/core --save
 ```
 
-Or generate a Puck application using a [recipe](https://github.com/puckeditor/puck#recipes)
+Or generate a Puck application using a [recipe](https://github.com/editoreditor/editor#recipes)
 
 ```sh copy
-npx create-puck-app my-app
+npx create-editor-app my-app
 ```
 
 ## Render the editor
 
 ```jsx copy filename="Editor.jsx"
-import { Puck } from "@puckeditor/core";
-import "@puckeditor/core/puck.css";
+import { Puck } from "@editoreditor/core";
+import "@editoreditor/core/editor.css";
 
 // Create Puck component config
 const config = {
@@ -51,7 +51,7 @@ export function Editor() {
 ## Render the page
 
 ```jsx copy filename="Page.jsx"
-import { Render } from "@puckeditor/core";
+import { Render } from "@editoreditor/core";
 
 export function Page() {
   return <Render config={config} data={data} />;

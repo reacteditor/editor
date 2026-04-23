@@ -5,11 +5,11 @@ Select [entries](https://www.contentful.com/developers/docs/references/content-d
 ## Quick start
 
 ```sh
-npm i @puckeditor/field-contentful
+npm i @editoreditor/field-contentful
 ```
 
 ```jsx
-import createFieldContentful from "@puckeditor/field-contentful";
+import createFieldContentful from "@editoreditor/field-contentful";
 
 const config = {
   components: {
@@ -66,7 +66,7 @@ A Contentful client as created by the [`contentful` Node.js package](https://www
 
 ##### `options.filterFields`
 
-An object describing which [`filterFields`](https://puckeditor.com/docs/api-reference/fields/external#filterfields) to render and pass the result directly to Contentful as [search parameters](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters).
+An object describing which [`filterFields`](https://editoreditor.com/docs/api-reference/fields/external#filterfields) to render and pass the result directly to Contentful as [search parameters](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters).
 
 ```jsx
 createFieldContentful("movies", {
@@ -107,7 +107,7 @@ createFieldContentful("movies", {
 
 ## Returns
 
-An [External field](https://puckeditor.com/docs/api-reference/fields/external) type that loads Contentful [entries](https://contentful.github.io/contentful.js/contentful/10.6.16/types/Entry.html).
+An [External field](https://editoreditor.com/docs/api-reference/fields/external) type that loads Contentful [entries](https://contentful.github.io/contentful.js/contentful/10.6.16/types/Entry.html).
 
 ## TypeScript
 
@@ -129,4 +129,4 @@ const config: Config<MyProps> = {
 
 ## License
 
-MIT © [The Puck Contributors](https://github.com/puckeditor/puck/graphs/contributors)
+MIT © [The Puck Contributors](https://github.com/editoreditor/editor/graphs/contributors)

@@ -233,7 +233,7 @@ const Layer = forwardRef(function Layer(
         isUnlinked: isGlobal && isUnlinked,
       })}
       data-index={dataIndex}
-      data-puck-layer-tree-id={node.itemId}
+      data-editor-layer-tree-id={node.itemId}
     >
       <div className={getClassNameLayer("inner")}>
         <button
@@ -393,7 +393,7 @@ const VirtualizedLayerTreeItems = ({
     overscan: LAYER_TREE_VIRTUALIZATION_OVERSCAN,
     measureElement: (element: HTMLElement) => {
       const height = Math.ceil(element.getBoundingClientRect().height);
-      const itemId = element.dataset.puckLayerTreeId;
+      const itemId = element.dataset.editorLayerTreeId;
 
       if (itemId) {
         cacheMeasuredRowHeight(itemId, height);

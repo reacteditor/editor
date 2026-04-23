@@ -27,14 +27,14 @@ export const Button: ComponentConfig<ButtonProps> = {
       default: "primary",
     },
   },
-  render: ({ href, variant, label, puck }) => {
+  render: ({ href, variant, label, editor }) => {
     return (
       <div>
         <_Button
-          href={puck.isEditing ? "#" : href}
+          href={editor.isEditing ? "#" : href}
           variant={variant}
           size="large"
-          tabIndex={puck.isEditing ? -1 : undefined}
+          tabIndex={editor.isEditing ? -1 : undefined}
         >
           {label}
         </_Button>

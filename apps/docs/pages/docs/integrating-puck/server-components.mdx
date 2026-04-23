@@ -11,7 +11,7 @@ Puck provides support for [React Server Components](https://react.dev/reference/
 Puck supports the server environment for the following APIs:
 
 - The [`<Render>`](/docs/api-reference/components/render) component, for rendering pages produced by Puck
-- The [`resolveAllData`](/docs/api-reference/functions/resolve-all-data) lib, for running all [data resolvers](/docs/integrating-puck/dynamic-props)
+- The [`resolveAllData`](/docs/api-reference/functions/resolve-all-data) lib, for running all [data resolvers](/docs/integrating-editor/dynamic-props)
 
 These APIs can be used in an RSC environment, but in order to do so the Puck config that they reference must be RSC-friendly.
 
@@ -37,7 +37,7 @@ There are three approaches to this:
 
 Avoiding client-specific code is the easiest way to support RSC across both environments, but may not be realistic for all users. This normally means avoiding React hooks like `useState` or `useContext`.
 
-<Callout type="info">If you're using the legacy [`<DropZone>` component](/docs/api-reference/components/drop-zone), you will may encounter issues with server components. We recommend migrating to the [`slot` field](/docs/api-reference/fields/slot) which provides native server component support. Alternatively, see [our previous server components guide](https://puckeditor.com/v/0.18.3/docs/integrating-puck/server-components) for information on handling DropZones.</Callout>
+<Callout type="info">If you're using the legacy [`<DropZone>` component](/docs/api-reference/components/drop-zone), you will may encounter issues with server components. We recommend migrating to the [`slot` field](/docs/api-reference/fields/slot) which provides native server component support. Alternatively, see [our previous server components guide](https://editoreditor.com/v/0.18.3/docs/integrating-editor/server-components) for information on handling DropZones.</Callout>
 
 ### 2. Marking up components with `"use client";`
 
@@ -45,8 +45,8 @@ Many modern component libraries will require some degree of client-side behaviou
 
 To achieve this, you must import each of those component from a separate file:
 
-```tsx copy showLineNumbers filename="puck.config.tsx"
-import type { Config } from "@puckeditor/core";
+```tsx copy showLineNumbers filename="editor.config.tsx"
+import type { Config } from "@editoreditor/core";
 import type { HeadingBlockProps } from "./components/HeadingBlock";
 import HeadingBlock from "./components/HeadingBlock";
 
@@ -95,7 +95,7 @@ export default ({ title }: { title: string }) => {
 This config can now be rendered inside an RSC component, such as a Next.js app router page:
 
 ```tsx copy showLineNumbers filename="app/page.tsx"
-import { config } from "../puck.config.tsx";
+import { config } from "../editor.config.tsx";
 
 export default async function Page() {
   const data = await getData(); // Some server function
@@ -112,8 +112,8 @@ Alternatively, consider entirely separate configs for the `<Puck>` and `<Render>
 
 Create a shared config type:
 
-```tsx copy showLineNumbers filename="puck-types.ts"
-import type { Config } from "@puckeditor/core";
+```tsx copy showLineNumbers filename="editor-types.ts"
+import type { Config } from "@editoreditor/core";
 
 type Props = {
   HeadingBlock: {
@@ -126,8 +126,8 @@ export type UserConfig = Config<Props>;
 
 Define a client component config for use within the `<Puck>` component:
 
-```tsx copy showLineNumbers filename="puck.config.client.tsx"
-import type { UserConfig } from "./puck-types.ts";
+```tsx copy showLineNumbers filename="editor.config.client.tsx"
+import type { UserConfig } from "./editor-types.ts";
 
 export const config: UserConfig = {
   components: {
@@ -154,8 +154,8 @@ export const config: UserConfig = {
 
 Define a server config using the shared types for use within the `<Render>` component, excluding editor-only behaviour where possible but preserving any fields required for render-time transforms like [`richtext`](/docs/api-reference/fields/richtext) and [`slot`](/docs/api-reference/fields/slot):
 
-```tsx copy showLineNumbers filename="puck.config.server.tsx"
-import type { UserConfig } from "./puck-types.ts";
+```tsx copy showLineNumbers filename="editor.config.server.tsx"
+import type { UserConfig } from "./editor-types.ts";
 
 export const config: UserConfig = {
   components: {
@@ -175,7 +175,7 @@ export const config: UserConfig = {
 Render the appropriate config depending on the environment. Here's a Next.js app router example of a server render:
 
 ```tsx copy showLineNumbers filename="app/page.tsx"
-import { config } from "../puck.config.server.tsx";
+import { config } from "../editor.config.server.tsx";
 
 export default async function Page() {
   const data = await getData(); // Some server function

@@ -10,10 +10,10 @@ export type WithId<Props> = Props & {
 };
 
 export type WithEditorProps<Props> = Props & {
-  puck: EditorContext;
+  editor: EditorContext;
   editMode?: boolean;
 };
-export type AsFieldProps<Props> = Omit<Props, "children" | "puck" | "editMode">;
+export type AsFieldProps<Props> = Omit<Props, "children" | "editor" | "editMode">;
 
 export type WithChildren<Props> = Props & {
   children: ReactNode;

@@ -1,6 +1,6 @@
 import { Editor, type Data, type Config } from "@puckeditor/core";
 import { createAiPlugin } from "@puckeditor/plugin-ai";
-import styles from "@puckeditor/core/puck.css";
+import styles from "@puckeditor/core/editor.css";
 import pluginStyles from "@puckeditor/plugin-ai/styles.css";
 import type {
   ActionFunctionArgs,
@@ -12,34 +12,34 @@ import { json } from "@remix-run/node";
 import { useLoaderData, useSubmit } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
-import puckConfig from "~/puck.config";
+import editorConfig from "~/editor.config";
 import { getPage, setPage } from "~/models/page.server";
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
-  const puckPath = params.puckPath || "/";
+  const editorPath = params.editorPath || "/";
   const formData = await request.formData();
-  const puckData = formData.get("puckData");
+  const editorData = formData.get("editorData");
 
-  invariant(puckData, "Missing data");
-  invariant(typeof puckData === "string", "Invalid data");
+  invariant(editorData, "Missing data");
+  invariant(typeof editorData === "string", "Invalid data");
 
-  setPage(puckPath, JSON.parse(puckData));
+  setPage(editorPath, JSON.parse(editorData));
 
   return json({ ok: true });
 };
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: styles, id: "puck-css" },
-  { rel: "stylesheet", href: pluginStyles, id: "puck-plugin-ai-css" },
+  { rel: "stylesheet", href: styles, id: "editor-css" },
+  { rel: "stylesheet", href: pluginStyles, id: "editor-plugin-ai-css" },
 ];
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const puckPath = params.puckPath || "/";
-  const initialData = getPage(puckPath) || {
+  const editorPath = params.editorPath || "/";
+  const initialData = getPage(editorPath) || {
     content: [],
     root: {},
   };
-  return json({ puckPath, initialData });
+  return json({ editorPath, initialData });
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
@@ -57,12 +57,12 @@ export default function Edit() {
   return (
     <Editor
       plugins={[aiPlugin]}
-      config={puckConfig as Config}
+      config={editorConfig as Config}
       data={initialData}
       onPublish={async (data: Data) => {
         // Use form data here because it's the usual remix way.
         let formData = new FormData();
-        formData.append("puckData", JSON.stringify(data));
+        formData.append("editorData", JSON.stringify(data));
         submit(formData, { method: "post" });
       }}
     />

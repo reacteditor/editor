@@ -4,7 +4,7 @@ import type { Data } from "@puckeditor/core";
 import { Editor } from "@puckeditor/core";
 import { createAiPlugin } from "@puckeditor/plugin-ai";
 
-import config from "../../../puck.config";
+import config from "../../../editor.config";
 
 const aiPlugin = createAiPlugin();
 

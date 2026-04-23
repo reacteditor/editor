@@ -32,10 +32,10 @@ export const Space: ComponentConfig<SpaceProps> = {
     },
   },
   inline: true,
-  render: ({ direction, size, puck }) => {
+  render: ({ direction, size, editor }) => {
     return (
       <div
-        ref={puck.dragRef}
+        ref={editor.dragRef}
         className={getClassName(direction ? { [direction]: direction } : {})}
         style={{ "--size": size } as any}
       />

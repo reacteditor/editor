@@ -5,14 +5,14 @@ Select [products](https://shopify.dev/docs/api/storefront/latest/objects/Product
 ## Quick start
 
 ```sh
-npm i @puckeditor/field-shopify @shopify/storefront-api-client
+npm i @editoreditor/field-shopify @shopify/storefront-api-client
 ```
 
 ```jsx
 import {
   createFieldShopifyProduct,
   createFieldShopifyCollection,
-} from "@puckeditor/field-shopify";
+} from "@editoreditor/field-shopify";
 
 const config = {
   components: {
@@ -67,7 +67,7 @@ If your store still requires a token, supply `storefrontAccessToken` and it will
 
 ```jsx
 import { createStorefrontApiClient } from "@shopify/storefront-api-client";
-import { createFieldShopifyProduct } from "@puckeditor/field-shopify";
+import { createFieldShopifyProduct } from "@editoreditor/field-shopify";
 
 const client = createStorefrontApiClient({
   storeDomain: "my-shop.myshopify.com",
@@ -96,7 +96,7 @@ createFieldShopifyProduct({
 
 ## Returns
 
-Both helpers return an [External field](https://puckeditor.com/docs/api-reference/fields/external) that stores the selected product or collection object.
+Both helpers return an [External field](https://editoreditor.com/docs/api-reference/fields/external) that stores the selected product or collection object.
 
 ## TypeScript
 
@@ -104,7 +104,7 @@ Both helpers return an [External field](https://puckeditor.com/docs/api-referenc
 import {
   createFieldShopifyProduct,
   type ShopifyProduct,
-} from "@puckeditor/field-shopify";
+} from "@editoreditor/field-shopify";
 
 type MyProps = {
   ProductCard: {
@@ -115,4 +115,4 @@ type MyProps = {
 
 ## License
 
-MIT © [The Puck Contributors](https://github.com/puckeditor/puck/graphs/contributors)
+MIT © [The Puck Contributors](https://github.com/editoreditor/editor/graphs/contributors)

@@ -32,7 +32,7 @@ export {
   useGetEditor,
   type UseEditorData,
   type EditorApi,
-} from "../lib/use-puck";
+} from "../lib/use-editor";
 
 export * from "../plugins/blocks";
 export * from "../plugins/fields";
