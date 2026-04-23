@@ -19,6 +19,7 @@ import {
 import { useRegisterFieldsSlice } from "../../../../store/slices/fields";
 import { useShallow } from "zustand/react/shallow";
 import { StoreApi } from "zustand";
+import { Link } from "lucide-react";
 
 const getClassName = getClassNameFactory("PuckFields", styles);
 
@@ -178,6 +179,68 @@ const FieldsChild = ({ fieldName }: { fieldName: string }) => {
 
 const FieldsChildMemo = memo(FieldsChild);
 
+/**
+ * Full-width button shown above the fields list when the selected component's
+ * type has `global: true`. Flips the instance's `__synced` prop between unset
+ * (synced with globalData) and `false` (unlinked — uses its own props).
+ *
+ * Re-linking discards local changes on the next render as globalData overlays
+ * the instance. Undo restores them if the user changes their mind.
+ */
+const GlobalSyncButton = () => {
+  const appStore = useAppStoreApi();
+  const selectedItem = useAppStore((s) => s.selectedItem);
+  const isGlobalType = useAppStore((s) =>
+    selectedItem
+      ? (s.config.components[selectedItem.type] as any)?.global === true
+      : false
+  );
+
+  if (!selectedItem || !isGlobalType) return null;
+
+  const isUnlinked = (selectedItem.props as any)?.__synced === false;
+
+  const onClick = async () => {
+    const { dispatch, state, resolveComponentData } = appStore.getState();
+
+    const newProps = { ...selectedItem.props } as Record<string, any>;
+    if (isUnlinked) {
+      delete newProps.__synced;
+    } else {
+      newProps.__synced = false;
+    }
+
+    const latestSelector = getSelectorForId(state, selectedItem.props.id);
+    if (!latestSelector) return;
+
+    const resolved = await resolveComponentData(
+      { ...selectedItem, props: newProps as typeof selectedItem.props },
+      "replace"
+    );
+
+    dispatch({
+      type: "replace",
+      destinationIndex: latestSelector.index,
+      destinationZone: latestSelector.zone || rootDroppableId,
+      data: resolved.node,
+    });
+  };
+
+  const syncButtonClass = [
+    getClassName("syncButton"),
+    isUnlinked ? styles["PuckFields-syncButton--unlinked"] : null,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <button type="button" className={syncButtonClass} onClick={onClick}>
+      <Link size={14} />
+      <span>{isUnlinked ? "Link to shared" : "Linked to shared"}</span>
+    </button>
+  );
+};
+
 const FieldsInternal = ({ wrapFields = true }: { wrapFields?: boolean }) => {
   const overrides = useAppStore((s) => s.overrides);
   const componentResolving = useAppStore((s) => {
@@ -215,6 +278,7 @@ const FieldsInternal = ({ wrapFields = true }: { wrapFields?: boolean }) => {
       }}
     >
       <Wrapper isLoading={isLoading} itemSelector={itemSelector}>
+        <GlobalSyncButton />
         {fieldNames.map((fieldName) => (
           <FieldsChildMemo key={fieldName} fieldName={fieldName} />
         ))}

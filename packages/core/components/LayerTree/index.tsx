@@ -2,7 +2,7 @@ import styles from "./styles.module.css";
 import getClassNameFactory from "../../lib/get-class-name-factory";
 import { Config } from "../../types";
 import { ItemSelector } from "../../lib/data/get-item";
-import { ChevronRight, Component } from "lucide-react";
+import { ChevronRight, Component, Unlink2 } from "lucide-react";
 import { rootAreaId } from "../../lib/root-droppable-id";
 import {
   ForwardedRef,
@@ -205,6 +205,11 @@ const Layer = forwardRef(function Layer(
   const isGlobal = useAppStore(
     (s) => (s.config.components[node.componentType] as any)?.global === true
   );
+  const isUnlinked = useAppStore(
+    (s) =>
+      (s.state.indexes.nodes[node.itemId]?.data?.props as any)?.__synced ===
+      false
+  );
   const containsZone = node.childZones.length > 0;
 
   const setItemSelector = useCallback(
@@ -224,7 +229,8 @@ const Layer = forwardRef(function Layer(
         containsZone,
         isHovering,
         isSelected,
-        isGlobal,
+        isGlobal: isGlobal && !isUnlinked,
+        isUnlinked: isGlobal && isUnlinked,
       })}
       data-index={dataIndex}
       data-puck-layer-tree-id={node.itemId}
@@ -268,6 +274,14 @@ const Layer = forwardRef(function Layer(
               <Component size="16" />
             </div>
             <div className={getClassNameLayer("name")}>{node.label}</div>
+            {isGlobal && isUnlinked && (
+              <div
+                className={getClassNameLayer("unlinkedGlyph")}
+                title="Unlinked from shared"
+              >
+                <Unlink2 size="12" />
+              </div>
+            )}
           </div>
         </button>
       </div>

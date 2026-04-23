@@ -42,3 +42,54 @@
 .PuckFields--wrapFields .PuckFields-field + .PuckFields-field {
   border-top: 1px solid var(--puck-border-subtle);
 }
+
+.PuckFields-syncButton {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--puck-color-global);
+  border-radius: var(--puck-radius-md);
+  color: var(--puck-color-global);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: var(--puck-font-size-xxs);
+  font-weight: 500;
+  gap: 8px;
+  justify-content: center;
+  margin: 12px 16px;
+  padding: 10px;
+  transition: background-color var(--puck-motion-fast) var(--puck-ease),
+    border-color var(--puck-motion-fast) var(--puck-ease),
+    color var(--puck-motion-fast) var(--puck-ease);
+  width: calc(100% - 32px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .PuckFields-syncButton:hover {
+    background: var(--puck-color-global-soft);
+  }
+}
+
+.PuckFields-syncButton:focus-visible {
+  outline: none;
+  box-shadow: var(--puck-ring);
+}
+
+.PuckFields-syncButton--unlinked {
+  border-color: var(--puck-border-default);
+  color: var(--puck-text-secondary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .PuckFields-syncButton--unlinked:hover {
+    background: var(--puck-surface-hover);
+    border-color: var(--puck-border-strong);
+    color: var(--puck-text-primary);
+  }
+}
+
+/* When the button sits immediately above a field group wrapped in padding,
+   don't double-pad. */
+.PuckFields--wrapFields .PuckFields-syncButton + .PuckFields-field {
+  border-top: none;
+}

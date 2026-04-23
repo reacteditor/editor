@@ -164,3 +164,23 @@
 .Layer--isGlobal.Layer--isSelected > .Layer-inner .Layer-name {
   color: var(--puck-color-global-strong);
 }
+
+/* Unlinked-from-shared: instance opted out of globalData sync. Renders in
+   the regular accent tree style (no purple) with a small broken-link glyph
+   so users can see it was once shared and can relink. */
+.Layer--isUnlinked > .Layer-inner .Layer-name {
+  font-style: italic;
+}
+
+.Layer-unlinkedGlyph {
+  color: var(--puck-color-global);
+  display: flex;
+  align-items: center;
+  margin-inline-start: 4px;
+  opacity: 0.7;
+}
+
+.Layer--isUnlinked.Layer--isSelected > .Layer-inner .Layer-unlinkedGlyph {
+  color: var(--puck-accent-strong);
+  opacity: 1;
+}
