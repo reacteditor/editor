@@ -14,12 +14,14 @@ export const DrawerItemInner = ({
   children,
   name,
   label,
+  icon,
   dragRef,
   isDragDisabled,
 }: {
   children?: (props: { children: ReactNode; name: string }) => ReactElement;
   name: string;
   label?: string;
+  icon?: ReactNode;
   dragRef?: Ref<any>;
   isDragDisabled?: boolean;
 }) => {
@@ -44,7 +46,7 @@ export const DrawerItemInner = ({
         <div className={getClassNameItem("draggableWrapper")}>
           <div className={getClassNameItem("draggable")}>
             <div className={getClassNameItem("icon")}>
-              <GripVertical size={14} />
+              {icon ?? <GripVertical size={14} />}
             </div>
             <div className={getClassNameItem("name")}>{label ?? name}</div>
           </div>
@@ -63,18 +65,22 @@ const DrawerItemDraggable = ({
   children,
   name,
   label,
+  icon,
   id,
   isDragDisabled,
+  data,
 }: {
   children?: (props: { children: ReactNode; name: string }) => ReactElement;
   name: string;
   label?: string;
+  icon?: ReactNode;
   id: string;
   isDragDisabled?: boolean;
+  data?: Record<string, any>;
 }) => {
   const { ref } = useDraggable({
     id,
-    data: { componentType: name },
+    data: { componentType: name, ...(data ?? {}) },
     disabled: isDragDisabled,
     type: "drawer",
   });
@@ -82,7 +88,7 @@ const DrawerItemDraggable = ({
   return (
     <div className={getClassName("draggable")}>
       <div className={getClassName("draggableBg")}>
-        <DrawerItemInner name={name} label={label}>
+        <DrawerItemInner name={name} label={label} icon={icon}>
           {children}
         </DrawerItemInner>
       </div>
@@ -90,6 +96,7 @@ const DrawerItemDraggable = ({
         <DrawerItemInner
           name={name}
           label={label}
+          icon={icon}
           dragRef={ref}
           isDragDisabled={isDragDisabled}
         >
@@ -105,15 +112,19 @@ const DrawerItem = ({
   children,
   id,
   label,
+  icon,
   index,
   isDragDisabled,
+  data,
 }: {
   name: string;
   children?: (props: { children: ReactNode; name: string }) => ReactElement;
   id?: string;
   label?: string;
+  icon?: ReactNode;
   index?: number; // TODO deprecate
   isDragDisabled?: boolean;
+  data?: Record<string, any>;
 }) => {
   const resolvedId = id || name;
   const [dynamicId, setDynamicId] = useState(generateId(resolvedId));
@@ -137,8 +148,10 @@ const DrawerItem = ({
       <DrawerItemDraggable
         name={name}
         label={label}
+        icon={icon}
         id={dynamicId}
         isDragDisabled={isDragDisabled}
+        data={data}
       >
         {children}
       </DrawerItemDraggable>

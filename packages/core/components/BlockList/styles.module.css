@@ -1,0 +1,56 @@
+.BlockList {
+  max-width: 100%;
+}
+
+.BlockList--isExpanded + .BlockList {
+  margin-top: 12px;
+}
+
+.BlockList-content {
+  display: none;
+}
+
+.BlockList--isExpanded > .BlockList-content {
+  display: block;
+}
+
+.BlockList-title {
+  background-color: transparent;
+  border: 0;
+  color: var(--puck-text-secondary);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: var(--puck-font-size-xxs);
+  font-weight: 600;
+  list-style: none;
+  margin-bottom: 4px;
+  padding: 8px;
+  transition: background-color var(--puck-motion-fast) var(--puck-ease),
+    color var(--puck-motion-fast) var(--puck-ease);
+  gap: 4px;
+  border-radius: var(--puck-radius-md);
+  width: 100%;
+}
+
+.BlockList-title:focus-visible {
+  outline: none;
+  box-shadow: var(--puck-ring);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .BlockList-title:hover {
+    background-color: var(--puck-surface-hover);
+    color: var(--puck-text-accent);
+    transition: none;
+  }
+}
+
+.BlockList-title:active {
+  background-color: var(--puck-accent-soft);
+  transition: none;
+}
+
+.BlockList-titleIcon {
+  margin-inline-start: auto;
+}

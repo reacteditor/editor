@@ -28,6 +28,7 @@ export const dropZoneContext = createContext<DropZoneContext>(null);
 
 export type Preview = {
   componentType: string;
+  blockName?: string;
   index: number;
   zone: string;
   props: Record<string, any>;

@@ -1,5 +1,6 @@
 import type { JSX, ReactNode } from "react";
 import { BaseField, Field, Fields } from "./Fields";
+import { BlockMap } from "./Blocks";
 import { ComponentData, ComponentMetadata, RootData } from "./Data";
 
 import { AsFieldProps, WithChildren, WithId, WithPuckProps } from "./Utils";
@@ -180,6 +181,7 @@ type ConfigInternal<
       "type"
     >;
   };
+  blocks?: BlockMap<Props>;
   root?: RootConfigInternal<RootProps, UserField>;
 };
 

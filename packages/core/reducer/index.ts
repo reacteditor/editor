@@ -6,6 +6,7 @@ import { AppStore } from "../store";
 import { PrivateAppState } from "../types/Internal";
 import { setAction } from "./actions/set";
 import { insertAction } from "./actions/insert";
+import { insertTreeAction } from "./actions/insert-tree";
 import { replaceAction } from "./actions/replace";
 import { replaceRootAction } from "./actions/replace-root";
 import { duplicateAction } from "./actions/duplicate";
@@ -79,6 +80,10 @@ export function createReducer<UserData extends Data>({
 
       if (action.type === "insert") {
         return insertAction(state, action, appStore);
+      }
+
+      if (action.type === "insertTree") {
+        return insertTreeAction(state, action, appStore);
       }
 
       if (action.type === "replace") {

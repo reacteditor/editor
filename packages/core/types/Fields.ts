@@ -25,6 +25,7 @@ export interface TextField extends BaseField {
   type: "text";
   placeholder?: string;
   contentEditable?: boolean;
+  default?: string;
 }
 
 export interface NumberField extends BaseField {
@@ -33,22 +34,26 @@ export interface NumberField extends BaseField {
   min?: number;
   max?: number;
   step?: number;
+  default?: number;
 }
 
 export interface TextareaField extends BaseField {
   type: "textarea";
   placeholder?: string;
   contentEditable?: boolean;
+  default?: string;
 }
 
 export interface SelectField extends BaseField {
   type: "select";
   options: FieldOptions;
+  default?: FieldOption["value"];
 }
 
 export interface RadioField extends BaseField {
   type: "radio";
   options: FieldOptions;
+  default?: FieldOption["value"];
 }
 
 export interface RichtextField<
@@ -87,6 +92,7 @@ export interface ArrayField<
       : Field<Props[0][SubPropName], UserField>;
   };
   defaultItemProps?: Props[0] | ((index: number) => Props[0]);
+  default?: Props;
   getItemSummary?: (item: Props[0], index?: number) => ReactNode;
   max?: number;
   min?: number;
@@ -102,6 +108,7 @@ export interface ObjectField<
       ? Field<Props[SubPropName]> | UserField
       : Field<Props[SubPropName]>;
   };
+  default?: Props;
 }
 
 // DEPRECATED
