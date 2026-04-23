@@ -30,7 +30,7 @@
     "standard-changelog": "^2.0.21",
     "turbo": "^2.5.8"
   },
-  "name": "frontend-visual-editor",
+  "name": "react-editor",
   "packageManager": "yarn@1.22.19",
   "workspaces": [
     "apps/*",

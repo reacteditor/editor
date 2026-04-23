@@ -1,9 +1,9 @@
 {
-  "name": "@frontend/plugin-tailwind-cdn",
+  "name": "@frontendai/plugin-tailwind-cdn",
   "version": "0.1.0",
   "author": "Rami Bitar <rami@frontend.co>",
-  "repository": "frontend-inc/frontend-visual-editor",
-  "bugs": "https://github.com/frontend-inc/frontend-visual-editor/issues",
+  "repository": "frontend-inc/react-editor",
+  "bugs": "https://github.com/frontend-inc/react-editor/issues",
   "homepage": "https://frontend.co",
   "private": false,
   "main": "./dist/index.js",
@@ -23,7 +23,7 @@
     "dist"
   ],
   "devDependencies": {
-    "@frontend/core": "^0.1.0",
+    "@frontendai/react-editor": "^0.1.0",
     "@types/minimatch": "3.0.5",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.0.2",

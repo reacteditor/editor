@@ -18,7 +18,7 @@ You can access [`EditorApi`](/docs/api-reference/editor-api) via two hooks:
 To access the API within your render lifecycle, use the `useEditor` hook. You can use a selector to limit re-rendering to a specific part of the API.
 
 ```tsx copy
-import { createUseEditor } from "@frontend/core";
+import { createUseEditor } from "@frontendai/react-editor";
 
 const useEditor = createUseEditor();
 
@@ -37,7 +37,7 @@ See the [`useEditor`](/docs/api-reference/functions/use-editor) docs for a full 
 Often it's not necessary to re-render your component when the EditorApi changes. Frontend provides the `useGetEditor` hook for accessing the latest `EditorApi` at call time.
 
 ```tsx copy
-import { useGetEditor } from "@frontend/core";
+import { useGetEditor } from "@frontendai/react-editor";
 
 const Example = () => {
   const getFrontend = useGetEditor();
@@ -62,7 +62,7 @@ Generally, you'll want to combine this with composition, UI overrides or custom 
 Here's an example using the internal API to log the page data as JSON while retaining the standard Frontend UI:
 
 ```tsx
-import { Editor, createUseEditor } from "@frontend/core";
+import { Editor, createUseEditor } from "@frontendai/react-editor";
 
 const useEditor = createUseEditor();
 

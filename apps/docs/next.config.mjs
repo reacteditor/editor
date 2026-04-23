@@ -44,7 +44,7 @@ export default withNextra({
       },
     ];
   },
-  transpilePackages: ["@frontend/core"],
+  transpilePackages: ["@frontendai/react-editor"],
   basePath: IS_RELEASE_BRANCH
     ? `/v/${packageJson.version}`
     : process.env.NEXT_PUBLIC_IS_CANARY

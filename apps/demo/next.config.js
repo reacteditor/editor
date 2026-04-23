@@ -1,4 +1,4 @@
 module.exports = {
   reactStrictMode: true,
-  transpilePackages: ["@frontend/core", "lucide-react"],
+  transpilePackages: ["@frontendai/react-editor", "lucide-react"],
 };

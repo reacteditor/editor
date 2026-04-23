@@ -11,9 +11,9 @@
 
 _The visual editor for React_
 
-[Documentation](https://frontend.co/docs?utm_source=readme&utm_medium=code&utm_campaign=repo&utm_contents=docs_link) • [Demo](https://demo.frontend.co/edit?utm_source=readme&utm_medium=code&utm_campaign=repo&utm_contents=demo_link) • [Discord](https://discord.gg/V9mDAhuxyZ) • [Contributing](https://github.com/frontend-inc/frontend-visual-editor/blob/main/CONTRIBUTING.md)
+[Documentation](https://frontend.co/docs?utm_source=readme&utm_medium=code&utm_campaign=repo&utm_contents=docs_link) • [Demo](https://demo.frontend.co/edit?utm_source=readme&utm_medium=code&utm_campaign=repo&utm_contents=demo_link) • [Discord](https://discord.gg/V9mDAhuxyZ) • [Contributing](https://github.com/frontend-inc/react-editor/blob/main/CONTRIBUTING.md)
 
-⭐️ Enjoying Frontend? Please [leave a star](https://github.com/frontend-inc/frontend-visual-editor)!
+⭐️ Enjoying Frontend? Please [leave a star](https://github.com/frontend-inc/react-editor)!
 
 <br />
 
@@ -27,22 +27,22 @@ Frontend is a modular, open-source visual editor for React.js. You can use Front
 
 Because Frontend is just a React component, it plays well with all React.js environments, including Next.js. You own your data and there’s no vendor lock-in.
 
-Frontend is also [licensed under MIT](https://github.com/frontend-inc/frontend-visual-editor?tab=MIT-1-ov-file#readme), making it suitable for both internal systems and commercial applications.
+Frontend is also [licensed under MIT](https://github.com/frontend-inc/react-editor?tab=MIT-1-ov-file#readme), making it suitable for both internal systems and commercial applications.
 
 ## Quick start
 
 Install the package:
 
 ```sh
-npm i @frontend/core --save # or npx create-frontend-app my-app
+npm i @frontendai/react-editor --save # or npx create-frontend-app my-app
 ```
 
 Render the editor:
 
 ```jsx
 // Editor.jsx
-import { Editor } from "@frontend/core";
-import "@frontend/core/frontend.css";
+import { Editor } from "@frontendai/react-editor";
+import "@frontendai/react-editor/frontend.css";
 
 // Create Frontend component config
 const config = {
@@ -76,8 +76,8 @@ Render the page:
 
 ```jsx
 // Page.jsx
-import { Render } from "@frontend/core";
-import "@frontend/core/frontend.css";
+import { Render } from "@frontendai/react-editor";
+import "@frontendai/react-editor/frontend.css";
 
 export function Page() {
   return <Render config={config} data={data} />;
@@ -86,7 +86,7 @@ export function Page() {
 
 ## Recipes
 
-Use `create-frontend-app` to quickly spin up a a pre-configured app based on our provided [recipes](https://github.com/frontend-inc/frontend-visual-editor/tree/main/recipes):
+Use `create-frontend-app` to quickly spin up a a pre-configured app based on our provided [recipes](https://github.com/frontend-inc/react-editor/tree/main/recipes):
 
 ```sh
 npx create-frontend-app my-app
@@ -94,16 +94,16 @@ npx create-frontend-app my-app
 
 Available recipes include:
 
-- [**next**](https://github.com/frontend-inc/frontend-visual-editor/tree/main/recipes/next): Next.js example, using App Router and static page generation
-- [**remix**](https://github.com/frontend-inc/frontend-visual-editor/tree/main/recipes/remix): Remix Run v2 example, using dynamic routes at root-level
-- [**react-router**](https://github.com/frontend-inc/frontend-visual-editor/tree/main/recipes/react-router): React Router v7 app example, using dynamic routes to create pages at any level
+- [**next**](https://github.com/frontend-inc/react-editor/tree/main/recipes/next): Next.js example, using App Router and static page generation
+- [**remix**](https://github.com/frontend-inc/react-editor/tree/main/recipes/remix): Remix Run v2 example, using dynamic routes at root-level
+- [**react-router**](https://github.com/frontend-inc/react-editor/tree/main/recipes/react-router): React Router v7 app example, using dynamic routes to create pages at any level
 
 ## Get support
 
-If you have any questions about Frontend, please open a [GitHub issue](https://github.com/frontend-inc/frontend-visual-editor/issues) or join us on [Discord](https://discord.gg/D9e4E3MQVZ).
+If you have any questions about Frontend, please open a [GitHub issue](https://github.com/frontend-inc/react-editor/issues) or join us on [Discord](https://discord.gg/D9e4E3MQVZ).
 
 Or [book a discovery call](https://calendly.com/rami-bitar/30min) for hands-on support and consultancy.
 
 ## License
 
-MIT © [The Frontend Contributors](https://github.com/frontend-inc/frontend-visual-editor/graphs/contributors)
+MIT © [The Frontend Contributors](https://github.com/frontend-inc/react-editor/graphs/contributors)

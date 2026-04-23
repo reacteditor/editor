@@ -1,5 +1,5 @@
-import type { Data } from "@frontend/core";
-import { Render } from "@frontend/core";
+import type { Data } from "@frontendai/react-editor";
+import { Render } from "@frontendai/react-editor";
 
 import { config } from "../../editor.config";
 

@@ -21,14 +21,14 @@ These plugins are included in the core package:
 
 Frontend provides official plugins that can be installed for common use-cases:
 
-- [`tailwind-cdn`](https://github.com/frontend-inc/frontend-visual-editor/tree/main/packages/plugin-tailwind-cdn): Inject the Tailwind v4 browser CDN into the Frontend iframe.
+- [`tailwind-cdn`](https://github.com/frontend-inc/react-editor/tree/main/packages/plugin-tailwind-cdn): Inject the Tailwind v4 browser CDN into the Frontend iframe.
 
 ## Loading a Plugin
 
 To load a plugin, provide it to the [`plugins` prop](/docs/api-reference/components/editor#plugins) on the `<Editor>` component.
 
 ```tsx showLineNumbers {2,8}
-import { Editor } from "@frontend/core";
+import { Editor } from "@frontendai/react-editor";
 import myPlugin from "my-editor-plugin";
 
 export function Editor() {
@@ -64,7 +64,7 @@ You can leverage the [internal Frontend API](internal-editor-api) to integrate F
 
 ```tsx showLineNumbers copy {2, 4, 10-14}
 import { Coffee } from "lucide-react";
-import { createUseEditor } from "@frontend/core";
+import { createUseEditor } from "@frontendai/react-editor";
 
 const useEditor = createUseEditor();
 
@@ -126,7 +126,7 @@ Both the field transforms and overrides let you introduce [entirely new field ty
 This example uses [Overlay Portals](overlay-portals) to create an interactive rich text field that can modified directly in the editor preview.
 
 ```tsx showLineNumbers copy {6-8, 12-20}
-import { registerOverlayPortal } from "@frontend/core";
+import { registerOverlayPortal } from "@frontendai/react-editor";
 
 const plugin = {
   overrides: {

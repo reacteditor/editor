@@ -5,11 +5,11 @@ Select [entries](https://www.contentful.com/developers/docs/references/content-d
 ## Quick start
 
 ```sh
-npm i @frontend/field-contentful
+npm i @frontendai/field-contentful
 ```
 
 ```jsx
-import createFieldContentful from "@frontend/field-contentful";
+import createFieldContentful from "@frontendai/field-contentful";
 
 const config = {
   components: {
