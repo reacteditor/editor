@@ -10,6 +10,7 @@ import { Template } from "./blocks/Template";
 import { Text } from "./blocks/Text";
 import { Space } from "./blocks/Space";
 import { RichText } from "./blocks/RichText";
+import { ShopifyProduct } from "./blocks/ShopifyProduct";
 
 import Root from "./root";
 import { UserConfig } from "./types";
@@ -33,6 +34,10 @@ export const conf: UserConfig = {
       title: "Other",
       components: ["Card", "Hero", "Logos", "Stats", "Template"],
     },
+    commerce: {
+      title: "Commerce",
+      components: ["ShopifyProduct"],
+    },
   },
   components: {
     Button,
@@ -47,6 +52,7 @@ export const conf: UserConfig = {
     Text,
     Space,
     RichText,
+    ShopifyProduct,
   },
 };
 

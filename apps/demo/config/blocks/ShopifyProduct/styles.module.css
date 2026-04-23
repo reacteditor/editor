@@ -1,0 +1,57 @@
+.ShopifyProduct {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: rgba(140, 152, 164, 0.25) 0px 3px 6px 0px;
+  max-width: 360px;
+}
+
+.ShopifyProduct-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--puck-color-grey-11);
+  border-radius: 4px;
+  object-fit: cover;
+  display: block;
+}
+
+.ShopifyProduct-placeholder {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--puck-color-grey-11);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--puck-color-grey-05);
+  font-size: 14px;
+}
+
+.ShopifyProduct-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--puck-color-grey-02);
+}
+
+.ShopifyProduct-vendor {
+  font-size: 13px;
+  color: var(--puck-color-grey-05);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ShopifyProduct-price {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--puck-color-grey-02);
+}
+
+.ShopifyProduct-description {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--puck-color-grey-04);
+  font-weight: 300;
+}

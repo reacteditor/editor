@@ -10,7 +10,9 @@
       "@/plugin-heading-analyzer": ["../../packages/plugin-heading-analyzer"],
       "@/plugin-heading-analyzer/*": [
         "../../packages/plugin-heading-analyzer/*"
-      ]
+      ],
+      "@/field-shopify": ["../../packages/field-shopify"],
+      "@/field-shopify/*": ["../../packages/field-shopify/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

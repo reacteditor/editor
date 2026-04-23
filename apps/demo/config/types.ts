@@ -10,6 +10,7 @@ import { StatsProps } from "./blocks/Stats";
 import { TemplateProps } from "./blocks/Template";
 import { TextProps } from "./blocks/Text";
 import { SpaceProps } from "./blocks/Space";
+import { ShopifyProductProps } from "./blocks/ShopifyProduct";
 
 import { RootProps } from "./root";
 import { RichTextProps } from "./blocks/RichText";
@@ -29,6 +30,7 @@ export type Components = {
   Text: TextProps;
   Space: SpaceProps;
   RichText: RichTextProps;
+  ShopifyProduct: ShopifyProductProps;
 };
 
 export type UserConfig = Config<{
