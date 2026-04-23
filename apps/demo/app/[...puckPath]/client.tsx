@@ -1,6 +1,6 @@
 "use client";
 
-import { AutoField, Button, FieldLabel, Puck, Render, Route } from "@/core";
+import { AutoField, Button, FieldLabel, Editor, Render, Route } from "@/core";
 import headingAnalyzer from "@/plugin-heading-analyzer/src/HeadingAnalyzer";
 import config from "../../config";
 import { initialData } from "../../config/initial-data";
@@ -57,7 +57,7 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
   if (isEdit) {
     return (
       <div>
-        <Puck
+        <Editor
           config={config}
           data={data}
           globalData={globalData}

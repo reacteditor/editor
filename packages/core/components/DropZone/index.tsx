@@ -28,8 +28,8 @@ import {
   DragAxis,
   Metadata,
   Overrides,
-  PuckContext,
-  WithPuckProps,
+  EditorContext,
+  WithEditorProps,
 } from "../../types";
 
 import { useDroppable, UseDroppableInput } from "@dnd-kit/react";
@@ -163,7 +163,7 @@ const DropZoneChild = ({
     item?.type ? s.config.components[item.type] : null
   );
 
-  const puckProps: PuckContext = useMemo(
+  const puckProps: EditorContext = useMemo(
     () => ({
       renderDropZone: DropZoneEditPure,
       isEditing: true,
@@ -365,7 +365,7 @@ export const DropZoneEdit = forwardRef<HTMLDivElement, DropZoneProps>(
       if (zoneType === "dropzone") {
         if (zoneCompound !== rootDroppableId) {
           console.warn(
-            "DropZones have been deprecated in favor of slot fields and will be removed in a future version of Puck. Please see the migration guide: https://www.puckeditor.com/docs/guides/migrations/dropzones-to-slots"
+            "DropZones have been deprecated in favor of slot fields and will be removed in a future version of Editor. Please see the migration guide: https://www.puckeditor.com/docs/guides/migrations/dropzones-to-slots"
           );
         }
       }
@@ -571,7 +571,7 @@ const DropZoneRenderItem = ({
 
   const props = useSlots(config, item, (slotProps) => (
     <SlotRenderPure {...slotProps} config={config} metadata={metadata} />
-  )) as WithPuckProps<ComponentData["props"]>;
+  )) as WithEditorProps<ComponentData["props"]>;
 
   const nextContextValue = useMemo<DropZoneContext>(
     () => ({

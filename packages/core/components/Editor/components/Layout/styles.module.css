@@ -1,11 +1,11 @@
 /*
- * Puck's responsive layout uses minimum viewport widths slightly _below_ common
+ * Editor's responsive layout uses minimum viewport widths slightly _below_ common
  * framework/device breakpoints, and ensures that the width of the resulting
- * Puck page preview (zoomed at 75%) is slightly _above_ common framework/device
+ * Editor page preview (zoomed at 75%) is slightly _above_ common framework/device
  * breakpoints. This can help alleviate some of the pain when editing responsive
  * pages in a preview area that is narrower than the reported viewport width.
  *
- * Viewport | Puck page @ zoom 0.75
+ * Viewport | Editor page @ zoom 0.75
  * --------------------------------
  * -        | 322px
  * 766px    | 322px
@@ -16,7 +16,7 @@
  * 1598px   | 1212px
  */
 
-.Puck {
+.Editor {
   --fe-space-px: 16px;
   color: var(--fe-text-primary);
   font-family: var(--fe-font-family);
@@ -24,21 +24,21 @@
 }
 
 @media (min-width: 766px) {
-  .Puck {
+  .Editor {
     overflow-x: auto;
   }
 }
 
-.Puck-portal {
+.Editor-portal {
   position: relative;
   z-index: 2;
 }
 
-.PuckLayout {
+.EditorLayout {
   height: 100dvh;
 }
 
-.PuckLayout-inner {
+.EditorLayout-inner {
   --fe-frame-width: auto;
   --fe-side-nav-width: min-content;
   --fe-side-bar-width: 0px;
@@ -63,37 +63,37 @@
 }
 
 @media (min-width: 638px) {
-  .PuckLayout-inner {
+  .EditorLayout-inner {
     --fe-side-nav-width: 44px;
     grid-template-areas: "header header header header" "sidenav left editor right";
     grid-template-columns: var(--fe-side-nav-width) 0 var(--fe-frame-width) 0;
     grid-template-rows: min-content auto;
   }
 
-  .Puck--hidePlugins .PuckLayout-inner {
+  .Editor--hidePlugins .EditorLayout-inner {
     --fe-side-nav-width: 0;
   }
 }
 
-.PuckLayout--mounted .PuckLayout-inner {
+.EditorLayout--mounted .EditorLayout-inner {
   --fe-side-bar-width: 186px;
 }
 
-.PuckLayout--mobilePanelHeightToggle.PuckLayout--leftSideBarVisible
-  .PuckLayout-inner {
+.EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
+  .EditorLayout-inner {
   /* Setting header to 0 causes jump as it can't be animated. Can't use fixed number as we don't know user's header dimensions. Consider using ref + JS. */
   grid-template-rows: 0 auto 30% 0 var(--fe-side-nav-width);
 }
 
-.PuckLayout--mobilePanelHeightToggle.PuckLayout--leftSideBarVisible.PuckLayout--isExpanded
-  .PuckLayout-inner {
+.EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible.EditorLayout--isExpanded
+  .EditorLayout-inner {
   /* Setting header to 0 causes jump as it can't be animated. Can't use fixed number as we don't know user's header dimensions. Consider using ref + JS. */
   grid-template-rows: 0 auto 55% 0 var(--fe-side-nav-width);
 }
 
 @media (min-width: 638px) {
-  .PuckLayout--mobilePanelHeightToggle.PuckLayout--leftSideBarVisible
-    .PuckLayout-inner {
+  .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
+    .EditorLayout-inner {
     grid-template-columns:
       var(--fe-side-nav-width) var(--fe-left-side-bar-width) var(
         --fe-frame-width
@@ -103,23 +103,23 @@
   }
 }
 
-.PuckLayout--mobilePanelHeightMinContent.PuckLayout--leftSideBarVisible
-  .PuckLayout-inner,
-.PuckLayout--mobilePanelHeightMinContent.PuckLayout--leftSideBarVisible.PuckLayout--isExpanded
-  .PuckLayout-inner {
+.EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible
+  .EditorLayout-inner,
+.EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible.EditorLayout--isExpanded
+  .EditorLayout-inner {
   /* Setting header to 0 causes jump as it can't be animated. Can't use fixed number as we don't know user's header dimensions. Consider using ref + JS. */
   grid-template-rows: 0 auto min-content 0 var(--fe-side-nav-width);
 }
 
 @media (min-width: 638px) {
-  .PuckLayout--mobilePanelHeightToggle.PuckLayout--leftSideBarVisible
-    .PuckLayout-inner,
-  .PuckLayout--mobilePanelHeightToggle.PuckLayout--leftSideBarVisible.PuckLayout--isExpanded
-    .PuckLayout-inner,
-  .PuckLayout--mobilePanelHeightMinContent.PuckLayout--leftSideBarVisible
-    .PuckLayout-inner,
-  .PuckLayout--mobilePanelHeightMinContent.PuckLayout--leftSideBarVisible.PuckLayout--isExpanded
-    .PuckLayout-inner {
+  .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
+    .EditorLayout-inner,
+  .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible.EditorLayout--isExpanded
+    .EditorLayout-inner,
+  .EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible
+    .EditorLayout-inner,
+  .EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible.EditorLayout--isExpanded
+    .EditorLayout-inner {
     grid-template-columns:
       var(--fe-side-nav-width) var(--fe-left-side-bar-width) var(
         --fe-frame-width
@@ -130,7 +130,7 @@
 }
 
 @media (min-width: 638px) {
-  .PuckLayout--rightSideBarVisible .PuckLayout-inner {
+  .EditorLayout--rightSideBarVisible .EditorLayout-inner {
     grid-template-columns:
       var(--fe-side-nav-width) 0 var(--fe-frame-width)
       var(--fe-right-side-bar-width);
@@ -138,8 +138,8 @@
 }
 
 @media (min-width: 638px) {
-  .PuckLayout--leftSideBarVisible.PuckLayout--rightSideBarVisible
-    .PuckLayout-inner {
+  .EditorLayout--leftSideBarVisible.EditorLayout--rightSideBarVisible
+    .EditorLayout-inner {
     grid-template-columns:
       var(--fe-side-nav-width) var(--fe-left-side-bar-width) var(
         --fe-frame-width
@@ -149,48 +149,48 @@
 }
 
 @media (min-width: 458px) {
-  .PuckLayout-mounted .PuckLayout-inner {
+  .EditorLayout-mounted .EditorLayout-inner {
     --fe-frame-width: minmax(266px, auto);
   }
 }
 
 @media (min-width: 638px) {
-  .PuckLayout .PuckLayout-inner {
+  .EditorLayout .EditorLayout-inner {
     --fe-side-bar-width: minmax(186px, 250px);
   }
 }
 
 @media (min-width: 766px) {
-  .PuckLayout .PuckLayout-inner {
+  .EditorLayout .EditorLayout-inner {
     --fe-frame-width: auto;
   }
 }
 
 @media (min-width: 990px) {
-  .PuckLayout .PuckLayout-inner {
+  .EditorLayout .EditorLayout-inner {
     --fe-side-bar-width: 256px;
   }
 }
 
 @media (min-width: 1198px) {
-  .PuckLayout .PuckLayout-inner {
+  .EditorLayout .EditorLayout-inner {
     --fe-side-bar-width: 274px;
   }
 }
 
 @media (min-width: 1398px) {
-  .PuckLayout .PuckLayout-inner {
+  .EditorLayout .EditorLayout-inner {
     --fe-side-bar-width: 290px;
   }
 }
 
 @media (min-width: 1598px) {
-  .PuckLayout .PuckLayout-inner {
+  .EditorLayout .EditorLayout-inner {
     --fe-side-bar-width: 320px;
   }
 }
 
-.PuckLayout-nav {
+.EditorLayout-nav {
   border-top: 1px solid var(--fe-border-subtle);
   background-color: var(--fe-surface-panel);
   grid-area: sidenav;
@@ -199,39 +199,39 @@
 }
 
 @media (min-width: 638px) {
-  .PuckLayout-nav {
+  .EditorLayout-nav {
     border-top: 0;
     border-right: 1px solid var(--fe-border-subtle);
     box-sizing: border-box;
   }
 }
 
-.PuckLayout-header {
+.EditorLayout-header {
   grid-area: header;
 }
 
-.PuckLayout--leftSideBarVisible .PuckLayout-header {
+.EditorLayout--leftSideBarVisible .EditorLayout-header {
   overflow: hidden;
 }
 
 @media (min-width: 638px) {
-  .PuckLayout--leftSideBarVisible .PuckLayout-header {
+  .EditorLayout--leftSideBarVisible .EditorLayout-header {
     overflow: auto;
   }
 }
 
-.PuckPluginTab {
+.EditorPluginTab {
   display: none;
   flex-grow: 1;
   max-height: 100%;
 }
 
-.PuckPluginTab--visible {
+.EditorPluginTab--visible {
   display: flex;
   flex-direction: column;
 }
 
-.PuckPluginTab-body {
+.EditorPluginTab-body {
   flex-grow: 1;
   max-height: 100%;
 }

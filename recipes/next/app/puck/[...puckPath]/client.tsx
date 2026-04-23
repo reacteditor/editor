@@ -1,12 +1,12 @@
 "use client";
 
 import type { Data } from "@puckeditor/core";
-import { Puck } from "@puckeditor/core";
+import { Editor } from "@puckeditor/core";
 import config from "../../../puck.config";
 
 export function Client({ path, data }: { path: string; data: Partial<Data> }) {
   return (
-    <Puck
+    <Editor
       config={config}
       data={data}
       onPublish={async (data) => {

@@ -1,13 +1,13 @@
-.PuckFields {
+.EditorFields {
   position: relative;
   font-family: var(--fe-font-family);
 }
 
-.PuckFields--isLoading {
+.EditorFields--isLoading {
   min-height: 48px; /* Ensure there is sufficient room for loader if no fields */
 }
 
-.PuckFields-loadingOverlay {
+.EditorFields-loadingOverlay {
   background: var(--fe-surface-panel);
   display: flex;
   justify-content: flex-end;
@@ -22,28 +22,28 @@
   opacity: 0.8;
 }
 
-.PuckFields-loadingOverlayInner {
+.EditorFields-loadingOverlayInner {
   display: flex;
   padding: 16px;
   position: sticky;
   top: 0;
 }
 
-.PuckFields-field * {
+.EditorFields-field * {
   box-sizing: border-box;
 }
 
-.PuckFields--wrapFields .PuckFields-field {
+.EditorFields--wrapFields .EditorFields-field {
   color: var(--fe-text-secondary);
   padding: 14px 16px;
   display: block;
 }
 
-.PuckFields--wrapFields .PuckFields-field + .PuckFields-field {
+.EditorFields--wrapFields .EditorFields-field + .EditorFields-field {
   border-top: 1px solid var(--fe-border-subtle);
 }
 
-.PuckFields-syncButton {
+.EditorFields-syncButton {
   align-items: center;
   background: transparent;
   border: 1px solid var(--fe-color-global);
@@ -65,23 +65,23 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .PuckFields-syncButton:hover {
+  .EditorFields-syncButton:hover {
     background: var(--fe-color-global-soft);
   }
 }
 
-.PuckFields-syncButton:focus-visible {
+.EditorFields-syncButton:focus-visible {
   outline: none;
   box-shadow: var(--fe-ring);
 }
 
-.PuckFields-syncButton--unlinked {
+.EditorFields-syncButton--unlinked {
   border-color: var(--fe-border-default);
   color: var(--fe-text-secondary);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .PuckFields-syncButton--unlinked:hover {
+  .EditorFields-syncButton--unlinked:hover {
     background: var(--fe-surface-hover);
     border-color: var(--fe-border-strong);
     color: var(--fe-text-primary);
@@ -90,6 +90,6 @@
 
 /* When the button sits immediately above a field group wrapped in padding,
    don't double-pad. */
-.PuckFields--wrapFields .PuckFields-syncButton + .PuckFields-field {
+.EditorFields--wrapFields .EditorFields-syncButton + .EditorFields-field {
   border-top: none;
 }

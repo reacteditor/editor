@@ -26,9 +26,9 @@ import { blocksPlugin } from "../../../../plugins/blocks";
 import { outlinePlugin } from "../../../../plugins/outline";
 import { fieldsPlugin } from "../../../../plugins/fields";
 
-const getClassName = getClassNameFactory("Puck", styles);
-const getLayoutClassName = getClassNameFactory("PuckLayout", styles);
-const getPluginTabClassName = getClassNameFactory("PuckPluginTab", styles);
+const getClassName = getClassNameFactory("Editor", styles);
+const getLayoutClassName = getClassNameFactory("EditorLayout", styles);
+const getPluginTabClassName = getClassNameFactory("EditorPluginTab", styles);
 
 const FieldSideBar = () => {
   const title = useAppStore((s) =>
@@ -135,7 +135,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
 
   const overrides = useAppStore((s) => s.overrides);
 
-  const CustomPuck = useMemo(
+  const CustomEditor = useMemo(
     () => overrides.puck || DefaultOverride,
     [overrides]
   );
@@ -286,7 +286,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
 
   return (
     <div
-      className={`Puck ${getClassName({
+      className={`Editor ${getClassName({
         hidePlugins: hasLegacySideBarPlugin,
       })}`}
       id={instanceId}
@@ -294,7 +294,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
       style={{ height }}
     >
       <DragDropContext disableAutoScroll={dnd?.disableAutoScroll}>
-        <CustomPuck>
+        <CustomEditor>
           {children || (
             <FrameProvider>
               <div
@@ -386,7 +386,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
               </div>
             </FrameProvider>
           )}
-        </CustomPuck>
+        </CustomEditor>
       </DragDropContext>
       <div id="puck-portal-root" className={getClassName("portal")} />
     </div>

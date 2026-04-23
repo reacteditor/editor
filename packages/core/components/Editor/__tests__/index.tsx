@@ -50,18 +50,18 @@ class ResizeObserver {
 }
 (global as any).ResizeObserver = ResizeObserver;
 
-type PuckInternal = {
+type EditorInternal = {
   appStore: AppStoreApi;
 };
 
 const getInternal = () => {
-  return (window as any).__PUCK_INTERNAL_DO_NOT_USE as PuckInternal;
+  return (window as any).__PUCK_INTERNAL_DO_NOT_USE as EditorInternal;
 };
 
-import { Puck } from "../index";
+import { Editor } from "../index";
 import { AppStoreApi } from "../../../store";
 
-describe("Puck", () => {
+describe("Editor", () => {
   const componentARender = jest.fn(() => null);
   const componentBRender = jest.fn(() => null);
   const rootRender = jest.fn(() => null);
@@ -99,7 +99,7 @@ describe("Puck", () => {
   const flush = () => act(async () => {});
 
   it("root renders", async () => {
-    render(<Puck config={config} data={{}} iframe={{ enabled: false }} />);
+    render(<Editor config={config} data={{}} iframe={{ enabled: false }} />);
 
     await flush();
 
@@ -108,7 +108,7 @@ describe("Puck", () => {
   });
 
   it("should generate the correct state on mount", async () => {
-    render(<Puck config={config} data={{}} iframe={{ enabled: false }} />);
+    render(<Editor config={config} data={{}} iframe={{ enabled: false }} />);
 
     await flush();
 
@@ -119,7 +119,7 @@ describe("Puck", () => {
 
   it("should index slots on mount", async () => {
     render(
-      <Puck
+      <Editor
         config={{
           root: {
             fields: {

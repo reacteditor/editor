@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode } from "react";
-import { PuckAction } from "../../reducer";
+import { EditorAction } from "../../reducer";
 import { WithDeepSlots } from "../Internal";
 import { DefaultComponentProps } from "../Props";
 import { AppState } from "./../AppState";
@@ -22,7 +22,7 @@ export type IframeConfig = {
 };
 
 export type OnAction<UserData extends Data = Data> = (
-  action: PuckAction,
+  action: EditorAction,
   appState: AppState<UserData>,
   prevAppState: AppState<UserData>
 ) => void;

@@ -18,7 +18,7 @@ import { flattenNode } from "./flatten-node";
 import { toComponent } from "./to-component";
 
 /**
- * Walk the Puck state, generate indexes and make modifications to nodes.
+ * Walk the Editor state, generate indexes and make modifications to nodes.
  *
  * @param state The initial state
  * @param mapContent A callback to modify the content of a DropZone or slot. Called for all DropZones, slots and the root content.

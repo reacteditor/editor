@@ -7,7 +7,7 @@ import { DefaultComponentProps } from "./Props";
 
 export type ZoneType = "root" | "dropzone" | "slot";
 
-export type PuckNodeData = {
+export type EditorNodeData = {
   data: ComponentData;
   flatData: ComponentData;
   parentId: string | null;
@@ -15,13 +15,13 @@ export type PuckNodeData = {
   path: string[];
 };
 
-export type PuckZoneData = {
+export type EditorZoneData = {
   contentIds: string[];
   type: ZoneType;
 };
 
-export type NodeIndex = Record<string, PuckNodeData>;
-export type ZoneIndex = Record<string, PuckZoneData>;
+export type NodeIndex = Record<string, EditorNodeData>;
+export type ZoneIndex = Record<string, EditorZoneData>;
 
 export type PrivateAppState<UserData extends Data = Data> =
   AppState<UserData> & {
@@ -97,7 +97,7 @@ export type AssertHasValue<T, True = T, False = never> = [keyof T] extends [
   ? False
   : True;
 
-// Plugins can use `usePuck` instead of relying on props
+// Plugins can use `useEditor` instead of relying on props
 export type RenderFunc<
   Props extends { [key: string]: any } = { children: ReactNode }
 > = (props: Props) => ReactElement;

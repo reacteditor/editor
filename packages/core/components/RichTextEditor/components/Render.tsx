@@ -3,7 +3,7 @@ import { generateHTML, generateJSON } from "@tiptap/html";
 import { useMemo } from "react";
 import getClassNameFactory from "../../../lib/get-class-name-factory";
 import styles from "../styles.module.css";
-import { PuckRichText } from "../extension";
+import { EditorRichText } from "../extension";
 import { RichtextField } from "../../../types";
 
 const getClassName = getClassNameFactory("RichTextEditor", styles);
@@ -19,7 +19,7 @@ export function RichTextRender({
   const { extensions = [] } = tiptap;
 
   const loadedExtensions = useMemo(
-    () => [PuckRichText.configure(options), ...extensions],
+    () => [EditorRichText.configure(options), ...extensions],
     [field, extensions]
   );
 

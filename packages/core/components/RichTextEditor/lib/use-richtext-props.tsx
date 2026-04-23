@@ -3,7 +3,7 @@ import {
   BaseField,
   Fields,
   RichtextField,
-  WithPuckProps,
+  WithEditorProps,
 } from "../../../types";
 import { RichTextRenderFallback } from "../components/RenderFallback";
 import { generateId } from "../../../lib/generate-id";
@@ -19,7 +19,7 @@ export function useRichtextProps(
     | Fields<any, {}>
     | Fields<any, { type: string } & BaseField>
     | undefined,
-  props: WithPuckProps<{
+  props: WithEditorProps<{
     [x: string]: any;
   }>
 ) {

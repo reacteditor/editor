@@ -1,9 +1,9 @@
-.PuckPreview {
+.EditorPreview {
   position: relative;
   height: 100%;
 }
 
-.PuckPreview-frame {
+.EditorPreview-frame {
   border: none;
   height: 100%;
   width: 100%;

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from "react";
-import { AutoField, Button, createUsePuck, FieldLabel, walkTree } from "@/core";
+import { AutoField, Button, createUseEditor, FieldLabel, walkTree } from "@/core";
 import { ComponentConfig, ComponentDataOptionalId, Slot } from "@/core/types";
 import { withLayout } from "../../components/Layout";
 import { generateId } from "@/core/lib/generate-id";
@@ -10,7 +10,7 @@ import { type Components } from "../../types";
 import TemplateComponent, { TemplateProps } from "./Template";
 import { templateRenderFields } from "./render-fields";
 
-const usePuck = createUsePuck();
+const useEditor = createUseEditor();
 
 async function createComponent<T extends keyof Components>(
   component: T,
@@ -38,7 +38,7 @@ export const TemplateInternal: ComponentConfig<TemplateProps> = {
       render: ({ name, value, onChange }) => {
         const templateKey = `puck-demo-templates:${componentKey}`;
 
-        const props = usePuck((s) => s.selectedItem?.props) as
+        const props = useEditor((s) => s.selectedItem?.props) as
           | TemplateProps
           | undefined;
 

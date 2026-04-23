@@ -1,7 +1,7 @@
 "use client";
 
 import type { Data } from "@puckeditor/core";
-import { Puck } from "@puckeditor/core";
+import { Editor } from "@puckeditor/core";
 import { createAiPlugin } from "@puckeditor/plugin-ai";
 
 import config from "../../../puck.config";
@@ -10,7 +10,7 @@ const aiPlugin = createAiPlugin();
 
 export function Client({ path, data }: { path: string; data: Partial<Data> }) {
   return (
-    <Puck
+    <Editor
       plugins={[aiPlugin]}
       config={config}
       data={data}

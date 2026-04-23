@@ -1,6 +1,6 @@
 import { cleanup } from "@testing-library/react";
 import { ComponentData, Config, RootDataWithProps } from "../../types";
-import { PuckAction } from "../../reducer";
+import { EditorAction } from "../../reducer";
 import { insertComponent } from "../insert-component";
 import { rootDroppableId } from "../root-droppable-id";
 
@@ -49,7 +49,7 @@ type ComponentOrRootData = ComponentData | RootDataWithProps;
 
 describe("use-insert-component", () => {
   describe("insert-component", () => {
-    let dispatchedEvents: PuckAction[] = [];
+    let dispatchedEvents: EditorAction[] = [];
     let resolvedDataEvents: ComponentOrRootData[] = [];
     let resolvedTrigger: string = "";
 
@@ -82,7 +82,7 @@ describe("use-insert-component", () => {
     it("should dispatch the insert action", async () => {
       insertComponent("MyComponent", rootDroppableId, 0, appStore);
 
-      expect(dispatchedEvents[0]).toEqual<PuckAction>({
+      expect(dispatchedEvents[0]).toEqual<EditorAction>({
         type: "insert",
         componentType: "MyComponent",
         destinationZone: rootDroppableId,
@@ -95,7 +95,7 @@ describe("use-insert-component", () => {
     it("should dispatch the setUi action, and select the item", async () => {
       insertComponent("MyComponent", rootDroppableId, 0, appStore);
 
-      expect(dispatchedEvents[1]).toEqual<PuckAction>({
+      expect(dispatchedEvents[1]).toEqual<EditorAction>({
         type: "setUi",
         ui: {
           itemSelector: {

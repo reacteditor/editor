@@ -9,15 +9,15 @@ import {
   Button,
   Data,
   FieldLabel,
-  Puck,
+  Editor,
   Render,
-  useGetPuck,
+  useGetEditor,
 } from "@/core";
 import { HeadingAnalyzer } from "@/plugin-heading-analyzer/src/HeadingAnalyzer";
 import config from "../../../config";
 import { UserConfig } from "../../../config/types";
 import { useDemoData } from "../../../lib/use-demo-data";
-import { IconButton, createUsePuck } from "@/core";
+import { IconButton, createUseEditor } from "@/core";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { Drawer } from "@/core/components/Drawer";
 import {
@@ -29,12 +29,12 @@ import {
   Type,
 } from "lucide-react";
 
-const usePuck = createUsePuck<UserConfig>();
+const useEditor = createUseEditor<UserConfig>();
 
 const CustomHeader = ({ onPublish }: { onPublish: (data: Data) => void }) => {
-  const getPuck = useGetPuck();
-  const dispatch = usePuck((s) => s.dispatch);
-  const previewMode = usePuck((s) => s.appState.ui.previewMode);
+  const getEditor = useGetEditor();
+  const dispatch = useEditor((s) => s.dispatch);
+  const previewMode = useEditor((s) => s.appState.ui.previewMode);
 
   const toggleMode = () => {
     dispatch({
@@ -66,7 +66,7 @@ const CustomHeader = ({ onPublish }: { onPublish: (data: Data) => void }) => {
             Switch to {previewMode === "edit" ? "interactive" : "edit"}
           </Button>
           <Button
-            onClick={() => onPublish(getPuck().appState.data)}
+            onClick={() => onPublish(getEditor().appState.data)}
             icon={<Globe size="14" />}
           >
             Publish
@@ -87,8 +87,8 @@ const Tabs = ({
   scrollTop: number;
 }) => {
   const [currentTab, setCurrentTab] = useState(-1);
-  const itemSelector = usePuck((s) => s.appState.ui.itemSelector);
-  const isDragging = usePuck((s) => s.appState.ui.isDragging);
+  const itemSelector = useEditor((s) => s.appState.ui.itemSelector);
+  const isDragging = useEditor((s) => s.appState.ui.isDragging);
 
   const currentTabRef = useRef(currentTab);
 
@@ -221,7 +221,7 @@ const Tabs = ({
   );
 };
 
-const CustomPuck = ({ dataKey }: { dataKey: string }) => {
+const CustomEditor = ({ dataKey }: { dataKey: string }) => {
   const [hoveringTabs, setHoveringTabs] = useState(false);
 
   const [actionBarScroll, setActionBarScroll] = useState(0);
@@ -246,7 +246,7 @@ const CustomPuck = ({ dataKey }: { dataKey: string }) => {
           zIndex: 0,
         }}
       >
-        <Puck.Preview />
+        <Editor.Preview />
       </div>
       <div
         id="action-bar"
@@ -295,9 +295,9 @@ const CustomPuck = ({ dataKey }: { dataKey: string }) => {
             }}
             scrollTop={actionBarScroll}
             tabs={[
-              { label: "Components", body: <Puck.Components /> },
-              { label: "Fields", body: <Puck.Fields /> },
-              { label: "Outline", body: <Puck.Outline /> },
+              { label: "Components", body: <Editor.Components /> },
+              { label: "Fields", body: <Editor.Fields /> },
+              { label: "Outline", body: <Editor.Outline /> },
               {
                 label: "Headings",
                 body: (
@@ -315,7 +315,7 @@ const CustomPuck = ({ dataKey }: { dataKey: string }) => {
 };
 
 const CustomDrawer = () => {
-  const getPermissions = usePuck((s) => s.getPermissions);
+  const getPermissions = useEditor((s) => s.getPermissions);
 
   return (
     <Drawer>
@@ -393,7 +393,7 @@ export function Client({ path, isEdit }: { path: string; isEdit: boolean }) {
 
   if (isEdit) {
     return (
-      <Puck<UserConfig>
+      <Editor<UserConfig>
         config={configOverride}
         data={data}
         iframe={{ enabled: false }}
@@ -435,9 +435,9 @@ export function Client({ path, isEdit }: { path: string; isEdit: boolean }) {
             );
           },
           actionBar: ({ children, label, parentAction }) => {
-            const selectedItem = usePuck((s) => s.selectedItem);
-            const getPermissions = usePuck((s) => s.getPermissions);
-            const refreshPermissions = usePuck((s) => s.refreshPermissions);
+            const selectedItem = useEditor((s) => s.selectedItem);
+            const getPermissions = useEditor((s) => s.getPermissions);
+            const refreshPermissions = useEditor((s) => s.refreshPermissions);
 
             const globalPermissions = getPermissions();
 
@@ -492,7 +492,7 @@ export function Client({ path, isEdit }: { path: string; isEdit: boolean }) {
             );
           },
           drawer: () => <CustomDrawer />,
-          puck: () => <CustomPuck dataKey={key} />,
+          puck: () => <CustomEditor dataKey={key} />,
         }}
       />
     );

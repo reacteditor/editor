@@ -1,4 +1,4 @@
-import resolvePuckPath from "../../../lib/resolve-puck-path";
+import resolveEditorPath from "../../../lib/resolve-puck-path";
 import { Metadata } from "next";
 import Client from "./client";
 
@@ -8,7 +8,7 @@ export async function generateMetadata({
   params: Promise<{ framework: string; uuid: string; puckPath: string[] }>;
 }): Promise<Metadata> {
   const { puckPath } = await params;
-  const { isEdit, path } = resolvePuckPath(puckPath);
+  const { isEdit, path } = resolveEditorPath(puckPath);
 
   if (isEdit) {
     return {
@@ -27,7 +27,7 @@ export default async function Page({
   params: Promise<{ framework: string; uuid: string; puckPath: string[] }>;
 }) {
   const { puckPath } = await params;
-  const { isEdit, path } = resolvePuckPath(puckPath);
+  const { isEdit, path } = resolveEditorPath(puckPath);
 
   return <Client isEdit={isEdit} path={path} />;
 }

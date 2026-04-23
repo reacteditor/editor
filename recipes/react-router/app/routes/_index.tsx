@@ -1,10 +1,10 @@
 import type { Route } from "./+types/_index";
-import { PuckRender } from "~/components/puck-render";
-import { resolvePuckPath } from "~/lib/resolve-puck-path.server";
+import { EditorRender } from "~/components/puck-render";
+import { resolveEditorPath } from "~/lib/resolve-puck-path.server";
 import { getPage } from "~/lib/pages.server";
 
 export async function loader() {
-  const { isEditorRoute, path } = resolvePuckPath("/");
+  const { isEditorRoute, path } = resolveEditorPath("/");
   let page = await getPage(path);
 
   if (!page) {
@@ -26,6 +26,6 @@ export function meta({ data: loaderData }: Route.MetaArgs) {
   ];
 }
 
-export default function PuckSplatRoute({ loaderData }: Route.ComponentProps) {
-  return <PuckRender data={loaderData.data} />;
+export default function EditorSplatRoute({ loaderData }: Route.ComponentProps) {
+  return <EditorRender data={loaderData.data} />;
 }

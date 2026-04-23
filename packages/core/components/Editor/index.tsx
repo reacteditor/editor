@@ -32,7 +32,7 @@ import type {
   DefaultComponentProps,
 } from "../../types";
 
-import { PuckAction } from "../../reducer";
+import { EditorAction } from "../../reducer";
 import { createAppStore, defaultAppState, appStoreContext } from "../../store";
 import { Fields } from "./components/Fields";
 import { Components } from "./components/Components";
@@ -44,8 +44,8 @@ import { useLoadedOverrides } from "../../lib/use-loaded-overrides";
 import { useRegisterHistorySlice } from "../../store/slices/history";
 import { useRegisterPermissionsSlice } from "../../store/slices/permissions";
 import {
-  UsePuckStoreContext,
-  useRegisterUsePuckStore,
+  UseEditorStoreContext,
+  useRegisterUseEditorStore,
 } from "../../lib/use-puck";
 import { walkAppState } from "../../lib/data/walk-app-state";
 import { PrivateAppState } from "../../types/Internal";
@@ -59,7 +59,7 @@ import { toComponent } from "../../lib/data/to-component";
 import { Layout } from "./components/Layout";
 import { useSafeId } from "../../lib/use-safe-id";
 
-type PuckProps<
+type EditorProps<
   UserConfig extends Config = Config,
   G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
 > = {
@@ -78,12 +78,12 @@ type PuckProps<
   fieldTransforms?: FieldTransforms<UserConfig>;
   renderHeader?: (props: {
     children: ReactNode;
-    dispatch: (action: PuckAction) => void;
+    dispatch: (action: EditorAction) => void;
     state: G["UserAppState"];
   }) => ReactElement;
   renderHeaderActions?: (props: {
     state: G["UserAppState"];
-    dispatch: (action: PuckAction) => void;
+    dispatch: (action: EditorAction) => void;
   }) => ReactElement;
   headerTitle?: string;
   headerPath?: string;
@@ -102,22 +102,22 @@ type PuckProps<
   _experimentalVirtualization?: boolean;
 };
 
-const propsContext = createContext<Partial<PuckProps>>({});
+const propsContext = createContext<Partial<EditorProps>>({});
 
 function PropsProvider<UserConfig extends Config = Config>(
-  props: PuckProps<UserConfig>
+  props: EditorProps<UserConfig>
 ) {
   return (
-    <propsContext.Provider value={props as PuckProps}>
+    <propsContext.Provider value={props as EditorProps}>
       {props.children}
     </propsContext.Provider>
   );
 }
 
 export const usePropsContext = () =>
-  useContext<PuckProps>(propsContext as Context<PuckProps>);
+  useContext<EditorProps>(propsContext as Context<EditorProps>);
 
-function PuckProvider<
+function EditorProvider<
   UserConfig extends Config = Config,
   G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
 >({ children }: PropsWithChildren) {
@@ -372,7 +372,7 @@ function PuckProvider<
 
   useRegisterPermissionsSlice(appStore, permissions);
 
-  const uPuckStore = useRegisterUsePuckStore(appStore);
+  const uEditorStore = useRegisterUseEditorStore(appStore);
 
   useEffect(() => {
     const { resolveAndCommitData } = appStore.getState();
@@ -385,28 +385,28 @@ function PuckProvider<
 
   return (
     <appStoreContext.Provider value={appStore}>
-      <UsePuckStoreContext.Provider value={uPuckStore}>
+      <UseEditorStoreContext.Provider value={uEditorStore}>
         {children}
-      </UsePuckStoreContext.Provider>
+      </UseEditorStoreContext.Provider>
     </appStoreContext.Provider>
   );
 }
 
-export function Puck<
+export function Editor<
   UserConfig extends Config = Config,
   G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
->(props: PuckProps<UserConfig>) {
+>(props: EditorProps<UserConfig>) {
   return (
     <PropsProvider {...props}>
-      <PuckProvider {...props}>
+      <EditorProvider {...props}>
         <Layout>{props.children}</Layout>
-      </PuckProvider>
+      </EditorProvider>
     </PropsProvider>
   );
 }
 
-Puck.Components = Components;
-Puck.Fields = Fields;
-Puck.Layout = Layout;
-Puck.Outline = Outline;
-Puck.Preview = Preview;
+Editor.Components = Components;
+Editor.Fields = Fields;
+Editor.Layout = Layout;
+Editor.Outline = Outline;
+Editor.Preview = Preview;

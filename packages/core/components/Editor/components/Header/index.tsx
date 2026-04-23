@@ -18,7 +18,7 @@ import {
 } from "../../../ui/Select";
 import styles from "./styles.module.css";
 
-const getClassName = getClassNameFactory("PuckHeader", styles);
+const getClassName = getClassNameFactory("EditorHeader", styles);
 
 const HeaderInner = <
   UserConfig extends Config = Config,
@@ -47,7 +47,7 @@ const HeaderInner = <
   const defaultHeaderRender = useMemo((): Overrides["header"] => {
     if (renderHeader) {
       console.warn(
-        "`renderHeader` is deprecated. Please use `overrides.header` and the `usePuck` hook instead"
+        "`renderHeader` is deprecated. Please use `overrides.header` and the `useEditor` hook instead"
       );
 
       const RenderHeader = ({ actions, ...props }: any) => {
@@ -72,7 +72,7 @@ const HeaderInner = <
   const defaultHeaderActionsRender = useMemo((): Overrides["headerActions"] => {
     if (renderHeaderActions) {
       console.warn(
-        "`renderHeaderActions` is deprecated. Please use `overrides.headerActions` and the `usePuck` hook instead."
+        "`renderHeaderActions` is deprecated. Please use `overrides.headerActions` and the `useEditor` hook instead."
       );
 
       const RenderHeader = (props: any) => {

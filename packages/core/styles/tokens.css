@@ -79,12 +79,12 @@
   --fe-color-grey-12: #fafafb;
 }
 
-/* Dark mode token overrides — applied at `.Puck[data-theme="dark"]` root so
+/* Dark mode token overrides — applied at `.Editor[data-theme="dark"]` root so
    all chrome cascades. The iframe preview is a separate document and does
    NOT inherit CSS custom properties across its boundary, so it stays light
    on its own. Dark mode is driven by the theme toggle (stored in
    localStorage) which also reflects system preference when set to "system". */
-.Puck[data-theme="dark"] {
+.Editor[data-theme="dark"] {
   color: var(--fe-text-primary);
     --fe-surface-app: #0f1115;
     --fe-surface-panel: #161a20;

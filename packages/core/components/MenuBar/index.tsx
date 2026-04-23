@@ -3,7 +3,7 @@ import { Undo2Icon, Redo2Icon } from "lucide-react";
 
 import { IconButton } from "../IconButton/IconButton";
 import getClassNameFactory from "../../lib/get-class-name-factory";
-import { PuckAction } from "../../reducer";
+import { EditorAction } from "../../reducer";
 import type { Data } from "../../types";
 
 import styles from "./styles.module.css";
@@ -16,7 +16,7 @@ export function MenuBar<UserData extends Data>({
   renderHeaderActions,
   setMenuOpen,
 }: {
-  dispatch: (action: PuckAction) => void;
+  dispatch: (action: EditorAction) => void;
   onPublish?: (data: UserData) => void;
   menuOpen: boolean;
   renderHeaderActions?: () => ReactElement;

@@ -1,14 +1,14 @@
 import { createContext, useContext } from "react";
 import { EditorState } from "../../RichTextEditor/types";
 import type { Editor } from "@tiptap/react";
-import type { PuckRichTextOptions } from "../../RichTextEditor/extension";
+import type { EditorRichTextOptions } from "../../RichTextEditor/extension";
 
 type ControlContextType = {
   editor: Editor | null;
   editorState: EditorState | null;
   inline: boolean;
   readOnly: boolean;
-  options?: Partial<PuckRichTextOptions>;
+  options?: Partial<EditorRichTextOptions>;
 };
 
 export const ControlContext = createContext<Partial<ControlContextType>>({});

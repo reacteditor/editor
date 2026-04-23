@@ -19,7 +19,7 @@ import { useCanvasFrame } from "../../../../lib/frame-context";
 import { usePropsContext } from "../..";
 import { defaultViewports } from "../../../ViewportControls/default-viewports";
 
-const getClassName = getClassNameFactory("PuckCanvas", styles);
+const getClassName = getClassNameFactory("EditorCanvas", styles);
 
 const TRANSITION_DURATION = 150;
 
@@ -58,11 +58,11 @@ export const Canvas = () => {
   const defaultRender = useMemo<
     React.FunctionComponent<{ children?: ReactNode }>
   >(() => {
-    const PuckDefault = ({ children }: { children?: ReactNode }) => (
+    const EditorDefault = ({ children }: { children?: ReactNode }) => (
       <>{children}</>
     );
 
-    return PuckDefault;
+    return EditorDefault;
   }, []);
 
   const CustomPreview = useMemo(

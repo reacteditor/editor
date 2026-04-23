@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAppStore } from "../store";
-import { PuckAction } from "../reducer";
+import { EditorAction } from "../reducer";
 
 /**
  * Custom hook for managing sidebar resize functionality
@@ -10,7 +10,7 @@ import { PuckAction } from "../reducer";
  */
 export function useSidebarResize(
   position: "left" | "right",
-  dispatch: (action: PuckAction) => void
+  dispatch: (action: EditorAction) => void
 ) {
   const [width, setWidth] = useState<number | null>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);

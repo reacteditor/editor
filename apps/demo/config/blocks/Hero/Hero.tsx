@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import { getClassNameFactory } from "@/core/lib";
 import { Button } from "@/core/components/Button";
 import { Section } from "../../components/Section";
-import { PuckComponent, RichText, Slot } from "@/core/types";
+import { EditorComponent, RichText, Slot } from "@/core/types";
 
 const getClassName = getClassNameFactory("Hero", styles);
 
@@ -26,7 +26,7 @@ export type HeroProps = {
   }[];
 };
 
-export const Hero: PuckComponent<HeroProps> = ({
+export const Hero: EditorComponent<HeroProps> = ({
   align,
   title,
   description,

@@ -18,7 +18,7 @@ import { resolveDataById } from "./data/resolve-data-by-id";
 import { resolveDataBySelector } from "./data/resolve-data-by-selector";
 import { getSelectorForId } from "./get-selector-for-id";
 
-export type UsePuckData<
+export type UseEditorData<
   UserConfig extends Config = Config,
   G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
 > = {
@@ -51,21 +51,21 @@ export type UsePuckData<
   };
 };
 
-export type PuckApi<UserConfig extends Config = Config> =
-  UsePuckData<UserConfig>;
+export type EditorApi<UserConfig extends Config = Config> =
+  UseEditorData<UserConfig>;
 
-type UsePuckStore<UserConfig extends Config = Config> = PuckApi<UserConfig>;
+type UseEditorStore<UserConfig extends Config = Config> = EditorApi<UserConfig>;
 
 type PickedStore = Pick<
   AppStore,
   "config" | "dispatch" | "selectedItem" | "permissions" | "history" | "state"
 >;
 
-export const generateUsePuck = (
+export const generateUseEditor = (
   store: PickedStore,
   getState: ReturnType<typeof useAppStoreApi>["getState"]
-): UsePuckStore => {
-  const history: UsePuckStore["history"] = {
+): UseEditorStore => {
+  const history: UseEditorStore["history"] = {
     back: store.history.back,
     forward: store.history.forward,
     setHistories: store.history.setHistories,
@@ -76,7 +76,7 @@ export const generateUsePuck = (
     index: store.history.index,
   };
 
-  const storeData: PuckApi = {
+  const storeData: EditorApi = {
     appState: makeStatePublic(store.state),
     config: store.config,
     dispatch: store.dispatch,
@@ -107,7 +107,7 @@ export const generateUsePuck = (
   return storeData;
 };
 
-export const UsePuckStoreContext = createContext<StoreApi<UsePuckStore> | null>(
+export const UseEditorStoreContext = createContext<StoreApi<UseEditorStore> | null>(
   null
 );
 
@@ -123,14 +123,14 @@ const convertToPickedStore = (store: AppStore): PickedStore => {
 };
 
 /**
- * Mirror changes in appStore to usePuckStore
+ * Mirror changes in appStore to useEditorStore
  */
-export const useRegisterUsePuckStore = (
+export const useRegisterUseEditorStore = (
   appStore: ReturnType<typeof useAppStoreApi>
 ) => {
-  const [usePuckStore] = useState(() =>
+  const [useEditorStore] = useState(() =>
     createStore(() =>
-      generateUsePuck(
+      generateUseEditor(
         convertToPickedStore(appStore.getState()),
         appStore.getState
       )
@@ -142,35 +142,35 @@ export const useRegisterUsePuckStore = (
     return appStore.subscribe(
       (store) => convertToPickedStore(store),
       (pickedStore) => {
-        usePuckStore.setState(generateUsePuck(pickedStore, appStore.getState));
+        useEditorStore.setState(generateUseEditor(pickedStore, appStore.getState));
       }
     );
   }, []);
 
-  return usePuckStore;
+  return useEditorStore;
 };
 
 /**
- * createUsePuck
+ * createUseEditor
  *
- * Create a typed usePuck hook, which is necessary because the user may provide a generic type but not
+ * Create a typed useEditor hook, which is necessary because the user may provide a generic type but not
  * a selector type, and TS does not currently support partial inference.
  * Related: https://github.com/microsoft/TypeScript/issues/26242
  *
- * @returns a typed usePuck function
+ * @returns a typed useEditor function
  */
-export function createUsePuck<UserConfig extends Config = Config>() {
-  return function usePuck<T = PuckApi<UserConfig>>(
-    selector: (state: UsePuckStore<UserConfig>) => T
+export function createUseEditor<UserConfig extends Config = Config>() {
+  return function useEditor<T = EditorApi<UserConfig>>(
+    selector: (state: UseEditorStore<UserConfig>) => T
   ): T {
-    const usePuckApi = useContext(UsePuckStoreContext);
+    const useEditorApi = useContext(UseEditorStoreContext);
 
-    if (!usePuckApi) {
-      throw new Error("usePuck must be used inside <Puck>.");
+    if (!useEditorApi) {
+      throw new Error("useEditor must be used inside <Editor>.");
     }
 
     const result = useStore(
-      usePuckApi as unknown as StoreApi<UsePuckStore<UserConfig>>,
+      useEditorApi as unknown as StoreApi<UseEditorStore<UserConfig>>,
       selector ?? ((s) => s as T)
     );
 
@@ -178,27 +178,27 @@ export function createUsePuck<UserConfig extends Config = Config>() {
   };
 }
 
-export function usePuck<UserConfig extends Config = Config>() {
+export function useEditor<UserConfig extends Config = Config>() {
   useEffect(() => {
     console.warn(
-      "You're using the `usePuck` method without a selector, which may cause unnecessary re-renders. Replace with `createUsePuck` and provide a selector for improved performance."
+      "You're using the `useEditor` method without a selector, which may cause unnecessary re-renders. Replace with `createUseEditor` and provide a selector for improved performance."
     );
   }, []);
 
-  return createUsePuck<UserConfig>()((s) => s);
+  return createUseEditor<UserConfig>()((s) => s);
 }
 
 /**
  * Get the latest state without relying on a render
  *
- * @returns PuckApi
+ * @returns EditorApi
  */
-export function useGetPuck() {
-  const usePuckApi = useContext(UsePuckStoreContext);
+export function useGetEditor() {
+  const useEditorApi = useContext(UseEditorStoreContext);
 
-  if (!usePuckApi) {
-    throw new Error("usePuckGet must be used inside <Puck>.");
+  if (!useEditorApi) {
+    throw new Error("useEditorGet must be used inside <Editor>.");
   }
 
-  return usePuckApi.getState;
+  return useEditorApi.getState;
 }

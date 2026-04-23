@@ -3,7 +3,7 @@ import { BaseField, Field, Fields } from "./Fields";
 import { BlockMap } from "./Blocks";
 import { ComponentData, ComponentMetadata, RootData } from "./Data";
 
-import { AsFieldProps, WithChildren, WithId, WithPuckProps } from "./Utils";
+import { AsFieldProps, WithChildren, WithId, WithEditorProps } from "./Utils";
 import { AppState } from "./AppState";
 import { DefaultComponentProps, DefaultRootFieldProps } from "./Props";
 import { Permissions } from "./API";
@@ -17,9 +17,9 @@ import {
 
 export type SlotComponent = (props?: Omit<DropZoneProps, "zone">) => ReactNode;
 
-export type PuckComponent<Props> = (
+export type EditorComponent<Props> = (
   props: WithId<
-    WithPuckProps<{
+    WithEditorProps<{
       [K in keyof Props]: WithDeepSlots<Props[K], SlotComponent>;
     }>
   >
@@ -47,7 +47,7 @@ type ComponentConfigInternal<
   DataShape = Omit<ComponentData<FieldProps>, "type">, // NB this doesn't include AllProps, so types will not contain deep slot types. To fix, we require a breaking change.
   UserField extends BaseField = {}
 > = {
-  render: PuckComponent<RenderProps>;
+  render: EditorComponent<RenderProps>;
   label?: string;
   fields?: Fields<FieldProps, UserField>;
   permissions?: Partial<Permissions>;

@@ -1,9 +1,9 @@
 /**
- * This file implements a *magic* catch-all route that renders the Puck editor.
+ * This file implements a *magic* catch-all route that renders the Editor editor.
  *
  * This route exposes /puck/[...puckPath], but is disabled by middleware.ts. The middleware
  * then rewrites all URL requests ending in `/edit` to this route, allowing you to visit any
- * page in your application and add /edit to the end to spin up a Puck editor.
+ * page in your application and add /edit to the end to spin up a Editor editor.
  *
  * This approach enables public pages to be statically rendered whilst the /puck route can
  * remain dynamic.
@@ -26,7 +26,7 @@ export async function generateMetadata({
   const path = `/${puckPath.join("/")}`;
 
   return {
-    title: "Puck: " + path,
+    title: "Editor: " + path,
   };
 }
 

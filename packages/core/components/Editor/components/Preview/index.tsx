@@ -11,7 +11,7 @@ import { BubbledPointerEvent } from "../../../../lib/bubble-pointer-event";
 import { useSlots } from "../../../../lib/use-slots";
 import { useRichtextProps } from "../../../RichTextEditor/lib/use-richtext-props";
 
-const getClassName = getClassNameFactory("PuckPreview", styles);
+const getClassName = getClassNameFactory("EditorPreview", styles);
 
 type PageProps = DefaultRootRenderProps;
 

@@ -1,4 +1,4 @@
-import { Puck, type Data, type Config } from "@puckeditor/core";
+import { Editor, type Data, type Config } from "@puckeditor/core";
 import { createAiPlugin } from "@puckeditor/plugin-ai";
 import styles from "@puckeditor/core/puck.css";
 import pluginStyles from "@puckeditor/plugin-ai/styles.css";
@@ -55,7 +55,7 @@ export default function Edit() {
   const submit = useSubmit();
 
   return (
-    <Puck
+    <Editor
       plugins={[aiPlugin]}
       config={puckConfig as Config}
       data={initialData}

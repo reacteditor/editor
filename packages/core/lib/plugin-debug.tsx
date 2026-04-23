@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { createUsePuck } from "./use-puck";
+import { createUseEditor } from "./use-puck";
 import { Plugin } from "../types";
 import { ActionBar } from "../components/ActionBar";
 import { IconButton } from "../components/IconButton";
 import { LogsIcon } from "lucide-react";
 import { useAppStoreApi } from "../store";
 
-const usePuck = createUsePuck();
+const useEditor = createUseEditor();
 
 export const debugPlugin: Plugin = {
   overrides: {
     actionBar: ({ children, parentAction }) => {
-      const item = usePuck((s) => s.selectedItem);
+      const item = useEditor((s) => s.selectedItem);
       return (
         <ActionBar>
           <ActionBar.Group>

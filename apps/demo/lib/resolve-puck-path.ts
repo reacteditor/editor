@@ -1,4 +1,4 @@
-const resolvePuckPath = (puckPath: string[] = []) => {
+const resolveEditorPath = (puckPath: string[] = []) => {
   const hasPath = puckPath.length > 0;
 
   const isEdit = hasPath ? puckPath[puckPath.length - 1] === "edit" : false;
@@ -12,4 +12,4 @@ const resolvePuckPath = (puckPath: string[] = []) => {
   };
 };
 
-export default resolvePuckPath;
+export default resolveEditorPath;

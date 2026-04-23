@@ -1,4 +1,4 @@
-import { Puck, type Data, type Config } from "@puckeditor/core";
+import { Editor, type Data, type Config } from "@puckeditor/core";
 import styles from "@puckeditor/core/puck.css";
 import type {
   ActionFunctionArgs,
@@ -50,7 +50,7 @@ export default function Edit() {
   const submit = useSubmit();
 
   return (
-    <Puck
+    <Editor
       config={puckConfig as Config}
       data={initialData}
       onPublish={async (data: Data) => {

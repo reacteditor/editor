@@ -86,7 +86,7 @@ export type UnregisterZoneAction = {
   zone: string;
 };
 
-export type PuckAction = { recordHistory?: boolean } & (
+export type EditorAction = { recordHistory?: boolean } & (
   | ReorderAction
   | InsertAction
   | InsertTreeAction

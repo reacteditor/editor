@@ -91,12 +91,12 @@ const ArrayFieldItemInternal = ({
   name?: string;
   localName?: string;
 }) => {
-  // NB this will prevent array fields from being used outside of Puck
+  // NB this will prevent array fields from being used outside of Editor
   const isExpanded = useAppStore((s) => {
     return s.state.ui.arrayState[arrayId]?.openId === id;
   });
 
-  // NB this will prevent array fields from being used outside of Puck
+  // NB this will prevent array fields from being used outside of Editor
   const canEdit = useAppStore(
     (s) => s.permissions.getPermissions({ item: s.selectedItem }).edit
   );

@@ -33,7 +33,7 @@ function debounce(func: Function, timeout = 300) {
   };
 }
 
-export type PuckHistory = {
+export type EditorHistory = {
   back: VoidFunction;
   forward: VoidFunction;
   setHistories: (histories: History[]) => void;

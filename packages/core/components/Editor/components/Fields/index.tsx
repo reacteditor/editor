@@ -21,7 +21,7 @@ import { useShallow } from "zustand/react/shallow";
 import { StoreApi } from "zustand";
 import { Link } from "lucide-react";
 
-const getClassName = getClassNameFactory("PuckFields", styles);
+const getClassName = getClassNameFactory("EditorFields", styles);
 
 const DefaultFields = ({
   children,
@@ -228,7 +228,7 @@ const GlobalSyncButton = () => {
 
   const syncButtonClass = [
     getClassName("syncButton"),
-    isUnlinked ? styles["PuckFields-syncButton--unlinked"] : null,
+    isUnlinked ? styles["EditorFields-syncButton--unlinked"] : null,
   ]
     .filter(Boolean)
     .join(" ");

@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useState } from "react";
 
 import styles from "./HeadingAnalyzer.module.css";
 
-import { createUsePuck } from "@puckeditor/core";
+import { createUseEditor } from "@puckeditor/core";
 import { Plugin } from "@/core/types";
 import { OutlineList } from "@/core/components/OutlineList";
 
@@ -100,10 +100,10 @@ function buildHierarchy(frame: Element | Document): Block[] {
   return root.children;
 }
 
-const usePuck = createUsePuck();
+const useEditor = createUseEditor();
 
 export const HeadingAnalyzer = () => {
-  const data = usePuck((s) => s.appState.data);
+  const data = useEditor((s) => s.appState.data);
   const [hierarchy, setHierarchy] = useState<Block[]>([]);
 
   // Re-render when content changes

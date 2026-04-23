@@ -1,16 +1,16 @@
 import { useFetcher, useLoaderData } from "react-router";
 import type { Data } from "@puckeditor/core";
-import { Puck, Render } from "@puckeditor/core";
+import { Editor, Render } from "@puckeditor/core";
 
 import type { Route } from "./+types/puck-splat";
 import { config } from "../../puck.config";
-import { resolvePuckPath } from "~/lib/resolve-puck-path.server";
+import { resolveEditorPath } from "~/lib/resolve-puck-path.server";
 import { getPage, savePage } from "~/lib/pages.server";
 import editorStyles from "@puckeditor/core/puck.css?url";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const pathname = params["*"] ?? "/";
-  const { isEditorRoute, path } = resolvePuckPath(pathname);
+  const { isEditorRoute, path } = resolveEditorPath(pathname);
   let page = await getPage(path);
 
   // Throw a 404 if we're not rendering the editor and data for the page does not exist
@@ -49,7 +49,7 @@ export function meta({ data: loaderData }: Route.MetaArgs) {
 
 export async function action({ params, request }: Route.ActionArgs) {
   const pathname = params["*"] ?? "/";
-  const { path } = resolvePuckPath(pathname);
+  const { path } = resolveEditorPath(pathname);
   const body = (await request.json()) as { data: Data };
 
   await savePage(path, body.data);
@@ -62,7 +62,7 @@ function Editor() {
   return (
     <>
       <link rel="stylesheet" href={editorStyles} id="puck-css" />
-      <Puck
+      <Editor
         config={config}
         data={loaderData.data}
         onPublish={async (data) => {
@@ -82,7 +82,7 @@ function Editor() {
   );
 }
 
-export default function PuckSplatRoute({ loaderData }: Route.ComponentProps) {
+export default function EditorSplatRoute({ loaderData }: Route.ComponentProps) {
   return (
     <div>
       {loaderData.isEditorRoute ? (

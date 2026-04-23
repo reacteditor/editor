@@ -5,7 +5,7 @@ import {
   EditorState,
   RichTextSelector,
 } from "../components/RichTextEditor/types";
-import { PuckRichTextOptions } from "../components/RichTextEditor/extension";
+import { EditorRichTextOptions } from "../components/RichTextEditor/extension";
 
 type FieldOption = {
   label: string;
@@ -62,7 +62,7 @@ export interface RichtextField<
   type: "richtext";
   contentEditable?: boolean;
   initialHeight?: CSSProperties["height"];
-  options?: Partial<PuckRichTextOptions>;
+  options?: Partial<EditorRichTextOptions>;
   renderMenu?: (props: {
     children: ReactNode;
     editor: Editor | null;

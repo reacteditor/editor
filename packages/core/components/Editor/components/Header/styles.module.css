@@ -1,4 +1,4 @@
-.PuckHeader {
+.EditorHeader {
   background: var(--fe-surface-panel);
   border-bottom: 1px solid var(--fe-border-subtle);
   color: var(--fe-text-primary);
@@ -8,16 +8,16 @@
 }
 
 @media (min-width: 638px) {
-  .PuckHeader {
+  .EditorHeader {
     padding-left: 43px;
   }
 
-  .PuckHeader--hidePlugins {
+  .EditorHeader--hidePlugins {
     padding-left: 0;
   }
 }
 
-.PuckHeader-inner {
+.EditorHeader-inner {
   align-items: center;
   display: grid;
   gap: var(--fe-space-px);
@@ -29,43 +29,43 @@
 }
 
 @media (min-width: 638px) {
-  .PuckHeader-inner {
+  .EditorHeader-inner {
     border-left: 1px solid var(--fe-border-subtle);
   }
 
-  .PuckHeader--hidePlugins .PuckHeader-inner {
+  .EditorHeader--hidePlugins .EditorHeader-inner {
     border-left: none;
   }
 }
 
-.PuckHeader-toggle {
+.EditorHeader-toggle {
   color: var(--fe-text-tertiary);
   display: flex;
   margin-inline-start: -4px;
 }
 
-.PuckHeader--rightSideBarVisible .PuckHeader-rightSideBarToggle,
-.PuckHeader--leftSideBarVisible .PuckHeader-leftSideBarToggle {
+.EditorHeader--rightSideBarVisible .EditorHeader-rightSideBarToggle,
+.EditorHeader--leftSideBarVisible .EditorHeader-leftSideBarToggle {
   color: var(--fe-text-primary);
 }
 
-.PuckHeader-rightSideBarToggle,
-.PuckHeader-leftSideBarToggle {
+.EditorHeader-rightSideBarToggle,
+.EditorHeader-leftSideBarToggle {
   display: none;
 }
 
 @media (min-width: 638px) {
-  .PuckHeader-rightSideBarToggle,
-  .PuckHeader-leftSideBarToggle {
+  .EditorHeader-rightSideBarToggle,
+  .EditorHeader-leftSideBarToggle {
     display: block;
   }
 }
 
-.PuckHeader-title {
+.EditorHeader-title {
   align-self: center;
 }
 
-.PuckHeader-path {
+.EditorHeader-path {
   font-family: var(--fe-font-family-monospaced);
   font-size: var(--fe-font-size-xxs);
   font-weight: normal;
@@ -76,27 +76,27 @@
    header. Shared Select primitive already supplies surface / border / radius
    / hover / focus styling via --fe-* tokens; this just tightens typography
    to match the header chrome. */
-.PuckHeader-routeSelect {
+.EditorHeader-routeSelect {
   font-weight: 600;
 }
 
-.PuckHeader-tools {
+.EditorHeader-tools {
   display: flex;
   gap: 16px;
   justify-content: flex-end;
 }
 
-.PuckHeader-menuButton {
+.EditorHeader-menuButton {
   color: var(--fe-text-tertiary);
   margin-inline-start: -4px;
 }
 
-.PuckHeader--menuOpen .PuckHeader-menuButton {
+.EditorHeader--menuOpen .EditorHeader-menuButton {
   color: var(--fe-text-primary);
 }
 
 @media (min-width: 638px) {
-  .PuckHeader-menuButton {
+  .EditorHeader-menuButton {
     display: none;
   }
 }
