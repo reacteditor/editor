@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import config, { componentKey } from "../config";
 import { getInitialData, initialData } from "../config/initial-data";
-import { Metadata, resolveAllData } from "@/core";
+import { GlobalData, Metadata, resolveAllData } from "@/core";
 import { Components, UserData } from "../config/types";
 import { RootProps } from "../config/root";
 
@@ -18,6 +18,8 @@ export const useDemoData = ({
 }) => {
   // unique b64 key that updates each time we add / remove components
   const key = `puck-demo:${componentKey}:${path}`;
+  // Globals are shared across all pages — one key, no path.
+  const globalsKey = `puck-demo-globals:${componentKey}`;
 
   const [data] = useState<Partial<UserData>>(() => {
     if (isBrowser) {
@@ -29,6 +31,12 @@ export const useDemoData = ({
 
       return getInitialData(path);
     }
+  });
+
+  const [globalData, setGlobalData] = useState<GlobalData>(() => {
+    if (!isBrowser) return {};
+    const stored = localStorage.getItem(globalsKey);
+    return stored ? JSON.parse(stored) : {};
   });
 
   // Normally this would happen on the server, but we can't
@@ -50,5 +58,5 @@ export const useDemoData = ({
     }
   }, [data, isEdit]);
 
-  return { data, resolvedData, key };
+  return { data, resolvedData, globalData, setGlobalData, key, globalsKey };
 };

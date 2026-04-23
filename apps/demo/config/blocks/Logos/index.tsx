@@ -18,6 +18,7 @@ const GOOGLE_LOGO =
   "https://logolook.net/wp-content/uploads/2021/06/Google-Logo.png";
 
 export const Logos: ComponentConfig<LogosProps> = {
+  global: true,
   fields: {
     logos: {
       type: "array",

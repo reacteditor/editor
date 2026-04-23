@@ -12,11 +12,12 @@ export function Client({ path, isEdit }: { path: string; isEdit: boolean }) {
     example: "Hello, world",
   };
 
-  const { data, resolvedData, key } = useDemoData({
-    path,
-    isEdit,
-    metadata,
-  });
+  const { data, resolvedData, globalData, setGlobalData, key, globalsKey } =
+    useDemoData({
+      path,
+      isEdit,
+      metadata,
+    });
 
   const [isClient, setIsClient] = useState(false);
 
@@ -34,6 +35,11 @@ export function Client({ path, isEdit }: { path: string; isEdit: boolean }) {
         <Puck
           config={config}
           data={data}
+          globalData={globalData}
+          onGlobalsChange={(next) => {
+            setGlobalData(next);
+            localStorage.setItem(globalsKey, JSON.stringify(next));
+          }}
           onPublish={async (data) => {
             localStorage.setItem(key, JSON.stringify(data));
           }}
@@ -82,7 +88,14 @@ export function Client({ path, isEdit }: { path: string; isEdit: boolean }) {
   }
 
   if (data.content) {
-    return <Render config={config} data={resolvedData} metadata={metadata} />;
+    return (
+      <Render
+        config={config}
+        data={resolvedData}
+        globalData={globalData}
+        metadata={metadata}
+      />
+    );
   }
 
   return (
