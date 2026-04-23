@@ -1,9 +1,46 @@
 import { UserData } from "./types";
 import { performanceData, performancePath } from "./fixtures/performance";
 
+const defaultHeaderProps = {
+  logo: "LOGO",
+  navItems: [
+    { label: "Home", href: "/" },
+    { label: "Pricing", href: "/pricing" },
+    { label: "About", href: "/about" },
+  ],
+};
+
+const defaultFooterProps = {
+  sections: [
+    {
+      title: "Section",
+      links: [
+        { label: "Label", href: "#" },
+        { label: "Label", href: "#" },
+        { label: "Label", href: "#" },
+        { label: "Label", href: "#" },
+      ],
+    },
+    {
+      title: "Section",
+      links: [
+        { label: "Label", href: "#" },
+        { label: "Label", href: "#" },
+        { label: "Label", href: "#" },
+        { label: "Label", href: "#" },
+      ],
+    },
+  ],
+  byline: "Made with Puck",
+};
+
 export const initialData: Record<string, UserData> = {
   "/": {
     content: [
+      {
+        type: "SiteHeader",
+        props: { id: "SiteHeader-home", ...defaultHeaderProps },
+      },
       {
         type: "Hero",
         props: {
@@ -398,16 +435,38 @@ export const initialData: Record<string, UserData> = {
           direction: "vertical",
         },
       },
+      {
+        type: "SiteFooter",
+        props: { id: "SiteFooter-home", ...defaultFooterProps },
+      },
     ],
     root: { props: { title: "Puck Example" } },
     zones: {},
   },
   "/pricing": {
-    content: [],
+    content: [
+      {
+        type: "SiteHeader",
+        props: { id: "SiteHeader-pricing", ...defaultHeaderProps },
+      },
+      {
+        type: "SiteFooter",
+        props: { id: "SiteFooter-pricing", ...defaultFooterProps },
+      },
+    ],
     root: { props: { title: "Pricing" } },
   },
   "/about": {
-    content: [],
+    content: [
+      {
+        type: "SiteHeader",
+        props: { id: "SiteHeader-about", ...defaultHeaderProps },
+      },
+      {
+        type: "SiteFooter",
+        props: { id: "SiteFooter-about", ...defaultFooterProps },
+      },
+    ],
     root: { props: { title: "About Us" } },
   },
 };

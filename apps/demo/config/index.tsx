@@ -10,6 +10,8 @@ import {
   Megaphone,
   MousePointerClick,
   Move,
+  PanelTop,
+  PanelBottom,
   ShoppingBag,
   Type,
 } from "lucide-react";
@@ -27,6 +29,8 @@ import { Text } from "./blocks/Text";
 import { Space } from "./blocks/Space";
 import { RichText } from "./blocks/RichText";
 import { ShopifyProduct } from "./blocks/ShopifyProduct";
+import { SiteHeader } from "./blocks/SiteHeader";
+import { SiteFooter } from "./blocks/SiteFooter";
 
 import Root from "./root";
 import { UserConfig } from "./types";
@@ -41,6 +45,7 @@ export const conf: UserConfig = {
     interactive: { title: "Actions" },
     other: { title: "Other" },
     commerce: { title: "Commerce" },
+    site: { title: "Site" },
   },
   components: {
     Button,
@@ -56,6 +61,8 @@ export const conf: UserConfig = {
     Space,
     RichText,
     ShopifyProduct,
+    SiteHeader,
+    SiteFooter,
   },
   blocks: {
     Grid: {
@@ -156,6 +163,18 @@ export const conf: UserConfig = {
           ],
         },
       },
+    },
+    SiteHeader: {
+      label: "Site header",
+      icon: <PanelTop size={16} />,
+      category: "site",
+      component: "SiteHeader",
+    },
+    SiteFooter: {
+      label: "Site footer",
+      icon: <PanelBottom size={16} />,
+      category: "site",
+      component: "SiteFooter",
     },
   },
 };

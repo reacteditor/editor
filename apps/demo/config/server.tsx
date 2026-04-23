@@ -11,6 +11,8 @@ import { Text } from "./blocks/Text";
 import { Space } from "./blocks/Space";
 import { RichText } from "./blocks/RichText";
 import { ShopifyProduct } from "./blocks/ShopifyProduct";
+import { SiteHeader } from "./blocks/SiteHeader";
+import { SiteFooter } from "./blocks/SiteFooter";
 import Root from "./root";
 import { UserConfig } from "./types";
 
@@ -23,6 +25,7 @@ const conf: UserConfig = {
     interactive: { title: "Actions" },
     other: { title: "Other" },
     commerce: { title: "Commerce" },
+    site: { title: "Site" },
   },
   components: {
     Button,
@@ -38,6 +41,8 @@ const conf: UserConfig = {
     Space,
     RichText,
     ShopifyProduct,
+    SiteHeader,
+    SiteFooter,
   },
 };
 

@@ -14,6 +14,8 @@ import { ShopifyProductProps } from "./blocks/ShopifyProduct";
 
 import { RootProps } from "./root";
 import { RichTextProps } from "./blocks/RichText";
+import { SiteHeaderProps } from "./blocks/SiteHeader";
+import { SiteFooterProps } from "./blocks/SiteFooter";
 
 export type { RootProps } from "./root";
 
@@ -31,12 +33,14 @@ export type Components = {
   Space: SpaceProps;
   RichText: RichTextProps;
   ShopifyProduct: ShopifyProductProps;
+  SiteHeader: SiteHeaderProps;
+  SiteFooter: SiteFooterProps;
 };
 
 export type UserConfig = Config<{
   components: Components;
   root: RootProps;
-  categories: ["layout", "typography", "interactive", "other", "commerce"];
+  categories: ["layout", "typography", "interactive", "other", "commerce", "site"];
   fields: {
     userField: {
       type: "userField";
