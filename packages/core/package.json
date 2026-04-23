@@ -1,13 +1,13 @@
 {
-  "name": "@puckeditor/core",
-  "version": "0.21.2",
+  "name": "@frontend/core",
+  "version": "0.1.0",
   "description": "The open-source visual editor for React",
-  "author": "Chris Villa <chris@puckeditor.com>",
-  "repository": "puckeditor/puck",
-  "bugs": "https://github.com/puckeditor/puck/issues",
-  "homepage": "https://puckeditor.com",
+  "author": "Rami Bitar <rami@frontend.co>",
+  "repository": "frontend-inc/frontend-visual-editor",
+  "bugs": "https://github.com/frontend-inc/frontend-visual-editor/issues",
+  "homepage": "https://frontend.co",
   "keywords": [
-    "puck",
+    "editor",
     "visual",
     "editor",
     "react",
@@ -50,7 +50,7 @@
       "import": "./dist/internal.mjs",
       "require": "./dist/internal.js"
     },
-    "./puck.css": "./dist/index.css",
+    "./frontend.css": "./dist/index.css",
     "./no-external.css": "./dist/no-external.css",
     "./dist/index.css": "./dist/index.css",
     "./package.json": "./package.json"

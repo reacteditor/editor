@@ -7,12 +7,12 @@ title: outlinePlugin
 Show an outline of the components currently on the canvas.
 
 ```tsx copy
-import { Puck, outlinePlugin } from "@puckeditor/core";
+import { Editor, outlinePlugin } from "@frontend/core";
 
 const outline = outlinePlugin();
 
 export function Editor() {
-  return <Puck plugins={[outline]} />;
+  return <Editor plugins={[outline]} />;
 }
 ```
 

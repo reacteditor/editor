@@ -13,7 +13,7 @@ The [`<DropZone>` component](/docs/api-reference/components/drop-zone) component
 Place droppable regions (zones) inside other components to enable nested components.
 
 ```tsx {1,9} copy
-import { DropZone } from "@puckeditor/core";
+import { DropZone } from "@frontend/core";
 
 const config = {
   components: {
@@ -111,7 +111,7 @@ const config = {
 
 ### `collisionAxis`
 
-Configure which axis Puck will use for overlap collision detection.
+Configure which axis Frontend will use for overlap collision detection.
 
 Options:
 
@@ -228,4 +228,4 @@ const config = {
 
 By default, DropZones don't work with React server components as they rely on context.
 
-Instead, you can use the [`renderDropZone` method](/docs/api-reference/configuration/component-config#propspuckrenderdropzone) passed to your component render function.
+Instead, you can use the [`renderDropZone` method](/docs/api-reference/configuration/component-config#propseditorrenderdropzone) passed to your component render function.

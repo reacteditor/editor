@@ -1,0 +1,237 @@
+/*
+ * Editor's responsive layout uses minimum viewport widths slightly _below_ common
+ * framework/device breakpoints, and ensures that the width of the resulting
+ * Editor page preview (zoomed at 75%) is slightly _above_ common framework/device
+ * breakpoints. This can help alleviate some of the pain when editing responsive
+ * pages in a preview area that is narrower than the reported viewport width.
+ *
+ * Viewport | Editor page @ zoom 0.75
+ * --------------------------------
+ * -        | 322px
+ * 766px    | 322px
+ * 990px    | 604px
+ * 1022px   | 646px
+ * 1198px   | 801px
+ * 1398px   | 1025px
+ * 1598px   | 1212px
+ */
+
+.Editor {
+  --fe-space-px: 16px;
+  color: var(--fe-text-primary);
+  font-family: var(--fe-font-family);
+  overflow-x: hidden;
+}
+
+@media (min-width: 766px) {
+  .Editor {
+    overflow-x: auto;
+  }
+}
+
+.Editor-portal {
+  position: relative;
+  z-index: 2;
+}
+
+.EditorLayout {
+  height: 100dvh;
+}
+
+.EditorLayout-inner {
+  --fe-frame-width: auto;
+  --fe-side-nav-width: min-content;
+  --fe-side-bar-width: 0px;
+  --fe-left-side-bar-width: var(
+    --fe-user-left-side-bar-width,
+    var(--fe-side-bar-width)
+  );
+  --fe-right-side-bar-width: var(
+    --fe-user-right-side-bar-width,
+    var(--fe-side-bar-width)
+  );
+  background-color: var(--fe-surface-app);
+  display: grid;
+  grid-template-areas: "header" "editor" "left" "right" "sidenav";
+  grid-template-columns: var(--fe-frame-width);
+  grid-template-rows: min-content auto 0 0 var(--fe-side-nav-width);
+  height: 100%;
+  position: relative;
+  transition: grid-template-rows 150ms ease-in;
+  z-index: 0;
+  overflow: hidden;
+}
+
+@media (min-width: 638px) {
+  .EditorLayout-inner {
+    --fe-side-nav-width: 44px;
+    grid-template-areas: "header header header header" "sidenav left editor right";
+    grid-template-columns: var(--fe-side-nav-width) 0 var(--fe-frame-width) 0;
+    grid-template-rows: min-content auto;
+  }
+
+  .Editor--hidePlugins .EditorLayout-inner {
+    --fe-side-nav-width: 0;
+  }
+}
+
+.EditorLayout--mounted .EditorLayout-inner {
+  --fe-side-bar-width: 186px;
+}
+
+.EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
+  .EditorLayout-inner {
+  /* Setting header to 0 causes jump as it can't be animated. Can't use fixed number as we don't know user's header dimensions. Consider using ref + JS. */
+  grid-template-rows: 0 auto 30% 0 var(--fe-side-nav-width);
+}
+
+.EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible.EditorLayout--isExpanded
+  .EditorLayout-inner {
+  /* Setting header to 0 causes jump as it can't be animated. Can't use fixed number as we don't know user's header dimensions. Consider using ref + JS. */
+  grid-template-rows: 0 auto 55% 0 var(--fe-side-nav-width);
+}
+
+@media (min-width: 638px) {
+  .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
+    .EditorLayout-inner {
+    grid-template-columns:
+      var(--fe-side-nav-width) var(--fe-left-side-bar-width) var(
+        --fe-frame-width
+      )
+      0;
+    grid-template-rows: min-content auto;
+  }
+}
+
+.EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible
+  .EditorLayout-inner,
+.EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible.EditorLayout--isExpanded
+  .EditorLayout-inner {
+  /* Setting header to 0 causes jump as it can't be animated. Can't use fixed number as we don't know user's header dimensions. Consider using ref + JS. */
+  grid-template-rows: 0 auto min-content 0 var(--fe-side-nav-width);
+}
+
+@media (min-width: 638px) {
+  .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
+    .EditorLayout-inner,
+  .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible.EditorLayout--isExpanded
+    .EditorLayout-inner,
+  .EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible
+    .EditorLayout-inner,
+  .EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible.EditorLayout--isExpanded
+    .EditorLayout-inner {
+    grid-template-columns:
+      var(--fe-side-nav-width) var(--fe-left-side-bar-width) var(
+        --fe-frame-width
+      )
+      0;
+    grid-template-rows: min-content auto;
+  }
+}
+
+@media (min-width: 638px) {
+  .EditorLayout--rightSideBarVisible .EditorLayout-inner {
+    grid-template-columns:
+      var(--fe-side-nav-width) 0 var(--fe-frame-width)
+      var(--fe-right-side-bar-width);
+  }
+}
+
+@media (min-width: 638px) {
+  .EditorLayout--leftSideBarVisible.EditorLayout--rightSideBarVisible
+    .EditorLayout-inner {
+    grid-template-columns:
+      var(--fe-side-nav-width) var(--fe-left-side-bar-width) var(
+        --fe-frame-width
+      )
+      var(--fe-right-side-bar-width);
+  }
+}
+
+@media (min-width: 458px) {
+  .EditorLayout-mounted .EditorLayout-inner {
+    --fe-frame-width: minmax(266px, auto);
+  }
+}
+
+@media (min-width: 638px) {
+  .EditorLayout .EditorLayout-inner {
+    --fe-side-bar-width: minmax(186px, 250px);
+  }
+}
+
+@media (min-width: 766px) {
+  .EditorLayout .EditorLayout-inner {
+    --fe-frame-width: auto;
+  }
+}
+
+@media (min-width: 990px) {
+  .EditorLayout .EditorLayout-inner {
+    --fe-side-bar-width: 256px;
+  }
+}
+
+@media (min-width: 1198px) {
+  .EditorLayout .EditorLayout-inner {
+    --fe-side-bar-width: 274px;
+  }
+}
+
+@media (min-width: 1398px) {
+  .EditorLayout .EditorLayout-inner {
+    --fe-side-bar-width: 290px;
+  }
+}
+
+@media (min-width: 1598px) {
+  .EditorLayout .EditorLayout-inner {
+    --fe-side-bar-width: 320px;
+  }
+}
+
+.EditorLayout-nav {
+  border-top: 1px solid var(--fe-border-subtle);
+  background-color: var(--fe-surface-panel);
+  grid-area: sidenav;
+  overflow: hidden;
+  width: 100%;
+}
+
+@media (min-width: 638px) {
+  .EditorLayout-nav {
+    border-top: 0;
+    border-right: 1px solid var(--fe-border-subtle);
+    box-sizing: border-box;
+  }
+}
+
+.EditorLayout-header {
+  grid-area: header;
+}
+
+.EditorLayout--leftSideBarVisible .EditorLayout-header {
+  overflow: hidden;
+}
+
+@media (min-width: 638px) {
+  .EditorLayout--leftSideBarVisible .EditorLayout-header {
+    overflow: auto;
+  }
+}
+
+.EditorPluginTab {
+  display: none;
+  flex-grow: 1;
+  max-height: 100%;
+}
+
+.EditorPluginTab--visible {
+  display: flex;
+  flex-direction: column;
+}
+
+.EditorPluginTab-body {
+  flex-grow: 1;
+  max-height: 100%;
+}

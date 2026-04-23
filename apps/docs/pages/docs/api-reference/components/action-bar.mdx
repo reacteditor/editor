@@ -2,12 +2,12 @@
 title: <ActionBar>
 ---
 
-import { PuckPreview } from "@/docs/components/Preview";
-import { ActionBar } from "@/puck";
+import { EditorPreview } from "@/docs/components/Preview";
+import { ActionBar } from "@/editor";
 
 # \<ActionBar\>
 
-Render the Puck ActionBar. Use this when overriding the [actionBar](/docs/api-reference/overrides/action-bar).
+Render the Frontend ActionBar. Use this when overriding the [actionBar](/docs/api-reference/overrides/action-bar).
 
 ```tsx showLineNumbers copy
 <ActionBar label="Actions">
@@ -19,7 +19,7 @@ Render the Puck ActionBar. Use this when overriding the [actionBar](/docs/api-re
 </ActionBar>
 ```
 
-<PuckPreview>
+<EditorPreview>
   <div style={{ display: "flex" }}>
     <ActionBar label="Actions">
       <ActionBar.Group>
@@ -27,7 +27,7 @@ Render the Puck ActionBar. Use this when overriding the [actionBar](/docs/api-re
       </ActionBar.Group>
     </ActionBar>
   </div>
-</PuckPreview>
+</EditorPreview>
 
 ## Props
 

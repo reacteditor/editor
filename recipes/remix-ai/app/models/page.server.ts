@@ -1,4 +1,4 @@
-import { Data } from "@puckeditor/core";
+import { Data } from "@frontend/core";
 import fs from "fs";
 
 // Replace with call to your database

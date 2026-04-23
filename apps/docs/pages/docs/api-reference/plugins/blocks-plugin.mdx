@@ -7,12 +7,12 @@ title: blocksPlugin
 Show the component drawer for dragging new components onto the canvas.
 
 ```tsx copy
-import { Puck, blocksPlugin } from "@puckeditor/core";
+import { Editor, blocksPlugin } from "@frontend/core";
 
 const blocks = blocksPlugin();
 
 export function Editor() {
-  return <Puck plugins={[blocks]} />;
+  return <Editor plugins={[blocks]} />;
 }
 ```
 

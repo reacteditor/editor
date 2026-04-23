@@ -30,14 +30,14 @@
     "standard-changelog": "^2.0.21",
     "turbo": "^2.5.8"
   },
-  "name": "puck-repo",
+  "name": "frontend-visual-editor",
   "packageManager": "yarn@1.22.19",
   "workspaces": [
     "apps/*",
     "recipes/*",
     "packages/*"
   ],
-  "version": "0.21.2",
+  "version": "0.1.0",
   "engines": {
     "node": ">=20.0.0"
   }

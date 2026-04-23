@@ -7,7 +7,7 @@ title: <Render>
 Render a [`Data`](/docs/api-reference/data-model/data) object for a given [`Config`](/docs/api-reference/configuration/config).
 
 ```tsx copy showLineNumbers
-import { Render } from "@puckeditor/core";
+import { Render } from "@frontend/core";
 
 export function Example() {
   return <Render config={config} data={data} />;
@@ -86,8 +86,8 @@ export function Example() {
       metadata={{ title: "Hello, world" }}
       config={{
         HeadingBlock: {
-          render: ({ puck }) => {
-            return <h1>{puck.metadata.title}</h1>; // "Hello, world"
+          render: ({ editor }) => {
+            return <h1>{editor.metadata.title}</h1>; // "Hello, world"
           },
         },
       }}

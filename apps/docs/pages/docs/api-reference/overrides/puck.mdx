@@ -1,14 +1,14 @@
 ---
-title: puck
+title: editor
 ---
 
-# puck
+# editor
 
-Override the Puck children. This is the equivalent of passing in [`children`](/docs/api-reference/components/puck#children) to the [`<Puck>`](/docs/api-reference/components/puck) component.
+Override the Frontend children. This is the equivalent of passing in [`children`](/docs/api-reference/components/editor#children) to the [`<Editor>`](/docs/api-reference/components/editor) component.
 
 ```tsx copy
 const overrides = {
-  puck: ({ children }) => <div>{children}</div>,
+  editor: ({ children }) => <div>{children}</div>,
 };
 ```
 
@@ -20,4 +20,4 @@ const overrides = {
 
 ### `children`
 
-The default node for the [`<Puck>`](/docs/api-reference/components/puck) children.
+The default node for the [`<Editor>`](/docs/api-reference/components/editor) children.

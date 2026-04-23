@@ -8,18 +8,18 @@ Closes #XXXX
 
 ## Description
 
-This PR adds a `style` prop to the `Puck` component to allow customization of the editor layout styles.
+This PR adds a `style` prop to the `Frontend` component to allow customization of the editor layout styles.
 
 <!--
   Include a concise and clear description of what this PR does.
   Mention any considerations or reasons behind the changes.
   Highlight any breaking changes.
-  Keep the explanation centered around Puck.
+  Keep the explanation centered around Frontend.
  -->
 
 ## Changes made
 
-- The `Puck` component now receives an optional `style` prop and passes it to the editor `div` wrapper.
+- The `Frontend` component now receives an optional `style` prop and passes it to the editor `div` wrapper.
 
 <!--
   List the key changes made and the reasons behind them.
@@ -27,10 +27,10 @@ This PR adds a `style` prop to the `Puck` component to allow customization of th
 
 ## How to test
 
-- Render the `Puck` component with a two-column grid layout using the `style` prop and confirm it renders in two columns:
+- Render the `Frontend` component with a two-column grid layout using the `style` prop and confirm it renders in two columns:
 
 ```tsx
-<Puck style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }} />
+<Editor style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }} />
 ```
 
 <!--

@@ -2,7 +2,7 @@ import { FormInput } from "lucide-react";
 import { useAppStore } from "../../store";
 import { PluginInternal } from "../../types/Internal";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
-import { Fields } from "../../components/Puck/components/Fields";
+import { Fields } from "../../components/Editor/components/Fields";
 import styles from "./styles.module.css";
 import { getClassNameFactory } from "../../lib";
 

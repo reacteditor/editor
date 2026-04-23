@@ -39,7 +39,7 @@ import TextAlign, { TextAlignOptions } from "@tiptap/extension-text-align";
 import type { UnderlineOptions } from "@tiptap/extension-underline";
 import { Underline } from "@tiptap/extension-underline";
 
-export interface PuckRichTextOptions {
+export interface EditorRichTextOptions {
   /**
    * If set to false, the blockquote extension will not be registered
    * @example blockquote: false
@@ -155,20 +155,20 @@ export interface PuckRichTextOptions {
   underline: Partial<UnderlineOptions> | false;
 }
 
-export const defaultPuckRichTextOptions: Partial<PuckRichTextOptions> = {
+export const defaultEditorRichTextOptions: Partial<EditorRichTextOptions> = {
   textAlign: {
     types: ["heading", "paragraph"],
   },
 };
 
-export const PuckRichText = Extension.create<PuckRichTextOptions>({
-  name: "puckRichText",
+export const EditorRichText = Extension.create<EditorRichTextOptions>({
+  name: "editorRichText",
   addExtensions() {
     const extensions = [];
 
-    const options: Partial<PuckRichTextOptions> = {
+    const options: Partial<EditorRichTextOptions> = {
       ...this.options,
-      ...defaultPuckRichTextOptions,
+      ...defaultEditorRichTextOptions,
     };
 
     if (options.bold !== false) {

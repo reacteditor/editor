@@ -40,7 +40,7 @@ export const DrawerItemInner = ({
       ref={dragRef}
       onMouseDown={(e) => e.preventDefault()}
       data-testid={dragRef ? `drawer-item:${name}` : ""}
-      data-puck-drawer-item
+      data-editor-drawer-item
     >
       <CustomInner name={name}>
         <div className={getClassNameItem("draggableWrapper")}>
@@ -194,9 +194,9 @@ export const Drawer = ({
     <div
       className={getClassName({ [variant]: variant })}
       ref={ref}
-      data-puck-dnd={id}
-      data-puck-drawer
-      data-puck-dnd-void
+      data-editor-dnd={id}
+      data-editor-drawer
+      data-editor-dnd-void
     >
       {children}
     </div>

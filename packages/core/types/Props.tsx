@@ -1,8 +1,8 @@
 import { DropZoneProps } from "../components/DropZone/types";
 import { Metadata } from "./Data";
-import { WithChildren, WithPuckProps } from "./Utils";
+import { WithChildren, WithEditorProps } from "./Utils";
 
-export type PuckContext = {
+export type EditorContext = {
   renderDropZone: (props: DropZoneProps) => React.ReactNode;
   metadata: Metadata;
   isEditing: boolean;
@@ -15,7 +15,7 @@ export type DefaultRootFieldProps = {
 
 export type DefaultRootRenderProps<
   Props extends DefaultComponentProps = DefaultRootFieldProps
-> = WithPuckProps<WithChildren<Props>>;
+> = WithEditorProps<WithChildren<Props>>;
 
 export type DefaultRootProps = DefaultRootRenderProps; // Deprecated
 

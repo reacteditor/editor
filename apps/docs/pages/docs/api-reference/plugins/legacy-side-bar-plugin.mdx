@@ -7,12 +7,12 @@ title: legacySideBarPlugin
 Hide the plugin rail and show a single sidebar with stacked "Components" and "Outline" sections. This will not affect mobile behavior.
 
 ```tsx copy
-import { Puck, legacySideBarPlugin } from "@puckeditor/core";
+import { Editor, legacySideBarPlugin } from "@frontend/core";
 
 const legacySideBar = legacySideBarPlugin();
 
 export function Editor() {
-  return <Puck plugins={[legacySideBar]} />;
+  return <Editor plugins={[legacySideBar]} />;
 }
 ```
 

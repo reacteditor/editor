@@ -1,15 +1,15 @@
 ---
-title: <Puck.Outline>
+title: <Editor.Outline>
 ---
 
-import { PuckPreview } from "@/docs/components/Preview";
-import { Puck } from "@/puck";
+import { EditorPreview } from "@/docs/components/Preview";
+import { Editor } from "@/editor";
 
-# \<Puck.Outline\>
+# \<Editor.Outline\>
 
-Render an interactive outline of the current data payload when composing a custom Puck UI.
+Render an interactive outline of the current data payload when composing a custom Frontend UI.
 
-<PuckPreview
+<EditorPreview
   config={{
     components: {
       HeadingBlock: { render: () => <div>Hello world</div> },
@@ -21,21 +21,21 @@ Render an interactive outline of the current data payload when composing a custo
     content: [{ type: "HeadingBlock", props: { id: "HeadingBlock-123" } }],
   }}
 >
-  <Puck.Outline />
+  <Editor.Outline />
   {/* Outline doesn't render unless Preview is rendered due to zone flushing */}
   <div style={{ display: "none" }}>
-    <Puck.Preview />
+    <Editor.Preview />
   </div>
-</PuckPreview>
+</EditorPreview>
 
 ```tsx {12} showLineNumbers copy
-import { Puck } from "@puckeditor/core";
+import { Editor } from "@frontend/core";
 
 export function Editor() {
   return (
-    <Puck>
-      <Puck.Outline />
-    </Puck>
+    <Editor>
+      <Editor.Outline />
+    </Frontend>
   );
 }
 ```

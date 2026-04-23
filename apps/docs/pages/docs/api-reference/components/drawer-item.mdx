@@ -2,23 +2,23 @@
 title: <Drawer.Item>
 ---
 
-import { PuckPreview } from "@/docs/components/Preview";
-import { Drawer } from "@/puck";
+import { EditorPreview } from "@/docs/components/Preview";
+import { Drawer } from "@/editor";
 
 # \<Drawer.Item\>
 
 An item that can be dragged from a [`<Drawer>`](drawer).
 
 ```tsx {7} copy
-import { Puck, Drawer } from "@puckeditor/core";
+import { Editor, Drawer } from "@frontend/core";
 
 export function Editor() {
   return (
-    <Puck>
+    <Editor>
       <Drawer>
         <Drawer.Item name="Orange" />
       </Drawer>
-    </Puck>
+    </Frontend>
   );
 }
 ```
@@ -48,24 +48,24 @@ The name of this drawer item.
 A custom render function to render inside the component.
 
 ```tsx {8} copy
-import { Puck, Drawer } from "@puckeditor/core";
+import { Editor, Drawer } from "@frontend/core";
 
 export function Editor() {
   return (
-    <Puck>
+    <Editor>
       <Drawer>
         <Drawer.Item name="Orange">{() => <div>Orange 🍊</div>}</Drawer.Item>
       </Drawer>
-    </Puck>
+    </Frontend>
   );
 }
 ```
 
-<PuckPreview config={{}} data={{ root: { props: {} }, content: [] }}>
+<EditorPreview config={{}} data={{ root: { props: {} }, content: [] }}>
   <Drawer>
     <Drawer.Item name="Orange">{() => <div>Orange 🍊</div>}</Drawer.Item>
   </Drawer>
-</PuckPreview>
+</EditorPreview>
 
 #### Render Props
 
@@ -81,7 +81,7 @@ The original node for the drawer item.
 
 A unique id for this drawer item. Defaults to the value of [`name`](#name).
 
-If using the `<Drawer>` as a component list to be dragged into `<Puck.Preview>`, this should be the key of a component defined in the [Config](/docs/api-reference/configuration/config).
+If using the `<Drawer>` as a component list to be dragged into `<Editor.Preview>`, this should be the key of a component defined in the [Config](/docs/api-reference/configuration/config).
 
 ### `isDragDisabled`
 

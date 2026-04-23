@@ -2,12 +2,11 @@
   "packages": [
     "apps/docs",
     "packages/core",
-    "packages/create-puck-app",
+    "packages/create-frontend-app",
     "packages/field-contentful",
-    "packages/plugin-emotion-cache",
-    "packages/plugin-heading-analyzer"
+    "packages/plugin-tailwind-cdn"
   ],
-  "version": "0.21.2",
+  "version": "0.1.0",
   "npmClient": "yarn",
   "$schema": "node_modules/lerna/schemas/lerna-schema.json"
 }

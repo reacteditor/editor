@@ -8,8 +8,8 @@ describe("ServerRender", () => {
       components: {
         Section: {
           fields: {},
-          render: ({ puck }) => (
-            <div>{puck.renderDropZone({ zone: "content" })}</div>
+          render: ({ editor }) => (
+            <div>{editor.renderDropZone({ zone: "content" })}</div>
           ),
         },
         RichText: {

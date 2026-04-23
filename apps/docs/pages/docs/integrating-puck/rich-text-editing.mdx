@@ -1,10 +1,10 @@
-import { ConfigPreview, PuckPreview } from "@/docs/components/Preview";
-import { Puck, RichTextMenu } from "@/puck";
+import { ConfigPreview, EditorPreview } from "@/docs/components/Preview";
+import { Editor, RichTextMenu } from "@/editor";
 import { Callout } from "nextra/components";
 
 # Rich Text Editing
 
-Puck supports rich text editing via the [`richtext`](/docs/api-reference/fields/richtext) field.
+Frontend supports rich text editing via the [`richtext`](/docs/api-reference/fields/richtext) field.
 
 ## Adding a rich text field
 
@@ -41,7 +41,7 @@ const config = {
     },
   }}
 >
-  <Puck.Preview />
+  <Editor.Preview />
 </ConfigPreview>
 
 ## Enabling inline editing
@@ -82,7 +82,7 @@ const config = {
   }}
   hideActionBar={false}
 >
-  <Puck.Preview />
+  <Editor.Preview />
 </ConfigPreview>
 
 ## Customizing behavior
@@ -129,7 +129,7 @@ const config = {
     },
   }}
 >
-  <Puck.Preview />
+  <Editor.Preview />
 </ConfigPreview>
 
 ### Configuring extensions
@@ -173,7 +173,7 @@ const config = {
     },
   }}
 >
-  <Puck.Preview />
+  <Editor.Preview />
 </ConfigPreview>
 
 ## Customizing the menu bar
@@ -181,7 +181,7 @@ const config = {
 Use [`renderMenu()`](/docs/api-reference/fields/richtext#rendermenuprops) to customize the menu bar layout using the [`<RichTextMenu>`](/docs/api-reference/components/rich-text-menu) component:
 
 ```tsx showLineNumbers copy {1, 9-18}
-import { RichTextMenu } from "@puckeditor/core";
+import { RichTextMenu } from "@frontend/core";
 
 const config = {
   components: {
@@ -230,7 +230,7 @@ const config = {
     },
   }}
 >
-  <Puck.Preview />
+  <Editor.Preview />
 </ConfigPreview>
 
 <Callout type="info">
@@ -300,7 +300,7 @@ Then implement a new control with [`<RichTextMenu.Control>`](/docs/api-reference
 ```tsx copy showLineNumbers {2-3, 12-28}
 import Superscript from "@tiptap/extension-superscript";
 import { Superscript } from "lucide-react";
-import { RichTextMenu } from "@puckeditor/core";
+import { RichTextMenu } from "@frontend/core";
 
 const config = {
   components: {

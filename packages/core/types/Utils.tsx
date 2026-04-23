@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Config, ExtractConfigParams } from "./Config";
-import { DefaultRootFieldProps, PuckContext } from "./Props";
+import { DefaultRootFieldProps, EditorContext } from "./Props";
 import { ComponentData, Data } from "./Data";
 import { PrivateAppState } from "./Internal";
 import { AppState } from "./AppState";
@@ -9,11 +9,11 @@ export type WithId<Props> = Props & {
   id: string;
 };
 
-export type WithPuckProps<Props> = Props & {
-  puck: PuckContext;
+export type WithEditorProps<Props> = Props & {
+  editor: EditorContext;
   editMode?: boolean;
 };
-export type AsFieldProps<Props> = Omit<Props, "children" | "puck" | "editMode">;
+export type AsFieldProps<Props> = Omit<Props, "children" | "editor" | "editMode">;
 
 export type WithChildren<Props> = Props & {
   children: ReactNode;

@@ -1,13 +1,13 @@
 ---
-title: <Puck>
+title: <Editor>
 ---
 
-# \<Puck\>
+# \<Editor\>
 
-Render the Puck editor.
+Render the Frontend editor.
 
 ```tsx copy
-import { Puck } from "@puckeditor/core";
+import { Editor } from "@frontend/core";
 
 const config = {
   components: {},
@@ -19,7 +19,7 @@ const initialData = {
 };
 
 export function Editor() {
-  return <Puck config={config} data={initialData} />;
+  return <Editor config={config} data={initialData} />;
 }
 ```
 
@@ -30,7 +30,7 @@ export function Editor() {
 | [`config`](#config)                                               | `config: { components: {} }`                       | [Config](/docs/api-reference/configuration/config)                       | Required     |
 | [`data`](#data)                                                   | `data: {}`                                         | [Data](/docs/api-reference/data-model/data)                              | Required     |
 | [`dnd`](#dnd)                                                     | `dnd: {}`                                          | [DndConfig](#dnd-params)                                                 | -            |
-| [`children`](#children)                                           | `children: <Puck.Preview />`                       | ReactNode                                                                | -            |
+| [`children`](#children)                                           | `children: <Editor.Preview />`                       | ReactNode                                                                | -            |
 | [`fieldTransforms`](#fieldtransforms)                             | `fieldTransforms: {text: () => <div />}`           | [FieldTransforms](/docs/api-reference/field-transforms)                  | -            |
 | [`headerPath`](#headerpath)                                       | `headerPath: "/my-page"`                           | String                                                                   | -            |
 | [`headerTitle`](#headertitle)                                     | `headerTitle: "My Page"`                           | String                                                                   | -            |
@@ -57,7 +57,7 @@ An object describing the available components, fields and more. See the [`Config
 ```tsx {4-17} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       config={{
         components: {
           HeadingBlock: {
@@ -80,12 +80,12 @@ export function Editor() {
 
 ### `data`
 
-The initial data to render. Cannot be changed once `<Puck>` has been mounted. See the [`Data` docs](/docs/api-reference/data-model/data) for a full reference.
+The initial data to render. Cannot be changed once `<Editor>` has been mounted. See the [`Data` docs](/docs/api-reference/data-model/data) for a full reference.
 
 ```tsx {4-12} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       data={{
         content: [
           {
@@ -105,14 +105,14 @@ export function Editor() {
 
 ### `children`
 
-Render custom nodes to create [compositional interfaces](/docs/extending-puck/composition).
+Render custom nodes to create [compositional interfaces](/docs/extending-editor/composition).
 
 ```tsx {4} copy
 export function Editor() {
   return (
-    <Puck /*...*/>
-      <Puck.Preview />
-    </Puck>
+    <Editor /*...*/>
+      <Editor.Preview />
+    </Frontend>
   );
 }
 ```
@@ -138,7 +138,7 @@ Specify transforms to modify field values before being passed to the editor canv
 ```tsx {4} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       fieldTransforms={{
         text: ({ value }) => <div>{value}</div>, // Wrap all text field values in a div
       }}
@@ -155,7 +155,7 @@ Set a path to show after the header title
 ```tsx {4} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       headerPath="/my-page"
       // ...
     />
@@ -170,7 +170,7 @@ Set the title shown in the header
 ```tsx {4} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       headerTitle="My page"
       // ...
     />
@@ -180,12 +180,12 @@ export function Editor() {
 
 ### `height`
 
-Modify the height of the Puck editor when using the standard layout. Defaults to `100dvh`.
+Modify the height of the Frontend editor when using the standard layout. Defaults to `100dvh`.
 
 ```tsx {4} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       height="100%"
       // ...
     />
@@ -200,7 +200,7 @@ Configure the iframe behaviour.
 ```tsx {4} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       iframe={{ enabled: false }}
       // ...
     />
@@ -217,17 +217,17 @@ export function Editor() {
 
 ##### `enabled`
 
-Render the Puck preview within iframe. Defaults to `true`.
+Render the Frontend preview within iframe. Defaults to `true`.
 
 Disabling iframes will also disable [viewports](#viewports).
 
 ##### `waitForStyles`
 
-Defer rendering of the Puck preview until the iframe styles have loaded, showing a spinner. Defaults to `true`.
+Defer rendering of the Frontend preview until the iframe styles have loaded, showing a spinner. Defaults to `true`.
 
 ### `initialHistory`
 
-Sets the undo/redo Puck history state when using the `usePuck` [history API](/docs/api-reference/puck-api#history).
+Sets the undo/redo Frontend history state when using the `useEditor` [history API](/docs/api-reference/editor-api#history).
 
 ```tsx showLineNumbers copy {12-15}
 const historyState = {
@@ -240,7 +240,7 @@ const historyState = {
 
 export function Editor() {
   return (
-    <Puck
+    <Editor
       initialHistory={{
         histories: [{ state: historyState }],
         index: 0,
@@ -255,13 +255,13 @@ export function Editor() {
 
 | Param                       | Example             | Type                                                       | Status   |
 | --------------------------- | ------------------- | ---------------------------------------------------------- | -------- |
-| [`histories`](#histories)   | `histories: []`     | [History](/docs/api-reference/puck-api#history-params)\[\] | Required |
+| [`histories`](#histories)   | `histories: []`     | [History](/docs/api-reference/editor-api#history-params)\[\] | Required |
 | [`index`](#index)           | `index: 2`          | Number                                                     | Required |
 | [`appendData`](#appenddata) | `appendData: false` | Boolean                                                    | -        |
 
 ##### `histories`
 
-An array of histories to reset the Puck state history state to.
+An array of histories to reset the Frontend state history state to.
 
 ##### `index`
 
@@ -269,13 +269,13 @@ The index of the histories to set the user to.
 
 ##### `appendData`
 
-Append the Puck [`data`](#data) prop onto the end of [`histories`](#histories). Defaults to `true`.
+Append the Frontend [`data`](#data) prop onto the end of [`histories`](#histories). Defaults to `true`.
 
-When `false`, the Puck `data` prop will be ignored but you must specify at least one item in the `histories` array.
+When `false`, the Frontend `data` prop will be ignored but you must specify at least one item in the `histories` array.
 
 ### `onAction(action, appState, prevAppState)`
 
-Callback that triggers when Puck dispatches an [action](https://puckeditor.com/docs/api-reference/actions), like `insert` or `set`. Use this to track changes, perform side effects, or sync with external systems.
+Callback that triggers when Frontend dispatches an [action](https://editoreditor.com/docs/api-reference/actions), like `insert` or `set`. Use this to track changes, perform side effects, or sync with external systems.
 
 Receives three arguments:
 
@@ -286,7 +286,7 @@ Receives three arguments:
 ```tsx {4-8} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       onAction={(action, appState, prevAppState) => {
         if (action.type === "insert") {
           console.log("New component was inserted", appState);
@@ -305,12 +305,12 @@ An object containing additional data provided to each component's [`render`](/do
 ```tsx {4,8} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       metadata={{ title: "Hello, world" }}
       config={{
         HeadingBlock: {
-          render: ({ puck }) => {
-            return <h1>{puck.metadata.title}</h1>; // "Hello, world"
+          render: ({ editor }) => {
+            return <h1>{editor.metadata.title}</h1>; // "Hello, world"
           },
         },
       }}
@@ -329,9 +329,9 @@ Receives a single [`Data`](/docs/api-reference/data-model/data) arg.
 ```tsx {4-6} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       onChange={(data) => {
-        console.log("Puck data was updated", data);
+        console.log("Frontend data was updated", data);
       }}
       // ...
     />
@@ -341,14 +341,14 @@ export function Editor() {
 
 ### `onPublish(data)`
 
-Callback that triggers when the user hits the "Publish" button. Use this to save the Puck data to your database.
+Callback that triggers when the user hits the "Publish" button. Use this to save the Frontend data to your database.
 
 Receives a single [`Data`](/docs/api-reference/data-model/data) arg.
 
 ```tsx {4-9} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       onPublish={async (data) => {
         await fetch("/my-api", {
           method: "post",
@@ -363,12 +363,12 @@ export function Editor() {
 
 ### `overrides`
 
-An [`Overrides`](/docs/api-reference/overrides) object defining custom render methods for various parts of the Puck UI.
+An [`Overrides`](/docs/api-reference/overrides) object defining custom render methods for various parts of the Frontend UI.
 
 ```tsx {4-6} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       overrides={{
         header: () => <div />,
       }}
@@ -380,12 +380,12 @@ export function Editor() {
 
 ### `permissions`
 
-Set the global [permissions](/docs/api-reference/permissions) for the Puck instance to toggle Puck functionality.
+Set the global [permissions](/docs/api-reference/permissions) for the Frontend instance to toggle Frontend functionality.
 
 ```tsx {4-6} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       permissions={{
         delete: false, // Prevent deletion of all components
       }}
@@ -397,15 +397,17 @@ export function Editor() {
 
 ### `plugins`
 
-An array of plugins to enhance Puck's behaviour. See the [Plugin API reference](/docs/api-reference/plugin).
+An array of plugins to enhance Frontend's behaviour. See the [Plugin API reference](/docs/api-reference/plugin).
 
 ```tsx {6} copy
-import headingAnalyzer from "@puckeditor/plugin-heading-analyzer";
+import createTailwindCdnPlugin from "@frontend/plugin-tailwind-cdn";
+
+const tailwindCdn = createTailwindCdnPlugin();
 
 export function Editor() {
   return (
-    <Puck
-      plugins={[headingAnalyzer]}
+    <Editor
+      plugins={[tailwindCdn]}
       // ...
     />
   );
@@ -419,7 +421,7 @@ Set the initial application UI state. See [`AppState.ui`](/docs/api-reference/da
 ```tsx {5} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       // Hide the left side bar by default
       ui={{ leftSideBarVisible: false }}
       // ...
@@ -430,12 +432,12 @@ export function Editor() {
 
 ### `viewports`
 
-Configure the viewports available to the user, rendered as an iframe. Puck will select the most appropriate initial viewport based on the user's window size, unless otherwise specified via the [`ui`](#ui) prop.
+Configure the viewports available to the user, rendered as an iframe. Frontend will select the most appropriate initial viewport based on the user's window size, unless otherwise specified via the [`ui`](#ui) prop.
 
 ```tsx {4-8} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       viewports={[
         {
           width: 1440,
@@ -477,11 +479,11 @@ The icon to show in the viewport switcher. Can be:
 - `"Monitor"`
 - ReactNode
 
-Puck uses [Lucide icons](https://lucide.dev/icons/). You can use [lucide-react](https://lucide.dev/guide/packages/lucide-react) to choose a similar icon, if desired.
+Frontend uses [Lucide icons](https://lucide.dev/icons/). You can use [lucide-react](https://lucide.dev/guide/packages/lucide-react) to choose a similar icon, if desired.
 
 #### Default viewports
 
-By default, Puck exposes small, medium and large viewports based on common viewport sizes.
+By default, Frontend exposes small, medium and large viewports based on common viewport sizes.
 
 ```json
 [
@@ -514,12 +516,12 @@ By default, Puck exposes small, medium and large viewports based on common viewp
 
 ### `_experimentalFullScreenCanvas`
 
-Use a full-screen mode for the Puck canvas, with a floating viewport switcher. **This param is experimental.**
+Use a full-screen mode for the Frontend canvas, with a floating viewport switcher. **This param is experimental.**
 
 ```tsx {4-8} copy
 export function Editor() {
   return (
-    <Puck
+    <Editor
       _experimentalFullScreenCanvas
       // ...
     />

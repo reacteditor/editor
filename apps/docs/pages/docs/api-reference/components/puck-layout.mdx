@@ -1,16 +1,16 @@
 ---
-title: <Puck.Layout>
+title: <Editor.Layout>
 ---
 
-import { PuckPreview } from "@/docs/components/Preview";
-import { Puck } from "@/puck";
+import { EditorPreview } from "@/docs/components/Preview";
+import { Editor } from "@/editor";
 
-# \<Puck.Layout\>
+# \<Editor.Layout\>
 
-Render the standard Puck layout. This is useful for implementing behavior using the [internal Puck API](/docs/extending-puck/internal-puck-api) without changing the default UI.
+Render the standard Frontend layout. This is useful for implementing behavior using the [internal Frontend API](/docs/extending-editor/internal-editor-api) without changing the default UI.
 
 ```tsx {13} showLineNumbers copy
-import { Puck } from "@puckeditor/core";
+import { Editor } from "@frontend/core";
 
 const Example = ({ children }) => {
   useEffect(() => console.log("Hello, world"), []);
@@ -20,11 +20,11 @@ const Example = ({ children }) => {
 
 export function Editor() {
   return (
-    <Puck>
+    <Editor>
       <Example>
-        <Puck.Layout />
+        <Editor.Layout />
       </Example>
-    </Puck>
+    </Frontend>
   );
 }
 ```

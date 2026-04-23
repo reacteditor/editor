@@ -1,6 +1,6 @@
 import { Reducer } from "react";
 import { AppState, Data } from "../types";
-import { PuckAction } from "./actions";
+import { EditorAction } from "./actions";
 import type { OnAction } from "../types";
 import { AppStore } from "../store";
 import { PrivateAppState } from "../types/Internal";
@@ -27,7 +27,7 @@ export type ActionType = "insert" | "reorder";
 
 export type StateReducer<UserData extends Data = Data> = Reducer<
   PrivateAppState<UserData>,
-  PuckAction
+  EditorAction
 >;
 
 function storeInterceptor<UserData extends Data = Data>(
@@ -37,7 +37,7 @@ function storeInterceptor<UserData extends Data = Data>(
 ) {
   return (
     state: PrivateAppState<UserData>,
-    action: PuckAction
+    action: EditorAction
   ): PrivateAppState<UserData> => {
     const newAppState = reducer(state, action);
 

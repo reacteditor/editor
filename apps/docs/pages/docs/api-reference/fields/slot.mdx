@@ -1,9 +1,9 @@
 import {
   ConfigPreview,
-  PuckPreview,
+  EditorPreview,
   CodeBlockDrawer,
 } from "@/docs/components/Preview";
-import { usePuck } from "@/puck";
+import { useEditor } from "@/editor";
 
 # Slot
 
@@ -14,7 +14,7 @@ Define a drag-and-drop area containing nested components. Extends [Base](base).
 
 This field does render any UI in the form section.
 
-<PuckPreview
+<EditorPreview
   label="Example"
   renderDrawer={() => {
     return (
@@ -98,7 +98,7 @@ const config = {
 When using TypeScript, make sure to use the `Slot` type so the render prop is correctly transformed.
 
 ```tsx
-import { Slot } from "@puckeditor/core";
+import { Slot } from "@frontend/core";
 
 type Props = {
   Example: {
@@ -243,7 +243,7 @@ const config = {
 
 ### `collisionAxis`
 
-Configure which axis Puck will use for overlap collision detection.
+Configure which axis Frontend will use for overlap collision detection.
 
 Options:
 

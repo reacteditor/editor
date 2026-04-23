@@ -8,7 +8,7 @@ This guide will help you migrate from [`DropZones`](/docs/api-reference/componen
 
 ---
 
-[Slot fields](/docs/api-reference/fields/slot) replace the [`<DropZone>` component](/docs/api-reference/components/drop-zone), introducing an inline data model that supports [`defaultProps`](/docs/api-reference/configuration/component-config#defaultprops), [`resolveData`](/docs/api-reference/configuration/component-config#resolvedatadata-params) and [Server Components](/docs/integrating-puck/server-components) out-of-the-box.
+[Slot fields](/docs/api-reference/fields/slot) replace the [`<DropZone>` component](/docs/api-reference/components/drop-zone), introducing an inline data model that supports [`defaultProps`](/docs/api-reference/configuration/component-config#defaultprops), [`resolveData`](/docs/api-reference/configuration/component-config#resolvedatadata-params) and [Server Components](/docs/integrating-editor/server-components) out-of-the-box.
 
 ## Replace DropZone instances
 
@@ -106,11 +106,11 @@ The slot data model is inline and recursive. This means that instead of storing 
 
 ### Migrating legacy data
 
-For new slots, you don't need to do anything. If you're migrating existing DropZones to slots, you will need to migrate your the data accordingly. Puck provides the [`migrate()` helper](/docs/api-reference/functions/migrate) to help with this:
+For new slots, you don't need to do anything. If you're migrating existing DropZones to slots, you will need to migrate your the data accordingly. Frontend provides the [`migrate()` helper](/docs/api-reference/functions/migrate) to help with this:
 
 ```tsx
-import { migrate } from "@puckeditor/core";
-import config from "puck.config.tsx";
+import { migrate } from "@frontend/core";
+import config from "editor.config.tsx";
 
 const newData = migrate(legacyData, config);
 ```

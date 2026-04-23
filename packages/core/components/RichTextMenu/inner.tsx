@@ -36,7 +36,7 @@ const DefaultMenu = ({ children }: { children: ReactNode }) => {
 export const RichTextMenu = ({ children }: { children: ReactNode }) => {
   const { inline } = useControlContext();
   return (
-    <div className={getClassName({ inline, form: !inline })} data-puck-rte-menu>
+    <div className={getClassName({ inline, form: !inline })} data-editor-rte-menu>
       {children}
     </div>
   );

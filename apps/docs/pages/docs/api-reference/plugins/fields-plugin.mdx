@@ -7,12 +7,12 @@ title: fieldsPlugin
 Show the fields for the currently selected component. On desktop, the fields will appear in the right-hand sidebar. On mobile, they will appear in the plugin rail.
 
 ```tsx copy
-import { Puck, fieldsPlugin } from "@puckeditor/core";
+import { Editor, fieldsPlugin } from "@frontend/core";
 
 const fields = fieldsPlugin();
 
 export function Editor() {
-  return <Puck plugins={[fields]} />;
+  return <Editor plugins={[fields]} />;
 }
 ```
 

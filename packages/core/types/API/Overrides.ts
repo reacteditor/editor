@@ -15,7 +15,7 @@ export const overrideKeys = [
   "drawerItem",
   "componentOverlay",
   "outline",
-  "puck",
+  "editor",
   "preview",
 ] as const;
 
@@ -59,7 +59,7 @@ export type Overrides<UserConfig extends Config = Config> = OverridesGeneric<{
     componentId: string;
     componentType: string;
   }>;
-  puck: RenderFunc;
+  editor: RenderFunc;
 }>;
 
 export type FieldRenderFunctions<

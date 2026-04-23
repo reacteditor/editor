@@ -75,7 +75,7 @@ const config = {
 You can pass in available category names to the `Config` type if using TypeScript
 
 ```tsx copy {3}
-import type { Config } from "@puckeditor/core";
+import type { Config } from "@frontend/core";
 
 const config: Config<{}, {}, "typography" | "interactive"> = {
   categories: {
@@ -89,4 +89,4 @@ const config: Config<{}, {}, "typography" | "interactive"> = {
 ## Further reading
 
 - [`categories` API reference](/docs/api-reference/configuration/config#categories)
-- [`renderComponentList` API reference](/docs/api-reference/components/puck#rendercomponentlistparams)
+- [`renderComponentList` API reference](/docs/api-reference/components/editor#rendercomponentlistparams)

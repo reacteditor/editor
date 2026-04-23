@@ -2,8 +2,8 @@
 title: <ActionBar.Action>
 ---
 
-import { PuckPreview } from "@/docs/components/Preview";
-import { ActionBar } from "@/puck";
+import { EditorPreview } from "@/docs/components/Preview";
+import { ActionBar } from "@/editor";
 
 # \<ActionBar.Action\>
 
@@ -15,7 +15,7 @@ Render an action button in the [`<ActionBar>`](action-bar). Often used inside an
 </ActionBar>
 ```
 
-<PuckPreview>
+<EditorPreview>
   <div style={{ display: "flex" }}>
     <ActionBar>
       <ActionBar.Action onClick={() => console.log("Clicked!")}>
@@ -23,7 +23,7 @@ Render an action button in the [`<ActionBar>`](action-bar). Often used inside an
       </ActionBar.Action>
     </ActionBar>
   </div>
-</PuckPreview>
+</EditorPreview>
 
 ## Props
 
@@ -39,7 +39,7 @@ Render an action button in the [`<ActionBar>`](action-bar). Often used inside an
 
 A node to render as the children of the action. Should be a string or an icon.
 
-Puck uses [Lucide icons](https://lucide.dev/icons/). You can use [lucide-react](https://lucide.dev/guide/packages/lucide-react) to choose a similar icon, if desired.
+Frontend uses [Lucide icons](https://lucide.dev/icons/). You can use [lucide-react](https://lucide.dev/guide/packages/lucide-react) to choose a similar icon, if desired.
 
 ### `onClick(e)`
 

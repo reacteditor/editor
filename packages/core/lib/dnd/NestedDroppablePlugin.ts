@@ -77,12 +77,12 @@ const getPointerCollisions = (
   );
 
   const previewFrame = elements.find((el) =>
-    el.getAttribute("data-puck-preview")
+    el.getAttribute("data-editor-preview")
   );
 
   // Restrict to drawer element if pointer is over drawer. This is necessary if
   // the drawer is over dnd elements.
-  const drawer = elements.find((el) => el.getAttribute("data-puck-drawer"));
+  const drawer = elements.find((el) => el.getAttribute("data-editor-drawer"));
   if (drawer) {
     elements = [drawer];
   }
@@ -102,9 +102,9 @@ const getPointerCollisions = (
     for (let i = 0; i < elements.length; i++) {
       const element = elements[i];
 
-      const dropzoneId = element.getAttribute("data-puck-dropzone");
-      const id = element.getAttribute("data-puck-dnd");
-      const isVoid = element.hasAttribute("data-puck-dnd-void");
+      const dropzoneId = element.getAttribute("data-editor-dropzone");
+      const id = element.getAttribute("data-editor-dnd");
+      const isVoid = element.hasAttribute("data-editor-dnd-void");
 
       // Only include this candidate if we're within a threshold of the bounding box
       if (BUFFER && (dropzoneId || id) && !isVoid) {

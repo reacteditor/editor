@@ -1,2 +1,2 @@
-export { default } from "./[...puckPath]/page";
-export * from "./[...puckPath]/page";
+export { default } from "./[...editorPath]/page";
+export * from "./[...editorPath]/page";

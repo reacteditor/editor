@@ -36,7 +36,7 @@ function DropZoneRenderItem({
 
   const props = {
     ...item.props,
-    puck: {
+    editor: {
       renderDropZone: ({ zone }: { zone: string }) => (
         <DropZoneRender
           zone={zone}
@@ -120,7 +120,7 @@ export function Render<
 
   const props = {
     ...rootProps,
-    puck: {
+    editor: {
       renderDropZone: ({ zone }: { zone: string }) => (
         <DropZoneRender
           zone={zone}
@@ -135,7 +135,7 @@ export function Render<
     },
     title,
     editMode: false,
-    id: "puck-root",
+    id: "editor-root",
   };
 
   const propsWithSlots = useSlots(config, { type: "root", props }, (props) => (

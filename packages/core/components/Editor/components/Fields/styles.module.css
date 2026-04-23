@@ -1,0 +1,95 @@
+.EditorFields {
+  position: relative;
+  font-family: var(--fe-font-family);
+}
+
+.EditorFields--isLoading {
+  min-height: 48px; /* Ensure there is sufficient room for loader if no fields */
+}
+
+.EditorFields-loadingOverlay {
+  background: var(--fe-surface-panel);
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  position: absolute;
+  z-index: 1;
+  pointer-events: all;
+  box-sizing: border-box;
+  opacity: 0.8;
+}
+
+.EditorFields-loadingOverlayInner {
+  display: flex;
+  padding: 16px;
+  position: sticky;
+  top: 0;
+}
+
+.EditorFields-field * {
+  box-sizing: border-box;
+}
+
+.EditorFields--wrapFields .EditorFields-field {
+  color: var(--fe-text-secondary);
+  padding: 14px 16px;
+  display: block;
+}
+
+.EditorFields--wrapFields .EditorFields-field + .EditorFields-field {
+  border-top: 1px solid var(--fe-border-subtle);
+}
+
+.EditorFields-syncButton {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--fe-color-global);
+  border-radius: var(--fe-radius-md);
+  color: var(--fe-color-global);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: var(--fe-font-size-xxs);
+  font-weight: 500;
+  gap: 8px;
+  justify-content: center;
+  margin: 12px 16px;
+  padding: 10px;
+  transition: background-color var(--fe-motion-fast) var(--fe-ease),
+    border-color var(--fe-motion-fast) var(--fe-ease),
+    color var(--fe-motion-fast) var(--fe-ease);
+  width: calc(100% - 32px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .EditorFields-syncButton:hover {
+    background: var(--fe-color-global-soft);
+  }
+}
+
+.EditorFields-syncButton:focus-visible {
+  outline: none;
+  box-shadow: var(--fe-ring);
+}
+
+.EditorFields-syncButton--unlinked {
+  border-color: var(--fe-border-default);
+  color: var(--fe-text-secondary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .EditorFields-syncButton--unlinked:hover {
+    background: var(--fe-surface-hover);
+    border-color: var(--fe-border-strong);
+    color: var(--fe-text-primary);
+  }
+}
+
+/* When the button sits immediately above a field group wrapped in padding,
+   don't double-pad. */
+.EditorFields--wrapFields .EditorFields-syncButton + .EditorFields-field {
+  border-top: none;
+}

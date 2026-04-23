@@ -1,28 +1,28 @@
 ---
-title: useGetPuck
+title: useGetEditor
 ---
 
-# useGetPuck
+# useGetEditor
 
-A hook that returns a function that retrieves the latest [`PuckApi`](/docs/api-reference/puck-api) at call time. This is useful in callbacks, effects, or any logic that runs outside the component render lifecycle.
+A hook that returns a function that retrieves the latest [`EditorApi`](/docs/api-reference/editor-api) at call time. This is useful in callbacks, effects, or any logic that runs outside the component render lifecycle.
 
 ```tsx copy
-import { useGetPuck } from "@puckeditor/core";
+import { useGetEditor } from "@frontend/core";
 
 const Example = () => {
-  const getPuck = useGetPuck();
+  const getFrontend = useGetEditor();
 
   const handleClick = useCallback(() => {
-    // Current PuckApi is always provided
-    const { appState } = getPuck();
-  }, [getPuck]);
+    // Current EditorApi is always provided
+    const { appState } = getFrontend();
+  }, [getFrontend]);
 
   return <button onClick={handleClick}>Click me</button>;
 };
 ```
 
-If you need to react to changes to `PuckApi`, try the [`usePuck` hook](use-puck).
+If you need to react to changes to `EditorApi`, try the [`useEditor` hook](use-editor).
 
 ## Returns
 
-A function to retrieve the latest [`PuckApi`](/docs/api-reference/puck-api) data at call time.
+A function to retrieve the latest [`EditorApi`](/docs/api-reference/editor-api) data at call time.

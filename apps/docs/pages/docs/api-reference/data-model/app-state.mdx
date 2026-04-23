@@ -11,15 +11,15 @@ import { Callout } from "nextra/components";
   changes.
 </Callout>
 
-The internal state of the [`<Puck>`](/docs/api-reference/components/puck) component.
+The internal state of the [`<Editor>`](/docs/api-reference/components/editor) component.
 
 ## `data`
 
-The current [`Data`](/docs/api-reference/data-model/data) payload being managed by Puck.
+The current [`Data`](/docs/api-reference/data-model/data) payload being managed by Frontend.
 
 ## `ui`
 
-The current state of the Puck editor interface.
+The current state of the Frontend editor interface.
 
 | Param                                           | Example                                               | Type                          |
 | ----------------------------------------------- | ----------------------------------------------------- | ----------------------------- |
@@ -126,7 +126,7 @@ The mode for the preview area, controlling whether or not the user can interact 
 - **`"edit"` (default)**: Components can be dragged and modified. An overlay prevents interaction with the underlying component.
 - **`"interactive"`**: Editing functionality is disabled. The user can interact with the underlying component.
 
-Puck does not currently provide the UI to control this value, but it can be toggled via the `cmd+i` or `ctrl+i` hotkeys.
+Frontend does not currently provide the UI to control this value, but it can be toggled via the `cmd+i` or `ctrl+i` hotkeys.
 
 ---
 
@@ -148,7 +148,7 @@ Current width of the right side bar in pixels.
 | ------------------------------------------------ | --------------------------------- | -------------------------------------------------------------------- |
 | [`controlsVisible`](#uiviewportscontrolsvisible) | `false`                           | Boolean                                                              |
 | [`current`](#uiviewportscurrent)                 | `{ width: 1440, height: "auto" }` | Object                                                               |
-| [`options`](#uiviewportsoptions)                 | `[]`                              | [Viewports\[\]](/docs/api-reference/components/puck#viewport-params) |
+| [`options`](#uiviewportsoptions)                 | `[]`                              | [Viewports\[\]](/docs/api-reference/components/editor#viewport-params) |
 
 #### `ui.viewports.controlsVisible`
 
@@ -173,4 +173,4 @@ The height of the current viewport.
 
 #### `ui.viewports.options`
 
-The available viewport options, as provided via the [`viewports` API](/docs/api-reference/components/puck#viewports).
+The available viewport options, as provided via the [`viewports` API](/docs/api-reference/components/editor#viewports).

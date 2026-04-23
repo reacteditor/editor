@@ -1,18 +1,18 @@
 ---
-title: PuckApi
+title: EditorApi
 ---
 
 import { Callout } from "nextra/components";
 
-# PuckApi
+# EditorApi
 
-`PuckApi` exposes Puck's internals to enable extension and modification to Puck's core behavior. It can be accessed by the [`usePuck`](/docs/api-reference/functions/use-puck) and [`useGetPuck`](/docs/api-reference/functions/use-get-puck) hooks.
+`EditorApi` exposes Frontend's internals to enable extension and modification to Frontend's core behavior. It can be accessed by the [`useEditor`](/docs/api-reference/functions/use-editor) and [`useGetEditor`](/docs/api-reference/functions/use-get-editor) hooks.
 
 <Callout type="info">
-  `PuckApi` can currently only be accessed through
-  [composition](/docs/extending-puck/composition), [UI
-  overrides](/docs/extending-puck/ui-overrides) or [custom
-  fields](/docs/extending-puck/custom-fields).
+  `EditorApi` can currently only be accessed through
+  [composition](/docs/extending-editor/composition), [UI
+  overrides](/docs/extending-editor/ui-overrides) or [custom
+  fields](/docs/extending-editor/custom-fields).
 </Callout>
 
 ## Params
@@ -20,7 +20,7 @@ import { Callout } from "nextra/components";
 | Param                                                             | Example                                            | Type                                                           |
 | ----------------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------------- |
 | [`appState`](#appstate)                                           | `{ data: {}, ui: {} }`                             | [AppState](/docs/api-reference/data-model/app-state)           |
-| [`dispatch`](#dispatchaction)                                     | `(action: PuckAction) => void`                     | Function                                                       |
+| [`dispatch`](#dispatchaction)                                     | `(action: EditorAction) => void`                     | Function                                                       |
 | [`getItemBySelector`](#getitembyselectorselector)                 | `() => ({ type: "Heading", props: {} })`           | Function                                                       |
 | [`getItemById`](#getitembyidid)                                   | `() => ({ type: "Heading", props: {} })`           | Function                                                       |
 | [`getSelectorForId`](#getselectorforidid)                         | `() => ({ index: 0, zone: 'Flex-123:children'  })` | Function                                                       |
@@ -33,7 +33,7 @@ import { Callout } from "nextra/components";
 
 ### `appState`
 
-The current [application state](/docs/api-reference/data-model/app-state) for this Puck instance.
+The current [application state](/docs/api-reference/data-model/app-state) for this Frontend instance.
 
 ```tsx
 console.log(appState.data);
@@ -42,7 +42,7 @@ console.log(appState.data);
 
 ### `dispatch(action)`
 
-Execute an [action](/docs/api-reference/actions) to mutate the Puck [application state](/docs/api-reference/data-model/app-state).
+Execute an [action](/docs/api-reference/actions) to mutate the Frontend [application state](/docs/api-reference/data-model/app-state).
 
 ```tsx
 dispatch({

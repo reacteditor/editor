@@ -56,7 +56,7 @@ export function Render<
 
   const pageProps = {
     ...rootProps,
-    puck: {
+    editor: {
       renderDropZone: DropZonePure,
       isEditing: false,
       dragRef: null,
@@ -64,7 +64,7 @@ export function Render<
     },
     title,
     editMode: false,
-    id: "puck-root",
+    id: "editor-root",
   };
 
   const propsWithSlots = useSlots(

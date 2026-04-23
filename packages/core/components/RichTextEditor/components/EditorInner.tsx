@@ -61,7 +61,7 @@ export const EditorInner = memo(
     const handleBlur = useCallback<FocusEventHandler<HTMLDivElement>>(
       (e) => {
         const targetInMenu = !!e.relatedTarget?.closest?.(
-          "[data-puck-rte-menu]"
+          "[data-editor-rte-menu]"
         );
 
         if (e.relatedTarget && !targetInMenu) {

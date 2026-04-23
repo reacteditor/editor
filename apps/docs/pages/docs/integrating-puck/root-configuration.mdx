@@ -1,6 +1,6 @@
 # Root Configuration
 
-The root is the top-level component within Puck. It:
+The root is the top-level component within Frontend. It:
 
 1. Renders a single wrapper around your other components. This can be overwritten with a `render` function.
 2. Stores meta data, like the page title. This can be extended with `fields`.
@@ -128,7 +128,7 @@ When the user modifies the inputs, the editor will produce a data payload like t
 Generic types can be passed to the `Config` type to strictly type your root configuration:
 
 ```tsx copy {1,3-5} /RootProps/2
-import type { Config } from "@puckeditor/core";
+import type { Config } from "@frontend/core";
 
 type RootProps = {
   description: string;
@@ -168,4 +168,4 @@ const config = {
 };
 ```
 
-Unlike [default parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters), `defaultProps` are stored in the data payload and will populate the Puck fields.
+Unlike [default parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters), `defaultProps` are stored in the data payload and will populate the Frontend fields.

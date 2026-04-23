@@ -1,10 +1,10 @@
 # Viewports
 
-The Puck preview renders in a same-origin iframe that can be resized to simulate different viewports.
+The Frontend preview renders in a same-origin iframe that can be resized to simulate different viewports.
 
 ## Default viewports
 
-Puck provides 4 viewports [by default](/docs/api-reference/components/puck#default-viewports):
+Frontend provides 4 viewports [by default](/docs/api-reference/components/editor#default-viewports):
 
 1. Small: 360px wide
 2. Medium: 768px wide
@@ -15,18 +15,18 @@ Each of the default viewports have 100% height, filling the available space (via
 
 ## Customizing viewports
 
-Customizing the available viewports using the [`viewports` API](/docs/api-reference/components/puck#viewports):
+Customizing the available viewports using the [`viewports` API](/docs/api-reference/components/editor#viewports):
 
 ```tsx
 export function Editor() {
   return (
-    <Puck
+    <Editor
       viewports={[
         {
           width: 1440,
           height: "auto", // Optional height. Can be numeric or "auto". Defaults to "auto".
           label: "My Viewport", // Optional. Shown in tooltip.
-          icon: <svg />, // Optional. Use lucide-icons to align with Puck UI.
+          icon: <svg />, // Optional. Use lucide-icons to align with Frontend UI.
         },
       ]}
       // ...
@@ -37,12 +37,12 @@ export function Editor() {
 
 ## Opting out of iframes
 
-Opt-out of iframe rendering by using the [`iframe` API](/docs/api-reference/components/puck#iframe):
+Opt-out of iframe rendering by using the [`iframe` API](/docs/api-reference/components/editor#iframe):
 
 ```tsx
 export function Editor() {
   return (
-    <Puck
+    <Editor
       iframe={{
         enabled: false,
       }}
@@ -56,20 +56,20 @@ This will disable all viewport functionality.
 
 ## Controlling viewports with compositional interfaces
 
-When implementing a [compositional interface](/docs/extending-puck/composition), the `viewports` API will have no effect. Instead, the viewport size can be controlled by the dimensions of the wrapping element that contains [`<Puck.Preview />`](/docs/api-reference/components/puck-preview).
+When implementing a [compositional interface](/docs/extending-editor/composition), the `viewports` API will have no effect. Instead, the viewport size can be controlled by the dimensions of the wrapping element that contains [`<Editor.Preview />`](/docs/api-reference/components/editor-preview).
 
 CSS transforms can be used to zoom the viewport without impacting drag-and-drop behaviour.
 
 ```tsx {6-8}
-import { Puck } from "@puckeditor/core";
+import { Editor } from "@frontend/core";
 
 export function Editor() {
   return (
-    <Puck>
+    <Editor>
       <div style={{ transform: "scale(0.5)", width: 1280 }}>
-        <Puck.Preview />
+        <Editor.Preview />
       </div>
-    </Puck>
+    </Frontend>
   );
 }
 ```

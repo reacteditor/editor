@@ -8,9 +8,9 @@ const getClassName = getClassNameFactory("CtaCard", styles);
 export const CtaCard = () => (
   <div className={getClassName()}>
     <h2 className={getClassName("heading")} id="support">
-      Stuck with Puck?
+      Stuck with Editor?
     </h2>
-    <p>We provide Puck support, design system builds, and consultancy.</p>
+    <p>We provide Editor support, design system builds, and consultancy.</p>
     <div className={getClassName("actions")}>
       <DiscoveryButton />
       <Button href="https://discord.gg/D9e4E3MQVZ" variant="secondary" newTab>

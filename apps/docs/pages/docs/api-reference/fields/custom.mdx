@@ -1,5 +1,5 @@
-import { Puck, FieldLabel, AutoField } from "@/puck";
-import { ConfigPreview, PuckPreview } from "@/docs/components/Preview";
+import { Editor, FieldLabel, AutoField } from "@/editor";
+import { ConfigPreview, EditorPreview } from "@/docs/components/Preview";
 import { Callout } from "nextra/components";
 
 # Custom
@@ -38,7 +38,7 @@ Implement a field with a custom UI. Extends [Base](base).
 />
 
 ```tsx {7-16} copy showLineNumbers
-import { FieldLabel } from "@puckeditor/core";
+import { FieldLabel } from "@frontend/core";
 
 const config = {
   components: {
@@ -105,7 +105,7 @@ const config = {
 Render the custom field.
 
 ```tsx {9-14} showLineNumbers copy
-import { FieldLabel } from "@puckeditor/core";
+import { FieldLabel } from "@frontend/core";
 
 const config = {
   components: {
@@ -140,7 +140,7 @@ const config = {
 
 ##### onChange(value, [ui])
 
-Set the value of the field and optionally update the [Puck UI state](/docs/api-reference/data-model/app-state#ui).
+Set the value of the field and optionally update the [Frontend UI state](/docs/api-reference/data-model/app-state#ui).
 
 | Param   | Example                       | Type                                                   | Status   |
 | ------- | ----------------------------- | ------------------------------------------------------ | -------- |
@@ -154,7 +154,7 @@ Set the value of the field and optionally update the [Puck UI state](/docs/api-r
 Enable inline text editing for this field. Only works if the value is a string. Defaults to `false`.
 
 <Callout type="warning">
-  When setting `contentEditable`, your [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) prop will be converted to an [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) when rendered inside [`<Puck>`](/docs/api-reference/components/puck) (but not [`<Render>`](/docs/api-reference/components/render)). When using TypeScript, change your `string` to  `string | ReactNode`.
+  When setting `contentEditable`, your [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) prop will be converted to an [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) when rendered inside [`<Editor>`](/docs/api-reference/components/editor) (but not [`<Render>`](/docs/api-reference/components/render)). When using TypeScript, change your `string` to  `string | ReactNode`.
 </Callout>
 
 ```tsx {7, 10} showLineNumbers copy
@@ -209,7 +209,7 @@ const config = {
     },
   }}
 >
-  <Puck.Preview />
+  <Editor.Preview />
 </ConfigPreview>
 
 ### `key`
@@ -339,10 +339,10 @@ const config = {
 
 >
 
-  <Puck.Preview />
+  <Editor.Preview />
 </ConfigPreview>
 
 ## Further reading
 
-- [Custom Fields guide](/docs/extending-puck/custom-fields)
+- [Custom Fields guide](/docs/extending-editor/custom-fields)
 - [The `<FieldLabel>` API reference](/docs/api-reference/components/field-label)

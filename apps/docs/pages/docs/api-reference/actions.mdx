@@ -1,14 +1,14 @@
 # Actions
 
-Actions enable you to make changes to the internal [AppState](/docs/api-reference/data-model/app-state) via the [dispatcher](/docs/api-reference/puck-api#dispatch).
+Actions enable you to make changes to the internal [AppState](/docs/api-reference/data-model/app-state) via the [dispatcher](/docs/api-reference/editor-api#dispatch).
 
-This is a partial reference of the most useful actions. A full reference is available in [the codebase](https://github.com/puckeditor/puck/blob/main/packages/core/reducer/actions.tsx).
+This is a partial reference of the most useful actions. A full reference is available in [the codebase](https://github.com/editoreditor/editor/blob/main/packages/core/reducer/actions.tsx).
 
 ## Types
 
 ### `setData`
 
-Modify the [data payload](/docs/api-reference/data-model/data) currently managed by Puck.
+Modify the [data payload](/docs/api-reference/data-model/data) currently managed by Frontend.
 
 | Param  | Example           | Type                                        | Status   |
 | ------ | ----------------- | ------------------------------------------- | -------- |
@@ -26,7 +26,7 @@ dispatch({
 
 ### `setUi`
 
-Change a value on Puck's [UI state](/docs/api-reference/data-model/app-state#ui).
+Change a value on Frontend's [UI state](/docs/api-reference/data-model/app-state#ui).
 
 | Param  | Example                             | Type                                         | Status   |
 | ------ | ----------------------------------- | -------------------------------------------- | -------- |

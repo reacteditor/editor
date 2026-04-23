@@ -1,4 +1,4 @@
-export type { PuckAction } from "../reducer/actions";
+export type { EditorAction } from "../reducer/actions";
 
 export * from "../types/API";
 export * from "../types";
@@ -15,7 +15,7 @@ export { Drawer } from "../components/Drawer";
 
 export { DropZone } from "../components/DropZone";
 export * from "../components/IconButton";
-export { Puck } from "../components/Puck";
+export { Editor } from "../components/Editor";
 export * from "../components/Render";
 export { RichTextMenu } from "../components/RichTextMenu/inner";
 
@@ -27,12 +27,12 @@ export * from "../lib/resolve-all-data";
 export { setDeep } from "../lib/data/set-deep";
 export { walkTree } from "../lib/data/walk-tree";
 export {
-  createUsePuck,
-  usePuck,
-  useGetPuck,
-  type UsePuckData,
-  type PuckApi,
-} from "../lib/use-puck";
+  createUseEditor,
+  useEditor,
+  useGetEditor,
+  type UseEditorData,
+  type EditorApi,
+} from "../lib/use-editor";
 
 export * from "../plugins/blocks";
 export * from "../plugins/fields";

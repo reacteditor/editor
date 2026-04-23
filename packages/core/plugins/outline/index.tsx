@@ -1,5 +1,5 @@
 import { Component } from "lucide-react";
-import { Outline } from "../../components/Puck/components/Outline";
+import { Outline } from "../../components/Editor/components/Outline";
 import { Plugin } from "../../types";
 import styles from "./styles.module.css";
 import { getClassNameFactory } from "../../lib";

@@ -16,7 +16,7 @@ import {
   ResolveDataTrigger,
   RichtextField,
 } from "../types";
-import { createReducer, PuckAction } from "../reducer";
+import { createReducer, EditorAction } from "../reducer";
 import { getItem } from "../lib/data/get-item";
 import { defaultViewports } from "../components/ViewportControls/default-viewports";
 import { Viewports } from "../types";
@@ -56,7 +56,7 @@ export type AppStore<
 > = {
   instanceId: string;
   state: G["UserAppState"];
-  dispatch: (action: PuckAction) => void;
+  dispatch: (action: EditorAction) => void;
   config: UserConfig;
   componentState: ComponentState;
   setComponentState: (componentState: ComponentState) => void;
@@ -86,7 +86,7 @@ export type AppStore<
   getCurrentData: () => G["UserData"]["content"][0] | G["UserData"]["root"];
   setUi: (ui: Partial<UiState>, recordHistory?: boolean) => void;
   getComponentConfig: (type?: string) => ComponentConfig | null | undefined;
-  onAction?: (action: PuckAction, newState: AppState, state: AppState) => void;
+  onAction?: (action: EditorAction, newState: AppState, state: AppState) => void;
   metadata: Metadata;
   fields: FieldsSlice;
   history: HistorySlice;
@@ -155,7 +155,7 @@ export const createAppStore = (initialAppStore?: Partial<AppStore>) =>
             initialAppStore.state
           )
         : null,
-      dispatch: (action: PuckAction) =>
+      dispatch: (action: EditorAction) =>
         set((s) => {
           const { record } = get().history;
 

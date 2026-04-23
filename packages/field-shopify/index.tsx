@@ -118,7 +118,7 @@ const PRODUCT_FIELDS = /* GraphQL */ `
 
 const PRODUCTS_QUERY = /* GraphQL */ `
   ${PRODUCT_FIELDS}
-  query PuckProducts($query: String, $first: Int!) {
+  query EditorProducts($query: String, $first: Int!) {
     products(first: $first, query: $query) {
       edges {
         node {
@@ -146,7 +146,7 @@ const COLLECTION_FIELDS = /* GraphQL */ `
 
 const COLLECTIONS_QUERY = /* GraphQL */ `
   ${COLLECTION_FIELDS}
-  query PuckCollections($query: String, $first: Int!) {
+  query EditorCollections($query: String, $first: Int!) {
     collections(first: $first, query: $query) {
       edges {
         node {

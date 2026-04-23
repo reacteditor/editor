@@ -1,15 +1,15 @@
 ---
-title: <Puck.Fields>
+title: <Editor.Fields>
 ---
 
-import { PuckPreview } from "@/docs/components/Preview";
-import { Puck } from "@/puck";
+import { EditorPreview } from "@/docs/components/Preview";
+import { Editor } from "@/editor";
 
-# \<Puck.Fields\>
+# \<Editor.Fields\>
 
-Render the fields for the currently selected item in [`<Puck.Preview>`](/docs/api-reference/components/puck-preview) when composing a custom Puck UI.
+Render the fields for the currently selected item in [`<Editor.Preview>`](/docs/api-reference/components/editor-preview) when composing a custom Frontend UI.
 
-<PuckPreview
+<EditorPreview
   config={{
     components: {
       HeadingBlock: {},
@@ -18,17 +18,17 @@ Render the fields for the currently selected item in [`<Puck.Preview>`](/docs/ap
   data={{ root: { props: {} }, content: [] }}
   style={{ padding: 4 }}
 >
-  <Puck.Fields />
-</PuckPreview>
+  <Editor.Fields />
+</EditorPreview>
 
 ```tsx {14} showLineNumbers copy
-import { Puck } from "@puckeditor/core";
+import { Editor } from "@frontend/core";
 
 export function Editor() {
   return (
-    <Puck>
-      <Puck.Fields />
-    </Puck>
+    <Editor>
+      <Editor.Fields />
+    </Frontend>
   );
 }
 ```
@@ -46,13 +46,13 @@ export function Editor() {
 Whether or not the top-level fields should be padded and separated by a a border. Defaults to `true`.
 
 ```tsx {6} copy
-import { Puck } from "@puckeditor/core";
+import { Editor } from "@frontend/core";
 
 export function Editor() {
   return (
-    <Puck>
-      <Puck.Fields wrapFields={false} />
-    </Puck>
+    <Editor>
+      <Editor.Fields wrapFields={false} />
+    </Frontend>
   );
 }
 ```

@@ -1,0 +1,31 @@
+{
+  "name": "create-frontend-app",
+  "version": "0.1.0",
+  "author": "Rami Bitar <rami@frontend.co>",
+  "repository": "frontend-inc/frontend-visual-editor",
+  "bugs": "https://github.com/frontend-inc/frontend-visual-editor/issues",
+  "homepage": "https://frontend.co",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "create-frontend-app": "./index.js"
+  },
+  "files": [
+    "templates",
+    "index.js"
+  ],
+  "scripts": {
+    "generate": "node scripts/generate.js",
+    "prepublishOnly": "yarn generate",
+    "removeGitignore": "mv templates/.gitignore templates/gitignore",
+    "restoreGitignore": "mv templates/gitignore templates/.gitignore"
+  },
+  "dependencies": {
+    "commander": "^10.0.1",
+    "glob": "^11.1.0",
+    "handlebars": "^4.7.7",
+    "inquirer": "^9.2.7",
+    "prettier": "^2.8.8"
+  }
+}

@@ -80,7 +80,7 @@ export const Select = ({
         {options.length > 0 && (
           <PopoverPortal>
             <PopoverContent align="start">
-              <ul className={getClassName("items")} data-puck-rte-menu>
+              <ul className={getClassName("items")} data-editor-rte-menu>
                 {options.map((option) => {
                   const Icon: any = option.icon;
 

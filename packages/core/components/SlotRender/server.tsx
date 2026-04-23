@@ -5,7 +5,7 @@ import {
   Config,
   Content,
   Metadata,
-  WithPuckProps,
+  WithEditorProps,
 } from "../../types";
 import { useSlots } from "../../lib/use-slots";
 import { useRichtextProps } from "../RichTextEditor/lib/use-richtext-props";
@@ -34,7 +34,7 @@ const Item = ({
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const props = useSlots(config, item, (slotProps) => (
     <SlotRenderPure {...slotProps} config={config} metadata={metadata} />
-  )) as WithPuckProps<ComponentData["props"]>;
+  )) as WithEditorProps<ComponentData["props"]>;
 
   const richtextProps = useRichtextProps(Component.fields, props);
 
@@ -42,8 +42,8 @@ const Item = ({
     <Component.render
       {...props}
       {...richtextProps}
-      puck={{
-        ...props.puck,
+      editor={{
+        ...props.editor,
         metadata: metadata || {},
       }}
     />

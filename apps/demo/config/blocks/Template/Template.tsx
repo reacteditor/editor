@@ -3,7 +3,7 @@ import { Slot } from "@/core/types";
 import styles from "./styles.module.css";
 import { getClassNameFactory } from "@/core/lib";
 import { Section } from "../../components/Section";
-import { PuckComponent } from "@/core/types";
+import { EditorComponent } from "@/core/types";
 
 const getClassName = getClassNameFactory("Template", styles);
 
@@ -12,7 +12,7 @@ export type TemplateProps = {
   children: Slot;
 };
 
-export const Template: PuckComponent<TemplateProps> = ({
+export const Template: EditorComponent<TemplateProps> = ({
   children: Children,
 }) => {
   return (

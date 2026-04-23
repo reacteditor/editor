@@ -158,7 +158,7 @@ const DragDropContextClient = ({
           }
         } else {
           const frame = getFrame();
-          const el = frame?.querySelector(`[data-puck-component="${id}"]`);
+          const el = frame?.querySelector(`[data-editor-component="${id}"]`);
           el?.scrollIntoView({ behavior: "smooth" });
         }
       },
@@ -334,8 +334,8 @@ const DragDropContextClient = ({
         plugins={plugins}
         sensors={sensors}
         onDragEnd={(event, manager) => {
-          const entryEl = getFrame()?.querySelector("[data-puck-entry]");
-          entryEl?.removeAttribute("data-puck-dragging");
+          const entryEl = getFrame()?.querySelector("[data-editor-entry]");
+          entryEl?.removeAttribute("data-editor-dragging");
 
           const { source, target } = event.operation;
 
@@ -617,8 +617,8 @@ const DragDropContextClient = ({
             });
           }
 
-          const entryEl = getFrame()?.querySelector("[data-puck-entry]");
-          entryEl?.setAttribute("data-puck-dragging", "true");
+          const entryEl = getFrame()?.querySelector("[data-editor-entry]");
+          entryEl?.setAttribute("data-editor-dragging", "true");
         }}
       >
         <ZoneStoreProvider store={zoneStore}>

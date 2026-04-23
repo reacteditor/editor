@@ -179,7 +179,7 @@ export const Hero: ComponentConfig<{
    *
    * It is called after the page data is changed, but before a component
    * is rendered. This allows us to make dynamic changes to the props
-   * without storing the data in Puck.
+   * without storing the data in Editor.
    *
    * For example, requesting a third-party API for the latest content.
    */

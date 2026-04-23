@@ -1,15 +1,15 @@
 ---
-title: <Puck.Preview>
+title: <Editor.Preview>
 ---
 
-import { PuckPreview } from "@/docs/components/Preview";
-import { Puck } from "@/puck";
+import { EditorPreview } from "@/docs/components/Preview";
+import { Editor } from "@/editor";
 
-# \<Puck.Preview\>
+# \<Editor.Preview\>
 
-Render a drag-and-drop preview for the current data when composing a custom Puck UI.
+Render a drag-and-drop preview for the current data when composing a custom Frontend UI.
 
-<PuckPreview
+<EditorPreview
   config={{
     components: {
       HeadingBlock: {
@@ -24,17 +24,17 @@ Render a drag-and-drop preview for the current data when composing a custom Puck
   }}
 >
 
-  <Puck.Preview />
-</PuckPreview>
+  <Editor.Preview />
+</EditorPreview>
 
 ```tsx {17} showLineNumbers copy
-import { Puck } from "@puckeditor/core";
+import { Editor } from "@frontend/core";
 
 export function Editor() {
   return (
-    <Puck>
-      <Puck.Preview />
-    </Puck>
+    <Editor>
+      <Editor.Preview />
+    </Frontend>
   );
 }
 ```
@@ -49,16 +49,16 @@ export function Editor() {
 
 ### `id`
 
-A unique identifier for the preview frame. Default: `puck-preview`.
+A unique identifier for the preview frame. Default: `editor-preview`.
 
 ```tsx {6} copy
-import { Puck } from "@puckeditor/core";
+import { Editor } from "@frontend/core";
 
 export function Editor() {
   return (
-    <Puck>
-      <Puck.Preview id="my-frame" />
-    </Puck>
+    <Editor>
+      <Editor.Preview id="my-frame" />
+    </Frontend>
   );
 }
 ```

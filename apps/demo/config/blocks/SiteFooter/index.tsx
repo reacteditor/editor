@@ -55,7 +55,7 @@ export const SiteFooter: ComponentConfig<SiteFooterProps> = {
         },
       ],
     },
-    byline: { type: "text", default: "Made with Puck" },
+    byline: { type: "text", default: "Made with Editor" },
   },
   render: ({ sections, byline }) => (
     <footer style={{ background: "var(--fe-color-grey-12)" }}>

@@ -1,9 +1,9 @@
 # Plugin
 
-A plugin is an extension that enhances the capabilities of Puck.
+A plugin is an extension that enhances the capabilities of Frontend.
 
 ```tsx showLineNumbers copy {3-8, 14}
-import { Puck } from "@puckeditor/core";
+import { Editor } from "@frontend/core";
 
 const MyPlugin = {
   name: "my-plugin", // Globally unique name
@@ -14,7 +14,7 @@ const MyPlugin = {
 
 export function Editor() {
   return (
-    <Puck
+    <Editor
       // ...
       plugins={[MyPlugin]}
     />
@@ -46,7 +46,7 @@ const MyPlugin = {
 };
 ```
 
-Puck uses [Lucide icons](https://lucide.dev/icons/). You can use [lucide-react](https://lucide.dev/guide/packages/lucide-react) to choose a similar icon, if desired.
+Frontend uses [Lucide icons](https://lucide.dev/icons/). You can use [lucide-react](https://lucide.dev/guide/packages/lucide-react) to choose a similar icon, if desired.
 
 ### `label`
 
@@ -90,7 +90,7 @@ const MyPlugin = {
 
 ### `overrides`
 
-Override the render functions for specific portions of the Puck UI. Implements the [`overrides` API](/docs/api-reference/overrides).
+Override the render functions for specific portions of the Frontend UI. Implements the [`overrides` API](/docs/api-reference/overrides).
 
 ```tsx {2-5}
 const MyPlugin = {

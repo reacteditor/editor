@@ -1,5 +1,5 @@
-import { Puck } from "@/puck";
-import { ConfigPreview, PuckPreview } from "@/docs/components/Preview";
+import { Editor } from "@/editor";
+import { ConfigPreview, EditorPreview } from "@/docs/components/Preview";
 import { Callout } from "nextra/components";
 
 # Textarea
@@ -74,7 +74,7 @@ const config = {
 Enable inline text editing for this field. Defaults to `false`.
 
 <Callout type="warning">
-  When setting `contentEditable`, your [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) prop will be converted to an [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) when rendered inside [`<Puck>`](/docs/api-reference/components/puck) (but not [`<Render>`](/docs/api-reference/components/render)). When using TypeScript, change your `string` to  `string | ReactNode`.
+  When setting `contentEditable`, your [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) prop will be converted to an [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) when rendered inside [`<Editor>`](/docs/api-reference/components/editor) (but not [`<Render>`](/docs/api-reference/components/render)). When using TypeScript, change your `string` to  `string | ReactNode`.
 </Callout>
 
 ```tsx {7} copy
@@ -111,7 +111,7 @@ const config = {
     },
   }}
 >
-  <Puck.Preview />
+  <Editor.Preview />
 </ConfigPreview>
 
 ### Placeholder

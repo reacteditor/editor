@@ -10,14 +10,14 @@ const Head = () => {
   const { asPath, defaultLocale, locale } = useRouter();
   const { frontMatter, title } = useConfig();
 
-  const siteUrl = "https://puckeditor.com";
+  const siteUrl = "https://frontend.co";
   const url =
     siteUrl + (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
 
-  const defaultTitle = `Puck - The open-source visual editor for React`;
+  const defaultTitle = `Editor - The open-source visual editor for React`;
   const description =
     frontMatter.description ||
-    `Puck empowers developers to build amazing visual editing experiences into their own React applications, powering the next generation of content tools.`;
+    `Editor empowers developers to build amazing visual editing experiences into their own React applications, powering the next generation of content tools.`;
 
   return (
     <>
@@ -29,7 +29,7 @@ const Head = () => {
       <meta property="og:image" content={`${siteUrl}/social.png`} />
       <meta property="og:image:height" content="675" />
       <meta property="og:image:width" content="1200" />
-      <meta property="og:image:alt" content="Puck" />
+      <meta property="og:image:alt" content="Editor" />
       <meta property="og:image:type" content="image/png" />
       <meta property="og:locale" content="en" />
       <meta property="og:site_name" content={defaultTitle} />
@@ -38,16 +38,16 @@ const Head = () => {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:image" content={`${siteUrl}/social.png`} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image:alt" content="Puck" />
+      <meta name="twitter:image:alt" content="Editor" />
       <meta name="twitter:image:height" content="675" />
       <meta name="twitter:image:type" content="image/png" />
       <meta name="twitter:image:width" content="1200" />
-      <meta name="twitter:site" content="@puckeditor" />
+      <meta name="twitter:site" content="@frontendinc" />
       <meta
         name="twitter:title"
-        content={title !== defaultTitle ? `${title} - Puck` : defaultTitle}
+        content={title !== defaultTitle ? `${title} - Editor` : defaultTitle}
       />
-      <title>{title !== defaultTitle ? `${title} - Puck` : defaultTitle}</title>
+      <title>{title !== defaultTitle ? `${title} - Editor` : defaultTitle}</title>
 
       <link rel="icon" href="/favicon.ico" sizes="48x48" />
       <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -59,8 +59,8 @@ const Head = () => {
           __html: `{
       "@context" : "https://schema.org",
       "@type" : "WebSite",
-      "name" : "Puck",
-      "url" : "https://puckeditor.com/"
+      "name" : "Editor",
+      "url" : "https://frontend.co/"
     }`,
         }}
       />
@@ -71,7 +71,7 @@ const Head = () => {
             __html: `${JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              name: "Puck",
+              name: "Editor",
               url: siteUrl,
             })}`,
           }}
@@ -98,7 +98,7 @@ const theme: DocsThemeConfig = {
     </div>
   ),
   project: {
-    link: "https://github.com/puckeditor/puck",
+    link: "https://github.com/frontend-inc/frontend-visual-editor",
   },
   footer: {
     content: (
@@ -107,9 +107,9 @@ const theme: DocsThemeConfig = {
           MIT © {new Date().getFullYear()}{" "}
           <a
             style={{ textDecoration: "underline" }}
-            href="https://github.com/puckeditor/puck/graphs/contributors"
+            href="https://github.com/frontend-inc/frontend-visual-editor/graphs/contributors"
           >
-            The Puck Contributors
+            The Editor Contributors
           </a>
         </p>
       </div>
@@ -140,16 +140,16 @@ const theme: DocsThemeConfig = {
           key: "v0.18.0",
           content: (
             <a
-              href="https://github.com/puckeditor/puck/releases"
+              href="https://github.com/frontend-inc/frontend-visual-editor/releases"
               target="_blank"
             >
-              <b>🎈 Puck 0.18</b>: The new drag-and-drop engine is here, with
+              <b>🎈 Editor 0.18</b>: The new drag-and-drop engine is here, with
               CSS grid & flexbox support →
             </a>
           ),
         }
       : {},
-  docsRepositoryBase: "https://github.com/puckeditor/puck/tree/main/apps/docs",
+  docsRepositoryBase: "https://github.com/frontend-inc/frontend-visual-editor/tree/main/apps/docs",
   navbar: {
     extraContent: () => (
       <Viewport desktop>

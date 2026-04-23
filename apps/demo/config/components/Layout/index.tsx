@@ -153,7 +153,7 @@ export function withLayout<
       <Layout
         className={getClassName()}
         layout={props.layout as LayoutFieldProps}
-        ref={props.puck.dragRef}
+        ref={props.editor.dragRef}
       >
         {componentConfig.render(props)}
       </Layout>

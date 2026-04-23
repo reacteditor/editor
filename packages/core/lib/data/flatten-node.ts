@@ -2,14 +2,14 @@ import flat from "flat";
 import { ComponentData, Config, RootData, UserGenerics } from "../../types";
 import { stripSlots } from "./strip-slots";
 
-// Explicitly destructure to account for flat module issues: https://github.com/puckeditor/puck/issues/1089
+// Explicitly destructure to account for flat module issues: https://github.com/frontend-inc/frontend-visual-editor/issues/1089
 const { flatten, unflatten } = flat;
 
 const isPureObject = (val: any) =>
   val != null && Object.prototype.toString.call(val) === "[object Object]";
 
-const emptyArrayStr = "__puck_[]";
-const emptyObjectStr = "__puck_{}";
+const emptyArrayStr = "__editor_[]";
+const emptyObjectStr = "__editor_{}";
 
 function encodeEmptyObjects(props: Record<string, any> = {}) {
   const result: Record<string, any> = {};

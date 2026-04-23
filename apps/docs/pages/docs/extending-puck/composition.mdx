@@ -1,38 +1,38 @@
-import { PuckPreview } from "@/docs/components/Preview";
-import { Puck } from "@/puck";
+import { EditorPreview } from "@/docs/components/Preview";
+import { Editor } from "@/editor";
 
 # Composition
 
-Puck uses compositional patterns enable completely custom editor interfaces. [See an example](https://demo.puckeditor.com/custom-ui/edit/).
+Frontend uses compositional patterns enable completely custom editor interfaces. [See an example](https://demo.editoreditor.com/custom-ui/edit/).
 
 ## Using composition
 
-Composition can be achieved by providing [`children`](/docs/api-reference/components/puck#children) to the [`<Puck>` component](/docs/api-reference/components/puck):
+Composition can be achieved by providing [`children`](/docs/api-reference/components/editor#children) to the [`<Editor>` component](/docs/api-reference/components/editor):
 
 ```tsx showLineNumbers copy
-import { Puck } from "@puckeditor/core";
+import { Editor } from "@frontend/core";
 
 export function Editor() {
   return (
-    <Puck>
+    <Editor>
       <div
         style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gridGap: 16 }}
       >
         <div>
           {/* Render the drag-and-drop preview */}
-          <Puck.Preview />
+          <Editor.Preview />
         </div>
         <div>
           {/* Render the component list */}
-          <Puck.Components />
+          <Editor.Components />
         </div>
       </div>
-    </Puck>
+    </Frontend>
   );
 }
 ```
 
-<PuckPreview
+<EditorPreview
   config={{
     components: {
       HeadingBlock: {
@@ -49,34 +49,34 @@ export function Editor() {
 >
   <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gridGap: 16 }}>
     <div>
-      <Puck.Components />
+      <Editor.Components />
     </div>
     <div>
-      <Puck.Preview />
+      <Editor.Preview />
     </div>
   </div>
-</PuckPreview>
+</EditorPreview>
 
 ## Compositional components
 
-Puck exposes its core components, allowing you to compose them together to create new layouts:
+Frontend exposes its core components, allowing you to compose them together to create new layouts:
 
-- [`<Puck.Components>`](/docs/api-reference/components/puck-components) - A draggable list of components.
-- [`<Puck.Fields>`](/docs/api-reference/components/puck-fields) - The fields for the currently selected item.
-- [`<Puck.Outline>`](/docs/api-reference/components/puck-outline) - An interactive outline.
-- [`<Puck.Preview>`](/docs/api-reference/components/puck-preview) - A drag-and-drop preview.
+- [`<Editor.Components>`](/docs/api-reference/components/editor-components) - A draggable list of components.
+- [`<Editor.Fields>`](/docs/api-reference/components/editor-fields) - The fields for the currently selected item.
+- [`<Editor.Outline>`](/docs/api-reference/components/editor-outline) - An interactive outline.
+- [`<Editor.Preview>`](/docs/api-reference/components/editor-preview) - A drag-and-drop preview.
 
-The internal UI for these components can also be changed by implementing [UI overrides](/docs/extending-puck/overrides) or [theming](theming).
+The internal UI for these components can also be changed by implementing [UI overrides](/docs/extending-editor/overrides) or [theming](theming).
 
 ### Helper components
 
-Puck also exposes helper components for even deeper customization:
+Frontend also exposes helper components for even deeper customization:
 
-- [`<Drawer>`](/docs/api-reference/components/drawer) - A reference list of items that can be dragged into a droppable area, normally `<Puck.Preview>`.
+- [`<Drawer>`](/docs/api-reference/components/drawer) - A reference list of items that can be dragged into a droppable area, normally `<Editor.Preview>`.
 - [`<Drawer.Item>`](/docs/api-reference/components/drawer-item) - An item that can be dragged from a `<Drawer>`.
 - [`<FieldLabel>`](/docs/api-reference/components/field-label) - A styled label for creating inputs.
 
 ## Further reading
 
-- [Internal Puck API](/docs/extending-puck/internal-puck-api)
-- [UI overrides](/docs/extending-puck/ui-overrides)
+- [Internal Frontend API](/docs/extending-editor/internal-editor-api)
+- [UI overrides](/docs/extending-editor/ui-overrides)

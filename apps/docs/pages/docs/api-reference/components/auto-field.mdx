@@ -3,11 +3,11 @@ title: <AutoField>
 ---
 
 import { ConfigPreview } from "@/docs/components/Preview";
-import { AutoField } from "@/puck";
+import { AutoField } from "@/editor";
 
 # \<AutoField\>
 
-Render a Puck field based on a [Field](/docs/api-reference/fields) object. Use this when building [custom fields](/docs/extending-puck/custom-fields) that need to use Puck-style fields internally.
+Render a Frontend field based on a [Field](/docs/api-reference/fields) object. Use this when building [custom fields](/docs/extending-editor/custom-fields) that need to use Frontend-style fields internally.
 
 <ConfigPreview
   label="Example"
@@ -36,7 +36,7 @@ Render a Puck field based on a [Field](/docs/api-reference/fields) object. Use t
 />
 
 ```tsx {1,4} copy
-import { Autofield } from "@puckeditor/core";
+import { Autofield } from "@frontend/core";
 
 const CustomField = ({ onChange, value }) => (
   <AutoField field={{ type: "text" }} onChange={onChange} value={value} />
@@ -92,5 +92,5 @@ A boolean describing whether or not this field is `readOnly`.
 
 ## Further reading
 
-- [Custom fields](/docs/extending-puck/custom-fields)
+- [Custom fields](/docs/extending-editor/custom-fields)
 - [The `<FieldLabel>` API reference](/docs/api-reference/components/field-label)

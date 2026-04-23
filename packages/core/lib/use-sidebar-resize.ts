@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAppStore } from "../store";
-import { PuckAction } from "../reducer";
+import { EditorAction } from "../reducer";
 
 /**
  * Custom hook for managing sidebar resize functionality
@@ -10,7 +10,7 @@ import { PuckAction } from "../reducer";
  */
 export function useSidebarResize(
   position: "left" | "right",
-  dispatch: (action: PuckAction) => void
+  dispatch: (action: EditorAction) => void
 ) {
   const [width, setWidth] = useState<number | null>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -25,7 +25,7 @@ export function useSidebarResize(
   useEffect(() => {
     if (typeof window !== "undefined" && !storeWidth) {
       try {
-        const savedWidths = localStorage.getItem("puck-sidebar-widths");
+        const savedWidths = localStorage.getItem("editor-sidebar-widths");
         if (savedWidths) {
           const widths = JSON.parse(savedWidths);
           const savedWidth = widths[position];
@@ -70,7 +70,7 @@ export function useSidebarResize(
       // Save to localStorage
       let widths = {};
       try {
-        const savedWidths = localStorage.getItem("puck-sidebar-widths");
+        const savedWidths = localStorage.getItem("editor-sidebar-widths");
         widths = savedWidths ? JSON.parse(savedWidths) : {};
       } catch (error) {
         console.error(
@@ -79,7 +79,7 @@ export function useSidebarResize(
         );
       } finally {
         localStorage.setItem(
-          "puck-sidebar-widths",
+          "editor-sidebar-widths",
           JSON.stringify({
             ...widths,
             [position]: width,

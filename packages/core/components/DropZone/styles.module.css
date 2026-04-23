@@ -16,8 +16,8 @@
   min-height: var(--min-empty-height);
 }
 
-/* We use global data-puck-dragging to avoid re-rendering DropZone */
-[data-puck-entry]:not([data-puck-dragging]) .DropZone {
+/* We use global data-editor-dragging to avoid re-rendering DropZone */
+[data-editor-entry]:not([data-editor-dragging]) .DropZone {
   transition: min-height var(--resize-animation-ms) ease-in;
 }
 
@@ -57,16 +57,16 @@
   z-index: 1;
 }
 
-[data-puck-dragging] .DropZone--isEnabled {
+[data-editor-dragging] .DropZone--isEnabled {
   outline: 1px dashed var(--fe-accent);
   border-radius: var(--fe-radius-md);
 }
 
-.DropZone > *:not([data-puck-component]) {
+.DropZone > *:not([data-editor-component]) {
   opacity: 0;
 }
 
 /* Hide overlays if DropZone is animating, which happens during a resize */
-body:has(.DropZone--isAnimating:empty) [data-puck-overlay] {
+body:has(.DropZone--isAnimating:empty) [data-editor-overlay] {
   opacity: 0 !important;
 }

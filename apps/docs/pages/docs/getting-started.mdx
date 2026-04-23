@@ -5,22 +5,22 @@
 Install the package
 
 ```sh npm2yarn copy
-npm i @puckeditor/core --save
+npm i @frontend/core --save
 ```
 
-Or generate a Puck application using a [recipe](https://github.com/puckeditor/puck#recipes)
+Or generate a Frontend application using a [recipe](https://github.com/editoreditor/editor#recipes)
 
 ```sh copy
-npx create-puck-app my-app
+npx create-editor-app my-app
 ```
 
 ## Render the editor
 
 ```jsx copy filename="Editor.jsx"
-import { Puck } from "@puckeditor/core";
-import "@puckeditor/core/puck.css";
+import { Editor } from "@frontend/core";
+import "@frontend/core/frontend.css";
 
-// Create Puck component config
+// Create Frontend component config
 const config = {
   components: {
     HeadingBlock: {
@@ -42,16 +42,16 @@ const initialData = {};
 // Save the data to your database
 const save = (data) => {};
 
-// Render Puck editor
+// Render Frontend editor
 export function Editor() {
-  return <Puck config={config} data={initialData} onPublish={save} />;
+  return <Editor config={config} data={initialData} onPublish={save} />;
 }
 ```
 
 ## Render the page
 
 ```jsx copy filename="Page.jsx"
-import { Render } from "@puckeditor/core";
+import { Render } from "@frontend/core";
 
 export function Page() {
   return <Render config={config} data={data} />;

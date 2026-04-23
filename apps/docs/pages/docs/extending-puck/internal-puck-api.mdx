@@ -1,73 +1,73 @@
 ---
-title: Internal Puck API
+title: Internal Frontend API
 ---
 
-# Internal Puck API
+# Internal Frontend API
 
-Puck exposes its internal API as [`PuckApi`](/docs/api-reference/puck-api) for extending Puck with custom functionality within [custom fields](/docs/extending-puck/custom-fields), [compositional interfaces](/docs/extending-puck/composition) or [UI overrides](/docs/extending-puck/ui-overrides).
+Frontend exposes its internal API as [`EditorApi`](/docs/api-reference/editor-api) for extending Frontend with custom functionality within [custom fields](/docs/extending-editor/custom-fields), [compositional interfaces](/docs/extending-editor/composition) or [UI overrides](/docs/extending-editor/ui-overrides).
 
 ## Accessing the internal API
 
-You can access [`PuckApi`](/docs/api-reference/puck-api) via two hooks:
+You can access [`EditorApi`](/docs/api-reference/editor-api) via two hooks:
 
-- [`usePuck`](/docs/api-reference/functions/use-puck) - returns `PuckApi` as part of your component render lifecycle
-- [`useGetPuck`](/docs/api-reference/functions/use-get-puck) - returns a function to access the latest `PuckApi` at call time
+- [`useEditor`](/docs/api-reference/functions/use-editor) - returns `EditorApi` as part of your component render lifecycle
+- [`useGetEditor`](/docs/api-reference/functions/use-get-editor) - returns a function to access the latest `EditorApi` at call time
 
 ### Within the render lifecycle
 
-To access the API within your render lifecycle, use the `usePuck` hook. You can use a selector to limit re-rendering to a specific part of the API.
+To access the API within your render lifecycle, use the `useEditor` hook. You can use a selector to limit re-rendering to a specific part of the API.
 
 ```tsx copy
-import { createUsePuck } from "@puckeditor/core";
+import { createUseEditor } from "@frontend/core";
 
-const usePuck = createUsePuck();
+const useEditor = createUseEditor();
 
 const Example = () => {
   // Use a selector so you only re-render when the selected type changes
-  const type = usePuck((s) => s.selectedItem?.type || "Nothing");
+  const type = useEditor((s) => s.selectedItem?.type || "Nothing");
 
   return <h2>{type} selected</h2>;
 };
 ```
 
-See the [`usePuck`](/docs/api-reference/functions/use-puck) docs for a full API reference.
+See the [`useEditor`](/docs/api-reference/functions/use-editor) docs for a full API reference.
 
 ### Outside of the render lifecycle
 
-Often it's not necessary to re-render your component when the PuckApi changes. Puck provides the `useGetPuck` hook for accessing the latest `PuckApi` at call time.
+Often it's not necessary to re-render your component when the EditorApi changes. Frontend provides the `useGetEditor` hook for accessing the latest `EditorApi` at call time.
 
 ```tsx copy
-import { useGetPuck } from "@puckeditor/core";
+import { useGetEditor } from "@frontend/core";
 
 const Example = () => {
-  const getPuck = useGetPuck();
+  const getFrontend = useGetEditor();
 
   const handleClick = useCallback(() => {
-    // Get the latest PuckApi value
-    const { appState } = getPuck();
+    // Get the latest EditorApi value
+    const { appState } = getFrontend();
 
     console.log(appState);
-  }, [getPuck]);
+  }, [getFrontend]);
 
   return <button onClick={handleClick}>Click me</button>;
 };
 ```
 
-See the [`useGetPuck`](/docs/api-reference/functions/use-get-puck) docs for a full API reference.
+See the [`useGetEditor`](/docs/api-reference/functions/use-get-editor) docs for a full API reference.
 
 ## Usage in practice
 
 Generally, you'll want to combine this with composition, UI overrides or custom fields.
 
-Here's an example using the internal API to log the page data as JSON while retaining the standard Puck UI:
+Here's an example using the internal API to log the page data as JSON while retaining the standard Frontend UI:
 
 ```tsx
-import { Puck, createUsePuck } from "@puckeditor/core";
+import { Editor, createUseEditor } from "@frontend/core";
 
-const usePuck = createUsePuck();
+const useEditor = createUseEditor();
 
 const JSONLogger = ({ children }) => {
-  const appState = usePuck((s) => s.appState);
+  const appState = useEditor((s) => s.appState);
 
   useEffect(() => {
     console.log(appState);
@@ -78,23 +78,23 @@ const JSONLogger = ({ children }) => {
 
 export function Editor() {
   return (
-    // Render the Puck context
-    <Puck>
+    // Render the Frontend context
+    <Editor>
       <JSONLogger>
-        {/* Since we're overriding Puck's children, we restore the standard Puck UI */}
-        <Puck.Layout />
+        {/* Since we're overriding Frontend's children, we restore the standard Frontend UI */}
+        <Editor.Layout />
       </JSONLogger>
-    </Puck>
+    </Frontend>
   );
 }
 ```
 
 ## Further reading
 
-- [`PuckApi` API reference](/docs/api-reference/puck-api)
-- [`usePuck` API reference](/docs/api-reference/functions/use-puck)
-- [`useGetPuck` API reference](/docs/api-reference/functions/use-get-puck)
-- [`<Puck.Layout>` API reference](/docs/api-reference/components/puck-layout)
-- [Composition](/docs/extending-puck/composition)
-- [Custom fields](/docs/extending-puck/custom-fields)
-- [UI overrides](/docs/extending-puck/ui-overrides)
+- [`EditorApi` API reference](/docs/api-reference/editor-api)
+- [`useEditor` API reference](/docs/api-reference/functions/use-editor)
+- [`useGetEditor` API reference](/docs/api-reference/functions/use-get-editor)
+- [`<Editor.Layout>` API reference](/docs/api-reference/components/editor-layout)
+- [Composition](/docs/extending-editor/composition)
+- [Custom fields](/docs/extending-editor/custom-fields)
+- [UI overrides](/docs/extending-editor/ui-overrides)

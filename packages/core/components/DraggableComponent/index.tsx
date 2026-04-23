@@ -229,10 +229,10 @@ export const DraggableComponent = ({
     });
 
     if (ref.current && !permissions.drag) {
-      ref.current.setAttribute("data-puck-disabled", "");
+      ref.current.setAttribute("data-editor-disabled", "");
 
       return () => {
-        ref.current?.removeAttribute("data-puck-disabled");
+        ref.current?.removeAttribute("data-editor-disabled");
         cleanup();
       };
     }
@@ -266,7 +266,7 @@ export const DraggableComponent = ({
     setPortalEl(
       iframe.enabled
         ? ref.current?.ownerDocument.body
-        : ref.current?.closest<HTMLElement>("[data-puck-preview]") ??
+        : ref.current?.closest<HTMLElement>("[data-editor-preview]") ??
             document.body
     );
   }, [iframe.enabled]);
@@ -278,7 +278,7 @@ export const DraggableComponent = ({
     const rect = el.getBoundingClientRect();
     const portalContainerEl = iframe.enabled
       ? null
-      : el.closest<HTMLElement>("[data-puck-preview]");
+      : el.closest<HTMLElement>("[data-editor-preview]");
 
     const targetIsFixed = (() => {
       let node: HTMLElement | null = el;
@@ -423,7 +423,7 @@ export const DraggableComponent = ({
 
       const el = e.target as Element;
 
-      if (!el.closest("[data-puck-overlay-portal]")) {
+      if (!el.closest("[data-editor-overlay-portal]")) {
         e.stopPropagation();
       }
 
@@ -528,16 +528,16 @@ export const DraggableComponent = ({
       setHover(false);
     };
 
-    el.setAttribute("data-puck-component", id);
-    el.setAttribute("data-puck-dnd", id);
+    el.setAttribute("data-editor-component", id);
+    el.setAttribute("data-editor-dnd", id);
     el.style.position = "relative";
     el.addEventListener("click", onClick);
     el.addEventListener("mouseover", _onMouseOver);
     el.addEventListener("mouseout", _onMouseOut);
 
     return () => {
-      el.removeAttribute("data-puck-component");
-      el.removeAttribute("data-puck-dnd");
+      el.removeAttribute("data-editor-component");
+      el.removeAttribute("data-editor-dnd");
       el.removeEventListener("click", onClick);
       el.removeEventListener("mouseover", _onMouseOver);
       el.removeEventListener("mouseout", _onMouseOut);
@@ -752,7 +752,7 @@ export const DraggableComponent = ({
               isGlobal,
             })}
             style={{ ...style }}
-            data-puck-overlay
+            data-editor-overlay
           >
             {debug}
             {isLoading && (

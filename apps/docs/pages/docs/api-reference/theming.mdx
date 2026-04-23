@@ -3,41 +3,41 @@ import { Callout } from "nextra/components";
 # Theming
 
 <Callout type="info">
-  Theming in Puck is currently limited in functionality, and being explored via
-  [#139 on GitHub](https://github.com/puckeditor/puck/issues/139).
+  Theming in Frontend is currently limited in functionality, and being explored via
+  [#139 on GitHub](https://github.com/editoreditor/editor/issues/139).
 </Callout>
 
-CSS properties for theming the default Puck user interface.
+CSS properties for theming the default Frontend user interface.
 
 ## Properties
 
 | Param                                                             | Example |
 | ----------------------------------------------------------------- | ------- |
-| [`--puck-font-family`](#--puck-font-family)                       | `Arial` |
-| [`--puck-font-family-monospaced`](#--puck-font-family-monospaced) | `Menlo` |
+| [`--editor-font-family`](#--editor-font-family)                       | `Arial` |
+| [`--editor-font-family-monospaced`](#--editor-font-family-monospaced) | `Menlo` |
 
-### `--puck-font-family`
+### `--editor-font-family`
 
-The font family used for the Puck interface. Must be used with the `no-external` bundle that stops Puck from loading the default font.
+The font family used for the Frontend interface. Must be used with the `no-external` bundle that stops Frontend from loading the default font.
 
 ```css
 /* Load bundle without existing font */
-@import "@puckeditor/core/no-external.css";
+@import "@frontend/core/no-external.css";
 
 :root {
-  --puck-font-family: Arial;
+  --editor-font-family: Arial;
 }
 ```
 
-### `--puck-font-family-monospaced`
+### `--editor-font-family-monospaced`
 
-The font family used for monospaced elements of the Puck interface.
+The font family used for monospaced elements of the Frontend interface.
 
 ```css
 /* Monospaced fonts don't use external files, so the default bundle is safe */
-@import "@puckeditor/core/puck.css";
+@import "@frontend/core/frontend.css";
 
 :root {
-  --puck-font-family-monospaced: Menlo;
+  --editor-font-family-monospaced: Menlo;
 }
 ```

@@ -1,7 +1,7 @@
 ---
 name: "Bug Report 🐛"
 about:
-  Report a problem with Puck. Please provide enough information to reproduce
+  Report a problem with Frontend. Please provide enough information to reproduce
   the problem.
 title: ""
 labels: ["type: bug 🐛"]
@@ -10,18 +10,18 @@ assignees: ""
 
 ## Description
 
-[Example: "The `<Puck />` component doesn't render correctly inside a CSS grid layout..."]
+[Example: "The `<Editor />` component doesn't render correctly inside a CSS grid layout..."]
 
 <!--
   Provide a clear and concise description of the bug.
   Don't assume we know anything about your repository or codebase.
-  Keep it centered around Puck—avoid detailing your use case unless it directly helps explain the issue.
-  Test the issue using the latest version of Puck to confirm it hasn't already been fixed.
+  Keep it centered around Frontend—avoid detailing your use case unless it directly helps explain the issue.
+  Test the issue using the latest version of Frontend to confirm it hasn't already been fixed.
 -->
 
 ## Environment
 
-- Puck version: [0.19.0, 1.0.0...]
+- Frontend version: [0.19.0, 1.0.0...]
 - Browser version: [Chrome 135 (desktop), Firefox 133 (mobile)...]
 - Additional environment info: [bundler, OS, device type...]
 
@@ -31,13 +31,13 @@ assignees: ""
 
 ## Steps to reproduce
 
-1. Render the `<Puck />` component in a grid layout...
+1. Render the `<Editor />` component in a grid layout...
 
 ```tsx
 const Editor = () => {
   return (
     <div style={{ display: "grid" }}>
-      <Puck config={config} data={data} />
+      <Editor config={config} data={data} />
     </div>
   );
 };
@@ -47,7 +47,7 @@ const Editor = () => {
 
 <!--
   Provide clear steps with code examples so that we can reproduce the bug.
-  Avoid including dependencies other than Puck.
+  Avoid including dependencies other than Frontend.
   Issues without reproduction steps or code examples may be closed as not actionable.
   For help on providing minimal, reproducible examples: https://stackoverflow.com/help/mcve
 -->
@@ -63,7 +63,7 @@ const Editor = () => {
 
 ## What I expect to happen
 
-[Example: "The Puck component should render correctly in any CSS layout..."]
+[Example: "The Frontend component should render correctly in any CSS layout..."]
 
 <!--
   State what was the result you expected from the steps above.

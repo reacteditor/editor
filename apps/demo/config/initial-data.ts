@@ -31,7 +31,7 @@ const defaultFooterProps = {
       ],
     },
   ],
-  byline: "Made with Puck",
+  byline: "Made with Editor",
 };
 
 export const initialData: Record<string, UserData> = {
@@ -44,13 +44,13 @@ export const initialData: Record<string, UserData> = {
       {
         type: "Hero",
         props: {
-          title: "This page was built with Puck",
+          title: "This page was built with Editor",
           description:
-            "<p>Puck is the self-hosted visual editor for React. Bring your own components and make site changes instantly, without a deploy.</p>",
+            "<p>Editor is the self-hosted visual editor for React. Bring your own components and make site changes instantly, without a deploy.</p>",
           buttons: [
             {
               label: "Visit GitHub",
-              href: "https://github.com/puckeditor/puck",
+              href: "https://github.com/frontend-inc/frontend-visual-editor",
             },
             { label: "Edit this page", href: "/edit", variant: "secondary" },
           ],
@@ -96,7 +96,7 @@ export const initialData: Record<string, UserData> = {
         type: "Text",
         props: {
           align: "center",
-          text: "Configure Puck with your own components to make change for your marketing pages without a developer.",
+          text: "Configure Editor with your own components to make change for your marketing pages without a developer.",
           layout: { padding: "0px" },
           size: "m",
           id: "Text-1687297621556",
@@ -123,7 +123,7 @@ export const initialData: Record<string, UserData> = {
               props: {
                 title: "Built for content teams",
                 description:
-                  "Puck enables content teams to make changes to their content without a developer or breaking the UI.",
+                  "Editor enables content teams to make changes to their content without a developer or breaking the UI.",
                 icon: "pen-tool",
                 mode: "flat",
                 layout: { grow: true, spanCol: 1, spanRow: 1, padding: "0px" },
@@ -147,7 +147,7 @@ export const initialData: Record<string, UserData> = {
               props: {
                 title: "No vendor lock-in",
                 description:
-                  "Completely open-source, Puck is designed to be integrated into your existing React application.",
+                  "Completely open-source, Editor is designed to be integrated into your existing React application.",
                 icon: "github",
                 mode: "flat",
                 layout: { grow: true, spanCol: 1, spanRow: 1, padding: "0px" },
@@ -196,7 +196,7 @@ export const initialData: Record<string, UserData> = {
         type: "Text",
         props: {
           align: "center",
-          text: 'This page demonstrates Puck configured with a custom component library. This component is called "Stats", and contains some made-up numbers. You can configure any page by adding "/edit" onto the URL.',
+          text: 'This page demonstrates Editor configured with a custom component library. This component is called "Stats", and contains some made-up numbers. You can configure any page by adding "/edit" onto the URL.',
           layout: { padding: "0px" },
           size: "m",
           id: "Text-1687284565722",
@@ -237,7 +237,7 @@ export const initialData: Record<string, UserData> = {
         props: {
           align: "center",
           level: "2",
-          text: "Extending Puck",
+          text: "Extending Editor",
           layout: { padding: "0px" },
           size: "xxl",
           id: "Heading-1687296184321",
@@ -255,7 +255,7 @@ export const initialData: Record<string, UserData> = {
         type: "Text",
         props: {
           align: "center",
-          text: "Puck can also be extended with plugins and headless CMS content fields, transforming Puck into the perfect tool for your Content Ops.",
+          text: "Editor can also be extended with plugins and headless CMS content fields, transforming Editor into the perfect tool for your Content Ops.",
           layout: { padding: "0px" },
           size: "m",
           id: "Text-1687296579834",
@@ -281,18 +281,6 @@ export const initialData: Record<string, UserData> = {
             {
               type: "Card",
               props: {
-                title: "plugin-heading-analyzer",
-                description:
-                  "Analyze the document structure and identify WCAG 2.1 issues with your heading hierarchy.",
-                icon: "align-left",
-                mode: "card",
-                layout: { grow: false, spanCol: 1, spanRow: 1, padding: "0px" },
-                id: "Card-b0e8407d-9fbb-4e76-aa32-d32f655c11d3",
-              },
-            },
-            {
-              type: "Card",
-              props: {
                 title: "External data",
                 description:
                   "Connect your components with an existing data source, like Strapi.js.",
@@ -307,7 +295,7 @@ export const initialData: Record<string, UserData> = {
               props: {
                 title: "Custom plugins",
                 description:
-                  "Create your own plugin to extend Puck for your use case using React.",
+                  "Create your own plugin to extend Editor for your use case using React.",
                 icon: "plug",
                 mode: "card",
                 layout: { grow: false, spanCol: 1, spanRow: 1, padding: "0px" },
@@ -381,7 +369,7 @@ export const initialData: Record<string, UserData> = {
         type: "Text",
         props: {
           align: "center",
-          text: "Browse the Puck GitHub to get started, or try editing this page",
+          text: "Browse the Editor GitHub to get started, or try editing this page",
           layout: { padding: "0px" },
           size: "m",
           id: "Text-1687299305686",
@@ -410,7 +398,7 @@ export const initialData: Record<string, UserData> = {
               type: "Button",
               props: {
                 label: "Visit GitHub",
-                href: "https://github.com/puckeditor/puck",
+                href: "https://github.com/frontend-inc/frontend-visual-editor",
                 variant: "primary",
                 id: "Button-bd41007c-6627-414d-839a-e261d470d8f9",
               },
@@ -440,7 +428,7 @@ export const initialData: Record<string, UserData> = {
         props: { id: "SiteFooter-home", ...defaultFooterProps },
       },
     ],
-    root: { props: { title: "Puck Example" } },
+    root: { props: { title: "Editor Example" } },
     zones: {},
   },
   "/pricing": {

@@ -11,7 +11,7 @@ export const Root: RootConfig<{
   fields: {
     title: { type: "text", default: "My Page" },
   },
-  render: ({ puck: { renderDropZone: DropZone } }) => {
+  render: ({ editor: { renderDropZone: DropZone } }) => {
     return (
       <div
         style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}

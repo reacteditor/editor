@@ -1,0 +1,40 @@
+{
+  "name": "@frontend/plugin-tailwind-cdn",
+  "version": "0.1.0",
+  "author": "Rami Bitar <rami@frontend.co>",
+  "repository": "frontend-inc/frontend-visual-editor",
+  "bugs": "https://github.com/frontend-inc/frontend-visual-editor/issues",
+  "homepage": "https://frontend.co",
+  "private": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.js",
+    "types": "./dist/index.d.ts"
+  },
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint \"**/*.ts*\"",
+    "build": "rm -rf dist && tsup index.tsx",
+    "prepare": "yarn build"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@frontend/core": "^0.1.0",
+    "@types/minimatch": "3.0.5",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.0.2",
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "*",
+    "tsconfig": "*",
+    "tsup": "^8.2.4",
+    "tsup-config": "*",
+    "typescript": "^5.5.4"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0 || ^19.0.0"
+  }
+}

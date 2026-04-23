@@ -11,13 +11,13 @@ export { AutoField } from "@/core/components/AutoField";
 
 import { ReactNode } from "react";
 import "@/core/styles.css";
-import { Puck } from "@/core/components/Puck";
+import { Editor } from "@/core/components/Editor";
 
 import { AppState, ComponentConfig } from "@/core/types";
 import { getClassNameFactory } from "@/core/lib";
 
 import styles from "./styles.module.css";
-import { createUsePuck } from "@/core/lib/use-puck";
+import { createUseEditor } from "@/core/lib/use-editor";
 
 import { ChevronUp, ChevronDown } from "lucide-react";
 
@@ -76,7 +76,7 @@ const Drawer = ({ renderDrawer }: { renderDrawer: () => ReactNode }) => {
   );
 };
 
-const usePuck = createUsePuck();
+const useEditor = createUseEditor();
 
 export const PreviewFrame = ({
   children,
@@ -93,7 +93,7 @@ export const PreviewFrame = ({
   renderInfo?: () => ReactNode;
   renderDrawer?: () => ReactNode;
 }) => {
-  const dispatch = usePuck((s) => s.dispatch);
+  const dispatch = useEditor((s) => s.dispatch);
 
   return (
     <div
@@ -148,15 +148,15 @@ export const CodeBlock = ({ code }: { code: string | object }) => {
   );
 };
 
-export const PuckPreview = ({
+export const EditorPreview = ({
   label,
-  children = <Puck.Preview />,
+  children = <Editor.Preview />,
   style = {},
   disableOnClick,
   renderInfo,
   renderDrawer,
-  ...puckProps
-}: React.ComponentProps<typeof Puck> & {
+  ...editorProps
+}: React.ComponentProps<typeof Editor> & {
   label: string;
   disableOnClick: boolean;
   children?: ReactNode;
@@ -167,7 +167,7 @@ export const PuckPreview = ({
   const [store] = useState(createStore(() => ({ drawerVisible: false })));
 
   return (
-    <Puck config={{}} data={{}} {...puckProps} iframe={{ enabled: false }}>
+    <Editor config={{}} data={{}} {...editorProps} iframe={{ enabled: false }}>
       <PreviewStoreContext value={store}>
         <PreviewFrame
           label={label}
@@ -179,7 +179,7 @@ export const PuckPreview = ({
           {children}
         </PreviewFrame>
       </PreviewStoreContext>
-    </Puck>
+    </Editor>
   );
 };
 
@@ -190,7 +190,7 @@ const ConfigPreviewInner = ({
   children?: ReactNode;
   componentConfig: ComponentConfig;
 }) => {
-  const appState = usePuck((s) => s.appState);
+  const appState = useEditor((s) => s.appState);
 
   return (
     <div>
@@ -199,7 +199,7 @@ const ConfigPreviewInner = ({
           {children ??
             componentConfig.render({
               ...appState.data["content"][0]?.props,
-              puck: {
+              editor: {
                 renderDropZone: () => <div />,
                 isEditing: false,
                 metadata: {},
@@ -217,7 +217,7 @@ export const CodeBlockDrawer = ({
 }: {
   getCode?: (appState: AppState) => object | string;
 }) => {
-  const appState = usePuck((s) => s.appState);
+  const appState = useEditor((s) => s.appState);
   const code = getCode?.(appState) ?? "";
 
   return <CodeBlock code={code} />;
@@ -233,7 +233,7 @@ export const ConfigPreview = ({
   label: string;
 }) => {
   return (
-    <PuckPreview
+    <EditorPreview
       label={label}
       config={{ components: { Example: componentConfig } }}
       data={{
@@ -253,7 +253,7 @@ export const ConfigPreview = ({
       disableOnClick
       renderInfo={() => (
         <div onClick={(e) => e.stopPropagation()}>
-          <Puck.Fields />
+          <Editor.Fields />
         </div>
       )}
       permissions={{ drag: false }}
@@ -272,7 +272,7 @@ export const ConfigPreview = ({
       <ConfigPreviewInner componentConfig={componentConfig}>
         {children}
       </ConfigPreviewInner>
-    </PuckPreview>
+    </EditorPreview>
   );
 };
 

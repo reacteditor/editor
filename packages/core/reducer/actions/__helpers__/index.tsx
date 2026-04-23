@@ -1,4 +1,4 @@
-import { PuckAction, createReducer } from "../../../reducer";
+import { EditorAction, createReducer } from "../../../reducer";
 import { ComponentData, Config, Data, Slot, UiState } from "../../../types";
 import { generateId } from "../../../lib/generate-id";
 import {
@@ -124,7 +124,7 @@ export const executeSequenceFactory =
   (reducer: Reducer<any, any>) =>
   <UserData extends Data>(
     initialState: PrivateAppState<UserData>,
-    actions: ((currentState: PrivateAppState<UserData>) => PuckAction)[]
+    actions: ((currentState: PrivateAppState<UserData>) => EditorAction)[]
   ) => {
     let currentState: PrivateAppState<UserData> = initialState;
 
@@ -159,7 +159,7 @@ export const testSetup = () => {
 
   const executeSequence = (
     initialState: PrivateAppState<UserData>,
-    actions: ((currentState: PrivateAppState<UserData>) => PuckAction)[]
+    actions: ((currentState: PrivateAppState<UserData>) => EditorAction)[]
   ) => {
     let currentState: PrivateAppState<UserData> = initialState;
 
@@ -175,7 +175,7 @@ export const testSetup = () => {
     return currentState;
   };
 
-  const reducer = (state: PrivateAppState, action: PuckAction) =>
+  const reducer = (state: PrivateAppState, action: EditorAction) =>
     _reducer(state, action);
 
   return { reducer, executeSequence, config };

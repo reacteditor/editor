@@ -2,12 +2,12 @@ import { Callout } from "nextra/components";
 
 # Field Transforms
 
-Puck lets you modify props before rendering in the editor via the [`FieldTransforms` API](/docs/api-reference/field-transforms).
+Frontend lets you modify props before rendering in the editor via the [`FieldTransforms` API](/docs/api-reference/field-transforms).
 
 Use this API to implement custom rendering behavior for specific field types, which can be used to implement features such as inline text editing.
 
 <Callout type="info">
-  Field transforms only apply to components rendered in `<Puck>` and will not be applied to `<Render>`.
+  Field transforms only apply to components rendered in `<Editor>` and will not be applied to `<Render>`.
 </Callout>
 
 ## Implementing a transform
@@ -19,15 +19,15 @@ const fieldTransforms = {
   text: ({ value }) => <div>Value: {value}</div>, // Wrap all text field props in divs
 };
 
-const Example = () => <Puck fieldTransforms={fieldTransforms} />;
+const Example = () => <Editor fieldTransforms={fieldTransforms} />;
 ```
 
 ## Making it interactive
 
-Combine transforms with [Overlay Portals](/docs/integrating-puck/overlay-portals) to make them interactive.
+Combine transforms with [Overlay Portals](/docs/integrating-editor/overlay-portals) to make them interactive.
 
 ```tsx
-import { registerOverlayPortal } from "@puckeditor/core";
+import { registerOverlayPortal } from "@frontend/core";
 
 const EditableText = ({ value }) => {
   const ref = useRef(null);
@@ -51,12 +51,12 @@ const fieldTransforms = {
   text: EditableText,
 };
 
-const Example = () => <Puck fieldTransforms={fieldTransforms} />;
+const Example = () => <Editor fieldTransforms={fieldTransforms} />;
 ```
 
 ## Define new fields
 
-As with [field type overrides](/docs/extending-puck/ui-overrides#introducing-new-field-types), field transforms let you define your own field types:
+As with [field type overrides](/docs/extending-editor/ui-overrides#introducing-new-field-types), field transforms let you define your own field types:
 
 ```tsx
 const fieldTransforms = {
@@ -82,10 +82,10 @@ const plugin = {
   },
 };
 
-const Example = () => <Puck plugins={[plugin]} />;
+const Example = () => <Editor plugins={[plugin]} />;
 ```
 
 ## Further reading
 
 - [Field Transforms API reference](/docs/api-reference/field-transforms)
-- [Overlay Portals API reference](/docs/integrating-puck/overlay-portals)
+- [Overlay Portals API reference](/docs/integrating-editor/overlay-portals)
