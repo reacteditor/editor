@@ -1,7 +1,7 @@
 import styles from "./styles.module.css";
 import getClassNameFactory from "../../lib/get-class-name-factory";
 import { ReactNode } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useAppStore } from "../../store";
 import { Drawer } from "../Drawer";
 import { Block } from "../../types";
@@ -78,10 +78,10 @@ const BlockList = ({ children, title, id }: BlockListProps) => {
               : `Expand${title ? ` ${title}` : ""}`
           }
         >
-          <div>{title}</div>
           <div className={getClassName("titleIcon")}>
-            {expanded ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+            <ChevronRight size={12} />
           </div>
+          <div>{title}</div>
         </button>
       )}
       <div className={getClassName("content")}>
