@@ -1,10 +1,10 @@
 {
-  "name": "@frontend/core",
+  "name": "@frontendai/react-editor",
   "version": "0.1.0",
   "description": "The open-source visual editor for React",
   "author": "Rami Bitar <rami@frontend.co>",
-  "repository": "frontend-inc/frontend-visual-editor",
-  "bugs": "https://github.com/frontend-inc/frontend-visual-editor/issues",
+  "repository": "frontend-inc/react-editor",
+  "bugs": "https://github.com/frontend-inc/react-editor/issues",
   "homepage": "https://frontend.co",
   "keywords": [
     "editor",

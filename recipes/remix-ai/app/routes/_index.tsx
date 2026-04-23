@@ -1,4 +1,4 @@
-import { Render, type Config } from "@frontend/core";
+import { Render, type Config } from "@frontendai/react-editor";
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";

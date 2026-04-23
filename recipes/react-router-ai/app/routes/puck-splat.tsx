@@ -1,13 +1,13 @@
 import { useFetcher, useLoaderData } from "react-router";
-import type { Data } from "@frontend/core";
-import { Editor, Render } from "@frontend/core";
+import type { Data } from "@frontendai/react-editor";
+import { Editor, Render } from "@frontendai/react-editor";
 import { createAiPlugin } from "@puckeditor/plugin-ai";
 
 import type { Route } from "./+types/editor-splat";
 import { config } from "../../editor.config";
 import { resolveEditorPath } from "~/lib/resolve-editor-path.server";
 import { getPage, savePage } from "~/lib/pages.server";
-import editorStyles from "@frontend/core/frontend.css?url";
+import editorStyles from "@frontendai/react-editor/frontend.css?url";
 import pluginStyles from "@puckeditor/plugin-ai/styles.css?url";
 
 export async function loader({ params }: Route.LoaderArgs) {

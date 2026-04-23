@@ -5,12 +5,12 @@ Inject the [Tailwind CSS v4 browser CDN](https://tailwindcss.com/docs/installati
 ## Quick start
 
 ```sh
-npm i @frontend/plugin-tailwind-cdn
+npm i @frontendai/plugin-tailwind-cdn
 ```
 
 ```jsx
-import { Editor } from "@frontend/core";
-import createTailwindCdnPlugin from "@frontend/plugin-tailwind-cdn";
+import { Editor } from "@frontendai/react-editor";
+import createTailwindCdnPlugin from "@frontendai/plugin-tailwind-cdn";
 
 const tailwindCdn = createTailwindCdnPlugin();
 
@@ -46,4 +46,4 @@ Override the script URL, e.g. to pin a specific version. Defaults to `https://cd
 
 ## License
 
-MIT © [The Frontend Contributors](https://github.com/frontend-inc/frontend-visual-editor/graphs/contributors)
+MIT © [The Frontend Contributors](https://github.com/frontend-inc/react-editor/graphs/contributors)

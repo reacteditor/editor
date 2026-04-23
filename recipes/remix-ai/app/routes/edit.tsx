@@ -1,6 +1,6 @@
-import { Editor, type Data, type Config } from "@frontend/core";
+import { Editor, type Data, type Config } from "@frontendai/react-editor";
 import { createAiPlugin } from "@puckeditor/plugin-ai";
-import styles from "@frontend/core/frontend.css";
+import styles from "@frontendai/react-editor/frontend.css";
 import pluginStyles from "@puckeditor/plugin-ai/styles.css";
 import type {
   ActionFunctionArgs,

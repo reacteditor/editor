@@ -11,7 +11,7 @@ const config: Options = {
   external: [
     "react",
     "react-dom",
-    "@frontend/core",
+    "@frontendai/react-editor",
     "@dnd-kit/react",
     "@dnd-kit/dom",
     "@dnd-kit/abstract",

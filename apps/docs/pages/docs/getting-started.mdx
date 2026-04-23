@@ -5,7 +5,7 @@
 Install the package
 
 ```sh npm2yarn copy
-npm i @frontend/core --save
+npm i @frontendai/react-editor --save
 ```
 
 Or generate a Frontend application using a [recipe](https://github.com/editoreditor/editor#recipes)
@@ -17,8 +17,8 @@ npx create-editor-app my-app
 ## Render the editor
 
 ```jsx copy filename="Editor.jsx"
-import { Editor } from "@frontend/core";
-import "@frontend/core/frontend.css";
+import { Editor } from "@frontendai/react-editor";
+import "@frontendai/react-editor/frontend.css";
 
 // Create Frontend component config
 const config = {
@@ -51,7 +51,7 @@ export function Editor() {
 ## Render the page
 
 ```jsx copy filename="Page.jsx"
-import { Render } from "@frontend/core";
+import { Render } from "@frontendai/react-editor";
 
 export function Page() {
   return <Render config={config} data={data} />;

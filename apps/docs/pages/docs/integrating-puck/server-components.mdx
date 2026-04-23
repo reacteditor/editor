@@ -46,7 +46,7 @@ Many modern component libraries will require some degree of client-side behaviou
 To achieve this, you must import each of those component from a separate file:
 
 ```tsx copy showLineNumbers filename="editor.config.tsx"
-import type { Config } from "@frontend/core";
+import type { Config } from "@frontendai/react-editor";
 import type { HeadingBlockProps } from "./components/HeadingBlock";
 import HeadingBlock from "./components/HeadingBlock";
 
@@ -113,7 +113,7 @@ Alternatively, consider entirely separate configs for the `<Editor>` and `<Rende
 Create a shared config type:
 
 ```tsx copy showLineNumbers filename="editor-types.ts"
-import type { Config } from "@frontend/core";
+import type { Config } from "@frontendai/react-editor";
 
 type Props = {
   HeadingBlock: {
