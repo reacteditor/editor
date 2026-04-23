@@ -5,6 +5,17 @@
   gap: 6px;
 }
 
+.Drawer--tile {
+  display: grid;
+  /* Always at least 2 columns: min shrinks below 88px when the container is
+     too narrow for two 88px tiles + gap (min(88px, 50% - half-gap)). */
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(88px, calc(50% - 3px)), 1fr)
+  );
+  gap: 6px;
+}
+
 .Drawer-draggable {
   position: relative;
 }
@@ -82,4 +93,32 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-weight: 500;
+}
+
+/* Tile variant — icon stacked above label, both centered in a square. */
+.Drawer--tile .DrawerItem-draggable {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  aspect-ratio: 1 / 1;
+  padding: 8px;
+  gap: 6px;
+}
+
+.Drawer--tile .DrawerItem-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Drawer--tile .DrawerItem-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.Drawer--tile .DrawerItem-name {
+  width: 100%;
+  font-size: var(--puck-font-size-xxxs);
+  line-height: 1.2;
 }

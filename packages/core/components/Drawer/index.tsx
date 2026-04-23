@@ -163,10 +163,12 @@ export const Drawer = ({
   children,
   droppableId,
   direction,
+  variant = "list",
 }: {
   children: ReactNode;
   droppableId?: string; // TODO deprecate
   direction?: "vertical" | "horizontal"; // TODO deprecate
+  variant?: "list" | "tile";
 }) => {
   if (droppableId) {
     console.error(
@@ -190,7 +192,7 @@ export const Drawer = ({
 
   return (
     <div
-      className={getClassName()}
+      className={getClassName({ [variant]: variant })}
       ref={ref}
       data-puck-dnd={id}
       data-puck-drawer

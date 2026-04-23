@@ -85,7 +85,7 @@ const BlockList = ({ children, title, id }: BlockListProps) => {
         </button>
       )}
       <div className={getClassName("content")}>
-        <Drawer>
+        <Drawer variant="tile">
           {children ??
             Object.entries(blocks ?? {}).map(([blockName, block]) => (
               <BlockListItem
