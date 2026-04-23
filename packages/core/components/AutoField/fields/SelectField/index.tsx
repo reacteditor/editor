@@ -1,9 +1,12 @@
-import getClassNameFactory from "../../../../lib/get-class-name-factory";
-import styles from "../../styles.module.css";
 import { FieldPropsInternal } from "../..";
 import { useDeepField } from "../../lib/use-deep-field";
-
-const getClassName = getClassNameFactory("Input", styles);
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../../ui/Select";
 
 export const SelectField = ({
   field,
@@ -21,30 +24,33 @@ export const SelectField = ({
     return null;
   }
 
+  // Radix Select requires string values. Serialize so any option value
+  // (string/number/boolean/object) round-trips cleanly on selection.
+  const serializedValue = JSON.stringify({ value });
+
   return (
-    <Label
-      label={label || name}
-      icon={labelIcon}
-      readOnly={readOnly}
-    >
-      <select
-        id={id}
-        title={label || name}
-        className={getClassName("input")}
-        disabled={readOnly}
-        onChange={(e) => {
-          onChange(JSON.parse(e.target.value).value);
+    <Label label={label || name} icon={labelIcon} readOnly={readOnly}>
+      <Select
+        value={serializedValue}
+        onValueChange={(v) => {
+          onChange(JSON.parse(v).value);
         }}
-        value={JSON.stringify({ value })}
+        disabled={readOnly}
       >
-        {field.options.map((option) => (
-          <option
-            key={option.label + JSON.stringify(option.value)}
-            label={option.label}
-            value={JSON.stringify({ value: option.value })}
-          />
-        ))}
-      </select>
+        <SelectTrigger id={id} style={{ width: "100%" }}>
+          <SelectValue placeholder={label || name} />
+        </SelectTrigger>
+        <SelectContent>
+          {field.options.map((option) => (
+            <SelectItem
+              key={option.label + JSON.stringify(option.value)}
+              value={JSON.stringify({ value: option.value })}
+            >
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </Label>
   );
 };

@@ -72,31 +72,12 @@
   word-break: break-all;
 }
 
+/* The routeSelect is the FeSelect trigger used by the route picker in the
+   header. Shared Select primitive already supplies surface / border / radius
+   / hover / focus styling via --fe-* tokens; this just tightens typography
+   to match the header chrome. */
 .PuckHeader-routeSelect {
-  background: var(--fe-surface-panel);
-  border: 1px solid var(--fe-border-subtle);
-  border-radius: var(--fe-radius-md);
-  color: var(--fe-text-primary);
-  cursor: pointer;
-  font: inherit;
-  font-size: var(--fe-font-size-xxs);
   font-weight: 600;
-  padding: 6px 28px 6px 10px;
-  transition: background-color var(--fe-motion-fast) var(--fe-ease),
-    border-color var(--fe-motion-fast) var(--fe-ease);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .PuckHeader-routeSelect:hover {
-    background: var(--fe-surface-hover);
-    border-color: var(--fe-border-default);
-  }
-}
-
-.PuckHeader-routeSelect:focus-visible {
-  outline: none;
-  box-shadow: var(--fe-ring);
-  border-color: var(--fe-border-default);
 }
 
 .PuckHeader-tools {

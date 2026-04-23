@@ -9,6 +9,13 @@ import { Config, Overrides, UserGenerics } from "../../../../types";
 import { DefaultOverride } from "../../../DefaultOverride";
 import { usePropsContext } from "../..";
 import { getClassNameFactory } from "../../../../lib";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../../ui/Select";
 import styles from "./styles.module.css";
 
 const getClassName = getClassNameFactory("PuckHeader", styles);
@@ -173,22 +180,26 @@ const HeaderInner = <
           </div>
           <div className={getClassName("title")}>
             {routes && currentPath !== undefined && onRouteChange ? (
-              <select
-                className={getClassName("routeSelect")}
+              <Select
                 value={currentPath}
-                onChange={(e) => {
-                  void onRouteChange(e.target.value);
+                onValueChange={(next) => {
+                  void onRouteChange(next);
                 }}
               >
-                {routes.some((r) => r.path === currentPath) ? null : (
-                  <option value={currentPath}>{currentPath}</option>
-                )}
-                {routes.map((route) => (
-                  <option key={route.path} value={route.path}>
-                    {route.title}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger className={getClassName("routeSelect")}>
+                  <SelectValue placeholder="Select page" />
+                </SelectTrigger>
+                <SelectContent>
+                  {routes.some((r) => r.path === currentPath) ? null : (
+                    <SelectItem value={currentPath}>{currentPath}</SelectItem>
+                  )}
+                  {routes.map((route) => (
+                    <SelectItem key={route.path} value={route.path}>
+                      {route.title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             ) : (
               <Heading rank="2" size="xs">
                 {headerTitle || rootTitle || "Page"}
