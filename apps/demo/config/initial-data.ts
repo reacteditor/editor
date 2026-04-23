@@ -450,6 +450,73 @@ export const initialData: Record<string, UserData> = {
         props: { id: "SiteHeader-pricing", ...defaultHeaderProps },
       },
       {
+        type: "Hero",
+        props: {
+          id: "Hero-pricing",
+          title: "Simple, honest pricing",
+          description:
+            "<p>Pick a plan that matches your team. Upgrade or cancel at any time.</p>",
+          buttons: [
+            { label: "Start free trial", href: "#", variant: "primary" },
+          ],
+          padding: "96px",
+          align: "center",
+          image: { url: "", mode: "inline", content: [] },
+        },
+        readOnly: { title: false, description: false },
+      },
+      {
+        type: "Grid",
+        props: {
+          id: "Grid-pricing",
+          numColumns: 3,
+          gap: 24,
+          items: [
+            {
+              type: "Card",
+              props: {
+                id: "Card-pricing-starter",
+                title: "Starter",
+                description: "Free for solo projects. One editor, one site.",
+                icon: "sparkles",
+                mode: "card",
+                layout: { grow: false, spanCol: 1, spanRow: 1, padding: "0px" },
+              },
+            },
+            {
+              type: "Card",
+              props: {
+                id: "Card-pricing-team",
+                title: "Team",
+                description: "Invite your team. Shared globals, page history.",
+                icon: "users",
+                mode: "card",
+                layout: { grow: false, spanCol: 1, spanRow: 1, padding: "0px" },
+              },
+            },
+            {
+              type: "Card",
+              props: {
+                id: "Card-pricing-enterprise",
+                title: "Enterprise",
+                description: "SSO, audit logs, priority support.",
+                icon: "building-2",
+                mode: "card",
+                layout: { grow: false, spanCol: 1, spanRow: 1, padding: "0px" },
+              },
+            },
+          ],
+        },
+      },
+      {
+        type: "Space",
+        props: {
+          size: "96px",
+          id: "Space-pricing-footer",
+          direction: "vertical",
+        },
+      },
+      {
         type: "SiteFooter",
         props: { id: "SiteFooter-pricing", ...defaultFooterProps },
       },
@@ -461,6 +528,61 @@ export const initialData: Record<string, UserData> = {
       {
         type: "SiteHeader",
         props: { id: "SiteHeader-about", ...defaultHeaderProps },
+      },
+      {
+        type: "Hero",
+        props: {
+          id: "Hero-about",
+          title: "About us",
+          description:
+            "<p>We build tools for people who build on the web.</p>",
+          buttons: [
+            { label: "Get in touch", href: "#", variant: "primary" },
+          ],
+          padding: "96px",
+          align: "center",
+          image: { url: "", mode: "inline", content: [] },
+        },
+        readOnly: { title: false, description: false },
+      },
+      {
+        type: "Heading",
+        props: {
+          id: "Heading-about-story",
+          align: "center",
+          level: "2",
+          text: "Our story",
+          size: "xxl",
+          layout: { padding: "0px" },
+        },
+      },
+      {
+        type: "Space",
+        props: {
+          size: "16px",
+          id: "Space-about-gap",
+          direction: "vertical",
+        },
+      },
+      {
+        type: "Text",
+        props: {
+          id: "Text-about-body",
+          align: "center",
+          text: "We started this project to solve a problem we kept running into: content teams needed to make visual changes without waiting on engineering, but every tool we tried either hid too much or hid too little. So we built the middle ground.",
+          size: "m",
+          color: "muted",
+          maxWidth: "720px",
+          layout: { padding: "0px" },
+        },
+      },
+      {
+        type: "Space",
+        props: {
+          size: "96px",
+          id: "Space-about-footer",
+          direction: "vertical",
+        },
       },
       {
         type: "SiteFooter",

@@ -1,13 +1,25 @@
 "use client";
 
-import { AutoField, Button, FieldLabel, Puck, Render } from "@/core";
+import { AutoField, Button, FieldLabel, Puck, Render, Route } from "@/core";
 import headingAnalyzer from "@/plugin-heading-analyzer/src/HeadingAnalyzer";
 import config from "../../config";
+import { initialData } from "../../config/initial-data";
 import { useDemoData } from "../../lib/use-demo-data";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Type } from "lucide-react";
 
-export function Client({ path, isEdit }: { path: string; isEdit: boolean }) {
+export function Client(props: { path: string; isEdit: boolean }) {
+  // Keyed by path so a route change fully remounts — useDemoData's useState
+  // initializer re-runs against the new path instead of retaining the
+  // previous page's data. Without this, Next's App Router preserves the
+  // client component across navigations and the editor keeps stale state.
+  return <ClientInner key={props.path} {...props} />;
+}
+
+function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
+  const router = useRouter();
+
   const metadata = {
     example: "Hello, world",
   };
@@ -18,6 +30,19 @@ export function Client({ path, isEdit }: { path: string; isEdit: boolean }) {
       isEdit,
       metadata,
     });
+
+  // Build the routes list from the known initial-data pages. Each route's
+  // title comes from that page's Root props (falling back to the path).
+  const routes = useMemo<Route[]>(
+    () =>
+      Object.entries(initialData).map(([routePath, pageData]) => ({
+        path: routePath,
+        title:
+          (pageData.root as any)?.props?.title ??
+          (routePath === "/" ? "Home" : routePath),
+      })),
+    []
+  );
 
   const [isClient, setIsClient] = useState(false);
 
@@ -45,6 +70,11 @@ export function Client({ path, isEdit }: { path: string; isEdit: boolean }) {
           }}
           plugins={[headingAnalyzer]}
           headerPath={path}
+          routes={routes}
+          currentPath={path}
+          onRouteChange={(next) => {
+            router.push(`${next === "/" ? "" : next}/edit`);
+          }}
           iframe={{
             enabled: params.get("disableIframe") === "true" ? false : true,
           }}
