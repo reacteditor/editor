@@ -55,7 +55,6 @@
     align-items: center;
     justify-content: center;
     padding: 12px 0;
-    border-top: 1px solid var(--puck-border-subtle);
   }
 }
 
