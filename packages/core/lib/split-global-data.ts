@@ -47,8 +47,15 @@ export function splitGlobalData(
       return { ...node, props: processedProps } as ComponentData;
     }
 
-    // Global instance: split props into shared (globalData) + extrinsic
-    // (children + id stay on the instance).
+    // Per-instance unlink: if this instance has opted out of global sync
+    // (__synced: false), keep its full props inline and do NOT extract to
+    // globalData. This is the escape hatch for one-off variants.
+    if (processedProps.__synced === false) {
+      return { ...node, props: processedProps } as ComponentData;
+    }
+
+    // Global instance (synced): split props into shared (globalData) +
+    // extrinsic (children + id stay on the instance).
     const { children, id, ...sharedProps } = processedProps;
 
     if (!extracted[type]) {

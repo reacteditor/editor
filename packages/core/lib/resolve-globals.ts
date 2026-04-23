@@ -4,9 +4,13 @@ import { ComponentData, Config, Data, GlobalData } from "../types";
  * Recursively resolves a single component node against globalData.
  *
  * Rule: if the node's type is marked `global: true` in config AND has an
- * entry in globalData, replace its props with the global's props. The
- * `children` slot stays from the instance (extrinsic, React-style) and the
- * `id` is preserved.
+ * entry in globalData AND the instance is not explicitly unlinked, replace
+ * its props with the global's props. The `children` slot stays from the
+ * instance (extrinsic, React-style) and the `id` is preserved.
+ *
+ * Per-instance unlink: if the instance has `__synced: false` on its props,
+ * it opts out of global resolution — its own props are used as-is. Used
+ * when a user wants a one-off variant on a specific page.
  *
  * Cycle guard: if a global's contents transitively reference the same type,
  * leave the inner reference unresolved and warn in dev.
@@ -20,8 +24,12 @@ function resolveItem(
   const type = item.type;
   const componentConfig = config.components[type];
   const globalEntry = globalData[type];
+  const isUnlinked = (item.props as any)?.__synced === false;
   const shouldApplyGlobal = Boolean(
-    componentConfig?.global && globalEntry && !visitedTypes.has(type)
+    componentConfig?.global &&
+      globalEntry &&
+      !visitedTypes.has(type) &&
+      !isUnlinked
   );
 
   let mergedProps: Record<string, any>;
