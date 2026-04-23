@@ -16,9 +16,6 @@ const RichTextInner: ComponentConfig<RichTextProps> = {
   render: ({ richtext }) => {
     return <Section>{richtext}</Section>;
   },
-  defaultProps: {
-    richtext: "<h2>Heading</h2><p>Body</p>",
-  },
 };
 
 export const RichText = withLayout(RichTextInner);

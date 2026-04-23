@@ -1,3 +1,19 @@
+import {
+  AlignHorizontalJustifyStart,
+  BarChart3,
+  CreditCard,
+  FileText,
+  Heading as HeadingIcon,
+  Images,
+  LayoutGrid,
+  LayoutTemplate,
+  Megaphone,
+  MousePointerClick,
+  Move,
+  ShoppingBag,
+  Type,
+} from "lucide-react";
+
 import { Button } from "./blocks/Button";
 import { Card } from "./blocks/Card";
 import { Grid } from "./blocks/Grid";
@@ -20,24 +36,11 @@ import { initialData } from "./initial-data";
 export const conf: UserConfig = {
   root: Root,
   categories: {
-    layout: {
-      components: ["Grid", "Flex", "Space"],
-    },
-    typography: {
-      components: ["Heading", "Text", "RichText"],
-    },
-    interactive: {
-      title: "Actions",
-      components: ["Button"],
-    },
-    other: {
-      title: "Other",
-      components: ["Card", "Hero", "Logos", "Stats", "Template"],
-    },
-    commerce: {
-      title: "Commerce",
-      components: ["ShopifyProduct"],
-    },
+    layout: { title: "Layout" },
+    typography: { title: "Typography" },
+    interactive: { title: "Actions" },
+    other: { title: "Other" },
+    commerce: { title: "Commerce" },
   },
   components: {
     Button,
@@ -53,6 +56,90 @@ export const conf: UserConfig = {
     Space,
     RichText,
     ShopifyProduct,
+  },
+  blocks: {
+    Grid: {
+      label: "Grid",
+      icon: <LayoutGrid size={16} />,
+      category: "layout",
+      component: "Grid",
+    },
+    Flex: {
+      label: "Flex",
+      icon: <AlignHorizontalJustifyStart size={16} />,
+      category: "layout",
+      component: "Flex",
+    },
+    Space: {
+      label: "Space",
+      icon: <Move size={16} />,
+      category: "layout",
+      component: "Space",
+    },
+    Heading: {
+      label: "Heading",
+      icon: <HeadingIcon size={16} />,
+      category: "typography",
+      component: "Heading",
+    },
+    Text: {
+      label: "Text",
+      icon: <Type size={16} />,
+      category: "typography",
+      component: "Text",
+    },
+    RichText: {
+      label: "Rich text",
+      icon: <FileText size={16} />,
+      category: "typography",
+      component: "RichText",
+      props: { richtext: "<h2>Heading</h2><p>Body</p>" },
+    },
+    Button: {
+      label: "Button",
+      icon: <MousePointerClick size={16} />,
+      category: "interactive",
+      component: "Button",
+    },
+    Card: {
+      label: "Card",
+      icon: <CreditCard size={16} />,
+      category: "other",
+      component: "Card",
+    },
+    Hero: {
+      label: "Hero",
+      icon: <Megaphone size={16} />,
+      category: "other",
+      component: "Hero",
+      props: { description: "<p>Description</p>", padding: "64px" },
+    },
+    Logos: {
+      label: "Logos",
+      icon: <Images size={16} />,
+      category: "other",
+      component: "Logos",
+    },
+    Stats: {
+      label: "Stats",
+      icon: <BarChart3 size={16} />,
+      category: "other",
+      component: "Stats",
+    },
+    Template: {
+      label: "Template",
+      icon: <LayoutTemplate size={16} />,
+      category: "other",
+      component: "Template",
+      props: { template: "example_1" },
+    },
+    ShopifyProduct: {
+      label: "Shopify product",
+      icon: <ShoppingBag size={16} />,
+      category: "commerce",
+      component: "ShopifyProduct",
+      props: { product: null },
+    },
   },
 };
 

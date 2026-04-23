@@ -91,7 +91,6 @@ export interface ArrayField<
       ? Field<Props[0][SubPropName], UserField> | UserField
       : Field<Props[0][SubPropName], UserField>;
   };
-  defaultItemProps?: Props[0] | ((index: number) => Props[0]);
   default?: Props;
   getItemSummary?: (item: Props[0], index?: number) => ReactNode;
   max?: number;

@@ -19,6 +19,7 @@ const TextInner: ComponentConfig<TextProps> = {
     text: {
       type: "textarea",
       contentEditable: true,
+      default: "Text",
     },
     size: {
       type: "select",
@@ -27,6 +28,7 @@ const TextInner: ComponentConfig<TextProps> = {
         { label: "S", value: "s" },
         { label: "M", value: "m" },
       ],
+      default: "m",
     },
     align: {
       type: "radio",
@@ -36,6 +38,7 @@ const TextInner: ComponentConfig<TextProps> = {
         { label: "Center", value: "center" },
         { label: "Right", value: "right" },
       ],
+      default: "left",
     },
     color: {
       type: "radio",
@@ -43,14 +46,9 @@ const TextInner: ComponentConfig<TextProps> = {
         { label: "Default", value: "default" },
         { label: "Muted", value: "muted" },
       ],
+      default: "default",
     },
     maxWidth: { type: "text" },
-  },
-  defaultProps: {
-    align: "left",
-    text: "Text",
-    size: "m",
-    color: "default",
   },
   render: ({ align, color, text, size, maxWidth }) => {
     return (

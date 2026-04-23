@@ -14,49 +14,26 @@ export type LogosProps = {
   }[];
 };
 
+const GOOGLE_LOGO =
+  "https://logolook.net/wp-content/uploads/2021/06/Google-Logo.png";
+
 export const Logos: ComponentConfig<LogosProps> = {
   fields: {
     logos: {
       type: "array",
       getItemSummary: (item, i) => item.alt || `Feature #${i}`,
-      defaultItemProps: {
-        alt: "",
-        imageUrl: "",
-      },
       arrayFields: {
-        alt: { type: "text" },
-        imageUrl: { type: "text" },
+        alt: { type: "text", default: "" },
+        imageUrl: { type: "text", default: "" },
       },
+      default: [
+        { alt: "google", imageUrl: GOOGLE_LOGO },
+        { alt: "google", imageUrl: GOOGLE_LOGO },
+        { alt: "google", imageUrl: GOOGLE_LOGO },
+        { alt: "google", imageUrl: GOOGLE_LOGO },
+        { alt: "google", imageUrl: GOOGLE_LOGO },
+      ],
     },
-  },
-  defaultProps: {
-    logos: [
-      {
-        alt: "google",
-        imageUrl:
-          "https://logolook.net/wp-content/uploads/2021/06/Google-Logo.png",
-      },
-      {
-        alt: "google",
-        imageUrl:
-          "https://logolook.net/wp-content/uploads/2021/06/Google-Logo.png",
-      },
-      {
-        alt: "google",
-        imageUrl:
-          "https://logolook.net/wp-content/uploads/2021/06/Google-Logo.png",
-      },
-      {
-        alt: "google",
-        imageUrl:
-          "https://logolook.net/wp-content/uploads/2021/06/Google-Logo.png",
-      },
-      {
-        alt: "google",
-        imageUrl:
-          "https://logolook.net/wp-content/uploads/2021/06/Google-Logo.png",
-      },
-    ],
   },
   render: ({ logos }) => {
     return (

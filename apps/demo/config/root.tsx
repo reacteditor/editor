@@ -10,8 +10,8 @@ export const Root: RootConfig<{
     userField: { type: "userField"; option: boolean };
   };
 }> = {
-  defaultProps: {
-    title: "My Page",
+  fields: {
+    title: { type: "text", default: "My Page" },
   },
   render: ({ puck: { isEditing, renderDropZone: DropZone } }) => {
     return (

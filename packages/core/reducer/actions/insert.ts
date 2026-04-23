@@ -7,6 +7,7 @@ import { walkAppState } from "../../lib/data/walk-app-state";
 import { getIdsForParent } from "../../lib/data/get-ids-for-parent";
 import { AppStore } from "../../store";
 import { populateIds } from "../../lib/data/populate-ids";
+import { resolveFieldDefaults } from "../../lib/resolve-field-defaults";
 
 export function insertAction<UserData extends Data>(
   state: PrivateAppState<UserData>,
@@ -14,12 +15,13 @@ export function insertAction<UserData extends Data>(
   appStore: AppStore
 ): PrivateAppState<UserData> {
   const id = action.id || generateId(action.componentType);
+  const componentConfig =
+    appStore.config.components[action.componentType];
   const emptyComponentData = populateIds(
     {
       type: action.componentType,
       props: {
-        ...(appStore.config.components[action.componentType].defaultProps ||
-          {}),
+        ...resolveFieldDefaults(componentConfig?.fields),
         id,
       },
     },

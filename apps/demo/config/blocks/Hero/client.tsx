@@ -81,7 +81,7 @@ export const Hero: ComponentConfig<{
       },
       getItemSummary: (item) => item.label,
     },
-    title: { type: "text", contentEditable: true },
+    title: { type: "text", contentEditable: true, default: "Hero" },
     description: {
       ...heroRenderFields.description,
       contentEditable: true,
@@ -118,20 +118,18 @@ export const Hero: ComponentConfig<{
       max: 4,
       getItemSummary: (item) => item.label || "Button",
       arrayFields: {
-        label: { type: "text", contentEditable: true },
-        href: { type: "text" },
+        label: { type: "text", contentEditable: true, default: "Button" },
+        href: { type: "text", default: "#" },
         variant: {
           type: "select",
           options: [
             { label: "primary", value: "primary" },
             { label: "secondary", value: "secondary" },
           ],
+          default: "primary",
         },
       },
-      defaultItemProps: {
-        label: "Button",
-        href: "#",
-      },
+      default: [{ label: "Learn more", href: "#", variant: "primary" }],
     },
     align: {
       type: "radio",
@@ -139,6 +137,7 @@ export const Hero: ComponentConfig<{
         { label: "left", value: "left" },
         { label: "center", value: "center" },
       ],
+      default: "left",
     },
     image: {
       ...heroRenderFields.image,
@@ -168,17 +167,11 @@ export const Hero: ComponentConfig<{
             { label: "bg", value: "background" },
             { label: "custom", value: "custom" },
           ],
+          default: "inline",
         },
       },
     },
     padding: { type: "userField", option: true },
-  },
-  defaultProps: {
-    title: "Hero",
-    align: "left",
-    description: "<p>Description</p>",
-    buttons: [{ label: "Learn more", href: "#" }],
-    padding: "64px",
   },
   /**
    * The resolveData method allows us to modify component data after being

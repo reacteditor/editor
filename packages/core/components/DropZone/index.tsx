@@ -42,6 +42,7 @@ import { useContentIdsWithPreview } from "./lib/use-content-with-preview";
 import { useDragAxis } from "./lib/use-drag-axis";
 import { useContextStore } from "../../lib/use-context-store";
 import { useShallow } from "zustand/react/shallow";
+import { resolveFieldDefaults } from "../../lib/resolve-field-defaults";
 import { renderContext } from "../Render";
 import { useSlots } from "../../lib/use-slots";
 import { ContextSlotRender, SlotRenderPure } from "../SlotRender";
@@ -182,14 +183,14 @@ const DropZoneChild = ({
 
   let label = componentConfig?.label ?? item?.type.toString() ?? "Component";
 
-  const defaultsProps = useMemo(
+  const defaultsProps: any = useMemo(
     () => ({
-      ...componentConfig?.defaultProps,
+      ...resolveFieldDefaults(componentConfig?.fields),
       ...item?.props,
       puck: puckProps,
       editMode: true, // DEPRECATED
     }),
-    [componentConfig?.defaultProps, item?.props, puckProps]
+    [componentConfig?.fields, item?.props, puckProps]
   );
 
   const defaultedNode = useMemo(

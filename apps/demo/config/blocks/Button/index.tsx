@@ -15,20 +15,17 @@ export const Button: ComponentConfig<ButtonProps> = {
       type: "text",
       placeholder: "Lorem ipsum...",
       contentEditable: true,
+      default: "Button",
     },
-    href: { type: "text" },
+    href: { type: "text", default: "#" },
     variant: {
       type: "radio",
       options: [
         { label: "primary", value: "primary" },
         { label: "secondary", value: "secondary" },
       ],
+      default: "primary",
     },
-  },
-  defaultProps: {
-    label: "Button",
-    href: "#",
-    variant: "primary",
   },
   render: ({ href, variant, label, puck }) => {
     return (

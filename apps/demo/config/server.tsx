@@ -10,6 +10,7 @@ import { Template } from "./blocks/Template/server";
 import { Text } from "./blocks/Text";
 import { Space } from "./blocks/Space";
 import { RichText } from "./blocks/RichText";
+import { ShopifyProduct } from "./blocks/ShopifyProduct";
 import Root from "./root";
 import { UserConfig } from "./types";
 
@@ -17,20 +18,11 @@ import { UserConfig } from "./types";
 const conf: UserConfig = {
   root: Root,
   categories: {
-    layout: {
-      components: ["Grid", "Flex", "Space"],
-    },
-    typography: {
-      components: ["Heading", "Text"],
-    },
-    interactive: {
-      title: "Actions",
-      components: ["Button"],
-    },
-    other: {
-      title: "Other",
-      components: ["Card", "Hero", "Logos", "Stats", "Template"],
-    },
+    layout: { title: "Layout" },
+    typography: { title: "Typography" },
+    interactive: { title: "Actions" },
+    other: { title: "Other" },
+    commerce: { title: "Commerce" },
   },
   components: {
     Button,
@@ -45,6 +37,7 @@ const conf: UserConfig = {
     Text,
     Space,
     RichText,
+    ShopifyProduct,
   },
 };
 

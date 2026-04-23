@@ -38,14 +38,17 @@ const HeadingInternal: ComponentConfig<HeadingProps> = {
     text: {
       type: "textarea",
       contentEditable: true,
+      default: "Heading",
     },
     size: {
       type: "select",
       options: sizeOptions,
+      default: "m",
     },
     level: {
       type: "select",
       options: levelOptions,
+      default: "",
     },
     align: {
       type: "radio",
@@ -54,14 +57,7 @@ const HeadingInternal: ComponentConfig<HeadingProps> = {
         { label: "Center", value: "center" },
         { label: "Right", value: "right" },
       ],
-    },
-  },
-  defaultProps: {
-    align: "left",
-    text: "Heading",
-    size: "m",
-    layout: {
-      padding: "8px",
+      default: "left",
     },
   },
   render: ({ align, text, size, level }) => {
@@ -77,4 +73,4 @@ const HeadingInternal: ComponentConfig<HeadingProps> = {
   },
 };
 
-export const Heading = withLayout(HeadingInternal);
+export const Heading = withLayout(HeadingInternal, { padding: "8px" });

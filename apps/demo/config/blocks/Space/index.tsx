@@ -19,6 +19,7 @@ export const Space: ComponentConfig<SpaceProps> = {
     size: {
       type: "select",
       options: spacingOptions,
+      default: "24px",
     },
     direction: {
       type: "radio",
@@ -27,11 +28,8 @@ export const Space: ComponentConfig<SpaceProps> = {
         { value: "horizontal", label: "Horizontal" },
         { value: "", label: "Both" },
       ],
+      default: "",
     },
-  },
-  defaultProps: {
-    direction: "",
-    size: "24px",
   },
   inline: true,
   render: ({ direction, size, puck }) => {

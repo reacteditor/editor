@@ -50,6 +50,7 @@ import { PrivateAppState } from "../../types/Internal";
 import { deepEqual } from "fast-equals";
 import { FieldTransforms } from "../../types/API/FieldTransforms";
 import { populateIds } from "../../lib/data/populate-ids";
+import { resolveFieldDefaults } from "../../lib/resolve-field-defaults";
 import { toComponent } from "../../lib/data/to-component";
 import { Layout } from "./components/Layout";
 import { useSafeId } from "../../lib/use-safe-id";
@@ -157,7 +158,7 @@ function PuckProvider<
     const rootProps = initialData?.root?.props || initialData?.root || {};
 
     const defaultedRootProps = {
-      ...config.root?.defaultProps,
+      ...resolveFieldDefaults(config.root?.fields),
       ...(rootProps as AsFieldProps<DefaultComponentProps> | AsFieldProps<any>),
     };
 
@@ -184,7 +185,6 @@ function PuckProvider<
                   ...acc,
                   [categoryName]: {
                     title: category.title,
-                    components: category.components,
                     expanded: category.defaultExpanded,
                     visible: category.visible,
                   },

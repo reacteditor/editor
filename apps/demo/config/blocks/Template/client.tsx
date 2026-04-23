@@ -4,6 +4,7 @@ import { AutoField, Button, createUsePuck, FieldLabel, walkTree } from "@/core";
 import { ComponentConfig, ComponentDataOptionalId, Slot } from "@/core/types";
 import { withLayout } from "../../components/Layout";
 import { generateId } from "@/core/lib/generate-id";
+import { resolveFieldDefaults } from "@/core/lib/resolve-field-defaults";
 import { componentKey } from "../../index";
 import { type Components } from "../../types";
 import TemplateComponent, { TemplateProps } from "./Template";
@@ -20,7 +21,9 @@ async function createComponent<T extends keyof Components>(
   return {
     type: component,
     props: {
-      ...config.components[component].defaultProps,
+      ...resolveFieldDefaults(
+        config.components[component]?.fields as any
+      ),
       ...props,
     },
   } as ComponentDataOptionalId<Components[T]>;
@@ -114,10 +117,6 @@ export const TemplateInternal: ComponentConfig<TemplateProps> = {
       },
     },
     ...templateRenderFields,
-  },
-  defaultProps: {
-    template: "example_1",
-    children: [],
   },
   resolveData: async (data, { changed, trigger }) => {
     if (!changed.template || trigger === "load") return data;

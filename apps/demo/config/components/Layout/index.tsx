@@ -27,36 +27,46 @@ type LayoutProps = WithLayout<{
   style?: CSSProperties;
 }>;
 
-export const layoutField: ObjectField<LayoutFieldProps> = {
-  type: "object",
-  objectFields: {
-    spanCol: {
-      label: "Grid Columns",
-      type: "number",
-      min: 1,
-      max: 12,
+function buildLayoutField(
+  overrides: Partial<LayoutFieldProps> = {}
+): ObjectField<LayoutFieldProps> {
+  return {
+    type: "object",
+    objectFields: {
+      spanCol: {
+        label: "Grid Columns",
+        type: "number",
+        min: 1,
+        max: 12,
+        default: overrides.spanCol ?? 1,
+      },
+      spanRow: {
+        label: "Grid Rows",
+        type: "number",
+        min: 1,
+        max: 12,
+        default: overrides.spanRow ?? 1,
+      },
+      grow: {
+        label: "Flex Grow",
+        type: "radio",
+        options: [
+          { label: "true", value: true },
+          { label: "false", value: false },
+        ],
+        default: overrides.grow ?? false,
+      },
+      padding: {
+        type: "select",
+        label: "Vertical Padding",
+        options: [{ label: "0px", value: "0px" }, ...spacingOptions],
+        default: overrides.padding ?? "0px",
+      },
     },
-    spanRow: {
-      label: "Grid Rows",
-      type: "number",
-      min: 1,
-      max: 12,
-    },
-    grow: {
-      label: "Flex Grow",
-      type: "radio",
-      options: [
-        { label: "true", value: true },
-        { label: "false", value: false },
-      ],
-    },
-    padding: {
-      type: "select",
-      label: "Vertical Padding",
-      options: [{ label: "0px", value: "0px" }, ...spacingOptions],
-    },
-  },
-};
+  };
+}
+
+export const layoutField = buildLayoutField();
 
 const Layout = forwardRef<HTMLDivElement, LayoutProps>(
   ({ children, className, layout, style }, ref) => {
@@ -89,33 +99,28 @@ export { Layout };
 
 export function withLayout<
   ThisComponentConfig extends ComponentConfig<any> = ComponentConfig
->(componentConfig: ThisComponentConfig): ThisComponentConfig {
+>(
+  componentConfig: ThisComponentConfig,
+  layoutDefaults?: Partial<LayoutFieldProps>
+): ThisComponentConfig {
+  const merged = buildLayoutField(layoutDefaults);
+
   return {
     ...componentConfig,
     fields: {
       ...componentConfig.fields,
-      layout: layoutField,
-    },
-    defaultProps: {
-      ...componentConfig.defaultProps,
-      layout: {
-        spanCol: 1,
-        spanRow: 1,
-        padding: "0px",
-        grow: false,
-        ...componentConfig.defaultProps?.layout,
-      },
+      layout: merged,
     },
     resolveFields: (_, params) => {
       if (params.parent?.type === "Grid") {
         return {
           ...componentConfig.fields,
           layout: {
-            ...layoutField,
+            ...merged,
             objectFields: {
-              spanCol: layoutField.objectFields.spanCol,
-              spanRow: layoutField.objectFields.spanRow,
-              padding: layoutField.objectFields.padding,
+              spanCol: merged.objectFields.spanCol,
+              spanRow: merged.objectFields.spanRow,
+              padding: merged.objectFields.padding,
             },
           },
         };
@@ -124,10 +129,10 @@ export function withLayout<
         return {
           ...componentConfig.fields,
           layout: {
-            ...layoutField,
+            ...merged,
             objectFields: {
-              grow: layoutField.objectFields.grow,
-              padding: layoutField.objectFields.padding,
+              grow: merged.objectFields.grow,
+              padding: merged.objectFields.padding,
             },
           },
         };
@@ -136,9 +141,9 @@ export function withLayout<
       return {
         ...componentConfig.fields,
         layout: {
-          ...layoutField,
+          ...merged,
           objectFields: {
-            padding: layoutField.objectFields.padding,
+            padding: merged.objectFields.padding,
           },
         },
       };

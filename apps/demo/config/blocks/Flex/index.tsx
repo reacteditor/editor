@@ -24,6 +24,7 @@ const FlexInternal: ComponentConfig<FlexProps> = {
         { label: "Row", value: "row" },
         { label: "Column", value: "column" },
       ],
+      default: "row",
     },
     justifyContent: {
       label: "Justify Content",
@@ -33,11 +34,13 @@ const FlexInternal: ComponentConfig<FlexProps> = {
         { label: "Center", value: "center" },
         { label: "End", value: "end" },
       ],
+      default: "start",
     },
     gap: {
       label: "Gap",
       type: "number",
       min: 0,
+      default: 24,
     },
     wrap: {
       label: "Wrap",
@@ -46,20 +49,11 @@ const FlexInternal: ComponentConfig<FlexProps> = {
         { label: "true", value: "wrap" },
         { label: "false", value: "nowrap" },
       ],
+      default: "wrap",
     },
     items: {
       type: "slot",
     },
-  },
-  defaultProps: {
-    justifyContent: "start",
-    direction: "row",
-    gap: 24,
-    wrap: "wrap",
-    layout: {
-      grow: true,
-    },
-    items: [],
   },
   render: ({ justifyContent, direction, gap, wrap, items: Items }) => {
     return (
@@ -79,4 +73,4 @@ const FlexInternal: ComponentConfig<FlexProps> = {
   },
 };
 
-export const Flex = withLayout(FlexInternal);
+export const Flex = withLayout(FlexInternal, { grow: true });

@@ -1,6 +1,6 @@
 import styles from "./styles.module.css";
 import getClassNameFactory from "../../lib/get-class-name-factory";
-import { ReactNode, useMemo } from "react";
+import { ReactNode } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useAppStore } from "../../store";
 import { Drawer } from "../Drawer";
@@ -55,21 +55,6 @@ const BlockList = ({ children, title, id }: BlockListProps) => {
 
   const { expanded = true } = componentList[id] || {};
 
-  const groups = useMemo(() => {
-    const all = Object.entries(blocks ?? {});
-    if (!all.length) return [] as [string | undefined, typeof all][];
-
-    const byCategory = new Map<string | undefined, typeof all>();
-    for (const entry of all) {
-      const [, block] = entry;
-      const key = block.category;
-      const bucket = byCategory.get(key) ?? [];
-      bucket.push(entry);
-      byCategory.set(key, bucket);
-    }
-    return Array.from(byCategory.entries());
-  }, [blocks]);
-
   return (
     <div className={getClassName({ isExpanded: expanded })}>
       {title && (
@@ -102,15 +87,13 @@ const BlockList = ({ children, title, id }: BlockListProps) => {
       <div className={getClassName("content")}>
         <Drawer>
           {children ??
-            groups.flatMap(([category, entries]) =>
-              entries.map(([blockName, block]) => (
-                <BlockListItem
-                  key={`${category ?? "_"}:${blockName}`}
-                  blockName={blockName}
-                  block={block}
-                />
-              ))
-            )}
+            Object.entries(blocks ?? {}).map(([blockName, block]) => (
+              <BlockListItem
+                key={blockName}
+                blockName={blockName}
+                block={block}
+              />
+            ))}
         </Drawer>
       </div>
     </div>

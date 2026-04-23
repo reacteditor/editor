@@ -24,20 +24,17 @@ export const GridInternal: ComponentConfig<GridProps> = {
       label: "Number of columns",
       min: 1,
       max: 12,
+      default: 4,
     },
     gap: {
       label: "Gap",
       type: "number",
       min: 0,
+      default: 24,
     },
     items: {
       type: "slot",
     },
-  },
-  defaultProps: {
-    numColumns: 4,
-    gap: 24,
-    items: [],
   },
   render: ({ gap, numColumns, items: Items }) => {
     return (

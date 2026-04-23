@@ -23,9 +23,6 @@ const ShopifyProductInner: ComponentConfig<ShopifyProductProps> = {
   fields: {
     product: productField,
   },
-  defaultProps: {
-    product: null,
-  },
   render: ({ product }) => {
     if (!product) {
       return (

@@ -37,14 +37,17 @@ const CardInner: ComponentConfig<CardProps> = {
     title: {
       type: "text",
       contentEditable: true,
+      default: "Title",
     },
     description: {
       type: "textarea",
       contentEditable: true,
+      default: "Description",
     },
     icon: {
       type: "select",
       options: iconOptions,
+      default: "Feather",
     },
     mode: {
       type: "radio",
@@ -52,13 +55,8 @@ const CardInner: ComponentConfig<CardProps> = {
         { label: "card", value: "card" },
         { label: "flat", value: "flat" },
       ],
+      default: "flat",
     },
-  },
-  defaultProps: {
-    title: "Title",
-    description: "Description",
-    icon: "Feather",
-    mode: "flat",
   },
   render: ({ title, icon, description, mode }) => {
     return (

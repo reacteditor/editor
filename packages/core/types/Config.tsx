@@ -49,7 +49,6 @@ type ComponentConfigInternal<
 > = {
   render: PuckComponent<RenderProps>;
   label?: string;
-  defaultProps?: FieldProps;
   fields?: Fields<FieldProps, UserField>;
   permissions?: Partial<Permissions>;
   inline?: boolean;
@@ -154,8 +153,7 @@ export type RootConfig<
     >
   : Partial<RootConfigInternal<WithChildren<RootPropsOrParams>>>;
 
-type Category<ComponentName> = {
-  components?: ComponentName[];
+type Category = {
   title?: string;
   visible?: boolean;
   defaultExpanded?: boolean;
@@ -167,8 +165,8 @@ type ConfigInternal<
   CategoryName extends string = string,
   UserField extends {} = {}
 > = {
-  categories?: Record<CategoryName, Category<keyof Props>> & {
-    other?: Category<keyof Props>;
+  categories?: Record<CategoryName, Category> & {
+    other?: Category;
   };
   components: {
     [ComponentName in keyof Props]: Omit<
