@@ -17,7 +17,7 @@
     "paths": {
       "~/*": ["./app/*"],
       "@frontend/core": ["../../packages/core/index.ts"],
-      "@frontend/core/editor.css": ["../../packages/core/bundle/index.css"]
+      "@frontend/core/frontend.css": ["../../packages/core/bundle/index.css"]
     },
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,

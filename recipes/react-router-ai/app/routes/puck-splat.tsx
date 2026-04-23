@@ -7,7 +7,7 @@ import type { Route } from "./+types/editor-splat";
 import { config } from "../../editor.config";
 import { resolveEditorPath } from "~/lib/resolve-editor-path.server";
 import { getPage, savePage } from "~/lib/pages.server";
-import editorStyles from "@frontend/core/editor.css?url";
+import editorStyles from "@frontend/core/frontend.css?url";
 import pluginStyles from "@puckeditor/plugin-ai/styles.css?url";
 
 export async function loader({ params }: Route.LoaderArgs) {

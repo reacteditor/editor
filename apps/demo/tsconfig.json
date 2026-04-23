@@ -7,10 +7,6 @@
       "@/core": ["../../packages/core"],
       "@/core/*": ["../../packages/core/*"],
       "@frontend/core": ["../../packages/core"],
-      "@/plugin-heading-analyzer": ["../../packages/plugin-heading-analyzer"],
-      "@/plugin-heading-analyzer/*": [
-        "../../packages/plugin-heading-analyzer/*"
-      ],
       "@/field-shopify": ["../../packages/field-shopify"],
       "@/field-shopify/*": ["../../packages/field-shopify/*"]
     }

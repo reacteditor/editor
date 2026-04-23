@@ -11,7 +11,7 @@
  * NB this route is public, and you will need to add authentication
  */
 
-import "@frontend/core/editor.css";
+import "@frontend/core/frontend.css";
 import { Client } from "./client";
 import { Metadata } from "next";
 import { getPage } from "../../../lib/get-page";

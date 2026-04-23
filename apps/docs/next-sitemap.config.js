@@ -1,5 +1,5 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: "https://puckeditor.com",
+  siteUrl: "https://frontend.co",
   generateIndexSitemap: false,
 };

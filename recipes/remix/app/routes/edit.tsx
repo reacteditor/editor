@@ -1,5 +1,5 @@
 import { Editor, type Data, type Config } from "@frontend/core";
-import styles from "@frontend/core/editor.css";
+import styles from "@frontend/core/frontend.css";
 import type {
   ActionFunctionArgs,
   LinksFunction,

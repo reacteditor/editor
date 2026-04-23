@@ -5,7 +5,7 @@ import { getClassNameFactory } from "@/core/lib";
 
 import styles from "./styles.module.css";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://puckeditor.com";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://frontend.co";
 
 const { version } = packageJson;
 
@@ -62,7 +62,7 @@ export const ReleaseSwitcher = ({
       onChange={(e) => {
         const newHref = e.currentTarget.value
           ? `/v/${e.currentTarget.value}`
-          : "https://puckeditor.com";
+          : "https://frontend.co";
 
         if (window.parent) {
           window.parent.location.href = newHref;

@@ -400,12 +400,14 @@ export function Editor() {
 An array of plugins to enhance Frontend's behaviour. See the [Plugin API reference](/docs/api-reference/plugin).
 
 ```tsx {6} copy
-import headingAnalyzer from "@frontend/plugin-heading-analyzer";
+import createTailwindCdnPlugin from "@frontend/plugin-tailwind-cdn";
+
+const tailwindCdn = createTailwindCdnPlugin();
 
 export function Editor() {
   return (
     <Editor
-      plugins={[headingAnalyzer]}
+      plugins={[tailwindCdn]}
       // ...
     />
   );

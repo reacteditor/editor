@@ -4,16 +4,16 @@ The `next` recipe showcases one of the most powerful ways to implement Frontend 
 
 ## Demonstrates
 
-- Next.js 13 App Router implementation
+- Next.js 16 App Router implementation
 - JSON database implementation with HTTP API
-- Catch-all routes to use puck for any route on the platform
+- Catch-all routes to use Frontend for any route on the platform
 
 ## Usage
 
 Run the generator and enter `next` when prompted
 
 ```
-npx create-puck-app my-app
+npx create-frontend-app my-app
 ```
 
 Start the server
@@ -30,10 +30,10 @@ You can do this for any route on the application, **even if the page doesn't exi
 
 To adopt this recipe you will need to:
 
-- **IMPORTANT** Add authentication to `/edit` routes. This can be done by modifying the example API routes in `/app/api/puck/route.ts` and server component in `/app/[...puckPath]/page.tsx`. **If you don't do this, Frontend will be completely public.**
-- Integrate your database into the API calls in `/app/api/puck/route.ts`
-- Implement a custom puck configuration in `puck.config.tsx`
+- **IMPORTANT** Add authentication to `/edit` routes. This can be done by modifying the example API routes in `/app/api/editor/route.ts` and server component in `/app/[...editorPath]/page.tsx`. **If you don't do this, Frontend will be completely public.**
+- Integrate your database into the API calls in `/app/api/editor/route.ts`
+- Implement a custom Frontend configuration in `editor.config.tsx`
 
 ## License
 
-MIT © [The Frontend Contributors](https://github.com/puckeditor/puck/graphs/contributors).
+MIT © [The Frontend Contributors](https://github.com/frontend-inc/frontend-visual-editor/graphs/contributors).

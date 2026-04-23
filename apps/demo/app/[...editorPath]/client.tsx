@@ -1,7 +1,6 @@
 "use client";
 
 import { AutoField, Button, FieldLabel, Editor, Render, Route } from "@/core";
-import headingAnalyzer from "@/plugin-heading-analyzer/src/HeadingAnalyzer";
 import config from "../../config";
 import { initialData } from "../../config/initial-data";
 import { useDemoData } from "../../lib/use-demo-data";
@@ -68,7 +67,6 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
           onPublish={async (data) => {
             localStorage.setItem(key, JSON.stringify(data));
           }}
-          plugins={[headingAnalyzer]}
           headerPath={path}
           routes={routes}
           currentPath={path}

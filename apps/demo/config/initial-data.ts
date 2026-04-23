@@ -50,7 +50,7 @@ export const initialData: Record<string, UserData> = {
           buttons: [
             {
               label: "Visit GitHub",
-              href: "https://github.com/puckeditor/editor",
+              href: "https://github.com/frontend-inc/frontend-visual-editor",
             },
             { label: "Edit this page", href: "/edit", variant: "secondary" },
           ],
@@ -281,18 +281,6 @@ export const initialData: Record<string, UserData> = {
             {
               type: "Card",
               props: {
-                title: "plugin-heading-analyzer",
-                description:
-                  "Analyze the document structure and identify WCAG 2.1 issues with your heading hierarchy.",
-                icon: "align-left",
-                mode: "card",
-                layout: { grow: false, spanCol: 1, spanRow: 1, padding: "0px" },
-                id: "Card-b0e8407d-9fbb-4e76-aa32-d32f655c11d3",
-              },
-            },
-            {
-              type: "Card",
-              props: {
                 title: "External data",
                 description:
                   "Connect your components with an existing data source, like Strapi.js.",
@@ -410,7 +398,7 @@ export const initialData: Record<string, UserData> = {
               type: "Button",
               props: {
                 label: "Visit GitHub",
-                href: "https://github.com/puckeditor/editor",
+                href: "https://github.com/frontend-inc/frontend-visual-editor",
                 variant: "primary",
                 id: "Button-bd41007c-6627-414d-839a-e261d470d8f9",
               },

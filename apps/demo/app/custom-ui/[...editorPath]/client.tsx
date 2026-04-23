@@ -13,7 +13,6 @@ import {
   Render,
   useGetEditor,
 } from "@/core";
-import { HeadingAnalyzer } from "@/plugin-heading-analyzer/src/HeadingAnalyzer";
 import config from "../../../config";
 import { UserConfig } from "../../../config/types";
 import { useDemoData } from "../../../lib/use-demo-data";
@@ -298,14 +297,6 @@ const CustomEditor = ({ dataKey }: { dataKey: string }) => {
               { label: "Components", body: <Editor.Components /> },
               { label: "Fields", body: <Editor.Fields /> },
               { label: "Outline", body: <Editor.Outline /> },
-              {
-                label: "Headings",
-                body: (
-                  <div style={{ padding: 24 }}>
-                    <HeadingAnalyzer />
-                  </div>
-                ),
-              },
             ]}
           />
         </div>

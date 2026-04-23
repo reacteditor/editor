@@ -10,7 +10,7 @@ const Head = () => {
   const { asPath, defaultLocale, locale } = useRouter();
   const { frontMatter, title } = useConfig();
 
-  const siteUrl = "https://puckeditor.com";
+  const siteUrl = "https://frontend.co";
   const url =
     siteUrl + (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
 
@@ -42,7 +42,7 @@ const Head = () => {
       <meta name="twitter:image:height" content="675" />
       <meta name="twitter:image:type" content="image/png" />
       <meta name="twitter:image:width" content="1200" />
-      <meta name="twitter:site" content="@puckeditor" />
+      <meta name="twitter:site" content="@frontendinc" />
       <meta
         name="twitter:title"
         content={title !== defaultTitle ? `${title} - Editor` : defaultTitle}
@@ -60,7 +60,7 @@ const Head = () => {
       "@context" : "https://schema.org",
       "@type" : "WebSite",
       "name" : "Editor",
-      "url" : "https://puckeditor.com/"
+      "url" : "https://frontend.co/"
     }`,
         }}
       />
@@ -98,7 +98,7 @@ const theme: DocsThemeConfig = {
     </div>
   ),
   project: {
-    link: "https://github.com/puckeditor/editor",
+    link: "https://github.com/frontend-inc/frontend-visual-editor",
   },
   footer: {
     content: (
@@ -107,7 +107,7 @@ const theme: DocsThemeConfig = {
           MIT © {new Date().getFullYear()}{" "}
           <a
             style={{ textDecoration: "underline" }}
-            href="https://github.com/puckeditor/editor/graphs/contributors"
+            href="https://github.com/frontend-inc/frontend-visual-editor/graphs/contributors"
           >
             The Editor Contributors
           </a>
@@ -140,7 +140,7 @@ const theme: DocsThemeConfig = {
           key: "v0.18.0",
           content: (
             <a
-              href="https://github.com/puckeditor/editor/releases"
+              href="https://github.com/frontend-inc/frontend-visual-editor/releases"
               target="_blank"
             >
               <b>🎈 Editor 0.18</b>: The new drag-and-drop engine is here, with
@@ -149,7 +149,7 @@ const theme: DocsThemeConfig = {
           ),
         }
       : {},
-  docsRepositoryBase: "https://github.com/puckeditor/editor/tree/main/apps/docs",
+  docsRepositoryBase: "https://github.com/frontend-inc/frontend-visual-editor/tree/main/apps/docs",
   navbar: {
     extraContent: () => (
       <Viewport desktop>

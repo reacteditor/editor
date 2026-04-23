@@ -104,7 +104,7 @@ program
       {
         type: "confirm",
         name: "editorAi",
-        message: `Puck AI (beta) lets you generate pages using your own components. Learn more: ${ansiColors.cyan}https://puckeditor.com/docs/ai/overview${ansiColors.reset}
+        message: `Puck AI (beta) lets you generate pages using your own components. Learn more: ${ansiColors.cyan}https://frontend.co/docs/ai/overview${ansiColors.reset}
 
   Add Puck AI to the editor? (Requires a Puck Cloud account)`,
         required: true,
@@ -230,7 +230,7 @@ program
 
     if (usesPuckAi) {
       console.log(
-        `Configure Puck AI access: ${ansiColors.cyan}https://cloud.puckeditor.com/onboarding/integrate${ansiColors.reset}`
+        `Configure Puck AI access: ${ansiColors.cyan}https://cloud.frontend.co/onboarding/integrate${ansiColors.reset}`
       );
     }
   })

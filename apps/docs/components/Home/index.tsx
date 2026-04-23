@@ -31,7 +31,7 @@ export const Home = () => {
           <Link href="/docs" style={{ display: "flex" }}>
             <Button>Read docs</Button>
           </Link>
-          <Button href="https://demo.puckeditor.com/edit" variant="secondary">
+          <Button href="https://demo.frontend.co/edit" variant="secondary">
             View demo
           </Button>
         </div>

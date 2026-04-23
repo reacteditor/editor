@@ -1,15 +1,15 @@
 {
-  "name": "create-editor-app",
-  "version": "0.21.2",
-  "author": "Chris Villa <chris@puckeditor.com>",
-  "repository": "puckeditor/editor",
-  "bugs": "https://github.com/puckeditor/editor/issues",
-  "homepage": "https://puckeditor.com",
+  "name": "create-frontend-app",
+  "version": "0.1.0",
+  "author": "Rami Bitar <rami@frontend.co>",
+  "repository": "frontend-inc/frontend-visual-editor",
+  "bugs": "https://github.com/frontend-inc/frontend-visual-editor/issues",
+  "homepage": "https://frontend.co",
   "private": false,
   "license": "MIT",
   "type": "module",
   "bin": {
-    "create-editor-app": "./index.js"
+    "create-frontend-app": "./index.js"
   },
   "files": [
     "templates",
