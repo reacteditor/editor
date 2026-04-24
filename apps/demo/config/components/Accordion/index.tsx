@@ -1,4 +1,5 @@
 import { ComponentConfig } from "@/core";
+import { ListChecks } from "lucide-react";
 import { Accordion as AccordionComponent } from "@/components/accordion";
 
 export type AccordionProps = {
@@ -7,21 +8,26 @@ export type AccordionProps = {
 };
 
 export const Accordion: ComponentConfig<AccordionProps> = {
+  label: "Accordion",
+  icon: <ListChecks size={16} />,
+  category: "elements",
+  defaultProps: {
+    items: [
+      {
+        question: "How do I get started?",
+        answer: "<p>Drag any block from the left sidebar onto the canvas.</p>",
+      },
+      {
+        question: "Can I compose custom layouts?",
+        answer:
+          "<p>Yes — use Section, Container, Grid, Columns, Stack, and Row.</p>",
+      },
+    ],
+    type: "single",
+  },
   fields: {
     items: {
       type: "array",
-      default: [
-        {
-          question: "How do I get started?",
-          answer:
-            "<p>Drag any block from the left sidebar onto the canvas.</p>",
-        },
-        {
-          question: "Can I compose custom layouts?",
-          answer:
-            "<p>Yes — use Section, Container, Grid, Columns, Stack, and Row.</p>",
-        },
-      ],
       getItemSummary: (item, i) => item.question || `Item ${(i ?? 0) + 1}`,
       arrayFields: {
         question: { type: "text", contentEditable: true },
@@ -30,7 +36,6 @@ export const Accordion: ComponentConfig<AccordionProps> = {
     },
     type: {
       type: "radio",
-      default: "single",
       options: [
         { label: "Single", value: "single" },
         { label: "Multiple", value: "multiple" },

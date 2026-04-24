@@ -1,6 +1,6 @@
 import { ComponentConfig } from "@/core";
+import { PanelTop } from "lucide-react";
 import { Navigation as NavigationComponent } from "@/components/navigation";
-import { defaultNavLinks } from "../../seeds";
 
 export type NavigationProps = {
   brand: string;
@@ -9,12 +9,25 @@ export type NavigationProps = {
 };
 
 export const Navigation: ComponentConfig<NavigationProps> = {
+  label: "Navigation",
+  icon: <PanelTop size={16} />,
+  category: "navigation",
   global: true,
+  defaultProps: {
+    brand: "react-editor",
+    links: [
+      { label: "Features", href: "#features" },
+      { label: "Pricing", href: "#pricing" },
+      { label: "Team", href: "#team" },
+      { label: "Docs", href: "#docs" },
+    ],
+    cta: { label: "Start building", href: "#" },
+  },
   fields: {
-    brand: { type: "text", default: "react-editor", contentEditable: true },
+    brand: { type: "text", contentEditable: true },
     links: {
       type: "array",
-      default: defaultNavLinks,
+      defaultItemProps: { label: "Link", href: "#" },
       getItemSummary: (l) => l.label,
       arrayFields: {
         label: { type: "text", contentEditable: true },
@@ -23,7 +36,6 @@ export const Navigation: ComponentConfig<NavigationProps> = {
     },
     cta: {
       type: "object",
-      default: { label: "Start building", href: "#" },
       objectFields: {
         label: { type: "text", contentEditable: true },
         href: { type: "text" },

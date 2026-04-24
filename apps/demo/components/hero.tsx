@@ -1,11 +1,8 @@
-import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 type Align = "left" | "center";
-
-type SlotRender = React.ComponentType<{ className?: string }>;
 
 type Props = {
   eyebrow: string;
@@ -14,7 +11,6 @@ type Props = {
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
   align: Align;
-  media: SlotRender;
 };
 
 export function Hero({
@@ -24,7 +20,6 @@ export function Hero({
   primaryCta,
   secondaryCta,
   align,
-  media: Media,
 }: Props) {
   return (
     <section className="relative w-full overflow-hidden bg-background py-24 md:py-32">
@@ -74,7 +69,6 @@ export function Hero({
               </Button>
             ) : null}
           </div>
-          <Media className="mt-8 w-full" />
         </div>
       </div>
     </section>

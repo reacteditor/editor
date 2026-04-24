@@ -1,4 +1,5 @@
 import { ComponentConfig, Slot } from "@/core";
+import { LayoutGrid } from "lucide-react";
 import { Grid as GridComponent } from "@/components/grid";
 
 export type GridProps = {
@@ -9,10 +10,18 @@ export type GridProps = {
 };
 
 export const Grid: ComponentConfig<GridProps> = {
+  label: "Grid",
+  icon: <LayoutGrid size={16} />,
+  category: "layout",
+  defaultProps: {
+    columns: "3",
+    gap: "md",
+    responsive: "on",
+    content: [],
+  },
   fields: {
     columns: {
       type: "select",
-      default: "3",
       options: [
         { label: "1", value: "1" },
         { label: "2", value: "2" },
@@ -24,7 +33,6 @@ export const Grid: ComponentConfig<GridProps> = {
     },
     gap: {
       type: "select",
-      default: "md",
       options: [
         { label: "Small", value: "sm" },
         { label: "Medium", value: "md" },
@@ -34,7 +42,6 @@ export const Grid: ComponentConfig<GridProps> = {
     },
     responsive: {
       type: "radio",
-      default: "on",
       options: [
         { label: "On", value: "on" },
         { label: "Off", value: "off" },

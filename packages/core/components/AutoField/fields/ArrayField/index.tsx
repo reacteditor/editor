@@ -27,7 +27,6 @@ import { useNestedFieldContext } from "../../context";
 import { walkField } from "../../../../lib/data/map-fields";
 import { populateIds } from "../../../../lib/data/populate-ids";
 import { defaultSlots } from "../../../../lib/data/default-slots";
-import { resolveArrayItemTemplate } from "../../../../lib/resolve-field-defaults";
 import { getDeep } from "../../../../lib/data/get-deep";
 import { SubField } from "../../subfield";
 import { setDeep } from "../../../../lib/data/set-deep";
@@ -532,8 +531,14 @@ export const ArrayField = ({
 
                 const existingValue = value || [];
 
+                // Support defaultItemProps as a function so we can generate dynamic defaults based on the current length of the array
+                const defaultProps =
+                  typeof field.defaultItemProps === "function"
+                    ? field.defaultItemProps(existingValue.length)
+                    : field.defaultItemProps ?? {};
+
                 const newItem = defaultSlots(
-                  uniqifyItem(resolveArrayItemTemplate(field.arrayFields)),
+                  uniqifyItem(defaultProps),
                   field.arrayFields
                 );
                 const newValue = [...existingValue, newItem];

@@ -1,4 +1,5 @@
 import { ComponentConfig } from "@/core";
+import { Users } from "lucide-react";
 import { TeamCard as TeamCardComponent } from "@/components/team-card";
 
 const socialOptions = [
@@ -19,34 +20,40 @@ export type TeamCardProps = {
 };
 
 export const TeamCard: ComponentConfig<TeamCardProps> = {
+  label: "Team card",
+  icon: <Users size={16} />,
+  category: "cards",
+  defaultProps: {
+    avatarUrl: "",
+    name: "Alex Rivera",
+    title: "Founding engineer",
+    bio: "Builds the editor runtime and the primitives that compose every page.",
+    socials: [
+      { platform: "twitter", href: "#" },
+      { platform: "github", href: "#" },
+    ],
+  },
   fields: {
-    avatarUrl: { type: "text", default: "" },
-    name: { type: "text", default: "Alex Rivera", contentEditable: true },
+    avatarUrl: { type: "text" },
+    name: { type: "text", contentEditable: true },
     title: {
       type: "text",
-      default: "Founding engineer",
       contentEditable: true,
     },
     bio: {
       type: "textarea",
-      default:
-        "Builds the editor runtime and the primitives that compose every page.",
       contentEditable: true,
     },
     socials: {
       type: "array",
-      default: [
-        { platform: "twitter", href: "#" },
-        { platform: "github", href: "#" },
-      ],
+      defaultItemProps: { platform: "twitter", href: "#" },
       getItemSummary: (s) => s.platform,
       arrayFields: {
         platform: {
           type: "select",
-          default: "twitter",
           options: [...socialOptions],
         },
-        href: { type: "text", default: "#" },
+        href: { type: "text" },
       },
     },
   },

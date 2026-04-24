@@ -8,8 +8,9 @@ export const Root: RootConfig<{
     userField: { type: "userField"; option: boolean };
   };
 }> = {
+  defaultProps: { title: "React Editor" },
   fields: {
-    title: { type: "text", default: "React Editor" },
+    title: { type: "text" },
   },
   render: ({ children }) => {
     return (

@@ -1,4 +1,5 @@
 import { ComponentConfig, Slot } from "@/core";
+import { AlignHorizontalJustifyStart } from "lucide-react";
 import { Row as RowComponent } from "@/components/row";
 
 export type RowProps = {
@@ -10,10 +11,19 @@ export type RowProps = {
 };
 
 export const Row: ComponentConfig<RowProps> = {
+  label: "Row",
+  icon: <AlignHorizontalJustifyStart size={16} />,
+  category: "layout",
+  defaultProps: {
+    gap: "md",
+    justify: "start",
+    align: "center",
+    wrap: "wrap",
+    content: [],
+  },
   fields: {
     gap: {
       type: "select",
-      default: "md",
       options: [
         { label: "None", value: "none" },
         { label: "Small", value: "sm" },
@@ -24,7 +34,6 @@ export const Row: ComponentConfig<RowProps> = {
     },
     justify: {
       type: "select",
-      default: "start",
       options: [
         { label: "Start", value: "start" },
         { label: "Center", value: "center" },
@@ -35,7 +44,6 @@ export const Row: ComponentConfig<RowProps> = {
     },
     align: {
       type: "select",
-      default: "center",
       options: [
         { label: "Start", value: "start" },
         { label: "Center", value: "center" },
@@ -46,7 +54,6 @@ export const Row: ComponentConfig<RowProps> = {
     },
     wrap: {
       type: "radio",
-      default: "wrap",
       options: [
         { label: "Wrap", value: "wrap" },
         { label: "No wrap", value: "nowrap" },

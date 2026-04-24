@@ -1,4 +1,5 @@
 import { ComponentConfig } from "@/core";
+import { Image as ImageIcon } from "lucide-react";
 import { Image as ImageComponent } from "@/components/image";
 
 export type ImageProps = {
@@ -10,16 +11,24 @@ export type ImageProps = {
 };
 
 export const Image: ComponentConfig<ImageProps> = {
+  label: "Image",
+  icon: <ImageIcon size={16} />,
+  category: "elements",
+  defaultProps: {
+    src: "https://placehold.co/1600x900",
+    alt: "Placeholder image",
+    ratio: "16:9",
+    fit: "cover",
+    rounded: "xl",
+  },
   fields: {
     src: {
       type: "text",
       placeholder: "https://...",
-      default: "https://placehold.co/1600x900",
     },
-    alt: { type: "text", default: "Placeholder image" },
+    alt: { type: "text" },
     ratio: {
       type: "select",
-      default: "16:9",
       options: [
         { label: "Auto", value: "auto" },
         { label: "1:1", value: "1:1" },
@@ -30,7 +39,6 @@ export const Image: ComponentConfig<ImageProps> = {
     },
     fit: {
       type: "radio",
-      default: "cover",
       options: [
         { label: "Cover", value: "cover" },
         { label: "Contain", value: "contain" },
@@ -38,7 +46,6 @@ export const Image: ComponentConfig<ImageProps> = {
     },
     rounded: {
       type: "select",
-      default: "xl",
       options: [
         { label: "None", value: "none" },
         { label: "Medium", value: "md" },

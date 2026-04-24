@@ -52,7 +52,6 @@ import { PrivateAppState } from "../../types/Internal";
 import { deepEqual } from "fast-equals";
 import { FieldTransforms } from "../../types/API/FieldTransforms";
 import { populateIds } from "../../lib/data/populate-ids";
-import { resolveFieldDefaults } from "../../lib/resolve-field-defaults";
 import { resolveGlobals } from "../../lib/resolve-globals";
 import { splitGlobalData } from "../../lib/split-global-data";
 import { toComponent } from "../../lib/data/to-component";
@@ -169,7 +168,7 @@ function EditorProvider<
     const rootProps = initialData?.root?.props || initialData?.root || {};
 
     const defaultedRootProps = {
-      ...resolveFieldDefaults(config.root?.fields),
+      ...config.root?.defaultProps,
       ...(rootProps as AsFieldProps<DefaultComponentProps> | AsFieldProps<any>),
     };
 
@@ -178,13 +177,13 @@ function EditorProvider<
       config
     );
 
-    // Seed globalData with field-default entries for any global-marked type
-    // that doesn't already have one from the consumer.
+    // Seed globalData with defaultProps-based entries for any global-marked
+    // type that doesn't already have one from the consumer.
     const seededGlobalData: GlobalData = { ...(initialGlobalData ?? {}) };
     for (const [type, comp] of Object.entries(config.components ?? {})) {
       if ((comp as any)?.global && !seededGlobalData[type]) {
         seededGlobalData[type] = {
-          props: resolveFieldDefaults((comp as any)?.fields),
+          props: { ...((comp as any)?.defaultProps ?? {}) },
         };
       }
     }

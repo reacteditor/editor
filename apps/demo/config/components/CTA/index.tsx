@@ -1,4 +1,5 @@
 import { ComponentConfig } from "@/core";
+import { Rocket } from "lucide-react";
 import { CTA as CTAComponent } from "@/components/cta";
 
 export type CTAProps = {
@@ -13,20 +14,29 @@ export type CTAProps = {
 };
 
 export const CTA: ComponentConfig<CTAProps> = {
+  label: "CTA",
+  icon: <Rocket size={16} />,
+  category: "sections",
+  defaultProps: {
+    heading: "Start shipping pages today",
+    subheading: "Free for open source and side projects.",
+    variant: "gradient",
+    buttons: [
+      { label: "Start building", href: "#", variant: "secondary" },
+      { label: "Read the docs", href: "#", variant: "outline" },
+    ],
+  },
   fields: {
     heading: {
       type: "text",
-      default: "Start shipping pages today",
       contentEditable: true,
     },
     subheading: {
       type: "textarea",
-      default: "Free for open source and side projects.",
       contentEditable: true,
     },
     variant: {
       type: "radio",
-      default: "gradient",
       options: [
         { label: "Solid", value: "solid" },
         { label: "Gradient", value: "gradient" },
@@ -35,17 +45,13 @@ export const CTA: ComponentConfig<CTAProps> = {
     },
     buttons: {
       type: "array",
-      default: [
-        { label: "Start building", href: "#", variant: "secondary" },
-        { label: "Read the docs", href: "#", variant: "outline" },
-      ],
+      defaultItemProps: { label: "Learn more", href: "#", variant: "default" },
       getItemSummary: (b, i) => b.label || `Button ${(i ?? 0) + 1}`,
       arrayFields: {
         label: { type: "text", contentEditable: true },
         href: { type: "text" },
         variant: {
           type: "select",
-          default: "default",
           options: [
             { label: "Primary", value: "default" },
             { label: "Outline", value: "outline" },

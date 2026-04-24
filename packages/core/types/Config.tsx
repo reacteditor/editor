@@ -1,6 +1,5 @@
 import type { JSX, ReactNode } from "react";
 import { BaseField, Field, Fields } from "./Fields";
-import { BlockMap } from "./Blocks";
 import { ComponentData, ComponentMetadata, RootData } from "./Data";
 
 import { AsFieldProps, WithChildren, WithId, WithEditorProps } from "./Utils";
@@ -49,6 +48,9 @@ type ComponentConfigInternal<
 > = {
   render: EditorComponent<RenderProps>;
   label?: string;
+  icon?: ReactNode;
+  category?: string;
+  defaultProps?: FieldProps;
   fields?: Fields<FieldProps, UserField>;
   permissions?: Partial<Permissions>;
   inline?: boolean;
@@ -162,7 +164,8 @@ export type RootConfig<
     >
   : Partial<RootConfigInternal<WithChildren<RootPropsOrParams>>>;
 
-type Category = {
+type Category<ComponentName> = {
+  components?: ComponentName[];
   title?: string;
   visible?: boolean;
   defaultExpanded?: boolean;
@@ -174,8 +177,8 @@ type ConfigInternal<
   CategoryName extends string = string,
   UserField extends {} = {}
 > = {
-  categories?: Record<CategoryName, Category> & {
-    other?: Category;
+  categories?: Record<CategoryName, Category<keyof Props>> & {
+    other?: Category<keyof Props>;
   };
   components: {
     [ComponentName in keyof Props]: Omit<
@@ -188,7 +191,6 @@ type ConfigInternal<
       "type"
     >;
   };
-  blocks?: BlockMap<Props>;
   root?: RootConfigInternal<RootProps, UserField>;
 };
 

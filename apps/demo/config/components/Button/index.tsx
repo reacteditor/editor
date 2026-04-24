@@ -1,4 +1,5 @@
 import { ComponentConfig } from "@/core";
+import { MousePointerClick } from "lucide-react";
 import { Button as ButtonComponent } from "@/components/button";
 import { iconOptions } from "../../icons";
 
@@ -12,12 +13,22 @@ export type ButtonBlockProps = {
 };
 
 export const Button: ComponentConfig<ButtonBlockProps> = {
+  label: "Button",
+  icon: <MousePointerClick size={16} />,
+  category: "elements",
+  defaultProps: {
+    label: "Get started",
+    href: "#",
+    variant: "default",
+    size: "default",
+    icon: "none",
+    iconPosition: "leading",
+  },
   fields: {
-    label: { type: "text", default: "Get started", contentEditable: true },
-    href: { type: "text", default: "#" },
+    label: { type: "text", contentEditable: true },
+    href: { type: "text" },
     variant: {
       type: "select",
-      default: "default",
       options: [
         { label: "Primary", value: "default" },
         { label: "Secondary", value: "secondary" },
@@ -28,7 +39,6 @@ export const Button: ComponentConfig<ButtonBlockProps> = {
     },
     size: {
       type: "radio",
-      default: "default",
       options: [
         { label: "Small", value: "sm" },
         { label: "Medium", value: "default" },
@@ -37,12 +47,10 @@ export const Button: ComponentConfig<ButtonBlockProps> = {
     },
     icon: {
       type: "select",
-      default: "none",
       options: iconOptions,
     },
     iconPosition: {
       type: "radio",
-      default: "leading",
       options: [
         { label: "Leading", value: "leading" },
         { label: "Trailing", value: "trailing" },

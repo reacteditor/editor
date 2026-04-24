@@ -1,4 +1,5 @@
 import { ComponentConfig } from "@/core";
+import { HelpCircle } from "lucide-react";
 import { FAQ as FAQComponent } from "@/components/faq";
 import { defaultFAQItems } from "../../seeds";
 
@@ -10,21 +11,28 @@ export type FAQProps = {
 };
 
 export const FAQ: ComponentConfig<FAQProps> = {
+  label: "FAQ",
+  icon: <HelpCircle size={16} />,
+  category: "sections",
+  defaultProps: {
+    eyebrow: "FAQ",
+    heading: "Frequently asked questions",
+    subheading: "Answers to common questions about the editor.",
+    items: defaultFAQItems,
+  },
   fields: {
-    eyebrow: { type: "text", default: "FAQ", contentEditable: true },
+    eyebrow: { type: "text", contentEditable: true },
     heading: {
       type: "text",
-      default: "Frequently asked questions",
       contentEditable: true,
     },
     subheading: {
       type: "textarea",
-      default: "Answers to common questions about the editor.",
       contentEditable: true,
     },
     items: {
       type: "array",
-      default: defaultFAQItems,
+      defaultItemProps: { question: "New question", answer: "" },
       getItemSummary: (item, i) => item.question || `Question ${(i ?? 0) + 1}`,
       arrayFields: {
         question: { type: "text", contentEditable: true },

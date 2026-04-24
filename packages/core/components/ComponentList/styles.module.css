@@ -1,20 +1,20 @@
-.BlockList {
+.ComponentList {
   max-width: 100%;
 }
 
-.BlockList--isExpanded + .BlockList {
+.ComponentList--isExpanded + .ComponentList {
   margin-top: 12px;
 }
 
-.BlockList-content {
+.ComponentList-content {
   display: none;
 }
 
-.BlockList--isExpanded > .BlockList-content {
+.ComponentList--isExpanded > .ComponentList-content {
   display: block;
 }
 
-.BlockList-title {
+.ComponentList-title {
   background-color: transparent;
   border: 0;
   color: var(--fe-text-secondary);
@@ -33,30 +33,30 @@
   width: 100%;
 }
 
-.BlockList-title:focus-visible {
+.ComponentList-title:focus-visible {
   outline: none;
   box-shadow: var(--fe-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .BlockList-title:hover {
+  .ComponentList-title:hover {
     background-color: var(--fe-surface-hover);
     color: var(--fe-text-accent);
     transition: none;
   }
 }
 
-.BlockList-title:active {
+.ComponentList-title:active {
   background-color: var(--fe-accent-soft);
   transition: none;
 }
 
-.BlockList-titleIcon {
+.ComponentList-titleIcon {
   display: flex;
   align-items: center;
   transition: transform var(--fe-motion-fast) var(--fe-ease);
 }
 
-.BlockList--isExpanded .BlockList-titleIcon {
+.ComponentList--isExpanded .ComponentList-titleIcon {
   transform: rotate(90deg);
 }

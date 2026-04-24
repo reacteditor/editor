@@ -26,7 +26,6 @@ import {
 } from "../DropZone/context";
 import { createNestedDroppablePlugin } from "../../lib/dnd/NestedDroppablePlugin";
 import { insertComponent } from "../../lib/insert-component";
-import { insertBlock } from "../../lib/insert-block";
 import { moveComponent } from "../../lib/move-component";
 import { useDebouncedCallback } from "use-debounce";
 import { ComponentDndData } from "../DraggableComponent";
@@ -393,21 +392,12 @@ const DragDropContextClient = ({
               zoneStore.setState({ previewIndex: {} });
 
               if (thisPreview.type === "insert") {
-                if (thisPreview.blockName) {
-                  insertBlock(
-                    thisPreview.blockName,
-                    thisPreview.zone,
-                    thisPreview.index,
-                    appStore
-                  );
-                } else {
-                  insertComponent(
-                    thisPreview.componentType,
-                    thisPreview.zone,
-                    thisPreview.index,
-                    appStore
-                  );
-                }
+                insertComponent(
+                  thisPreview.componentType,
+                  thisPreview.zone,
+                  thisPreview.index,
+                  appStore
+                );
               } else if (initialSelector.current) {
                 moveComponent(
                   thisPreview.props.id,
@@ -521,7 +511,6 @@ const DragDropContextClient = ({
               previewIndex: {
                 [targetZone]: {
                   componentType: sourceData.componentType,
-                  blockName: sourceData.blockName,
                   type: "insert",
                   index: targetIndex,
                   zone: targetZone,

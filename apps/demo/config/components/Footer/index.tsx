@@ -1,4 +1,5 @@
 import { ComponentConfig } from "@/core";
+import { PanelBottom } from "lucide-react";
 import { Footer as FooterComponent } from "@/components/footer";
 import { defaultFooterColumns, defaultSocial } from "../../seeds";
 
@@ -20,22 +21,32 @@ export type FooterProps = {
 };
 
 export const Footer: ComponentConfig<FooterProps> = {
+  label: "Footer",
+  icon: <PanelBottom size={16} />,
+  category: "navigation",
   global: true,
+  defaultProps: {
+    brand: "react-editor",
+    tagline: "A visual editor for your React components.",
+    columns: defaultFooterColumns,
+    copyright: "© 2026 react-editor. All rights reserved.",
+    social: defaultSocial,
+  },
   fields: {
-    brand: { type: "text", default: "react-editor", contentEditable: true },
+    brand: { type: "text", contentEditable: true },
     tagline: {
       type: "textarea",
-      default: "A visual editor for your React components.",
       contentEditable: true,
     },
     columns: {
       type: "array",
-      default: defaultFooterColumns,
+      defaultItemProps: { heading: "New column", links: [] },
       getItemSummary: (c) => c.heading,
       arrayFields: {
         heading: { type: "text", contentEditable: true },
         links: {
           type: "array",
+          defaultItemProps: { label: "Link", href: "#" },
           getItemSummary: (l) => l.label,
           arrayFields: {
             label: { type: "text", contentEditable: true },
@@ -46,17 +57,15 @@ export const Footer: ComponentConfig<FooterProps> = {
     },
     copyright: {
       type: "text",
-      default: "© 2026 react-editor. All rights reserved.",
       contentEditable: true,
     },
     social: {
       type: "array",
-      default: defaultSocial,
+      defaultItemProps: { platform: "twitter", href: "#" },
       getItemSummary: (s) => s.platform,
       arrayFields: {
         platform: {
           type: "select",
-          default: "twitter",
           options: [...socialOptions],
         },
         href: { type: "text" },

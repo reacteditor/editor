@@ -1,6 +1,6 @@
 import { ComponentConfig } from "@/core";
+import { Tag } from "lucide-react";
 import { Logos as LogosComponent } from "@/components/logos";
-import { defaultLogos } from "../../seeds";
 
 export type LogosProps = {
   eyebrow: string;
@@ -9,15 +9,29 @@ export type LogosProps = {
 };
 
 export const Logos: ComponentConfig<LogosProps> = {
+  label: "Logos",
+  icon: <Tag size={16} />,
+  category: "sections",
+  defaultProps: {
+    eyebrow: "Trusted by teams shipping fast",
+    logos: [
+      { alt: "Vercel", src: "https://cdn.simpleicons.org/vercel" },
+      { alt: "Next.js", src: "https://cdn.simpleicons.org/nextdotjs" },
+      { alt: "React", src: "https://cdn.simpleicons.org/react" },
+      { alt: "TypeScript", src: "https://cdn.simpleicons.org/typescript" },
+      { alt: "Tailwind", src: "https://cdn.simpleicons.org/tailwindcss" },
+      { alt: "Radix", src: "https://cdn.simpleicons.org/radixui" },
+    ],
+    grayscale: "yes",
+  },
   fields: {
     eyebrow: {
       type: "text",
-      default: "Trusted by teams shipping fast",
       contentEditable: true,
     },
     logos: {
       type: "array",
-      default: defaultLogos,
+      defaultItemProps: { alt: "Logo", src: "" },
       getItemSummary: (l, i) => l.alt || `Logo ${(i ?? 0) + 1}`,
       arrayFields: {
         alt: { type: "text" },
@@ -26,7 +40,6 @@ export const Logos: ComponentConfig<LogosProps> = {
     },
     grayscale: {
       type: "radio",
-      default: "yes",
       options: [
         { label: "Yes", value: "yes" },
         { label: "No", value: "no" },

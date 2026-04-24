@@ -1,4 +1,5 @@
 import { ComponentConfig } from "@/core";
+import { Quote } from "lucide-react";
 import { TestimonialCard as TestimonialCardComponent } from "@/components/testimonial-card";
 
 export type TestimonialCardProps = {
@@ -9,15 +10,24 @@ export type TestimonialCardProps = {
 };
 
 export const TestimonialCard: ComponentConfig<TestimonialCardProps> = {
+  label: "Testimonial card",
+  icon: <Quote size={16} />,
+  category: "cards",
+  defaultProps: {
+    quote:
+      "<p>This tool changed how our team ships pages. Fast to set up, delightful to use.</p>",
+    author: "Jane Doe",
+    role: "Head of Marketing, Acme",
+    avatarUrl: "",
+  },
   fields: {
     quote: { type: "richtext", contentEditable: true },
-    author: { type: "text", default: "Jane Doe", contentEditable: true },
+    author: { type: "text", contentEditable: true },
     role: {
       type: "text",
-      default: "Head of Marketing, Acme",
       contentEditable: true,
     },
-    avatarUrl: { type: "text", default: "" },
+    avatarUrl: { type: "text" },
   },
   render: ({ quote, author, role, avatarUrl }) => (
     <TestimonialCardComponent

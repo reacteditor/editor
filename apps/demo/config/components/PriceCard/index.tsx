@@ -1,4 +1,5 @@
 import { ComponentConfig } from "@/core";
+import { CreditCard } from "lucide-react";
 import { PriceCard as PriceCardComponent } from "@/components/price-card";
 
 export type PriceCardProps = {
@@ -16,12 +17,27 @@ export type PriceCardProps = {
 };
 
 export const PriceCard: ComponentConfig<PriceCardProps> = {
+  label: "Price card",
+  icon: <CreditCard size={16} />,
+  category: "cards",
+  defaultProps: {
+    name: "Pro",
+    price: "$49",
+    cadence: "month",
+    features: [
+      { text: "Unlimited pages" },
+      { text: "Role-based permissions" },
+      { text: "Priority support" },
+    ],
+    highlighted: "no",
+    badge: "Most popular",
+    cta: { label: "Get started", href: "#", variant: "default" },
+  },
   fields: {
-    name: { type: "text", default: "Pro", contentEditable: true },
-    price: { type: "text", default: "$49", contentEditable: true },
+    name: { type: "text", contentEditable: true },
+    price: { type: "text", contentEditable: true },
     cadence: {
       type: "radio",
-      default: "month",
       options: [
         { label: "Per month", value: "month" },
         { label: "Per year", value: "year" },
@@ -30,17 +46,12 @@ export const PriceCard: ComponentConfig<PriceCardProps> = {
     },
     features: {
       type: "array",
-      default: [
-        { text: "Unlimited pages" },
-        { text: "Role-based permissions" },
-        { text: "Priority support" },
-      ],
+      defaultItemProps: { text: "New feature" },
       getItemSummary: (f, i) => f.text || `Feature ${(i ?? 0) + 1}`,
       arrayFields: { text: { type: "text", contentEditable: true } },
     },
     highlighted: {
       type: "radio",
-      default: "no",
       options: [
         { label: "No", value: "no" },
         { label: "Yes", value: "yes" },
@@ -48,19 +59,16 @@ export const PriceCard: ComponentConfig<PriceCardProps> = {
     },
     badge: {
       type: "text",
-      default: "Most popular",
       placeholder: "Most popular",
       contentEditable: true,
     },
     cta: {
       type: "object",
-      default: { label: "Get started", href: "#", variant: "default" },
       objectFields: {
         label: { type: "text", contentEditable: true },
         href: { type: "text" },
         variant: {
           type: "select",
-          default: "default",
           options: [
             { label: "Primary", value: "default" },
             { label: "Outline", value: "outline" },

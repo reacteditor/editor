@@ -68,7 +68,6 @@ const DrawerItemDraggable = ({
   icon,
   id,
   isDragDisabled,
-  data,
 }: {
   children?: (props: { children: ReactNode; name: string }) => ReactElement;
   name: string;
@@ -76,11 +75,10 @@ const DrawerItemDraggable = ({
   icon?: ReactNode;
   id: string;
   isDragDisabled?: boolean;
-  data?: Record<string, any>;
 }) => {
   const { ref } = useDraggable({
     id,
-    data: { componentType: name, ...(data ?? {}) },
+    data: { componentType: name },
     disabled: isDragDisabled,
     type: "drawer",
   });
@@ -115,7 +113,6 @@ const DrawerItem = ({
   icon,
   index,
   isDragDisabled,
-  data,
 }: {
   name: string;
   children?: (props: { children: ReactNode; name: string }) => ReactElement;
@@ -124,7 +121,6 @@ const DrawerItem = ({
   icon?: ReactNode;
   index?: number; // TODO deprecate
   isDragDisabled?: boolean;
-  data?: Record<string, any>;
 }) => {
   const resolvedId = id || name;
   const [dynamicId, setDynamicId] = useState(generateId(resolvedId));
@@ -151,7 +147,6 @@ const DrawerItem = ({
         icon={icon}
         id={dynamicId}
         isDragDisabled={isDragDisabled}
-        data={data}
       >
         {children}
       </DrawerItemDraggable>

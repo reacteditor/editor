@@ -1,4 +1,5 @@
 import { ComponentConfig, Slot } from "@/core";
+import { Minus } from "lucide-react";
 import { Section as SectionComponent } from "@/components/section";
 
 export type SectionProps = {
@@ -8,10 +9,17 @@ export type SectionProps = {
 };
 
 export const Section: ComponentConfig<SectionProps> = {
+  label: "Section",
+  icon: <Minus size={16} />,
+  category: "layout",
+  defaultProps: {
+    background: "default",
+    paddingY: "lg",
+    content: [],
+  },
   fields: {
     background: {
       type: "select",
-      default: "default",
       options: [
         { label: "Default", value: "default" },
         { label: "Muted", value: "muted" },
@@ -21,7 +29,6 @@ export const Section: ComponentConfig<SectionProps> = {
     },
     paddingY: {
       type: "select",
-      default: "lg",
       options: [
         { label: "None", value: "none" },
         { label: "Small", value: "sm" },

@@ -22,6 +22,7 @@ export type UiState = {
   componentList: Record<
     string,
     {
+      components?: string[];
       title?: string;
       visible?: boolean;
       expanded?: boolean;

@@ -1,4 +1,5 @@
-import { ComponentConfig, Slot } from "@/core";
+import { ComponentConfig } from "@/core";
+import { Rocket } from "lucide-react";
 import { Hero as HeroComponent } from "@/components/hero";
 
 export type HeroProps = {
@@ -8,31 +9,37 @@ export type HeroProps = {
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
   align: "left" | "center";
-  media: Slot;
 };
 
 export const Hero: ComponentConfig<HeroProps> = {
+  label: "Hero",
+  icon: <Rocket size={16} />,
+  category: "sections",
+  defaultProps: {
+    eyebrow: "v2 · Visual editing for React",
+    title: "Ship pages at the speed of thought",
+    subtitle:
+      "A drag-and-drop editor for your own React components. Own your data, keep your stack, extend anything.",
+    primaryCta: { label: "Start building", href: "#" },
+    secondaryCta: { label: "See components", href: "#" },
+    align: "center",
+  },
   fields: {
     eyebrow: {
       type: "text",
-      default: "v2 · Visual editing for React",
       placeholder: "New · v2",
       contentEditable: true,
     },
     title: {
       type: "text",
-      default: "Ship pages at the speed of thought",
       contentEditable: true,
     },
     subtitle: {
       type: "textarea",
-      default:
-        "A drag-and-drop editor for your own React components. Own your data, keep your stack, extend anything.",
       contentEditable: true,
     },
     primaryCta: {
       type: "object",
-      default: { label: "Start building", href: "#" },
       objectFields: {
         label: { type: "text", contentEditable: true },
         href: { type: "text" },
@@ -40,7 +47,6 @@ export const Hero: ComponentConfig<HeroProps> = {
     },
     secondaryCta: {
       type: "object",
-      default: { label: "See components", href: "#" },
       objectFields: {
         label: { type: "text", contentEditable: true },
         href: { type: "text" },
@@ -48,13 +54,11 @@ export const Hero: ComponentConfig<HeroProps> = {
     },
     align: {
       type: "radio",
-      default: "center",
       options: [
         { label: "Left", value: "left" },
         { label: "Center", value: "center" },
       ],
     },
-    media: { type: "slot" },
   },
   render: ({
     eyebrow,
@@ -63,7 +67,6 @@ export const Hero: ComponentConfig<HeroProps> = {
     primaryCta,
     secondaryCta,
     align,
-    media,
   }) => (
     <HeroComponent
       eyebrow={eyebrow}
@@ -72,7 +75,6 @@ export const Hero: ComponentConfig<HeroProps> = {
       primaryCta={primaryCta}
       secondaryCta={secondaryCta}
       align={align}
-      media={media}
     />
   ),
 };

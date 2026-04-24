@@ -9,13 +9,6 @@ export type InsertAction = {
   id?: string;
 };
 
-export type InsertTreeAction = {
-  type: "insertTree";
-  destinationIndex: number;
-  destinationZone: string;
-  nodes: ComponentData[];
-};
-
 export type DuplicateAction = {
   type: "duplicate";
   sourceIndex: number;
@@ -89,7 +82,6 @@ export type UnregisterZoneAction = {
 export type EditorAction = { recordHistory?: boolean } & (
   | ReorderAction
   | InsertAction
-  | InsertTreeAction
   | MoveAction
   | ReplaceAction
   | ReplaceRootAction

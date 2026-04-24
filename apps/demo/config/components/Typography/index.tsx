@@ -1,4 +1,5 @@
 import { ComponentConfig } from "@/core";
+import { Type } from "lucide-react";
 import { Typography as TypographyComponent } from "@/components/typography";
 
 export type TypographyProps = {
@@ -8,10 +9,17 @@ export type TypographyProps = {
 };
 
 export const Typography: ComponentConfig<TypographyProps> = {
+  label: "Typography",
+  icon: <Type size={16} />,
+  category: "elements",
+  defaultProps: {
+    variant: "h2",
+    content: "",
+    align: "left",
+  },
   fields: {
     variant: {
       type: "select",
-      default: "h2",
       options: [
         { label: "Heading 1", value: "h1" },
         { label: "Heading 2", value: "h2" },
@@ -26,7 +34,6 @@ export const Typography: ComponentConfig<TypographyProps> = {
     content: { type: "richtext", contentEditable: true },
     align: {
       type: "radio",
-      default: "left",
       options: [
         { label: "Left", value: "left" },
         { label: "Center", value: "center" },

@@ -38,7 +38,6 @@ export const initialData: Record<string, UserData> = {
           primaryCta: { label: "Start building", href: "#" },
           secondaryCta: { label: "See components", href: "#features" },
           align: "center",
-          media: [],
         },
       },
       {

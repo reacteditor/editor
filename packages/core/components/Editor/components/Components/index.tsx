@@ -1,16 +1,21 @@
 import { useAppStore } from "../../../../store";
-import { BlockList } from "../../../BlockList";
-import { useMemo, useState } from "react";
+import { ComponentList } from "../../../ComponentList";
+import { ReactNode, useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import { Block } from "../../../../types";
 import styles from "./styles.module.css";
 import getClassNameFactory from "../../../../lib/get-class-name-factory";
 
 const getClassName = getClassNameFactory("Components", styles);
 
+type ComponentConfigLike = {
+  label?: string;
+  icon?: ReactNode;
+  category?: string;
+};
+
 export const Components = () => {
   const overrides = useAppStore((s) => s.overrides);
-  const blocks = useAppStore((s) => s.config.blocks);
+  const components = useAppStore((s) => s.config.components);
   const categoriesConfig = useAppStore((s) => s.config.categories);
 
   const [search, setSearch] = useState("");
@@ -27,24 +32,25 @@ export const Components = () => {
 
   const groups = useMemo(() => {
     const query = search.trim().toLowerCase();
-    const entries = (Object.entries(blocks ?? {}) as [string, Block][]).filter(
-      ([, block]) => {
-        if (!query) return true;
-        return block.label.toLowerCase().includes(query);
-      }
-    );
+    const entries = (
+      Object.entries(components ?? {}) as [string, ComponentConfigLike][]
+    ).filter(([name, conf]) => {
+      if (!query) return true;
+      const label = (conf.label ?? name).toLowerCase();
+      return label.includes(query);
+    });
     if (!entries.length) return [] as [string | undefined, typeof entries][];
 
     const buckets = new Map<string | undefined, typeof entries>();
     for (const entry of entries) {
-      const [, block] = entry;
-      const key = block.category;
+      const [, conf] = entry;
+      const key = conf.category;
       const bucket = buckets.get(key) ?? [];
       bucket.push(entry);
       buckets.set(key, bucket);
     }
     return Array.from(buckets.entries());
-  }, [blocks, search]);
+  }, [components, search]);
 
   return (
     <Wrapper>
@@ -64,15 +70,16 @@ export const Components = () => {
       {groups.length === 0 ? (
         <div className={getClassName("empty")}>No results match your search</div>
       ) : groups.length <= 1 && !groups[0]?.[0] ? (
-        <BlockList id="all">
-          {groups[0][1].map(([blockName, block]) => (
-            <BlockList.Item
-              key={blockName}
-              blockName={blockName}
-              block={block}
+        <ComponentList id="all">
+          {groups[0][1].map(([name, conf]) => (
+            <ComponentList.Item
+              key={name}
+              name={name}
+              label={(conf.label ?? name) as string}
+              icon={conf.icon}
             />
           ))}
-        </BlockList>
+        </ComponentList>
       ) : (
         groups.map(([category, entries]) => {
           const categoryKey = category ?? "other";
@@ -81,19 +88,20 @@ export const Components = () => {
             (category ?? "Other");
 
           return (
-            <BlockList
+            <ComponentList
               id={categoryKey}
               key={categoryKey}
               title={title as string}
             >
-              {entries.map(([blockName, block]) => (
-                <BlockList.Item
-                  key={blockName}
-                  blockName={blockName}
-                  block={block}
+              {entries.map(([name, conf]) => (
+                <ComponentList.Item
+                  key={name}
+                  name={name}
+                  label={(conf.label ?? name) as string}
+                  icon={conf.icon}
                 />
               ))}
-            </BlockList>
+            </ComponentList>
           );
         })
       )}

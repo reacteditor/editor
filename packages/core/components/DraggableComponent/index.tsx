@@ -81,7 +81,6 @@ export type ComponentDndData = {
   zone: string;
   index: number;
   componentType: string;
-  blockName?: string;
   containsActiveZone: boolean;
   depth: number;
   path: UniqueIdentifier[];

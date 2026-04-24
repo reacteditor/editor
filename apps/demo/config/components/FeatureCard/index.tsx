@@ -1,4 +1,5 @@
 import { ComponentConfig } from "@/core";
+import { Sparkles } from "lucide-react";
 import { FeatureCard as FeatureCardComponent } from "@/components/feature-card";
 import { iconOptions } from "../../icons";
 
@@ -10,22 +11,28 @@ export type FeatureCardProps = {
 };
 
 export const FeatureCard: ComponentConfig<FeatureCardProps> = {
+  label: "Feature card",
+  icon: <Sparkles size={16} />,
+  category: "cards",
+  defaultProps: {
+    icon: "sparkles",
+    title: "Feature title",
+    description:
+      "A short description of the feature, focusing on the user benefit.",
+    cta: { label: "", href: "" },
+  },
   fields: {
-    icon: { type: "select", default: "sparkles", options: iconOptions },
+    icon: { type: "select", options: iconOptions },
     title: {
       type: "text",
-      default: "Feature title",
       contentEditable: true,
     },
     description: {
       type: "textarea",
-      default:
-        "A short description of the feature, focusing on the user benefit.",
       contentEditable: true,
     },
     cta: {
       type: "object",
-      default: { label: "", href: "" },
       objectFields: {
         label: { type: "text", contentEditable: true },
         href: { type: "text" },
