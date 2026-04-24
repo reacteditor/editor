@@ -9,7 +9,7 @@ export type LogosProps = {
 
 export const Logos: ComponentConfig<LogosProps> = {
   fields: {
-    eyebrow: { type: "text" },
+    eyebrow: { type: "text", contentEditable: true },
     logos: {
       type: "array",
       getItemSummary: (l, i) => l.alt || `Logo ${(i ?? 0) + 1}`,
@@ -36,19 +36,21 @@ export const Logos: ComponentConfig<LogosProps> = {
           </p>
         ) : null}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-80">
-          {(logos ?? []).map((l, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={i}
-              src={l.src}
-              alt={l.alt}
-              className={cn(
-                "h-8 w-auto object-contain",
-                grayscale === "yes" &&
-                  "grayscale transition-[filter] hover:grayscale-0"
-              )}
-            />
-          ))}
+          {(logos ?? [])
+            .filter((l) => l.src)
+            .map((l, i) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={i}
+                src={l.src}
+                alt={l.alt}
+                className={cn(
+                  "h-8 w-auto object-contain",
+                  grayscale === "yes" &&
+                    "grayscale transition-[filter] hover:grayscale-0"
+                )}
+              />
+            ))}
         </div>
       </div>
     </section>

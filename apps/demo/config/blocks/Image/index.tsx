@@ -27,7 +27,11 @@ const roundedClasses: Record<ImageProps["rounded"], string> = {
 
 export const Image: ComponentConfig<ImageProps> = {
   fields: {
-    src: { type: "text", placeholder: "https://..." },
+    src: {
+      type: "text",
+      placeholder: "https://...",
+      default: "https://placehold.co/1600x900",
+    },
     alt: { type: "text" },
     ratio: {
       type: "select",
@@ -68,15 +72,17 @@ export const Image: ComponentConfig<ImageProps> = {
         roundedClasses[rounded]
       )}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt={alt}
-        className={cn(
-          "h-full w-full",
-          fit === "cover" ? "object-cover" : "object-contain"
-        )}
-      />
+      {src ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={src}
+          alt={alt}
+          className={cn(
+            "h-full w-full",
+            fit === "cover" ? "object-cover" : "object-contain"
+          )}
+        />
+      ) : null}
     </div>
   ),
 };

@@ -24,7 +24,6 @@ import { FAQProps } from "./blocks/FAQ";
 import { NavigationProps } from "./blocks/Navigation";
 import { NavBarProps } from "./blocks/NavBar";
 import { FooterProps } from "./blocks/Footer";
-import { FooterLinksProps } from "./blocks/FooterLinks";
 
 import { RootProps } from "./root";
 
@@ -56,21 +55,17 @@ export type Components = {
   Navigation: NavigationProps;
   NavBar: NavBarProps;
   Footer: FooterProps;
-  FooterLinks: FooterLinksProps;
 };
 
 export type UserConfig = Config<{
   components: Components;
   root: RootProps;
   categories: [
-    "typography",
-    "media",
-    "actions",
     "layout",
-    "interactive",
-    "cards",
+    "navigation",
     "sections",
-    "site"
+    "cards",
+    "elements"
   ];
   fields: {
     userField: {

@@ -22,8 +22,8 @@ const variantClasses: Record<CTAProps["variant"], string> = {
 
 export const CTA: ComponentConfig<CTAProps> = {
   fields: {
-    heading: { type: "text" },
-    subheading: { type: "textarea" },
+    heading: { type: "text", contentEditable: true },
+    subheading: { type: "textarea", contentEditable: true },
     variant: {
       type: "radio",
       default: "gradient",
@@ -37,7 +37,7 @@ export const CTA: ComponentConfig<CTAProps> = {
       type: "array",
       getItemSummary: (b, i) => b.label || `Button ${(i ?? 0) + 1}`,
       arrayFields: {
-        label: { type: "text" },
+        label: { type: "text", contentEditable: true },
         href: { type: "text" },
         variant: {
           type: "select",

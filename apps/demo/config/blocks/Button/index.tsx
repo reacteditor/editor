@@ -13,7 +13,7 @@ export type ButtonBlockProps = {
 
 export const Button: ComponentConfig<ButtonBlockProps> = {
   fields: {
-    label: { type: "text", default: "Get started" },
+    label: { type: "text", default: "Get started", contentEditable: true },
     href: { type: "text", default: "#" },
     variant: {
       type: "select",

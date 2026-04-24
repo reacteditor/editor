@@ -9,9 +9,9 @@ export type TestimonialsProps = {
 
 export const Testimonials: ComponentConfig<TestimonialsProps> = {
   fields: {
-    eyebrow: { type: "text" },
-    heading: { type: "text" },
-    subheading: { type: "textarea" },
+    eyebrow: { type: "text", contentEditable: true },
+    heading: { type: "text", contentEditable: true },
+    subheading: { type: "textarea", contentEditable: true },
     items: { type: "slot" },
   },
   render: ({ eyebrow, heading, subheading, items: Items }) => (

@@ -17,19 +17,19 @@ const justifyClasses: Record<NavBarProps["align"], string> = {
 
 export const NavBar: ComponentConfig<NavBarProps> = {
   fields: {
-    brand: { type: "text", default: "react-editor" },
+    brand: { type: "text", default: "react-editor", contentEditable: true },
     links: {
       type: "array",
       getItemSummary: (l) => l.label,
       arrayFields: {
-        label: { type: "text" },
+        label: { type: "text", contentEditable: true },
         href: { type: "text" },
       },
     },
     cta: {
       type: "object",
       objectFields: {
-        label: { type: "text" },
+        label: { type: "text", contentEditable: true },
         href: { type: "text" },
       },
     },

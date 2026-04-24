@@ -10,20 +10,26 @@ export type TestimonialCardProps = {
   avatarUrl: string;
 };
 
-const initials = (name: string) =>
-  name
+const initials = (name: unknown) => {
+  if (typeof name !== "string" || !name) return "";
+  return name
     .split(" ")
     .map((p) => p[0])
     .filter(Boolean)
     .slice(0, 2)
     .join("")
     .toUpperCase();
+};
 
 export const TestimonialCard: ComponentConfig<TestimonialCardProps> = {
   fields: {
-    quote: { type: "richtext" },
-    author: { type: "text", default: "Jane Doe" },
-    role: { type: "text", default: "Head of Marketing, Acme" },
+    quote: { type: "richtext", contentEditable: true },
+    author: { type: "text", default: "Jane Doe", contentEditable: true },
+    role: {
+      type: "text",
+      default: "Head of Marketing, Acme",
+      contentEditable: true,
+    },
     avatarUrl: { type: "text" },
   },
   render: ({ quote, author, role, avatarUrl }) => (

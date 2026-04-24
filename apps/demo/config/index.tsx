@@ -48,7 +48,6 @@ import { FAQ } from "./blocks/FAQ";
 import { Navigation } from "./blocks/Navigation";
 import { NavBar } from "./blocks/NavBar";
 import { Footer } from "./blocks/Footer";
-import { FooterLinks } from "./blocks/FooterLinks";
 
 import Root from "./root";
 import { UserConfig } from "./types";
@@ -68,14 +67,11 @@ import {
 export const conf: UserConfig = {
   root: Root,
   categories: {
-    typography: { title: "Typography" },
-    media: { title: "Media" },
-    actions: { title: "Actions" },
     layout: { title: "Layout" },
-    interactive: { title: "Interactive" },
-    cards: { title: "Cards" },
+    navigation: { title: "Navigation" },
     sections: { title: "Sections" },
-    site: { title: "Site" },
+    cards: { title: "Cards" },
+    elements: { title: "Elements" },
   },
   components: {
     Typography,
@@ -103,31 +99,9 @@ export const conf: UserConfig = {
     Navigation,
     NavBar,
     Footer,
-    FooterLinks,
   },
   blocks: {
-    Typography: {
-      label: "Typography",
-      icon: <Type size={16} />,
-      category: "typography",
-      component: "Typography",
-    },
-    Image: {
-      label: "Image",
-      icon: <ImageIcon size={16} />,
-      category: "media",
-      component: "Image",
-      props: {
-        src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80",
-        alt: "Placeholder image",
-      },
-    },
-    Button: {
-      label: "Button",
-      icon: <MousePointerClick size={16} />,
-      category: "actions",
-      component: "Button",
-    },
+    // Layout
     Section: {
       label: "Section",
       icon: <Minus size={16} />,
@@ -171,51 +145,46 @@ export const conf: UserConfig = {
         gap: "md",
       },
     },
-    Accordion: {
-      label: "Accordion",
-      icon: <ListChecks size={16} />,
-      category: "interactive",
-      component: "Accordion",
+
+    // Navigation
+    Navigation: {
+      label: "Navigation",
+      icon: <PanelTop size={16} />,
+      category: "navigation",
+      component: "Navigation",
       props: {
-        items: [
-          {
-            question: "How do I get started?",
-            answer:
-              "<p>Drag any block from the left sidebar onto the canvas.</p>",
-          },
-          {
-            question: "Can I compose custom layouts?",
-            answer:
-              "<p>Yes — use Section, Container, Grid, Columns, Stack, and Row.</p>",
-          },
-        ],
-        type: "single",
+        brand: "react-editor",
+        links: defaultNavLinks,
+        cta: { label: "Start building", href: "#" },
       },
     },
-    FeatureCard: {
-      label: "Feature card",
-      icon: <Sparkles size={16} />,
-      category: "cards",
-      component: "FeatureCard",
+    NavBar: {
+      label: "Nav bar",
+      icon: <Square size={16} />,
+      category: "navigation",
+      component: "NavBar",
+      props: {
+        brand: "react-editor",
+        links: defaultNavLinks,
+        cta: { label: "Sign in", href: "#" },
+        align: "center",
+      },
     },
-    TestimonialCard: {
-      label: "Testimonial card",
-      icon: <Quote size={16} />,
-      category: "cards",
-      component: "TestimonialCard",
+    Footer: {
+      label: "Footer",
+      icon: <PanelBottom size={16} />,
+      category: "navigation",
+      component: "Footer",
+      props: {
+        brand: "react-editor",
+        tagline: "A visual editor for your React components.",
+        columns: defaultFooterColumns,
+        copyright: "© 2026 react-editor. All rights reserved.",
+        social: defaultSocial,
+      },
     },
-    PriceCard: {
-      label: "Price card",
-      icon: <CreditCard size={16} />,
-      category: "cards",
-      component: "PriceCard",
-    },
-    TeamCard: {
-      label: "Team card",
-      icon: <Users size={16} />,
-      category: "cards",
-      component: "TeamCard",
-    },
+
+    // Sections
     Hero: {
       label: "Hero",
       icon: <Rocket size={16} />,
@@ -331,48 +300,76 @@ export const conf: UserConfig = {
         items: defaultFAQItems,
       },
     },
-    Navigation: {
-      label: "Navigation",
-      icon: <PanelTop size={16} />,
-      category: "site",
-      component: "Navigation",
+
+    // Cards
+    FeatureCard: {
+      label: "Feature card",
+      icon: <Sparkles size={16} />,
+      category: "cards",
+      component: "FeatureCard",
+    },
+    TestimonialCard: {
+      label: "Testimonial card",
+      icon: <Quote size={16} />,
+      category: "cards",
+      component: "TestimonialCard",
+    },
+    PriceCard: {
+      label: "Price card",
+      icon: <CreditCard size={16} />,
+      category: "cards",
+      component: "PriceCard",
+    },
+    TeamCard: {
+      label: "Team card",
+      icon: <Users size={16} />,
+      category: "cards",
+      component: "TeamCard",
+    },
+
+    // Elements
+    Typography: {
+      label: "Typography",
+      icon: <Type size={16} />,
+      category: "elements",
+      component: "Typography",
+    },
+    Image: {
+      label: "Image",
+      icon: <ImageIcon size={16} />,
+      category: "elements",
+      component: "Image",
       props: {
-        brand: "react-editor",
-        links: defaultNavLinks,
-        cta: { label: "Start building", href: "#" },
+        src: "https://placehold.co/1600x900",
+        alt: "Placeholder image",
       },
     },
-    NavBar: {
-      label: "Nav bar",
-      icon: <Square size={16} />,
-      category: "site",
-      component: "NavBar",
-      props: {
-        brand: "react-editor",
-        links: defaultNavLinks,
-        cta: { label: "Sign in", href: "#" },
-        align: "center",
-      },
+    Button: {
+      label: "Button",
+      icon: <MousePointerClick size={16} />,
+      category: "elements",
+      component: "Button",
     },
-    Footer: {
-      label: "Footer",
-      icon: <PanelBottom size={16} />,
-      category: "site",
-      component: "Footer",
+    Accordion: {
+      label: "Accordion",
+      icon: <ListChecks size={16} />,
+      category: "elements",
+      component: "Accordion",
       props: {
-        brand: "react-editor",
-        tagline: "A visual editor for your React components.",
-        columns: defaultFooterColumns,
-        copyright: "© 2026 react-editor. All rights reserved.",
-        social: defaultSocial,
+        items: [
+          {
+            question: "How do I get started?",
+            answer:
+              "<p>Drag any block from the left sidebar onto the canvas.</p>",
+          },
+          {
+            question: "Can I compose custom layouts?",
+            answer:
+              "<p>Yes — use Section, Container, Grid, Columns, Stack, and Row.</p>",
+          },
+        ],
+        type: "single",
       },
-    },
-    FooterLinks: {
-      label: "Footer links",
-      icon: <Square size={16} />,
-      category: "site",
-      component: "FooterLinks",
-      props: { columns: defaultFooterColumns },
     },
   },
 };

@@ -18,8 +18,8 @@ export const Accordion: ComponentConfig<AccordionProps> = {
       type: "array",
       getItemSummary: (item, i) => item.question || `Item ${(i ?? 0) + 1}`,
       arrayFields: {
-        question: { type: "text" },
-        answer: { type: "richtext" },
+        question: { type: "text", contentEditable: true },
+        answer: { type: "richtext", contentEditable: true },
       },
     },
     type: {

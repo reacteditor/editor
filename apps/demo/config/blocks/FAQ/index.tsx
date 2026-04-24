@@ -16,15 +16,15 @@ export type FAQProps = {
 
 export const FAQ: ComponentConfig<FAQProps> = {
   fields: {
-    eyebrow: { type: "text" },
-    heading: { type: "text" },
-    subheading: { type: "textarea" },
+    eyebrow: { type: "text", contentEditable: true },
+    heading: { type: "text", contentEditable: true },
+    subheading: { type: "textarea", contentEditable: true },
     items: {
       type: "array",
       getItemSummary: (item, i) => item.question || `Question ${(i ?? 0) + 1}`,
       arrayFields: {
-        question: { type: "text" },
-        answer: { type: "richtext" },
+        question: { type: "text", contentEditable: true },
+        answer: { type: "richtext", contentEditable: true },
       },
     },
   },

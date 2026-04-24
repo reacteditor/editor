@@ -15,20 +15,24 @@ export type HeroProps = {
 
 export const Hero: ComponentConfig<HeroProps> = {
   fields: {
-    eyebrow: { type: "text", placeholder: "New · v2" },
-    title: { type: "text" },
-    subtitle: { type: "textarea" },
+    eyebrow: {
+      type: "text",
+      placeholder: "New · v2",
+      contentEditable: true,
+    },
+    title: { type: "text", contentEditable: true },
+    subtitle: { type: "textarea", contentEditable: true },
     primaryCta: {
       type: "object",
       objectFields: {
-        label: { type: "text" },
+        label: { type: "text", contentEditable: true },
         href: { type: "text" },
       },
     },
     secondaryCta: {
       type: "object",
       objectFields: {
-        label: { type: "text" },
+        label: { type: "text", contentEditable: true },
         href: { type: "text" },
       },
     },

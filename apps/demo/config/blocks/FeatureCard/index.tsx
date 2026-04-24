@@ -12,16 +12,21 @@ export type FeatureCardProps = {
 export const FeatureCard: ComponentConfig<FeatureCardProps> = {
   fields: {
     icon: { type: "select", default: "sparkles", options: iconOptions },
-    title: { type: "text", default: "Feature title" },
+    title: {
+      type: "text",
+      default: "Feature title",
+      contentEditable: true,
+    },
     description: {
       type: "textarea",
       default:
         "A short description of the feature, focusing on the user benefit.",
+      contentEditable: true,
     },
     cta: {
       type: "object",
       objectFields: {
-        label: { type: "text" },
+        label: { type: "text", contentEditable: true },
         href: { type: "text" },
       },
     },

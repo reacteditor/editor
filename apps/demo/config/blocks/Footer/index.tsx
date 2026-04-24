@@ -1,6 +1,7 @@
 import { ComponentConfig } from "@/core";
 import { Separator } from "@/components/ui/separator";
 import { Github, Linkedin, Twitter } from "lucide-react";
+import { defaultFooterColumns, defaultSocial } from "../../seeds";
 
 const socialOptions = [
   { label: "Twitter", value: "twitter" },
@@ -26,27 +27,38 @@ const socialIcon = {
 };
 
 export const Footer: ComponentConfig<FooterProps> = {
+  global: true,
   fields: {
-    brand: { type: "text", default: "react-editor" },
-    tagline: { type: "textarea" },
+    brand: { type: "text", default: "react-editor", contentEditable: true },
+    tagline: {
+      type: "textarea",
+      default: "A visual editor for your React components.",
+      contentEditable: true,
+    },
     columns: {
       type: "array",
+      default: defaultFooterColumns,
       getItemSummary: (c) => c.heading,
       arrayFields: {
-        heading: { type: "text" },
+        heading: { type: "text", contentEditable: true },
         links: {
           type: "array",
           getItemSummary: (l) => l.label,
           arrayFields: {
-            label: { type: "text" },
+            label: { type: "text", contentEditable: true },
             href: { type: "text" },
           },
         },
       },
     },
-    copyright: { type: "text" },
+    copyright: {
+      type: "text",
+      default: "© 2026 react-editor. All rights reserved.",
+      contentEditable: true,
+    },
     social: {
       type: "array",
+      default: defaultSocial,
       getItemSummary: (s) => s.platform,
       arrayFields: {
         platform: {

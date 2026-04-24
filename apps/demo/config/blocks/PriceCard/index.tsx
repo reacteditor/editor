@@ -27,8 +27,8 @@ const cadenceLabel: Record<PriceCardProps["cadence"], string> = {
 
 export const PriceCard: ComponentConfig<PriceCardProps> = {
   fields: {
-    name: { type: "text", default: "Pro" },
-    price: { type: "text", default: "$49" },
+    name: { type: "text", default: "Pro", contentEditable: true },
+    price: { type: "text", default: "$49", contentEditable: true },
     cadence: {
       type: "radio",
       default: "month",
@@ -41,7 +41,7 @@ export const PriceCard: ComponentConfig<PriceCardProps> = {
     features: {
       type: "array",
       getItemSummary: (f, i) => f.text || `Feature ${(i ?? 0) + 1}`,
-      arrayFields: { text: { type: "text" } },
+      arrayFields: { text: { type: "text", contentEditable: true } },
     },
     highlighted: {
       type: "radio",
@@ -51,11 +51,11 @@ export const PriceCard: ComponentConfig<PriceCardProps> = {
         { label: "Yes", value: "yes" },
       ],
     },
-    badge: { type: "text", placeholder: "Most popular" },
+    badge: { type: "text", placeholder: "Most popular", contentEditable: true },
     cta: {
       type: "object",
       objectFields: {
-        label: { type: "text" },
+        label: { type: "text", contentEditable: true },
         href: { type: "text" },
         variant: {
           type: "select",

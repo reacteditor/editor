@@ -26,23 +26,30 @@ const socialIcon = {
   github: Github,
 };
 
-const initials = (name: string) =>
-  name
+const initials = (name: unknown) => {
+  if (typeof name !== "string" || !name) return "";
+  return name
     .split(" ")
     .map((p) => p[0])
     .filter(Boolean)
     .slice(0, 2)
     .join("")
     .toUpperCase();
+};
 
 export const TeamCard: ComponentConfig<TeamCardProps> = {
   fields: {
     avatarUrl: { type: "text" },
-    name: { type: "text", default: "Alex Rivera" },
-    title: { type: "text", default: "Founding engineer" },
+    name: { type: "text", default: "Alex Rivera", contentEditable: true },
+    title: {
+      type: "text",
+      default: "Founding engineer",
+      contentEditable: true,
+    },
     bio: {
       type: "textarea",
       default: "A short bio.",
+      contentEditable: true,
     },
     socials: {
       type: "array",

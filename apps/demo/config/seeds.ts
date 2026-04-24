@@ -11,7 +11,7 @@ export const defaultLogos = [
   { alt: "React", src: "https://cdn.simpleicons.org/react" },
   { alt: "TypeScript", src: "https://cdn.simpleicons.org/typescript" },
   { alt: "Tailwind", src: "https://cdn.simpleicons.org/tailwindcss" },
-  { alt: "Radix", src: "https://cdn.simpleicons.org/radix-ui" },
+  { alt: "Radix", src: "https://cdn.simpleicons.org/radixui" },
 ];
 
 export const defaultFooterColumns = [

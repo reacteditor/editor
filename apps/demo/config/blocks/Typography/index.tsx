@@ -41,7 +41,7 @@ export const Typography: ComponentConfig<TypographyProps> = {
         { label: "Body 2", value: "body2" },
       ],
     },
-    content: { type: "richtext" },
+    content: { type: "richtext", contentEditable: true },
     align: {
       type: "radio",
       default: "left",
