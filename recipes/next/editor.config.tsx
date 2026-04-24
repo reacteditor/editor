@@ -8,21 +8,17 @@ type Props = {
 export const config: Config<Props> = {
   components: {
     HeadingBlock: {
+      label: "Heading",
+      icon: <Heading size={16} />,
+      defaultProps: { title: "Heading" },
       fields: {
-        title: { type: "text", default: "Heading" },
+        title: { type: "text" },
       },
       render: ({ title }) => (
         <div style={{ padding: 64 }}>
           <h1>{title}</h1>
         </div>
       ),
-    },
-  },
-  blocks: {
-    Heading: {
-      label: "Heading",
-      icon: <Heading size={16} />,
-      component: "HeadingBlock",
     },
   },
 };

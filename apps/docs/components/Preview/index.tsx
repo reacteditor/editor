@@ -25,7 +25,6 @@ import { codeToHtml } from "shiki";
 
 import { createStore } from "zustand";
 import { useContextStore } from "@/core/lib/use-context-store";
-import { resolveFieldDefaults } from "@/core/lib/resolve-field-defaults";
 import { Button, registerOverlayPortal } from "@/core";
 
 export const PreviewStoreContext = createContext(
@@ -241,7 +240,7 @@ export const ConfigPreview = ({
           {
             type: "Example",
             props: {
-              ...resolveFieldDefaults(componentConfig.fields),
+              ...(componentConfig.defaultProps ?? {}),
               id: "example",
             },
           },
