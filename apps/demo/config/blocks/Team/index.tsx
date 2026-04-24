@@ -9,9 +9,18 @@ export type TeamProps = {
 
 export const Team: ComponentConfig<TeamProps> = {
   fields: {
-    eyebrow: { type: "text", contentEditable: true },
-    heading: { type: "text", contentEditable: true },
-    subheading: { type: "textarea", contentEditable: true },
+    eyebrow: { type: "text", default: "Team", contentEditable: true },
+    heading: {
+      type: "text",
+      default: "Built by a small, focused team",
+      contentEditable: true,
+    },
+    subheading: {
+      type: "textarea",
+      default:
+        "We come from editor, framework, and design-systems teams. This is the tool we always wanted.",
+      contentEditable: true,
+    },
     members: { type: "slot" },
   },
   render: ({ eyebrow, heading, subheading, members: Members }) => (

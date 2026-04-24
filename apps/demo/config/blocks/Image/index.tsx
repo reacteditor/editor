@@ -32,7 +32,7 @@ export const Image: ComponentConfig<ImageProps> = {
       placeholder: "https://...",
       default: "https://placehold.co/1600x900",
     },
-    alt: { type: "text" },
+    alt: { type: "text", default: "Placeholder image" },
     ratio: {
       type: "select",
       default: "16:9",

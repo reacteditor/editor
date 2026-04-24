@@ -313,6 +313,13 @@ export const conf: UserConfig = {
       icon: <Quote size={16} />,
       category: "cards",
       component: "TestimonialCard",
+      props: {
+        quote:
+          "<p>This tool changed how our team ships pages. Fast to set up, delightful to use.</p>",
+        author: "Jane Doe",
+        role: "Head of Marketing, Acme",
+        avatarUrl: "",
+      },
     },
     PriceCard: {
       label: "Price card",

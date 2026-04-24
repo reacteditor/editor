@@ -13,7 +13,7 @@ The `next` recipe showcases one of the most powerful ways to implement Frontend 
 Run the generator and enter `next` when prompted
 
 ```
-npx create-frontend-app my-app
+npx create-react-editor my-app
 ```
 
 Start the server

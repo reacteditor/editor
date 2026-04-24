@@ -16,6 +16,18 @@ export const Accordion: ComponentConfig<AccordionProps> = {
   fields: {
     items: {
       type: "array",
+      default: [
+        {
+          question: "How do I get started?",
+          answer:
+            "<p>Drag any block from the left sidebar onto the canvas.</p>",
+        },
+        {
+          question: "Can I compose custom layouts?",
+          answer:
+            "<p>Yes — use Section, Container, Grid, Columns, Stack, and Row.</p>",
+        },
+      ],
       getItemSummary: (item, i) => item.question || `Item ${(i ?? 0) + 1}`,
       arrayFields: {
         question: { type: "text", contentEditable: true },

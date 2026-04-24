@@ -2,7 +2,7 @@
   "packages": [
     "apps/docs",
     "packages/core",
-    "packages/create-frontend-app",
+    "packages/create-react-editor",
     "packages/field-contentful",
     "packages/plugin-tailwind-cdn"
   ],

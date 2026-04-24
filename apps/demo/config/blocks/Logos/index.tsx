@@ -1,5 +1,6 @@
 import { ComponentConfig } from "@/core";
 import { cn } from "@/lib/utils";
+import { defaultLogos } from "../../seeds";
 
 export type LogosProps = {
   eyebrow: string;
@@ -9,9 +10,14 @@ export type LogosProps = {
 
 export const Logos: ComponentConfig<LogosProps> = {
   fields: {
-    eyebrow: { type: "text", contentEditable: true },
+    eyebrow: {
+      type: "text",
+      default: "Trusted by teams shipping fast",
+      contentEditable: true,
+    },
     logos: {
       type: "array",
+      default: defaultLogos,
       getItemSummary: (l, i) => l.alt || `Logo ${(i ?? 0) + 1}`,
       arrayFields: {
         alt: { type: "text" },

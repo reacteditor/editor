@@ -25,6 +25,7 @@ export const FeatureCard: ComponentConfig<FeatureCardProps> = {
     },
     cta: {
       type: "object",
+      default: { label: "", href: "" },
       objectFields: {
         label: { type: "text", contentEditable: true },
         href: { type: "text" },
@@ -34,7 +35,7 @@ export const FeatureCard: ComponentConfig<FeatureCardProps> = {
   render: ({ icon, title, description, cta }) => {
     const Icon = resolveIcon(icon);
     return (
-      <Card className="h-full gap-4 p-6 transition-shadow hover:shadow-md">
+      <Card className="h-full min-w-[280px] gap-4 p-6 transition-shadow hover:shadow-md">
         <CardHeader className="px-0">
           {Icon ? (
             <div className="mb-2 inline-flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">

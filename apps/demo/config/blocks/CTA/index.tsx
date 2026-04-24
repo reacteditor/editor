@@ -22,8 +22,16 @@ const variantClasses: Record<CTAProps["variant"], string> = {
 
 export const CTA: ComponentConfig<CTAProps> = {
   fields: {
-    heading: { type: "text", contentEditable: true },
-    subheading: { type: "textarea", contentEditable: true },
+    heading: {
+      type: "text",
+      default: "Start shipping pages today",
+      contentEditable: true,
+    },
+    subheading: {
+      type: "textarea",
+      default: "Free for open source and side projects.",
+      contentEditable: true,
+    },
     variant: {
       type: "radio",
       default: "gradient",
@@ -35,6 +43,10 @@ export const CTA: ComponentConfig<CTAProps> = {
     },
     buttons: {
       type: "array",
+      default: [
+        { label: "Start building", href: "#", variant: "secondary" },
+        { label: "Read the docs", href: "#", variant: "outline" },
+      ],
       getItemSummary: (b, i) => b.label || `Button ${(i ?? 0) + 1}`,
       arrayFields: {
         label: { type: "text", contentEditable: true },

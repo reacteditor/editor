@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { defaultFAQItems } from "../../seeds";
 
 export type FAQProps = {
   eyebrow: string;
@@ -16,11 +17,20 @@ export type FAQProps = {
 
 export const FAQ: ComponentConfig<FAQProps> = {
   fields: {
-    eyebrow: { type: "text", contentEditable: true },
-    heading: { type: "text", contentEditable: true },
-    subheading: { type: "textarea", contentEditable: true },
+    eyebrow: { type: "text", default: "FAQ", contentEditable: true },
+    heading: {
+      type: "text",
+      default: "Frequently asked questions",
+      contentEditable: true,
+    },
+    subheading: {
+      type: "textarea",
+      default: "Answers to common questions about the editor.",
+      contentEditable: true,
+    },
     items: {
       type: "array",
+      default: defaultFAQItems,
       getItemSummary: (item, i) => item.question || `Question ${(i ?? 0) + 1}`,
       arrayFields: {
         question: { type: "text", contentEditable: true },

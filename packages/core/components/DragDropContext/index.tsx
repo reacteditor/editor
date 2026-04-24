@@ -357,8 +357,20 @@ const DragDropContextClient = ({
           const onAnimationEnd = () => {
             zoneStore.setState({ draggedItem: null });
 
-            // Tidy up cancellation
-            if (event.canceled || target?.type === "void") {
+            // Tidy up cancellation.
+            //
+            // An explicit cancel (ESC, programmatic abort) always aborts.
+            //
+            // A "void" target (release over no registered droppable) also
+            // aborts — UNLESS we already have a valid insert preview. That
+            // case happens when the user drags over a zone (preview lights
+            // up), then drifts slightly off the drop indicator before
+            // releasing. Without this carve-out the new block would vanish
+            // even though the preview showed a clear landing spot.
+            const isUnguidedVoid =
+              target?.type === "void" && thisPreview?.type !== "insert";
+
+            if (event.canceled || isUnguidedVoid) {
               zoneStore.setState({ previewIndex: {} });
 
               dragListeners.dragend?.forEach((fn) => {

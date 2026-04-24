@@ -1,5 +1,6 @@
 import { ComponentConfig } from "@/core";
 import { Button } from "@/components/ui/button";
+import { defaultNavLinks } from "../../seeds";
 
 export type NavigationProps = {
   brand: string;
@@ -13,6 +14,7 @@ export const Navigation: ComponentConfig<NavigationProps> = {
     brand: { type: "text", default: "react-editor", contentEditable: true },
     links: {
       type: "array",
+      default: defaultNavLinks,
       getItemSummary: (l) => l.label,
       arrayFields: {
         label: { type: "text", contentEditable: true },
@@ -21,6 +23,7 @@ export const Navigation: ComponentConfig<NavigationProps> = {
     },
     cta: {
       type: "object",
+      default: { label: "Start building", href: "#" },
       objectFields: {
         label: { type: "text", contentEditable: true },
         href: { type: "text" },

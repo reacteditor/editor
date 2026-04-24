@@ -17,13 +17,24 @@ export const Hero: ComponentConfig<HeroProps> = {
   fields: {
     eyebrow: {
       type: "text",
+      default: "v2 · Visual editing for React",
       placeholder: "New · v2",
       contentEditable: true,
     },
-    title: { type: "text", contentEditable: true },
-    subtitle: { type: "textarea", contentEditable: true },
+    title: {
+      type: "text",
+      default: "Ship pages at the speed of thought",
+      contentEditable: true,
+    },
+    subtitle: {
+      type: "textarea",
+      default:
+        "A drag-and-drop editor for your own React components. Own your data, keep your stack, extend anything.",
+      contentEditable: true,
+    },
     primaryCta: {
       type: "object",
+      default: { label: "Start building", href: "#" },
       objectFields: {
         label: { type: "text", contentEditable: true },
         href: { type: "text" },
@@ -31,6 +42,7 @@ export const Hero: ComponentConfig<HeroProps> = {
     },
     secondaryCta: {
       type: "object",
+      default: { label: "See components", href: "#" },
       objectFields: {
         label: { type: "text", contentEditable: true },
         href: { type: "text" },

@@ -9,9 +9,18 @@ export type PricingProps = {
 
 export const Pricing: ComponentConfig<PricingProps> = {
   fields: {
-    eyebrow: { type: "text", contentEditable: true },
-    heading: { type: "text", contentEditable: true },
-    subheading: { type: "textarea", contentEditable: true },
+    eyebrow: { type: "text", default: "Pricing", contentEditable: true },
+    heading: {
+      type: "text",
+      default: "Simple, predictable pricing",
+      contentEditable: true,
+    },
+    subheading: {
+      type: "textarea",
+      default:
+        "Start free, upgrade when you need more seats, workspaces, or custom roles.",
+      contentEditable: true,
+    },
     tiers: { type: "slot" },
   },
   render: ({ eyebrow, heading, subheading, tiers: Tiers }) => (

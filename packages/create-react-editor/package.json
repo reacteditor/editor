@@ -1,5 +1,5 @@
 {
-  "name": "create-frontend-app",
+  "name": "create-react-editor",
   "version": "0.1.0",
   "author": "Rami Bitar <rami@frontend.co>",
   "repository": "frontend-inc/react-editor",
@@ -9,7 +9,7 @@
   "license": "MIT",
   "type": "module",
   "bin": {
-    "create-frontend-app": "./index.js"
+    "create-react-editor": "./index.js"
   },
   "files": [
     "templates",

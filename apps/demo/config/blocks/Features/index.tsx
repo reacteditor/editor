@@ -17,9 +17,18 @@ const columnsClasses: Record<FeaturesProps["columns"], string> = {
 
 export const Features: ComponentConfig<FeaturesProps> = {
   fields: {
-    eyebrow: { type: "text", contentEditable: true },
-    heading: { type: "text", contentEditable: true },
-    subheading: { type: "textarea", contentEditable: true },
+    eyebrow: { type: "text", default: "Features", contentEditable: true },
+    heading: {
+      type: "text",
+      default: "Everything you need to ship a page",
+      contentEditable: true,
+    },
+    subheading: {
+      type: "textarea",
+      default:
+        "Composable primitives, rich fields, and a preview that mirrors production.",
+      contentEditable: true,
+    },
     columns: {
       type: "radio",
       default: "3",

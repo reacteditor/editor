@@ -39,7 +39,7 @@ const initials = (name: unknown) => {
 
 export const TeamCard: ComponentConfig<TeamCardProps> = {
   fields: {
-    avatarUrl: { type: "text" },
+    avatarUrl: { type: "text", default: "" },
     name: { type: "text", default: "Alex Rivera", contentEditable: true },
     title: {
       type: "text",
@@ -48,11 +48,16 @@ export const TeamCard: ComponentConfig<TeamCardProps> = {
     },
     bio: {
       type: "textarea",
-      default: "A short bio.",
+      default:
+        "Builds the editor runtime and the primitives that compose every page.",
       contentEditable: true,
     },
     socials: {
       type: "array",
+      default: [
+        { platform: "twitter", href: "#" },
+        { platform: "github", href: "#" },
+      ],
       getItemSummary: (s) => s.platform,
       arrayFields: {
         platform: {
@@ -60,12 +65,12 @@ export const TeamCard: ComponentConfig<TeamCardProps> = {
           default: "twitter",
           options: [...socialOptions],
         },
-        href: { type: "text" },
+        href: { type: "text", default: "#" },
       },
     },
   },
   render: ({ avatarUrl, name, title, bio, socials }) => (
-    <Card className="h-full items-center gap-4 p-6 text-center">
+    <Card className="h-full min-w-[240px] items-center gap-4 p-6 text-center">
       <CardHeader className="flex flex-col items-center gap-3 px-0">
         <Avatar className="size-20">
           {avatarUrl ? <AvatarImage src={avatarUrl} alt={name} /> : null}

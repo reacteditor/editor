@@ -34,7 +34,7 @@ Frontend is also [licensed under MIT](https://github.com/frontend-inc/react-edit
 Install the package:
 
 ```sh
-npm i @frontendai/react-editor --save # or npx create-frontend-app my-app
+npm i @frontendai/react-editor --save # or npx create-react-editor my-app
 ```
 
 Render the editor:
@@ -86,10 +86,10 @@ export function Page() {
 
 ## Recipes
 
-Use `create-frontend-app` to quickly spin up a a pre-configured app based on our provided [recipes](https://github.com/frontend-inc/react-editor/tree/main/recipes):
+Use `create-react-editor` to quickly spin up a a pre-configured app based on our provided [recipes](https://github.com/frontend-inc/react-editor/tree/main/recipes):
 
 ```sh
-npx create-frontend-app my-app
+npx create-react-editor my-app
 ```
 
 Available recipes include:

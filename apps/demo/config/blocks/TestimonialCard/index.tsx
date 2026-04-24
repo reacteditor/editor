@@ -30,10 +30,10 @@ export const TestimonialCard: ComponentConfig<TestimonialCardProps> = {
       default: "Head of Marketing, Acme",
       contentEditable: true,
     },
-    avatarUrl: { type: "text" },
+    avatarUrl: { type: "text", default: "" },
   },
   render: ({ quote, author, role, avatarUrl }) => (
-    <Card className="h-full gap-4 p-6">
+    <Card className="h-full min-w-[280px] gap-4 p-6">
       <CardContent className="px-0 text-base leading-relaxed text-foreground">
         {quote as unknown as React.ReactNode}
       </CardContent>

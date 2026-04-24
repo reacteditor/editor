@@ -40,6 +40,11 @@ export const PriceCard: ComponentConfig<PriceCardProps> = {
     },
     features: {
       type: "array",
+      default: [
+        { text: "Unlimited pages" },
+        { text: "Role-based permissions" },
+        { text: "Priority support" },
+      ],
       getItemSummary: (f, i) => f.text || `Feature ${(i ?? 0) + 1}`,
       arrayFields: { text: { type: "text", contentEditable: true } },
     },
@@ -51,9 +56,15 @@ export const PriceCard: ComponentConfig<PriceCardProps> = {
         { label: "Yes", value: "yes" },
       ],
     },
-    badge: { type: "text", placeholder: "Most popular", contentEditable: true },
+    badge: {
+      type: "text",
+      default: "Most popular",
+      placeholder: "Most popular",
+      contentEditable: true,
+    },
     cta: {
       type: "object",
+      default: { label: "Get started", href: "#", variant: "default" },
       objectFields: {
         label: { type: "text", contentEditable: true },
         href: { type: "text" },
@@ -78,7 +89,7 @@ export const PriceCard: ComponentConfig<PriceCardProps> = {
     return (
       <Card
         className={cn(
-          "relative h-full gap-6 p-6",
+          "relative h-full min-w-[280px] gap-6 p-6",
           isHighlighted && "border-primary shadow-lg ring-1 ring-primary/20"
         )}
       >

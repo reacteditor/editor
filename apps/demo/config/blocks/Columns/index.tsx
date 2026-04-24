@@ -47,6 +47,10 @@ export const Columns: ComponentConfig<ColumnsProps> = {
   fields: {
     items: {
       type: "array",
+      default: [
+        { span: "6", content: [] },
+        { span: "6", content: [] },
+      ],
       getItemSummary: (item, i) =>
         `Column ${(i ?? 0) + 1} · span ${item.span}`,
       arrayFields: {

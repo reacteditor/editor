@@ -1,6 +1,7 @@
 import { ComponentConfig } from "@/core";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { defaultNavLinks } from "../../seeds";
 
 export type NavBarProps = {
   brand: string;
@@ -20,6 +21,7 @@ export const NavBar: ComponentConfig<NavBarProps> = {
     brand: { type: "text", default: "react-editor", contentEditable: true },
     links: {
       type: "array",
+      default: defaultNavLinks,
       getItemSummary: (l) => l.label,
       arrayFields: {
         label: { type: "text", contentEditable: true },
@@ -28,6 +30,7 @@ export const NavBar: ComponentConfig<NavBarProps> = {
     },
     cta: {
       type: "object",
+      default: { label: "Sign in", href: "#" },
       objectFields: {
         label: { type: "text", contentEditable: true },
         href: { type: "text" },
