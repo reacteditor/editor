@@ -7,8 +7,7 @@
       "@/core": ["../../packages/core"],
       "@/core/*": ["../../packages/core/*"],
       "@frontendai/react-editor": ["../../packages/core"],
-      "@/field-shopify": ["../../packages/field-shopify"],
-      "@/field-shopify/*": ["../../packages/field-shopify/*"]
+      "@/*": ["./*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

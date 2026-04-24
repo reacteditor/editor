@@ -27,6 +27,10 @@ import {
   Unlock,
   Type,
 } from "lucide-react";
+import createTailwindCdnPlugin from "@frontendai/plugin-tailwind-cdn";
+import createThemeVarsPlugin from "../../../config/plugins/theme-vars";
+
+const editorPlugins = [createTailwindCdnPlugin(), createThemeVarsPlugin()];
 
 const useEditor = createUseEditor<UserConfig>();
 
@@ -386,6 +390,7 @@ export function Client({ path, isEdit }: { path: string; isEdit: boolean }) {
     return (
       <Editor<UserConfig>
         config={configOverride}
+        plugins={editorPlugins}
         data={data}
         iframe={{ enabled: false }}
         headerPath={path}

@@ -1,57 +1,58 @@
-/* eslint-disable @next/next/no-img-element */
-import React from "react";
 import { ComponentConfig } from "@/core";
-import styles from "./styles.module.css";
-import { getClassNameFactory } from "@/core/lib";
-import { Section } from "../../components/Section";
-
-const getClassName = getClassNameFactory("Logos", styles);
+import { cn } from "@/lib/utils";
 
 export type LogosProps = {
-  logos: {
-    alt: string;
-    imageUrl: string;
-  }[];
+  eyebrow: string;
+  logos: Array<{ alt: string; src: string }>;
+  grayscale: "yes" | "no";
 };
 
-const GOOGLE_LOGO =
-  "https://logolook.net/wp-content/uploads/2021/06/Google-Logo.png";
-
 export const Logos: ComponentConfig<LogosProps> = {
-  global: true,
   fields: {
+    eyebrow: { type: "text", contentEditable: true },
     logos: {
       type: "array",
-      getItemSummary: (item, i) => item.alt || `Feature #${i}`,
+      getItemSummary: (l, i) => l.alt || `Logo ${(i ?? 0) + 1}`,
       arrayFields: {
-        alt: { type: "text", default: "" },
-        imageUrl: { type: "text", default: "" },
+        alt: { type: "text" },
+        src: { type: "text" },
       },
-      default: [
-        { alt: "google", imageUrl: GOOGLE_LOGO },
-        { alt: "google", imageUrl: GOOGLE_LOGO },
-        { alt: "google", imageUrl: GOOGLE_LOGO },
-        { alt: "google", imageUrl: GOOGLE_LOGO },
-        { alt: "google", imageUrl: GOOGLE_LOGO },
+    },
+    grayscale: {
+      type: "radio",
+      default: "yes",
+      options: [
+        { label: "Yes", value: "yes" },
+        { label: "No", value: "no" },
       ],
     },
   },
-  render: ({ logos }) => {
-    return (
-      <Section className={getClassName()}>
-        <div className={getClassName("items")}>
-          {logos.map((item, i) => (
-            <div key={i} className={getClassName("item")}>
+  render: ({ eyebrow, logos, grayscale }) => (
+    <section className="w-full border-y border-border bg-muted/30 py-12">
+      <div className="mx-auto max-w-6xl px-6 md:px-10">
+        {eyebrow ? (
+          <p className="text-center text-sm font-medium uppercase tracking-wide text-muted-foreground">
+            {eyebrow}
+          </p>
+        ) : null}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-80">
+          {(logos ?? [])
+            .filter((l) => l.src)
+            .map((l, i) => (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
-                className={getClassName("image")}
-                alt={item.alt}
-                src={item.imageUrl}
-                height={64}
-              ></img>
-            </div>
-          ))}
+                key={i}
+                src={l.src}
+                alt={l.alt}
+                className={cn(
+                  "h-8 w-auto object-contain",
+                  grayscale === "yes" &&
+                    "grayscale transition-[filter] hover:grayscale-0"
+                )}
+              />
+            ))}
         </div>
-      </Section>
-    );
-  },
+      </div>
+    </section>
+  ),
 };

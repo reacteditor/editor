@@ -1,44 +1,73 @@
-import React from "react";
-import { ComponentConfig } from "@/core/types";
-import { Button as _Button } from "@/core/components/Button";
+import { ComponentConfig } from "@/core";
+import { Button as UIButton } from "@/components/ui/button";
+import { iconOptions, resolveIcon } from "../../icons";
 
-export type ButtonProps = {
+export type ButtonBlockProps = {
   label: string;
   href: string;
-  variant: "primary" | "secondary";
+  variant: "default" | "secondary" | "outline" | "ghost" | "link";
+  size: "sm" | "default" | "lg";
+  icon: string;
+  iconPosition: "leading" | "trailing";
 };
 
-export const Button: ComponentConfig<ButtonProps> = {
-  label: "Button",
+export const Button: ComponentConfig<ButtonBlockProps> = {
   fields: {
-    label: {
-      type: "text",
-      placeholder: "Lorem ipsum...",
-      contentEditable: true,
-      default: "Button",
-    },
+    label: { type: "text", default: "Get started", contentEditable: true },
     href: { type: "text", default: "#" },
     variant: {
-      type: "radio",
+      type: "select",
+      default: "default",
       options: [
-        { label: "primary", value: "primary" },
-        { label: "secondary", value: "secondary" },
+        { label: "Primary", value: "default" },
+        { label: "Secondary", value: "secondary" },
+        { label: "Outline", value: "outline" },
+        { label: "Ghost", value: "ghost" },
+        { label: "Link", value: "link" },
       ],
-      default: "primary",
+    },
+    size: {
+      type: "radio",
+      default: "default",
+      options: [
+        { label: "Small", value: "sm" },
+        { label: "Medium", value: "default" },
+        { label: "Large", value: "lg" },
+      ],
+    },
+    icon: {
+      type: "select",
+      default: "none",
+      options: iconOptions,
+    },
+    iconPosition: {
+      type: "radio",
+      default: "leading",
+      options: [
+        { label: "Leading", value: "leading" },
+        { label: "Trailing", value: "trailing" },
+      ],
     },
   },
-  render: ({ href, variant, label, editor }) => {
+  resolveFields: (data, { fields }) => {
+    const hasIcon = Boolean(
+      data.props.icon && data.props.icon !== "none"
+    );
+    return {
+      ...fields,
+      iconPosition: { ...fields.iconPosition, visible: hasIcon },
+    };
+  },
+  render: ({ label, href, variant, size, icon, iconPosition }) => {
+    const Icon = resolveIcon(icon);
     return (
-      <div>
-        <_Button
-          href={editor.isEditing ? "#" : href}
-          variant={variant}
-          size="large"
-          tabIndex={editor.isEditing ? -1 : undefined}
-        >
+      <UIButton asChild variant={variant} size={size}>
+        <a href={href}>
+          {Icon && iconPosition === "leading" ? <Icon /> : null}
           {label}
-        </_Button>
-      </div>
+          {Icon && iconPosition === "trailing" ? <Icon /> : null}
+        </a>
+      </UIButton>
     );
   },
 };

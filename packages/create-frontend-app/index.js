@@ -17,11 +17,6 @@ const packageJson = JSON.parse(
   fs.readFileSync(path.join(__dirname, "./package.json"))
 );
 
-const ansiColors = {
-  reset: "\x1b[0m",
-  cyan: "\x1b[36m",
-};
-
 // Lifted from https://github.com/vercel/next.js/blob/c2d7bbd1b82c71808b99e9a7944fb16717a581db/packages/create-next-app/helpers/get-pkg-manager.ts
 function getPkgManager() {
   // eslint-disable-next-line turbo/no-undeclared-env-vars
@@ -101,15 +96,6 @@ program
           },
         ],
       },
-      {
-        type: "confirm",
-        name: "editorAi",
-        message: `Puck AI (beta) lets you generate pages using your own components. Learn more: ${ansiColors.cyan}https://frontend.co/docs/ai/overview${ansiColors.reset}
-
-  Add Puck AI to the editor? (Requires a Puck Cloud account)`,
-        required: true,
-        default: true,
-      },
     ];
 
     const answers = await inquirer.prompt(questions);
@@ -124,11 +110,9 @@ program
     }
 
     const recipe = answers.recipe;
-    const usesPuckAi = answers.editorAi;
 
     // Copy template files to the new directory
-    const recipeName = `${recipe}${usesPuckAi ? "-ai" : ""}`;
-    const templatePath = path.join(__dirname, "./templates", recipeName);
+    const templatePath = path.join(__dirname, "./templates", recipe);
     const appPath = path.join(process.cwd(), appName);
 
     if (!recipe) {
@@ -137,7 +121,7 @@ program
     }
 
     if (!fs.existsSync(templatePath)) {
-      console.error(`No recipe named ${recipeName} exists.`);
+      console.error(`No recipe named ${recipe} exists.`);
       return;
     }
 
@@ -227,11 +211,5 @@ program
     console.log("\nDone! Now run:\n");
     console.log(`  cd ${appName}`);
     console.log(`  ${packageManager} run dev\n`);
-
-    if (usesPuckAi) {
-      console.log(
-        `Configure Puck AI access: ${ansiColors.cyan}https://cloud.frontend.co/onboarding/integrate${ansiColors.reset}`
-      );
-    }
   })
   .parse(process.argv);
