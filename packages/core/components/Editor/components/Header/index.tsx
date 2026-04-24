@@ -1,7 +1,6 @@
 import { memo, useCallback, useMemo, useState } from "react";
 import { useAppStore, useAppStoreApi } from "../../../../store";
 import { ChevronDown, ChevronUp, PanelLeft, PanelRight } from "lucide-react";
-import { Heading } from "../../../Heading";
 import { IconButton } from "../../../IconButton/IconButton";
 import { MenuBar } from "../../../MenuBar";
 import { Button } from "../../../Button";
@@ -9,13 +8,6 @@ import { Config, Overrides, UserGenerics } from "../../../../types";
 import { DefaultOverride } from "../../../DefaultOverride";
 import { usePropsContext } from "../..";
 import { getClassNameFactory } from "../../../../lib";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../../ui/Select";
 import styles from "./styles.module.css";
 
 const getClassName = getClassNameFactory("EditorHeader", styles);
@@ -32,11 +24,7 @@ const HeaderInner = <
     onPublish,
     renderHeader,
     renderHeaderActions,
-    headerTitle,
-    headerPath,
-    routes,
-    currentPath,
-    onRouteChange,
+    title,
     iframe: _iframe,
   } = usePropsContext();
 
@@ -98,12 +86,6 @@ const HeaderInner = <
   );
 
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const rootTitle = useAppStore((s) => {
-    const rootData = s.state.indexes.nodes["root"]?.data as G["UserRootProps"];
-
-    return rootData.props.title ?? "";
-  });
 
   const leftSideBarVisible = useAppStore((s) => s.state.ui.leftSideBarVisible);
   const rightSideBarVisible = useAppStore(
@@ -178,40 +160,7 @@ const HeaderInner = <
               </IconButton>
             </div>
           </div>
-          <div className={getClassName("title")}>
-            {routes && currentPath !== undefined && onRouteChange ? (
-              <Select
-                value={currentPath}
-                onValueChange={(next) => {
-                  void onRouteChange(next);
-                }}
-              >
-                <SelectTrigger className={getClassName("routeSelect")}>
-                  <SelectValue placeholder="Select page" />
-                </SelectTrigger>
-                <SelectContent>
-                  {routes.some((r) => r.path === currentPath) ? null : (
-                    <SelectItem value={currentPath}>{currentPath}</SelectItem>
-                  )}
-                  {routes.map((route) => (
-                    <SelectItem key={route.path} value={route.path}>
-                      {route.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            ) : (
-              <Heading rank="2" size="xs">
-                {headerTitle || rootTitle || "Page"}
-                {headerPath && (
-                  <>
-                    {" "}
-                    <code className={getClassName("path")}>{headerPath}</code>
-                  </>
-                )}
-              </Heading>
-            )}
-          </div>
+          <div className={getClassName("title")}>{title}</div>
           <div className={getClassName("tools")}>
             <div className={getClassName("menuButton")}>
               <IconButton

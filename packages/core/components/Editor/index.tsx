@@ -86,6 +86,7 @@ type EditorProps<
   }) => ReactElement;
   headerTitle?: string;
   headerPath?: string;
+  title?: ReactNode;
   routes?: Route[];
   currentPath?: string;
   onRouteChange?: (path: string) => void | Promise<void>;

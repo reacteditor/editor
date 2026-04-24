@@ -65,21 +65,6 @@
   align-self: center;
 }
 
-.EditorHeader-path {
-  font-family: var(--fe-font-family-monospaced);
-  font-size: var(--fe-font-size-xxs);
-  font-weight: normal;
-  word-break: break-all;
-}
-
-/* The routeSelect is the FeSelect trigger used by the route picker in the
-   header. Shared Select primitive already supplies surface / border / radius
-   / hover / focus styling via --fe-* tokens; this just tightens typography
-   to match the header chrome. */
-.EditorHeader-routeSelect {
-  font-weight: 600;
-}
-
 .EditorHeader-tools {
   display: flex;
   gap: 16px;
