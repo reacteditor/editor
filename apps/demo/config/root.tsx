@@ -9,14 +9,12 @@ export const Root: RootConfig<{
   };
 }> = {
   fields: {
-    title: { type: "text", default: "My Page" },
+    title: { type: "text", default: "React Editor" },
   },
   render: ({ editor: { renderDropZone: DropZone } }) => {
     return (
-      <div
-        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
-      >
-        <DropZone zone="default-zone" style={{ flexGrow: 1 }} />
+      <div className="flex min-h-screen flex-col bg-background text-foreground">
+        <DropZone zone="default-zone" className="flex-1" />
       </div>
     );
   },

@@ -9,6 +9,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
         {process.env.NEXT_PUBLIC_PLAUSIBLE_DATA_DOMAIN && (
           <script
             defer

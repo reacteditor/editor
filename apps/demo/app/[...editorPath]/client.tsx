@@ -7,6 +7,10 @@ import { useDemoData } from "../../lib/use-demo-data";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Type } from "lucide-react";
+import createTailwindCdnPlugin from "@frontendai/plugin-tailwind-cdn";
+import createThemeVarsPlugin from "../../config/plugins/theme-vars";
+
+const editorPlugins = [createTailwindCdnPlugin(), createThemeVarsPlugin()];
 
 export function Client(props: { path: string; isEdit: boolean }) {
   // Keyed by path so a route change fully remounts — useDemoData's useState
@@ -58,6 +62,7 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
       <div>
         <Editor
           config={config}
+          plugins={editorPlugins}
           data={data}
           globalData={globalData}
           onGlobalsChange={(next) => {
