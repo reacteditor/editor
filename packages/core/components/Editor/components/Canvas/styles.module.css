@@ -39,25 +39,42 @@
   width: 100%;
 }
 
+/* Wraps the browser bar + preview root in one width-bound column so both
+   share the selected viewport width and animate together. Positioned
+   absolute within .EditorCanvas-inner to keep the original layout
+   behaviour (centered, filling vertical space). */
+.EditorCanvas-rootColumn {
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  min-width: 321px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  transform-origin: top;
+}
+
+@media (min-width: 1198px) {
+  .EditorCanvas-rootColumn {
+    min-width: unset;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .EditorCanvas-rootColumn {
+    transition: none !important;
+  }
+}
+
 .EditorCanvas-root {
   background: var(--fe-surface-panel);
   outline: 1px solid var(--fe-border-subtle);
   box-shadow: var(--fe-shadow-lg);
-  border-radius: var(--fe-radius-md);
-  box-sizing: content-box;
-  min-width: 321px;
-  position: absolute;
+  border-radius: 0 0 var(--fe-radius-md) var(--fe-radius-md);
+  flex: 1;
+  min-height: 0;
   pointer-events: none;
-  transform-origin: top;
-  top: 0;
-  bottom: 0;
   opacity: 0;
-}
-
-@media (min-width: 1198px) {
-  .EditorCanvas-root {
-    min-width: unset;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -91,11 +108,7 @@
   transition: none;
 }
 
-.EditorCanvas-controls {
-  padding-bottom: calc(var(--fe-space-px) * 0.5);
-}
-
-.EditorCanvas--fullScreen .EditorCanvas-controls {
-  padding-bottom: 0;
-  z-index: 1;
+.EditorCanvas-browserBar {
+  flex-shrink: 0;
+  width: 100%;
 }

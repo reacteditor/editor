@@ -1,0 +1,92 @@
+.BrowserBar {
+  align-items: center;
+  background: var(--fe-surface-panel);
+  border: 1px solid var(--fe-border-subtle);
+  border-bottom: 0;
+  border-radius: var(--fe-radius-md) var(--fe-radius-md) 0 0;
+  display: flex;
+  gap: 8px;
+  padding: 8px 10px;
+  width: 100%;
+}
+
+/* The URL trigger is a full-flex pill. When the Select is active it IS the
+   trigger button; when it's a static fallback it's just a div with the same
+   look. Overrides the Select defaults to strip the border / bg. */
+.BrowserBar-urlTrigger {
+  align-items: center !important;
+  background: var(--fe-surface-sunken) !important;
+  border: 1px solid var(--fe-border-subtle) !important;
+  border-radius: 9999px !important;
+  color: var(--fe-text-primary) !important;
+  display: inline-flex !important;
+  flex: 1 !important;
+  font-size: var(--fe-font-size-xxs) !important;
+  gap: 8px !important;
+  justify-content: flex-start !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  padding: 8px 12px !important;
+  width: 100% !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .BrowserBar-urlTrigger:hover {
+    background: var(--fe-surface-hover) !important;
+    border-color: var(--fe-border-default) !important;
+  }
+}
+
+.BrowserBar-urlTrigger[data-state="open"],
+.BrowserBar-urlTrigger:focus-visible {
+  border-color: var(--fe-border-default) !important;
+  box-shadow: var(--fe-ring) !important;
+  outline: none !important;
+}
+
+.BrowserBar-urlIcon {
+  color: var(--fe-text-tertiary);
+  flex-shrink: 0;
+}
+
+.BrowserBar-urlText {
+  color: var(--fe-text-primary);
+  display: inline-flex;
+  flex: 1;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.BrowserBar-urlPath {
+  color: var(--fe-text-tertiary);
+  flex-shrink: 0;
+}
+
+.BrowserBar-urlTitle {
+  color: var(--fe-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hide the Select primitive's trailing chevron — the URL bar is a text-like
+   input, not a visible dropdown. Keyboard users still get the popover on
+   Enter/ArrowDown via Radix. */
+.BrowserBar-urlTrigger > svg:last-child {
+  display: none;
+}
+
+.BrowserBar-actions {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  gap: 2px;
+}
+
+.BrowserBar-deviceIcon {
+  color: var(--fe-text-primary);
+  display: inline-flex;
+}

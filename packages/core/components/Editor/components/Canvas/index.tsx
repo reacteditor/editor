@@ -8,11 +8,10 @@ import {
   useState,
 } from "react";
 import { useAppStore, useAppStoreApi } from "../../../../store";
-import { ViewportControls } from "../../../ViewportControls";
+import { BrowserBar } from "../../../BrowserBar";
 import styles from "./styles.module.css";
 import { getClassNameFactory } from "../../../../lib";
 import { Preview } from "../Preview";
-import { UiState } from "../../../../types";
 import { Loader } from "../../../Loader";
 import { useShallow } from "zustand/react/shallow";
 import { useCanvasFrame } from "../../../../lib/frame-context";
@@ -202,51 +201,59 @@ export const Canvas = () => {
         }
       }}
     >
-      {viewports.controlsVisible && iframe.enabled && (
-        <div className={getClassName("controls")}>
-          <ViewportControls
-            fullScreen={_experimentalFullScreenCanvas}
-            onViewportChange={(viewport) => {
-              setShowTransition(true);
-              isResizingRef.current = true;
-
-              const uiViewport = {
-                ...viewport,
-                height: viewport.height || "auto",
-                zoom: 1,
-              };
-
-              const newUi: Partial<UiState> = {
-                viewports: { ...viewports, current: uiViewport },
-              };
-
-              setUi(newUi);
-            }}
-          />
-        </div>
-      )}
       <div className={getClassName("inner")} ref={frameRef}>
         <div
-          className={getClassName("root")}
+          className={getClassName("rootColumn")}
           style={{
             width: iframe.enabled ? viewports.current.width : "100%",
-            height: zoomConfig.rootHeight,
-            transform: iframe.enabled ? `scale(${zoomConfig.zoom})` : undefined,
             transition: showTransition
-              ? `width ${TRANSITION_DURATION}ms ease-out, height ${TRANSITION_DURATION}ms ease-out, transform ${TRANSITION_DURATION}ms ease-out`
+              ? `width ${TRANSITION_DURATION}ms ease-out`
               : "",
-            overflow: iframe.enabled ? undefined : "auto",
-          }}
-          suppressHydrationWarning // Suppress hydration warning as frame is not visible until after load
-          id="editor-canvas-root"
-          onTransitionEnd={() => {
-            setShowTransition(false);
-            isResizingRef.current = false;
           }}
         >
-          <CustomPreview>
-            <Preview />
-          </CustomPreview>
+          {iframe.enabled && (
+            <div className={getClassName("browserBar")}>
+              <BrowserBar
+                onViewportChange={(viewport) => {
+                  setShowTransition(true);
+                  isResizingRef.current = true;
+
+                  const uiViewport = {
+                    ...viewport,
+                    height: viewport.height || "auto",
+                    zoom: 1,
+                  };
+
+                  setUi({
+                    viewports: { ...viewports, current: uiViewport },
+                  });
+                }}
+              />
+            </div>
+          )}
+          <div
+            className={getClassName("root")}
+            style={{
+              height: zoomConfig.rootHeight,
+              transform: iframe.enabled
+                ? `scale(${zoomConfig.zoom})`
+                : undefined,
+              transition: showTransition
+                ? `height ${TRANSITION_DURATION}ms ease-out, transform ${TRANSITION_DURATION}ms ease-out`
+                : "",
+              overflow: iframe.enabled ? undefined : "auto",
+            }}
+            suppressHydrationWarning // Suppress hydration warning as frame is not visible until after load
+            id="editor-canvas-root"
+            onTransitionEnd={() => {
+              setShowTransition(false);
+              isResizingRef.current = false;
+            }}
+          >
+            <CustomPreview>
+              <Preview />
+            </CustomPreview>
+          </div>
         </div>
         <div className={getClassName("loader")}>
           <Loader size={24} />
