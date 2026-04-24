@@ -17,9 +17,9 @@ export const useDemoData = ({
   metadata?: Metadata;
 }) => {
   // unique b64 key that updates each time we add / remove components
-  const key = `editor-demo:${componentKey}:${path}`;
+  const key = `react-editor-demo:${componentKey}:${path}`;
   // Globals are shared across all pages — one key, no path.
-  const globalsKey = `editor-demo-globals:${componentKey}`;
+  const globalsKey = `react-editor-demo-globals:${componentKey}`;
 
   const [data] = useState<Partial<UserData>>(() => {
     if (isBrowser) {
