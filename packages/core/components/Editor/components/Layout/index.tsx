@@ -166,11 +166,11 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   const layoutOptions: Record<string, any> = {};
 
   if (leftWidth) {
-    layoutOptions["--fe-user-left-side-bar-width"] = `${leftWidth}px`;
+    layoutOptions["--re-user-left-side-bar-width"] = `${leftWidth}px`;
   }
 
   if (rightWidth) {
-    layoutOptions["--fe-user-right-side-bar-width"] = `${rightWidth}px`;
+    layoutOptions["--re-user-right-side-bar-width"] = `${rightWidth}px`;
   }
 
   const setUi = useAppStore((s) => s.setUi);

@@ -1,9 +1,9 @@
 .BrowserBar {
   align-items: center;
-  background: var(--fe-surface-panel);
-  border: 1px solid var(--fe-border-subtle);
+  background: var(--re-surface-panel);
+  border: 1px solid var(--re-border-subtle);
   border-bottom: 0;
-  border-radius: var(--fe-radius-md) var(--fe-radius-md) 0 0;
+  border-radius: var(--re-radius-md) var(--re-radius-md) 0 0;
   display: flex;
   gap: 8px;
   padding: 8px 10px;
@@ -15,13 +15,13 @@
    look. Overrides the Select defaults to strip the border / bg. */
 .BrowserBar-urlTrigger {
   align-items: center !important;
-  background: var(--fe-surface-sunken) !important;
-  border: 1px solid var(--fe-border-subtle) !important;
+  background: var(--re-surface-sunken) !important;
+  border: 1px solid var(--re-border-subtle) !important;
   border-radius: 9999px !important;
-  color: var(--fe-text-primary) !important;
+  color: var(--re-text-primary) !important;
   display: inline-flex !important;
   flex: 1 !important;
-  font-size: var(--fe-font-size-xxs) !important;
+  font-size: var(--re-font-size-xxs) !important;
   gap: 8px !important;
   justify-content: flex-start !important;
   min-width: 0 !important;
@@ -32,25 +32,25 @@
 
 @media (hover: hover) and (pointer: fine) {
   .BrowserBar-urlTrigger:hover {
-    background: var(--fe-surface-hover) !important;
-    border-color: var(--fe-border-default) !important;
+    background: var(--re-surface-hover) !important;
+    border-color: var(--re-border-default) !important;
   }
 }
 
 .BrowserBar-urlTrigger[data-state="open"],
 .BrowserBar-urlTrigger:focus-visible {
-  border-color: var(--fe-border-default) !important;
-  box-shadow: var(--fe-ring) !important;
+  border-color: var(--re-border-default) !important;
+  box-shadow: var(--re-ring) !important;
   outline: none !important;
 }
 
 .BrowserBar-urlIcon {
-  color: var(--fe-text-tertiary);
+  color: var(--re-text-tertiary);
   flex-shrink: 0;
 }
 
 .BrowserBar-urlText {
-  color: var(--fe-text-primary);
+  color: var(--re-text-primary);
   display: inline-flex;
   flex: 1;
   gap: 8px;
@@ -62,12 +62,12 @@
 }
 
 .BrowserBar-urlPath {
-  color: var(--fe-text-tertiary);
+  color: var(--re-text-tertiary);
   flex-shrink: 0;
 }
 
 .BrowserBar-urlTitle {
-  color: var(--fe-text-primary);
+  color: var(--re-text-primary);
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -87,6 +87,6 @@
 }
 
 .BrowserBar-deviceIcon {
-  color: var(--fe-text-primary);
+  color: var(--re-text-primary);
   display: inline-flex;
 }

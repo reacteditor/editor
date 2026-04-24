@@ -1,82 +1,82 @@
 :root {
   /* Radius */
-  --fe-radius-sm: 4px;
-  --fe-radius-md: 6px;
-  --fe-radius-lg: 8px;
-  --fe-radius-xl: 12px;
+  --re-radius-sm: 4px;
+  --re-radius-md: 6px;
+  --re-radius-lg: 8px;
+  --re-radius-xl: 12px;
 
   /* Elevation */
-  --fe-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04),
+  --re-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04),
     0 1px 1px rgba(15, 23, 42, 0.03);
-  --fe-shadow-md: 0 2px 4px rgba(15, 23, 42, 0.05),
+  --re-shadow-md: 0 2px 4px rgba(15, 23, 42, 0.05),
     0 1px 2px rgba(15, 23, 42, 0.04);
-  --fe-shadow-lg: 0 8px 16px rgba(15, 23, 42, 0.08),
+  --re-shadow-lg: 0 8px 16px rgba(15, 23, 42, 0.08),
     0 2px 4px rgba(15, 23, 42, 0.04);
-  --fe-shadow-xl: 0 20px 40px rgba(15, 23, 42, 0.12),
+  --re-shadow-xl: 0 20px 40px rgba(15, 23, 42, 0.12),
     0 4px 8px rgba(15, 23, 42, 0.06);
 
   /* Motion */
-  --fe-motion-fast: 120ms;
-  --fe-motion-base: 150ms;
-  --fe-motion-slow: 220ms;
-  --fe-ease: cubic-bezier(0.2, 0, 0.1, 1);
+  --re-motion-fast: 120ms;
+  --re-motion-base: 150ms;
+  --re-motion-slow: 220ms;
+  --re-ease: cubic-bezier(0.2, 0, 0.1, 1);
 
   /* Focus ring */
-  --fe-ring-color: var(--fe-color-azure-05);
-  --fe-ring-offset: 2px;
-  --fe-ring-width: 2px;
-  --fe-ring: 0 0 0 var(--fe-ring-width) var(--fe-ring-color);
+  --re-ring-color: var(--re-color-azure-05);
+  --re-ring-offset: 2px;
+  --re-ring-width: 2px;
+  --re-ring: 0 0 0 var(--re-ring-width) var(--re-ring-color);
 
   /* Semantic surface/border tokens (light) */
-  --fe-surface-app: #fafafb;
-  --fe-surface-panel: #ffffff;
-  --fe-surface-raised: #ffffff;
-  --fe-surface-sunken: #f4f5f7;
-  --fe-surface-hover: var(--fe-color-azure-11);
+  --re-surface-app: #fafafb;
+  --re-surface-panel: #ffffff;
+  --re-surface-raised: #ffffff;
+  --re-surface-sunken: #f4f5f7;
+  --re-surface-hover: var(--re-color-azure-11);
 
-  --fe-border-subtle: #ececf0;
-  --fe-border-default: #e2e3e8;
-  --fe-border-strong: #cfd1d8;
+  --re-border-subtle: #ececf0;
+  --re-border-default: #e2e3e8;
+  --re-border-strong: #cfd1d8;
 
-  --fe-text-primary: #1b1d22;
-  --fe-text-secondary: #555863;
-  --fe-text-tertiary: #878a93;
-  --fe-text-inverse: #ffffff;
-  --fe-text-accent: var(--fe-color-azure-04);
+  --re-text-primary: #1b1d22;
+  --re-text-secondary: #555863;
+  --re-text-tertiary: #878a93;
+  --re-text-inverse: #ffffff;
+  --re-text-accent: var(--re-color-azure-04);
 
-  --fe-accent: var(--fe-color-azure-05);
-  --fe-accent-strong: var(--fe-color-azure-04);
-  --fe-accent-soft: var(--fe-color-azure-11);
+  --re-accent: var(--re-color-azure-05);
+  --re-accent-strong: var(--re-color-azure-04);
+  --re-accent-soft: var(--re-color-azure-11);
 
   /* Global-component accent (purple). Used to mark components whose props
      come from globalData — signals that edits propagate across every page
      where the type appears. Mirrors the accent token structure. */
-  --fe-color-global: #7c3aed;
-  --fe-color-global-strong: #5b21b6;
-  --fe-color-global-soft: #f3e8ff;
+  --re-color-global: #7c3aed;
+  --re-color-global-strong: #5b21b6;
+  --re-color-global-soft: #f3e8ff;
 
   /* Neutral primary (shadcn-style): dark in light theme, light in dark theme.
      Use for strong high-contrast surfaces like the action bar and Publish
      button — inverts with theme instead of tracking the blue accent. */
-  --fe-primary: #1b1d22;
-  --fe-primary-hover: #2a2d34;
-  --fe-primary-foreground: #ffffff;
+  --re-primary: #1b1d22;
+  --re-primary-hover: #2a2d34;
+  --re-primary-foreground: #ffffff;
 }
 
 /* Warmer, slightly-tinted greys (overrides of base palette) */
 :root {
-  --fe-color-grey-01: #1b1d22;
-  --fe-color-grey-02: #2a2d34;
-  --fe-color-grey-03: #42454d;
-  --fe-color-grey-04: #555863;
-  --fe-color-grey-05: #747780;
-  --fe-color-grey-06: #9093a0;
-  --fe-color-grey-07: #abaeba;
-  --fe-color-grey-08: #c5c7d0;
-  --fe-color-grey-09: #dcdee3;
-  --fe-color-grey-10: #eceef2;
-  --fe-color-grey-11: #f4f5f7;
-  --fe-color-grey-12: #fafafb;
+  --re-color-grey-01: #1b1d22;
+  --re-color-grey-02: #2a2d34;
+  --re-color-grey-03: #42454d;
+  --re-color-grey-04: #555863;
+  --re-color-grey-05: #747780;
+  --re-color-grey-06: #9093a0;
+  --re-color-grey-07: #abaeba;
+  --re-color-grey-08: #c5c7d0;
+  --re-color-grey-09: #dcdee3;
+  --re-color-grey-10: #eceef2;
+  --re-color-grey-11: #f4f5f7;
+  --re-color-grey-12: #fafafb;
 }
 
 /* Dark mode token overrides — applied at `.Editor[data-theme="dark"]` root so
@@ -85,67 +85,67 @@
    on its own. Dark mode is driven by the theme toggle (stored in
    localStorage) which also reflects system preference when set to "system". */
 .Editor[data-theme="dark"] {
-  color: var(--fe-text-primary);
-    --fe-surface-app: #0f1115;
-    --fe-surface-panel: #161a20;
-    --fe-surface-raised: #1c2028;
-    --fe-surface-sunken: #0b0d11;
-    --fe-surface-hover: #1f2834;
+  color: var(--re-text-primary);
+    --re-surface-app: #0f1115;
+    --re-surface-panel: #161a20;
+    --re-surface-raised: #1c2028;
+    --re-surface-sunken: #0b0d11;
+    --re-surface-hover: #1f2834;
 
-    --fe-border-subtle: #1f232b;
-    --fe-border-default: #262c35;
-    --fe-border-strong: #353c48;
+    --re-border-subtle: #1f232b;
+    --re-border-default: #262c35;
+    --re-border-strong: #353c48;
 
-    --fe-text-primary: #e7e9ee;
-    --fe-text-secondary: #a7abb5;
-    --fe-text-tertiary: #8f939e;
-    --fe-text-inverse: #0f1115;
-    --fe-text-accent: #8ab3ee;
+    --re-text-primary: #e7e9ee;
+    --re-text-secondary: #a7abb5;
+    --re-text-tertiary: #8f939e;
+    --re-text-inverse: #0f1115;
+    --re-text-accent: #8ab3ee;
 
-    --fe-accent: #6f9fe3;
-    --fe-accent-strong: #8ab3ee;
-    --fe-accent-soft: #192233;
+    --re-accent: #6f9fe3;
+    --re-accent-strong: #8ab3ee;
+    --re-accent-soft: #192233;
 
-    --fe-color-global: #a78bfa;
-    --fe-color-global-strong: #c4b5fd;
-    --fe-color-global-soft: #2e1065;
+    --re-color-global: #a78bfa;
+    --re-color-global-strong: #c4b5fd;
+    --re-color-global-soft: #2e1065;
 
-    --fe-primary: #f4f5f7;
-    --fe-primary-hover: #dcdee3;
-    --fe-primary-foreground: #0f1115;
+    --re-primary: #f4f5f7;
+    --re-primary-hover: #dcdee3;
+    --re-primary-foreground: #0f1115;
 
-    --fe-ring-color: #8ab3ee;
+    --re-ring-color: #8ab3ee;
 
-    --fe-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --fe-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.5);
-    --fe-shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.55);
-    --fe-shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.6);
+    --re-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --re-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.5);
+    --re-shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.55);
+    --re-shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.6);
 
     /* Remap grey scale to dark-mode-appropriate values so existing components
-       (that reference --fe-color-grey-*) still look correct. */
-    --fe-color-grey-01: #f4f5f7;
-    --fe-color-grey-02: #e7e9ee;
-    --fe-color-grey-03: #cfd1d8;
-    --fe-color-grey-04: #a7abb5;
-    --fe-color-grey-05: #8a8e99;
-    --fe-color-grey-06: #70747f;
-    --fe-color-grey-07: #555863;
-    --fe-color-grey-08: #3a3e48;
-    --fe-color-grey-09: #262c35;
-    --fe-color-grey-10: #1c2028;
-    --fe-color-grey-11: #161a20;
-    --fe-color-grey-12: #0f1115;
+       (that reference --re-color-grey-*) still look correct. */
+    --re-color-grey-01: #f4f5f7;
+    --re-color-grey-02: #e7e9ee;
+    --re-color-grey-03: #cfd1d8;
+    --re-color-grey-04: #a7abb5;
+    --re-color-grey-05: #8a8e99;
+    --re-color-grey-06: #70747f;
+    --re-color-grey-07: #555863;
+    --re-color-grey-08: #3a3e48;
+    --re-color-grey-09: #262c35;
+    --re-color-grey-10: #1c2028;
+    --re-color-grey-11: #161a20;
+    --re-color-grey-12: #0f1115;
 
-    --fe-color-white: #0f1115;
-    --fe-color-black: #e7e9ee;
+    --re-color-white: #0f1115;
+    --re-color-black: #e7e9ee;
 
-    --fe-color-azure-11: #192233;
-    --fe-color-azure-12: #121a28;
-    --fe-color-azure-10: #1e2a40;
-    --fe-color-azure-09: #24344f;
-    --fe-color-azure-08: #2c4166;
-    --fe-color-azure-07: #3a5684;
-    --fe-color-azure-06: #5375a3;
-    --fe-color-azure-05: #6f9fe3;
-    --fe-color-azure-04: #8ab3ee;
+    --re-color-azure-11: #192233;
+    --re-color-azure-12: #121a28;
+    --re-color-azure-10: #1e2a40;
+    --re-color-azure-09: #24344f;
+    --re-color-azure-08: #2c4166;
+    --re-color-azure-07: #3a5684;
+    --re-color-azure-06: #5375a3;
+    --re-color-azure-05: #6f9fe3;
+    --re-color-azure-04: #8ab3ee;
 }

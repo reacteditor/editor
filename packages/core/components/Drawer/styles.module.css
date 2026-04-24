@@ -1,7 +1,7 @@
 .Drawer {
   display: flex;
   flex-direction: column;
-  font-family: var(--fe-font-family);
+  font-family: var(--re-font-family);
   gap: 6px;
 }
 
@@ -31,31 +31,31 @@
 }
 
 .DrawerItem-draggable {
-  background: var(--fe-surface-panel);
+  background: var(--re-surface-panel);
   cursor: grab;
   padding: 8px 10px;
   display: flex;
-  border: 1px var(--fe-border-subtle) solid;
-  border-radius: var(--fe-radius-md);
-  font-size: var(--fe-font-size-xxs);
-  color: var(--fe-text-primary);
+  border: 1px var(--re-border-subtle) solid;
+  border-radius: var(--re-radius-md);
+  font-size: var(--re-font-size-xxs);
+  color: var(--re-text-primary);
   gap: 8px;
   align-items: center;
-  transition: background-color var(--fe-motion-fast) var(--fe-ease),
-    color var(--fe-motion-fast) var(--fe-ease),
-    border-color var(--fe-motion-fast) var(--fe-ease),
-    box-shadow var(--fe-motion-fast) var(--fe-ease);
+  transition: background-color var(--re-motion-fast) var(--re-ease),
+    color var(--re-motion-fast) var(--re-ease),
+    border-color var(--re-motion-fast) var(--re-ease),
+    box-shadow var(--re-motion-fast) var(--re-ease);
 }
 
 .DrawerItem-icon {
-  color: var(--fe-text-tertiary);
+  color: var(--re-text-tertiary);
   display: flex;
-  transition: color var(--fe-motion-fast) var(--fe-ease);
+  transition: color var(--re-motion-fast) var(--re-ease);
 }
 
 .DrawerItem--disabled .DrawerItem-draggable {
-  background: var(--fe-surface-sunken);
-  color: var(--fe-text-tertiary);
+  background: var(--re-surface-sunken);
+  color: var(--re-text-tertiary);
   cursor: not-allowed; /** Move this out of inline styles */
 }
 
@@ -66,25 +66,25 @@
 .Drawer:not(.Drawer--isDraggingFrom)
   .DrawerItem:focus-visible
   .DrawerItem-draggable {
-  border-radius: var(--fe-radius-md);
+  border-radius: var(--re-radius-md);
   outline: none;
-  box-shadow: var(--fe-ring);
+  box-shadow: var(--re-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .Drawer:not(.Drawer--isDraggingFrom)
     .DrawerItem:not(.DrawerItem--disabled)
     .DrawerItem-draggable:hover {
-    background-color: var(--fe-surface-hover);
-    border-color: var(--fe-border-default);
-    color: var(--fe-text-accent);
-    box-shadow: var(--fe-shadow-sm);
+    background-color: var(--re-surface-hover);
+    border-color: var(--re-border-default);
+    color: var(--re-text-accent);
+    box-shadow: var(--re-shadow-sm);
     transition: none;
   }
   .Drawer:not(.Drawer--isDraggingFrom)
     .DrawerItem:not(.DrawerItem--disabled)
     .DrawerItem-draggable:hover .DrawerItem-icon {
-    color: var(--fe-text-accent);
+    color: var(--re-text-accent);
   }
 }
 
@@ -119,6 +119,6 @@
 
 .Drawer--tile .DrawerItem-name {
   width: 100%;
-  font-size: var(--fe-font-size-xxxs);
+  font-size: var(--re-font-size-xxxs);
   line-height: 1.2;
 }

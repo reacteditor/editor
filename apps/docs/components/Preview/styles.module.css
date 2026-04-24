@@ -1,6 +1,6 @@
 .PreviewFrame {
   background: white;
-  border: 1px solid var(--fe-color-grey-09);
+  border: 1px solid var(--re-color-grey-09);
   color: black;
   border-radius: 16px;
   margin-top: 32px;
@@ -8,14 +8,14 @@
 }
 
 .PreviewFrame-header {
-  background: var(--fe-color-azure-11);
+  background: var(--re-color-azure-11);
   gap: 8px;
-  color: var(--fe-color-azure-05);
+  color: var(--re-color-azure-05);
   font-weight: 0;
   padding: 12px 16px;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  border-bottom: 1px solid var(--fe-color-grey-09);
+  border-bottom: 1px solid var(--re-color-grey-09);
   align-items: center;
 }
 
@@ -31,7 +31,7 @@
 
 .PreviewFrame-contents {
   align-items: stretch;
-  background-color: var(--fe-color-grey-09);
+  background-color: var(--re-color-grey-09);
   display: flex;
   gap: 1px;
   flex-wrap: wrap;
@@ -65,12 +65,12 @@
 
 .PreviewFrame-drawerButton {
   align-items: center;
-  border-left: 1px solid var(--fe-color-grey-10);
-  border-top: 1px solid var(--fe-color-grey-10);
+  border-left: 1px solid var(--re-color-grey-10);
+  border-top: 1px solid var(--re-color-grey-10);
   display: flex;
   gap: 4px;
   border-top-left-radius: 4px;
-  font-size: var(--fe-font-size-xxxs);
+  font-size: var(--re-font-size-xxxs);
   font-weight: 500;
   position: absolute;
   padding: 4px 12px;
@@ -80,27 +80,27 @@
 }
 
 .PreviewFrame-drawerButton:hover {
-  background: var(--fe-color-azure-11);
-  color: var(--fe-color-azure-02);
+  background: var(--re-color-azure-11);
+  color: var(--re-color-azure-02);
 }
 
 .PreviewFrame-drawerButtonIcon {
-  color: var(--fe-color-grey-07);
+  color: var(--re-color-grey-07);
 }
 
 .PreviewFrame-drawer {
-  background: var(--fe-color-grey-12);
-  border-top: 1px solid var(--fe-color-grey-09);
+  background: var(--re-color-grey-12);
+  border-top: 1px solid var(--re-color-grey-09);
 }
 
 .PreviewFrame-preview {
-  color: var(--fe-color-grey-03);
+  color: var(--re-color-grey-03);
   padding: 16px;
 }
 
 .PreviewFrame-preview > * {
   color: var(
-    --fe-color-grey-03
+    --re-color-grey-03
   ) !important; /* Override any injected Nextra/Tailwind styles */
 }
 
@@ -117,32 +117,32 @@
 }
 
 .PreviewFrame h1 {
-  font-size: var(--fe-font-size-xxxl);
+  font-size: var(--re-font-size-xxxl);
   font-weight: 600;
 }
 
 .PreviewFrame h2 {
-  font-size: var(--fe-font-size-xxl);
+  font-size: var(--re-font-size-xxl);
   font-weight: 600;
 }
 
 .PreviewFrame h3 {
-  font-size: var(--fe-font-size-xl);
+  font-size: var(--re-font-size-xl);
   font-weight: 600;
 }
 
 .PreviewFrame h4 {
-  font-size: var(--fe-font-size-l);
+  font-size: var(--re-font-size-l);
   font-weight: 600;
 }
 
 .PreviewFrame h5 {
-  font-size: var(--fe-font-size-m);
+  font-size: var(--re-font-size-m);
   font-weight: 600;
 }
 
 .PreviewFrame h6 {
-  font-size: var(--fe-font-size-s);
+  font-size: var(--re-font-size-s);
   font-weight: 600;
 }
 

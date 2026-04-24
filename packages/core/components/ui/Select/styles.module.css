@@ -2,21 +2,21 @@
 
 .FeSelect-trigger {
   align-items: center;
-  background: var(--fe-surface-panel);
-  border: 1px solid var(--fe-border-subtle);
-  border-radius: var(--fe-radius-md);
-  color: var(--fe-text-primary);
+  background: var(--re-surface-panel);
+  border: 1px solid var(--re-border-subtle);
+  border-radius: var(--re-radius-md);
+  color: var(--re-text-primary);
   cursor: pointer;
   display: inline-flex;
   font: inherit;
-  font-size: var(--fe-font-size-xxs);
+  font-size: var(--re-font-size-xxs);
   gap: 8px;
   justify-content: space-between;
   outline: none;
   padding: 9px 10px;
-  transition: background-color var(--fe-motion-fast) var(--fe-ease),
-    border-color var(--fe-motion-fast) var(--fe-ease),
-    box-shadow var(--fe-motion-fast) var(--fe-ease);
+  transition: background-color var(--re-motion-fast) var(--re-ease),
+    border-color var(--re-motion-fast) var(--re-ease),
+    box-shadow var(--re-motion-fast) var(--re-ease);
   white-space: nowrap;
   width: fit-content;
 }
@@ -26,20 +26,20 @@
 }
 
 .FeSelect-trigger[data-placeholder] {
-  color: var(--fe-text-tertiary);
+  color: var(--re-text-tertiary);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .FeSelect-trigger:hover {
-    background: var(--fe-surface-hover);
-    border-color: var(--fe-border-default);
+    background: var(--re-surface-hover);
+    border-color: var(--re-border-default);
   }
 }
 
 .FeSelect-trigger:focus-visible,
 .FeSelect-trigger[data-state="open"] {
-  border-color: var(--fe-border-default);
-  box-shadow: var(--fe-ring);
+  border-color: var(--re-border-default);
+  box-shadow: var(--re-ring);
 }
 
 .FeSelect-trigger:disabled {
@@ -48,24 +48,24 @@
 }
 
 .FeSelect-trigger[aria-invalid="true"] {
-  border-color: var(--fe-color-red-05, #d04040);
+  border-color: var(--re-color-red-05, #d04040);
 }
 
 .FeSelect-triggerIcon {
-  color: var(--fe-text-tertiary);
+  color: var(--re-text-tertiary);
   flex-shrink: 0;
   pointer-events: none;
 }
 
 /* Content panel (the dropdown) */
 .FeSelect-content {
-  background: var(--fe-surface-raised);
-  border: 1px solid var(--fe-border-subtle);
-  border-radius: var(--fe-radius-md);
-  box-shadow: var(--fe-shadow-md);
-  color: var(--fe-text-primary);
-  font-family: var(--fe-font-family);
-  font-size: var(--fe-font-size-xxs);
+  background: var(--re-surface-raised);
+  border: 1px solid var(--re-border-subtle);
+  border-radius: var(--re-radius-md);
+  box-shadow: var(--re-shadow-md);
+  color: var(--re-text-primary);
+  font-family: var(--re-font-family);
+  font-size: var(--re-font-size-xxs);
   max-height: var(--radix-select-content-available-height);
   min-width: 9rem;
   overflow: hidden;
@@ -92,11 +92,11 @@
 /* Items */
 .FeSelect-item {
   align-items: center;
-  border-radius: var(--fe-radius-sm);
+  border-radius: var(--re-radius-sm);
   cursor: pointer;
   display: flex;
   font: inherit;
-  font-size: var(--fe-font-size-xxs);
+  font-size: var(--re-font-size-xxs);
   gap: 8px;
   outline: none;
   padding: 6px 8px 6px 28px;
@@ -106,8 +106,8 @@
 
 .FeSelect-item[data-highlighted],
 .FeSelect-item[data-state="checked"] {
-  background: var(--fe-accent-soft);
-  color: var(--fe-text-accent);
+  background: var(--re-accent-soft);
+  color: var(--re-text-accent);
 }
 
 .FeSelect-item[data-disabled] {
@@ -118,7 +118,7 @@
 
 .FeSelect-itemIndicator {
   align-items: center;
-  color: var(--fe-accent-strong);
+  color: var(--re-accent-strong);
   display: inline-flex;
   justify-content: center;
   left: 8px;
@@ -133,8 +133,8 @@
 }
 
 .FeSelect-label {
-  color: var(--fe-text-tertiary);
-  font-size: var(--fe-font-size-xxxs);
+  color: var(--re-text-tertiary);
+  font-size: var(--re-font-size-xxxs);
   font-weight: 600;
   letter-spacing: 0.04em;
   padding: 6px 8px 4px;
@@ -142,7 +142,7 @@
 }
 
 .FeSelect-separator {
-  background: var(--fe-border-subtle);
+  background: var(--re-border-subtle);
   height: 1px;
   margin: 4px;
   pointer-events: none;
@@ -151,8 +151,8 @@
 /* Scroll buttons (only appear when content overflows) */
 .FeSelect-scrollButton {
   align-items: center;
-  background: var(--fe-surface-raised);
-  color: var(--fe-text-tertiary);
+  background: var(--re-surface-raised);
+  color: var(--re-text-tertiary);
   cursor: default;
   display: flex;
   justify-content: center;

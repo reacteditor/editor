@@ -17,44 +17,44 @@
 .ComponentList-title {
   background-color: transparent;
   border: 0;
-  color: var(--fe-text-secondary);
+  color: var(--re-text-secondary);
   cursor: pointer;
   display: flex;
   font: inherit;
-  font-size: var(--fe-font-size-xxs);
+  font-size: var(--re-font-size-xxs);
   font-weight: 600;
   list-style: none;
   margin-bottom: 4px;
   padding: 8px;
-  transition: background-color var(--fe-motion-fast) var(--fe-ease),
-    color var(--fe-motion-fast) var(--fe-ease);
+  transition: background-color var(--re-motion-fast) var(--re-ease),
+    color var(--re-motion-fast) var(--re-ease);
   gap: 4px;
-  border-radius: var(--fe-radius-md);
+  border-radius: var(--re-radius-md);
   width: 100%;
 }
 
 .ComponentList-title:focus-visible {
   outline: none;
-  box-shadow: var(--fe-ring);
+  box-shadow: var(--re-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ComponentList-title:hover {
-    background-color: var(--fe-surface-hover);
-    color: var(--fe-text-accent);
+    background-color: var(--re-surface-hover);
+    color: var(--re-text-accent);
     transition: none;
   }
 }
 
 .ComponentList-title:active {
-  background-color: var(--fe-accent-soft);
+  background-color: var(--re-accent-soft);
   transition: none;
 }
 
 .ComponentList-titleIcon {
   display: flex;
   align-items: center;
-  transition: transform var(--fe-motion-fast) var(--fe-ease);
+  transition: transform var(--re-motion-fast) var(--re-ease);
 }
 
 .ComponentList--isExpanded .ComponentList-titleIcon {

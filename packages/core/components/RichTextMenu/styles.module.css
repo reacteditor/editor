@@ -5,10 +5,10 @@
 }
 
 .RichTextMenu--form {
-  border-top-left-radius: var(--fe-radius-md);
-  border-top-right-radius: var(--fe-radius-md);
+  border-top-left-radius: var(--re-radius-md);
+  border-top-right-radius: var(--re-radius-md);
   padding: 6px 6px;
-  background-color: var(--fe-surface-sunken);
+  background-color: var(--re-surface-sunken);
   position: relative;
   scrollbar-width: none;
   overflow-x: auto;
@@ -33,14 +33,14 @@
 }
 
 .RichTextMenu--inline .RichTextMenu-group {
-  color: var(--fe-text-inverse);
+  color: var(--re-text-inverse);
   opacity: 0.85;
   gap: 0px;
   flex-wrap: nowrap;
 }
 
 .RichTextMenu-group + .RichTextMenu-group {
-  border-left: 1px solid var(--fe-border-subtle);
+  border-left: 1px solid var(--re-border-subtle);
 }
 
 .RichTextMenu--inline .RichTextMenu-group + .RichTextMenu-group {

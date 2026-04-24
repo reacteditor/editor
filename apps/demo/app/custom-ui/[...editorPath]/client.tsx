@@ -162,10 +162,10 @@ const Tabs = ({
                 fontSize: 16,
                 padding: "16px 16px",
                 paddingTop: 19,
-                color: isCurrentTab ? "var(--fe-color-azure-04)" : "black",
+                color: isCurrentTab ? "var(--re-color-azure-04)" : "black",
                 border: "none",
                 borderBottom: isCurrentTab
-                  ? "3px solid var(--fe-color-azure-04)"
+                  ? "3px solid var(--re-color-azure-04)"
                   : "3px solid transparent",
                 background: "white",
                 cursor: "pointer",
@@ -320,7 +320,7 @@ const CustomDrawer = () => {
           gridTemplateColumns: "repeat(auto-fill, minmax(256px, 1fr))",
           pointerEvents: "all",
           padding: "16px",
-          background: "var(--fe-color-grey-12)",
+          background: "var(--re-color-grey-12)",
           gap: 8,
         }}
       >

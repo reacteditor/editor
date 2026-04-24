@@ -4,40 +4,40 @@
 
 .Input-label {
   align-items: center;
-  color: var(--fe-text-secondary);
+  color: var(--re-text-secondary);
   display: flex;
   padding-bottom: 8px;
-  font-size: var(--fe-font-size-xxs);
+  font-size: var(--re-font-size-xxs);
   font-weight: 500;
   letter-spacing: 0.005em;
 }
 
 .Input-labelIcon {
-  color: var(--fe-text-tertiary);
+  color: var(--re-text-tertiary);
   display: flex;
   margin-inline-end: 4px;
   padding-inline-start: 4px;
 }
 
 .Input-disabledIcon {
-  color: var(--fe-text-tertiary);
+  color: var(--re-text-tertiary);
   margin-inline-start: auto;
 }
 
 .Input-input {
-  background: var(--fe-surface-panel);
+  background: var(--re-surface-panel);
   border-width: 1px;
   border-style: solid;
-  border-color: var(--fe-border-default);
-  border-radius: var(--fe-radius-md);
+  border-color: var(--re-border-default);
+  border-radius: var(--re-radius-md);
   box-sizing: border-box;
-  color: var(--fe-text-primary);
+  color: var(--re-text-primary);
   font-family: inherit;
   font-size: 16px;
   padding: 10px 12px;
-  transition: border-color var(--fe-motion-fast) var(--fe-ease),
-    box-shadow var(--fe-motion-fast) var(--fe-ease),
-    background-color var(--fe-motion-fast) var(--fe-ease);
+  transition: border-color var(--re-motion-fast) var(--re-ease),
+    box-shadow var(--re-motion-fast) var(--re-ease),
+    background-color var(--re-motion-fast) var(--re-ease);
   width: 100%;
   max-width: 100%;
 }
@@ -55,7 +55,7 @@ select.Input-input {
   background-size: 10px;
   background-position: calc(100% - 12px) calc(50% + 3px);
   background-repeat: no-repeat;
-  background-color: var(--fe-surface-panel);
+  background-color: var(--re-surface-panel);
   cursor: pointer;
 }
 
@@ -66,29 +66,29 @@ select.Input-input:dir(rtl) {
 @media (hover: hover) and (pointer: fine) {
   .Input:has(> input):hover .Input-input:not([readonly]),
   .Input:has(> textarea):hover .Input-input:not([readonly]) {
-    border-color: var(--fe-border-strong);
+    border-color: var(--re-border-strong);
     transition: none;
   }
   .Input:has(> select):hover .Input-input:not([disabled]) {
-    background-color: var(--fe-surface-hover);
+    background-color: var(--re-surface-hover);
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%235a5a5a'><polygon points='0,0 100,0 50,50'/></svg>");
-    border-color: var(--fe-border-strong);
+    border-color: var(--re-border-strong);
     transition: none;
   }
 }
 
 .Input-input:focus {
-  border-color: var(--fe-accent);
+  border-color: var(--re-accent);
   outline: none;
-  box-shadow: var(--fe-ring);
+  box-shadow: var(--re-ring);
   transition: none;
 }
 
 .Input--readOnly > .Input-input,
 .Input--readOnly > select.Input-input {
-  background-color: var(--fe-surface-sunken);
-  border-color: var(--fe-border-subtle);
-  color: var(--fe-text-secondary);
+  background-color: var(--re-surface-sunken);
+  border-color: var(--re-border-subtle);
+  color: var(--re-text-secondary);
   cursor: default;
   opacity: 1;
   outline: 0;
@@ -97,14 +97,14 @@ select.Input-input:dir(rtl) {
 
 .Input-radioGroupItems {
   display: flex;
-  border: 1px solid var(--fe-border-default);
-  border-radius: var(--fe-radius-md);
+  border: 1px solid var(--re-border-default);
+  border-radius: var(--re-radius-md);
   flex-wrap: wrap;
   overflow: hidden;
 }
 
 .Input-radio {
-  border-inline-end: 1px solid var(--fe-border-default);
+  border-inline-end: 1px solid var(--re-border-default);
   flex-grow: 1;
 }
 
@@ -113,46 +113,46 @@ select.Input-input:dir(rtl) {
 }
 
 .Input-radioInner {
-  background-color: var(--fe-surface-panel);
-  color: var(--fe-text-secondary);
+  background-color: var(--re-surface-panel);
+  color: var(--re-text-secondary);
   cursor: pointer;
-  font-size: var(--fe-font-size-xxxs);
+  font-size: var(--re-font-size-xxxs);
   padding: 8px 12px;
   text-align: center;
-  transition: background-color var(--fe-motion-fast) var(--fe-ease),
-    color var(--fe-motion-fast) var(--fe-ease);
+  transition: background-color var(--re-motion-fast) var(--re-ease),
+    color var(--re-motion-fast) var(--re-ease);
 }
 
 .Input-radio:has(:focus-visible) {
   outline: none;
-  box-shadow: var(--fe-ring);
+  box-shadow: var(--re-ring);
   position: relative;
   z-index: 1;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .Input-radioInner:hover {
-    background-color: var(--fe-surface-hover);
-    color: var(--fe-text-primary);
+    background-color: var(--re-surface-hover);
+    color: var(--re-text-primary);
     transition: none;
   }
 }
 
 .Input--readOnly .Input-radioInner {
-  background-color: var(--fe-surface-sunken);
-  color: var(--fe-text-secondary);
+  background-color: var(--re-surface-sunken);
+  color: var(--re-text-secondary);
   cursor: default;
 }
 
 .Input-radio .Input-radioInput:checked ~ .Input-radioInner {
-  background-color: var(--fe-accent-soft);
-  color: var(--fe-text-accent);
+  background-color: var(--re-accent-soft);
+  color: var(--re-text-accent);
   font-weight: 500;
 }
 
 .Input--readOnly .Input-radioInput:checked ~ .Input-radioInner {
-  background-color: var(--fe-surface-sunken);
-  color: var(--fe-text-secondary);
+  background-color: var(--re-surface-sunken);
+  color: var(--re-text-secondary);
 }
 
 .Input-radio .Input-radioInput {

@@ -2,22 +2,22 @@
   appearance: none;
   background: none;
   border: 1px solid transparent;
-  border-radius: var(--fe-radius-md);
-  color: var(--fe-primary-foreground);
+  border-radius: var(--re-radius-md);
+  color: var(--re-primary-foreground);
   display: inline-flex;
   align-items: center;
   gap: 8px;
   letter-spacing: 0.01ch;
-  font-family: var(--fe-font-family);
+  font-family: var(--re-font-family);
   font-size: 13px;
   font-weight: 500;
   box-sizing: border-box;
   line-height: 1;
   text-align: center;
   text-decoration: none;
-  transition: background-color var(--fe-motion-fast) var(--fe-ease),
-    box-shadow var(--fe-motion-fast) var(--fe-ease),
-    transform var(--fe-motion-fast) var(--fe-ease);
+  transition: background-color var(--re-motion-fast) var(--re-ease),
+    box-shadow var(--re-motion-fast) var(--re-ease),
+    transform var(--re-motion-fast) var(--re-ease);
   cursor: pointer;
   white-space: nowrap;
   margin: 0;
@@ -48,41 +48,41 @@
 }
 
 .Button--primary {
-  background: var(--fe-primary);
-  color: var(--fe-primary-foreground);
+  background: var(--re-primary);
+  color: var(--re-primary-foreground);
 }
 
 .Button:focus-visible {
   outline: none;
-  box-shadow: var(--fe-ring);
+  box-shadow: var(--re-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .Button--primary:hover {
-    background-color: var(--fe-primary-hover);
+    background-color: var(--re-primary-hover);
   }
 }
 
 .Button--primary:active {
-  background-color: var(--fe-primary-hover);
+  background-color: var(--re-primary-hover);
   transform: translateY(1px);
 }
 
 .Button--secondary {
-  border: 1px solid var(--fe-border-default);
-  color: var(--fe-text-primary);
+  border: 1px solid var(--re-border-default);
+  color: var(--re-text-primary);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .Button--secondary:hover {
-    background-color: var(--fe-surface-hover);
-    color: var(--fe-text-primary);
+    background-color: var(--re-surface-hover);
+    color: var(--re-text-primary);
   }
 }
 
 .Button--secondary:active {
-  background-color: var(--fe-accent-soft);
-  color: var(--fe-text-primary);
+  background-color: var(--re-accent-soft);
+  color: var(--re-text-primary);
 }
 
 .Button--flush {
@@ -91,8 +91,8 @@
 
 .Button--disabled,
 .Button--disabled:hover {
-  background-color: var(--fe-border-subtle);
-  color: var(--fe-text-tertiary);
+  background-color: var(--re-border-subtle);
+  color: var(--re-text-tertiary);
   cursor: not-allowed;
   box-shadow: none;
 }

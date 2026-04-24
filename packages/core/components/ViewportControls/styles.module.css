@@ -17,29 +17,29 @@
 
 .ViewportControls--fullScreen .ViewportControls-toggleButton {
   align-items: center;
-  background-color: var(--fe-surface-panel);
-  border: 1px solid var(--fe-border-default);
+  background-color: var(--re-surface-panel);
+  border: 1px solid var(--re-border-default);
   border-radius: 30px;
   cursor: pointer;
-  color: var(--fe-text-primary);
+  color: var(--re-text-primary);
   display: flex;
   justify-content: center;
   width: 38px;
   height: 38px;
   z-index: 1;
-  box-shadow: var(--fe-shadow-md);
-  transition: background-color var(--fe-motion-fast) var(--fe-ease),
-    color var(--fe-motion-fast) var(--fe-ease);
+  box-shadow: var(--re-shadow-md);
+  transition: background-color var(--re-motion-fast) var(--re-ease),
+    color var(--re-motion-fast) var(--re-ease);
 }
 
 .ViewportControls--fullScreen .ViewportControls-toggleButton:hover {
-  background-color: var(--fe-surface-hover);
-  color: var(--fe-text-accent);
+  background-color: var(--re-surface-hover);
+  color: var(--re-text-accent);
 }
 
 .ViewportControls--isExpanded .ViewportControls-toggleButton {
-  background-color: var(--fe-accent-soft);
-  color: var(--fe-text-accent);
+  background-color: var(--re-accent-soft);
+  color: var(--re-text-accent);
 }
 
 .ViewportControls-actions {
@@ -57,10 +57,10 @@
 }
 
 .ViewportControls--fullScreen .ViewportControls-actionsInner {
-  background: var(--fe-surface-panel);
-  border: 1px solid var(--fe-border-default);
+  background: var(--re-surface-panel);
+  border: 1px solid var(--re-border-default);
   border-radius: 30px;
-  box-shadow: var(--fe-shadow-md);
+  box-shadow: var(--re-shadow-md);
   margin-left: none;
   margin-right: none;
   padding-right: 38px;
@@ -77,7 +77,7 @@
 }
 
 .ViewportControls-divider {
-  border-inline-end: 1px solid var(--fe-border-subtle);
+  border-inline-end: 1px solid var(--re-border-subtle);
   margin-bottom: 8px;
   margin-top: 8px;
 }
@@ -90,7 +90,7 @@
   background-position: calc(100% - 12px) calc(50% + 3px);
   background-repeat: no-repeat;
   border: 0;
-  font-size: var(--fe-font-size-xxxs);
+  font-size: var(--re-font-size-xxxs);
   padding: 0;
   padding-left: 8px;
   width: 96px;
@@ -121,5 +121,5 @@
 }
 
 .ViewportButton--isActive .ViewportButton-inner {
-  color: var(--fe-text-accent);
+  color: var(--re-text-accent);
 }

@@ -20,57 +20,57 @@
   /* Unitless font sizes
        ======================================================================== */
 
-  --fe-font-size-scale-base-unitless: 12;
-  --fe-font-size-xxxs-unitless: 12;
-  --fe-font-size-xxs-unitless: 14;
-  --fe-font-size-xs-unitless: 16;
-  --fe-font-size-s-unitless: 18;
-  --fe-font-size-m-unitless: 21;
-  --fe-font-size-l-unitless: 24;
-  --fe-font-size-xl-unitless: 28;
-  --fe-font-size-xxl-unitless: 36;
-  --fe-font-size-xxxl-unitless: 48;
-  --fe-font-size-xxxxl-unitless: 56;
+  --re-font-size-scale-base-unitless: 12;
+  --re-font-size-xxxs-unitless: 12;
+  --re-font-size-xxs-unitless: 14;
+  --re-font-size-xs-unitless: 16;
+  --re-font-size-s-unitless: 18;
+  --re-font-size-m-unitless: 21;
+  --re-font-size-l-unitless: 24;
+  --re-font-size-xl-unitless: 28;
+  --re-font-size-xxl-unitless: 36;
+  --re-font-size-xxxl-unitless: 48;
+  --re-font-size-xxxxl-unitless: 56;
 
   /* Descriptive font sizes
        ======================================================================== */
 
-  --fe-font-size-xxxs: calc(1rem * var(--fe-font-size-xxxs-unitless) / 16);
-  --fe-font-size-xxs: calc(1rem * var(--fe-font-size-xxs-unitless) / 16);
-  --fe-font-size-xs: calc(1rem * var(--fe-font-size-xs-unitless) / 16);
-  --fe-font-size-s: calc(1rem * var(--fe-font-size-s-unitless) / 16);
-  --fe-font-size-m: calc(1rem * var(--fe-font-size-m-unitless) / 16);
-  --fe-font-size-l: calc(1rem * var(--fe-font-size-l-unitless) / 16);
-  --fe-font-size-xl: calc(1rem * var(--fe-font-size-xl-unitless) / 16);
-  --fe-font-size-xxl: calc(1rem * var(--fe-font-size-xxl-unitless) / 16);
-  --fe-font-size-xxxl: calc(1rem * var(--fe-font-size-xxxl-unitless) / 16);
-  --fe-font-size-xxxxl: calc(
-    1rem * var(--fe-font-size-xxxxl-unitless) / 16
+  --re-font-size-xxxs: calc(1rem * var(--re-font-size-xxxs-unitless) / 16);
+  --re-font-size-xxs: calc(1rem * var(--re-font-size-xxs-unitless) / 16);
+  --re-font-size-xs: calc(1rem * var(--re-font-size-xs-unitless) / 16);
+  --re-font-size-s: calc(1rem * var(--re-font-size-s-unitless) / 16);
+  --re-font-size-m: calc(1rem * var(--re-font-size-m-unitless) / 16);
+  --re-font-size-l: calc(1rem * var(--re-font-size-l-unitless) / 16);
+  --re-font-size-xl: calc(1rem * var(--re-font-size-xl-unitless) / 16);
+  --re-font-size-xxl: calc(1rem * var(--re-font-size-xxl-unitless) / 16);
+  --re-font-size-xxxl: calc(1rem * var(--re-font-size-xxxl-unitless) / 16);
+  --re-font-size-xxxxl: calc(
+    1rem * var(--re-font-size-xxxxl-unitless) / 16
   );
 
   /* Functional font sizes
       ========================================================================= */
 
-  --fe-font-size-base: var(--fe-font-size-xs);
+  --re-font-size-base: var(--re-font-size-xs);
 
   /* Descriptive line heights
       ========================================================================= */
 
   --line-height-reset: 1;
   --line-height-xs: calc(
-    var(--space-m-unitless) / var(--fe-font-size-m-unitless)
+    var(--space-m-unitless) / var(--re-font-size-m-unitless)
   );
   --line-height-s: calc(
-    var(--space-m-unitless) / var(--fe-font-size-s-unitless)
+    var(--space-m-unitless) / var(--re-font-size-s-unitless)
   );
   --line-height-m: calc(
-    var(--space-m-unitless) / var(--fe-font-size-xs-unitless)
+    var(--space-m-unitless) / var(--re-font-size-xs-unitless)
   );
   --line-height-l: calc(
-    var(--space-m-unitless) / var(--fe-font-size-xxs-unitless)
+    var(--space-m-unitless) / var(--re-font-size-xxs-unitless)
   );
   --line-height-xl: calc(
-    var(--space-m-unitless) / var(--fe-font-size-scale-base-unitless)
+    var(--space-m-unitless) / var(--re-font-size-scale-base-unitless)
   );
 
   /* Functional line heights
@@ -85,13 +85,13 @@
     Helvetica Neue, sans-serif, Apple Color Emoji, Segoe UI Emoji,
     Segoe UI Symbol;
 
-  --fe-font-family: Inter, var(--fallback-font-stack);
-  --fe-font-family-monospaced: ui-monospace, "Cascadia Code",
+  --re-font-family: Inter, var(--fallback-font-stack);
+  --re-font-family-monospaced: ui-monospace, "Cascadia Code",
     "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
 }
 
 @supports (font-variation-settings: normal) {
   :root {
-    --fe-font-family: InterVariable, var(--fallback-font-stack);
+    --re-font-family: InterVariable, var(--fallback-font-stack);
   }
 }

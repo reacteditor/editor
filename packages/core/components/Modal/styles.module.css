@@ -1,5 +1,5 @@
 .Modal {
-  background: color-mix(in srgb, var(--fe-color-black) 75%, transparent);
+  background: color-mix(in srgb, var(--re-color-black) 75%, transparent);
   display: none;
   justify-content: center;
   align-items: center;
@@ -19,10 +19,10 @@
 .Modal-inner {
   width: 100%;
   max-width: 1024px;
-  border-radius: var(--fe-radius-lg);
+  border-radius: var(--re-radius-lg);
   overflow: hidden;
-  background: var(--fe-surface-panel);
-  box-shadow: var(--fe-shadow-xl);
+  background: var(--re-surface-panel);
+  box-shadow: var(--re-shadow-xl);
   display: flex;
   flex-direction: column;
   max-height: 90dvh;

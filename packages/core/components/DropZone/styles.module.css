@@ -23,26 +23,26 @@
 
 .DropZone--isAreaSelected,
 .DropZone--hoveringOverArea:not(.DropZone--isRootZone) {
-  background: var(--fe-accent-soft);
-  outline: 1px dashed var(--fe-accent);
-  border-radius: var(--fe-radius-md);
+  background: var(--re-accent-soft);
+  outline: 1px dashed var(--re-accent);
+  border-radius: var(--re-radius-md);
 }
 
 .DropZone:empty {
-  background: var(--fe-surface-sunken);
-  outline: 1px dashed var(--fe-border-default);
-  border-radius: var(--fe-radius-md);
-  transition: background-color var(--fe-motion-base) var(--fe-ease),
-    outline-color var(--fe-motion-base) var(--fe-ease);
+  background: var(--re-surface-sunken);
+  outline: 1px dashed var(--re-border-default);
+  border-radius: var(--re-radius-md);
+  transition: background-color var(--re-motion-base) var(--re-ease),
+    outline-color var(--re-motion-base) var(--re-ease);
 }
 
 .DropZone--isDestination {
-  outline: 1px dashed var(--fe-accent-strong) !important;
-  border-radius: var(--fe-radius-md);
+  outline: 1px dashed var(--re-accent-strong) !important;
+  border-radius: var(--re-radius-md);
 }
 
 .DropZone--isDestination:not(.DropZone--isRootZone) {
-  background: var(--fe-accent-soft) !important;
+  background: var(--re-accent-soft) !important;
 }
 
 .DropZone-item {
@@ -58,8 +58,8 @@
 }
 
 [data-editor-dragging] .DropZone--isEnabled {
-  outline: 1px dashed var(--fe-accent);
-  border-radius: var(--fe-radius-md);
+  outline: 1px dashed var(--re-accent);
+  border-radius: var(--re-radius-md);
 }
 
 .DropZone > *:not([data-editor-component]) {

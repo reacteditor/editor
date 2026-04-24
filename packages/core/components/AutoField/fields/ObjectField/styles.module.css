@@ -5,9 +5,9 @@
 .ObjectField {
   display: flex;
   flex-direction: column;
-  background-color: var(--fe-surface-panel);
-  border: 1px solid var(--fe-border-subtle);
-  border-radius: var(--fe-radius-md);
+  background-color: var(--re-surface-panel);
+  border: 1px solid var(--re-border-subtle);
+  border-radius: var(--re-radius-md);
 }
 
 .ObjectField-fieldset {

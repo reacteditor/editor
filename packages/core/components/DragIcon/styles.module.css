@@ -1,5 +1,5 @@
 .DragIcon {
-  color: var(--fe-color-grey-05);
+  color: var(--re-color-grey-05);
   cursor: grab;
   padding: 4px;
   border-radius: 4px;
@@ -11,7 +11,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .DragIcon:not(.DragIcon--disabled):hover {
-    color: var(--fe-color-azure-05);
-    background-color: var(--fe-color-azure-12);
+    color: var(--re-color-azure-05);
+    background-color: var(--re-color-azure-12);
   }
 }

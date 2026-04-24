@@ -2,37 +2,37 @@
   align-items: center;
   background: transparent;
   border: none;
-  border-radius: var(--fe-radius-md);
+  border-radius: var(--re-radius-md);
   color: currentColor;
   display: flex;
-  font-family: var(--fe-font-family);
+  font-family: var(--re-font-family);
   justify-content: center;
   padding: 4px;
-  transition: background-color var(--fe-motion-fast) var(--fe-ease),
-    color var(--fe-motion-fast) var(--fe-ease);
+  transition: background-color var(--re-motion-fast) var(--re-ease),
+    color var(--re-motion-fast) var(--re-ease);
 }
 
 .IconButton--active {
-  color: var(--fe-text-accent);
-  background: var(--fe-accent-soft);
+  color: var(--re-text-accent);
+  background: var(--re-accent-soft);
 }
 
 .IconButton:focus-visible {
   outline: none;
-  box-shadow: var(--fe-ring);
+  box-shadow: var(--re-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .IconButton:hover:not(.IconButton--disabled) {
-    background: var(--fe-surface-hover);
-    color: var(--fe-text-accent);
+    background: var(--re-surface-hover);
+    color: var(--re-text-accent);
     cursor: pointer;
     transition: none;
   }
 }
 
 .IconButton:active {
-  background: var(--fe-accent-soft);
+  background: var(--re-accent-soft);
   transition: none;
 }
 
@@ -47,5 +47,5 @@
 }
 
 .IconButton--disabled {
-  color: var(--fe-text-tertiary);
+  color: var(--re-text-tertiary);
 }

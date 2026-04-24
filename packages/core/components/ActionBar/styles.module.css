@@ -6,20 +6,20 @@
   padding: 4px;
   padding-inline-start: 0;
   padding-inline-end: 0;
-  border-top-left-radius: var(--fe-radius-lg);
-  border-top-right-radius: var(--fe-radius-lg);
-  border-radius: var(--fe-radius-lg);
-  background: var(--fe-primary);
-  color: var(--fe-primary-foreground);
-  font-family: var(--fe-font-family);
+  border-top-left-radius: var(--re-radius-lg);
+  border-top-right-radius: var(--re-radius-lg);
+  border-radius: var(--re-radius-lg);
+  background: var(--re-primary);
+  color: var(--re-primary-foreground);
+  font-family: var(--re-font-family);
   min-height: 26px;
-  box-shadow: var(--fe-shadow-md);
+  box-shadow: var(--re-shadow-md);
 }
 
 .ActionBar-label {
-  color: var(--fe-primary-foreground);
+  color: var(--re-primary-foreground);
   opacity: 0.85;
-  font-size: var(--fe-font-size-xxxs);
+  font-size: var(--re-font-size-xxxs);
   font-weight: 500;
   padding-inline-start: 8px;
   padding-inline-end: 8px;
@@ -57,19 +57,19 @@
 .ActionBarAction {
   background: transparent;
   border: none;
-  color: var(--fe-primary-foreground);
+  color: var(--re-primary-foreground);
   opacity: 0.85;
   cursor: pointer;
   padding: 6px;
   margin-inline-start: 4px;
   margin-inline-end: 4px;
-  border-radius: var(--fe-radius-sm);
+  border-radius: var(--re-radius-sm);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity var(--fe-motion-fast) var(--fe-ease),
-    background-color var(--fe-motion-fast) var(--fe-ease);
+  transition: opacity var(--re-motion-fast) var(--re-ease),
+    background-color var(--re-motion-fast) var(--re-ease);
 }
 
 .ActionBarAction--disabled {
@@ -83,7 +83,7 @@
 
 .ActionBarAction:focus-visible {
   outline: none;
-  box-shadow: var(--fe-ring);
+  box-shadow: var(--re-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
