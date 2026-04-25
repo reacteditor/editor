@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Puck should generate the correct state on mount 1`] = `
+exports[`Editor should generate the correct state on mount 1`] = `
 {
-  "_experimentalFullScreenCanvas": false,
   "_experimentalVirtualization": false,
   "componentState": {},
   "config": {
@@ -30,6 +29,7 @@ exports[`Puck should generate the correct state on mount 1`] = `
     "lastResolvedData": {},
     "loading": false,
   },
+  "fullScreenCanvas": false,
   "getComponentConfig": [Function],
   "getCurrentData": [Function],
   "history": {
@@ -171,7 +171,7 @@ exports[`Puck should generate the correct state on mount 1`] = `
     "enabled": false,
     "waitForStyles": true,
   },
-  "instanceId": "_r_5_",
+  "instanceId": "_r_8_",
   "metadata": undefined,
   "nodes": {
     "registerNode": [Function],
@@ -283,20 +283,14 @@ exports[`Puck should generate the correct state on mount 1`] = `
     {
       "height": "auto",
       "icon": "Monitor",
-      "label": "Large",
-      "width": 1280,
-    },
-    {
-      "height": "auto",
-      "icon": "FullWidth",
-      "label": "Full-width",
+      "label": "Desktop",
       "width": "100%",
     },
   ],
   "zoomConfig": {
-    "autoZoom": NaN,
+    "autoZoom": 1,
     "rootHeight": 0,
-    "zoom": NaN,
+    "zoom": 1,
   },
 }
 `;
