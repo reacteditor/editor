@@ -1,7 +1,7 @@
 "use client";
 
-import type { Data } from "@frontendai/react-editor";
-import { Editor } from "@frontendai/react-editor";
+import type { Data } from "@reacteditor/core";
+import { Editor } from "@reacteditor/core";
 import config from "../../../editor.config";
 
 export function Client({ path, data }: { path: string; data: Partial<Data> }) {

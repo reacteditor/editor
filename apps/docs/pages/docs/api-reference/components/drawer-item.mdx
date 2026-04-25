@@ -10,7 +10,7 @@ import { Drawer } from "@/editor";
 An item that can be dragged from a [`<Drawer>`](drawer).
 
 ```tsx {7} copy
-import { Editor, Drawer } from "@frontendai/react-editor";
+import { Editor, Drawer } from "@reacteditor/core";
 
 export function Editor() {
   return (
@@ -18,7 +18,7 @@ export function Editor() {
       <Drawer>
         <Drawer.Item name="Orange" />
       </Drawer>
-    </Frontend>
+    </Editor>
   );
 }
 ```
@@ -48,7 +48,7 @@ The name of this drawer item.
 A custom render function to render inside the component.
 
 ```tsx {8} copy
-import { Editor, Drawer } from "@frontendai/react-editor";
+import { Editor, Drawer } from "@reacteditor/core";
 
 export function Editor() {
   return (
@@ -56,7 +56,7 @@ export function Editor() {
       <Drawer>
         <Drawer.Item name="Orange">{() => <div>Orange 🍊</div>}</Drawer.Item>
       </Drawer>
-    </Frontend>
+    </Editor>
   );
 }
 ```

@@ -5,14 +5,14 @@ Select [products](https://shopify.dev/docs/api/storefront/latest/objects/Product
 ## Quick start
 
 ```sh
-npm i @frontendai/field-shopify @shopify/storefront-api-client
+npm i @reacteditor/field-shopify @shopify/storefront-api-client
 ```
 
 ```jsx
 import {
   createFieldShopifyProduct,
   createFieldShopifyCollection,
-} from "@frontendai/field-shopify";
+} from "@reacteditor/field-shopify";
 
 const config = {
   components: {
@@ -67,7 +67,7 @@ If your store still requires a token, supply `storefrontAccessToken` and it will
 
 ```jsx
 import { createStorefrontApiClient } from "@shopify/storefront-api-client";
-import { createFieldShopifyProduct } from "@frontendai/field-shopify";
+import { createFieldShopifyProduct } from "@reacteditor/field-shopify";
 
 const client = createStorefrontApiClient({
   storeDomain: "my-shop.myshopify.com",
@@ -104,7 +104,7 @@ Both helpers return an [External field](https://editoreditor.com/docs/api-refere
 import {
   createFieldShopifyProduct,
   type ShopifyProduct,
-} from "@frontendai/field-shopify";
+} from "@reacteditor/field-shopify";
 
 type MyProps = {
   ProductCard: {

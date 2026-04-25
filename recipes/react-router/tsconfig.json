@@ -16,8 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./app/*"],
-      "@frontendai/react-editor": ["../../packages/core/index.ts"],
-      "@frontendai/react-editor/frontend.css": ["../../packages/core/bundle/index.css"]
+      "@reacteditor/core": ["../../packages/core/index.ts"],
+      "@reacteditor/core/react-editor.css": ["../../packages/core/bundle/index.css"]
     },
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,

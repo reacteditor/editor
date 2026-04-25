@@ -3,7 +3,7 @@ import { AutoField, FieldLabel } from "@/editor";
 
 # Custom Fields
 
-Frontend can be extended with completely custom fields for different use-cases.
+React Editor can be extended with completely custom fields for different use-cases.
 
 ## Creating a custom field
 
@@ -34,7 +34,7 @@ const config = {
 };
 ```
 
-The [`onChange` function](/docs/api-reference/fields/custom#onchangevalue-ui) updates the Frontend data payload for the field name, in this case "title".
+The [`onChange` function](/docs/api-reference/fields/custom#onchangevalue-ui) updates the React Editor data payload for the field name, in this case "title".
 
 <ConfigPreview
   label="Example"
@@ -69,10 +69,10 @@ The [`onChange` function](/docs/api-reference/fields/custom#onchangevalue-ui) up
 
 ## Adding a label
 
-You can add your own label, but it's recommended to use the [`<FieldLabel>` component](/docs/api-reference/components/field-label) provided by Frontend to seamlessly integrate into the Frontend field UI.
+You can add your own label, but it's recommended to use the [`<FieldLabel>` component](/docs/api-reference/components/field-label) provided by React Editor to seamlessly integrate into the React Editor field UI.
 
 ```tsx copy showLineNumbers {1, 11-13}
-import { FieldLabel } from "@frontendai/react-editor";
+import { FieldLabel } from "@reacteditor/core";
 
 const config = {
   components: {
@@ -128,12 +128,12 @@ const config = {
   }}
 />
 
-## Rendering Frontend fields internally
+## Rendering React Editor fields internally
 
-Use the [`<AutoField>` component](/docs/api-reference/components/auto-field) to render Frontend fields within your custom field.
+Use the [`<AutoField>` component](/docs/api-reference/components/auto-field) to render React Editor fields within your custom field.
 
 ```tsx copy showLineNumbers {1, 12-16}
-import { AutoField } from "@frontendai/react-editor";
+import { AutoField } from "@reacteditor/core";
 
 const config = {
   components: {
@@ -190,7 +190,7 @@ const config = {
 
 ## Updating the UI state
 
-The [`onChange` function](/docs/api-reference/fields/custom#onchangevalue-ui) can also be used to modify the [Frontend UI state](/docs/api-reference/data-model/app-state#ui) at the same time as updating the field value:
+The [`onChange` function](/docs/api-reference/fields/custom#onchangevalue-ui) can also be used to modify the [React Editor UI state](/docs/api-reference/data-model/app-state#ui) at the same time as updating the field value:
 
 ```tsx copy showLineNumbers {14,15}
 const config = {

@@ -7,7 +7,7 @@ import { Callout } from "nextra/components";
   changes.
 </Callout>
 
-An object describing render functions to override the default Frontend interface.
+An object describing render functions to override the default React Editor interface.
 
 ```tsx copy
 const overrides = {
@@ -29,4 +29,4 @@ const overrides = {
 - [`iframe`](overrides/iframe): Override the root of the iframe. Useful for injecting styles.
 - [`outline`](overrides/outline): Override the outline.
 - [`preview`](overrides/preview): Override the drag-and-drop preview.
-- [`editor`](overrides/editor): Override the Frontend children. This is the equivalent of passing in [`children`](/docs/api-reference/components/editor#children) to the [`<Editor>`](/docs/api-reference/components/editor) component.
+- [`editor`](overrides/editor): Override the React Editor children. This is the equivalent of passing in [`children`](/docs/api-reference/components/editor#children) to the [`<Editor>`](/docs/api-reference/components/editor) component.

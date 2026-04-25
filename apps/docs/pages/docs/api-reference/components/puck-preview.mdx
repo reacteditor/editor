@@ -7,7 +7,7 @@ import { Editor } from "@/editor";
 
 # \<Editor.Preview\>
 
-Render a drag-and-drop preview for the current data when composing a custom Frontend UI.
+Render a drag-and-drop preview for the current data when composing a custom React Editor UI.
 
 <EditorPreview
   config={{
@@ -28,13 +28,13 @@ Render a drag-and-drop preview for the current data when composing a custom Fron
 </EditorPreview>
 
 ```tsx {17} showLineNumbers copy
-import { Editor } from "@frontendai/react-editor";
+import { Editor } from "@reacteditor/core";
 
 export function Editor() {
   return (
     <Editor>
       <Editor.Preview />
-    </Frontend>
+    </Editor>
   );
 }
 ```
@@ -52,13 +52,13 @@ export function Editor() {
 A unique identifier for the preview frame. Default: `editor-preview`.
 
 ```tsx {6} copy
-import { Editor } from "@frontendai/react-editor";
+import { Editor } from "@reacteditor/core";
 
 export function Editor() {
   return (
     <Editor>
       <Editor.Preview id="my-frame" />
-    </Frontend>
+    </Editor>
   );
 }
 ```

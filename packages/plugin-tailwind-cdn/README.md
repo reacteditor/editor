@@ -1,16 +1,16 @@
 # plugin-tailwind-cdn
 
-Inject the [Tailwind CSS v4 browser CDN](https://tailwindcss.com/docs/installation/play-cdn) into the Frontend editor iframe so utility classes work without build-time setup.
+Inject the [Tailwind CSS v4 browser CDN](https://tailwindcss.com/docs/installation/play-cdn) into the React Editor editor iframe so utility classes work without build-time setup.
 
 ## Quick start
 
 ```sh
-npm i @frontendai/plugin-tailwind-cdn
+npm i @reacteditor/plugin-tailwind-cdn
 ```
 
 ```jsx
-import { Editor } from "@frontendai/react-editor";
-import createTailwindCdnPlugin from "@frontendai/plugin-tailwind-cdn";
+import { Editor } from "@reacteditor/core";
+import createTailwindCdnPlugin from "@reacteditor/plugin-tailwind-cdn";
 
 const tailwindCdn = createTailwindCdnPlugin();
 

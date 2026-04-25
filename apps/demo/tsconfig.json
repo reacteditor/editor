@@ -6,7 +6,7 @@
     "paths": {
       "@/core": ["../../packages/core"],
       "@/core/*": ["../../packages/core/*"],
-      "@frontendai/react-editor": ["../../packages/core"],
+      "@reacteditor/core": ["../../packages/core"],
       "@/*": ["./*"]
     }
   },

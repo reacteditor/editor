@@ -1,6 +1,6 @@
 # `react-router` recipe
 
-The `react-router` recipe showcases one of the most powerful ways to implement Frontend using to provide an authoring tool for any route in your React Router app.
+The `react-router` recipe showcases one of the most powerful ways to implement React Editor using to provide an authoring tool for any route in your React Router app.
 
 ## Demonstrates
 
@@ -22,7 +22,7 @@ Start the server
 yarn dev
 ```
 
-Navigate to the homepage at http://localhost:5173/. To edit the homepage, access the Frontend editor at http://localhost:5173/edit.
+Navigate to the homepage at http://localhost:5173/. To edit the homepage, access the React Editor editor at http://localhost:5173/edit.
 
 You can do this for any **base** route on the application, **even if the page doesn't exist**. For example, visit http://localhost:5173/hello-world and you'll receive a 404. You can author and publish a page by visiting http://localhost:5173/hello-world/edit. After publishing, go back to the original URL to see your page.
 
@@ -30,6 +30,6 @@ You can do this for any **base** route on the application, **even if the page do
 
 To adopt this recipe, you will need to:
 
-- **IMPORTANT** Add authentication to `/edit` routes. This can be done by modifying the [route module action](https://reactrouter.com/start/framework/route-module#action) in the splat route `/app/routes/editor-splat.tsx`. **If you don't do this, Frontend will be completely public.**
+- **IMPORTANT** Add authentication to `/edit` routes. This can be done by modifying the [route module action](https://reactrouter.com/start/framework/route-module#action) in the splat route `/app/routes/editor-splat.tsx`. **If you don't do this, React Editor will be completely public.**
 - Integrate your database into the functions in `/lib/pages.server.ts`
 - Implement a custom editor configuration in `/app/editor.config.tsx`

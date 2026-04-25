@@ -5,11 +5,11 @@ Select [entries](https://www.contentful.com/developers/docs/references/content-d
 ## Quick start
 
 ```sh
-npm i @frontendai/field-contentful
+npm i @reacteditor/field-contentful
 ```
 
 ```jsx
-import createFieldContentful from "@frontendai/field-contentful";
+import createFieldContentful from "@reacteditor/field-contentful";
 
 const config = {
   components: {

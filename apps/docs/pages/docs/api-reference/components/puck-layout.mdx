@@ -7,10 +7,10 @@ import { Editor } from "@/editor";
 
 # \<Editor.Layout\>
 
-Render the standard Frontend layout. This is useful for implementing behavior using the [internal Frontend API](/docs/extending-editor/internal-editor-api) without changing the default UI.
+Render the standard React Editor layout. This is useful for implementing behavior using the [internal React Editor API](/docs/extending-editor/internal-editor-api) without changing the default UI.
 
 ```tsx {13} showLineNumbers copy
-import { Editor } from "@frontendai/react-editor";
+import { Editor } from "@reacteditor/core";
 
 const Example = ({ children }) => {
   useEffect(() => console.log("Hello, world"), []);
@@ -24,7 +24,7 @@ export function Editor() {
       <Example>
         <Editor.Layout />
       </Example>
-    </Frontend>
+    </Editor>
   );
 }
 ```

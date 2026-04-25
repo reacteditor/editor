@@ -4,7 +4,7 @@ import { Callout } from "nextra/components";
 
 # Rich Text Editing
 
-Frontend supports rich text editing via the [`richtext`](/docs/api-reference/fields/richtext) field.
+React Editor supports rich text editing via the [`richtext`](/docs/api-reference/fields/richtext) field.
 
 ## Adding a rich text field
 
@@ -181,7 +181,7 @@ const config = {
 Use [`renderMenu()`](/docs/api-reference/fields/richtext#rendermenuprops) to customize the menu bar layout using the [`<RichTextMenu>`](/docs/api-reference/components/rich-text-menu) component:
 
 ```tsx showLineNumbers copy {1, 9-18}
-import { RichTextMenu } from "@frontendai/react-editor";
+import { RichTextMenu } from "@reacteditor/core";
 
 const config = {
   components: {
@@ -300,7 +300,7 @@ Then implement a new control with [`<RichTextMenu.Control>`](/docs/api-reference
 ```tsx copy showLineNumbers {2-3, 12-28}
 import Superscript from "@tiptap/extension-superscript";
 import { Superscript } from "lucide-react";
-import { RichTextMenu } from "@frontendai/react-editor";
+import { RichTextMenu } from "@reacteditor/core";
 
 const config = {
   components: {

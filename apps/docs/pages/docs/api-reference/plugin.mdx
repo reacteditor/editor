@@ -1,9 +1,9 @@
 # Plugin
 
-A plugin is an extension that enhances the capabilities of Frontend.
+A plugin is an extension that enhances the capabilities of React Editor.
 
 ```tsx showLineNumbers copy {3-8, 14}
-import { Editor } from "@frontendai/react-editor";
+import { Editor } from "@reacteditor/core";
 
 const MyPlugin = {
   name: "my-plugin", // Globally unique name
@@ -46,7 +46,7 @@ const MyPlugin = {
 };
 ```
 
-Frontend uses [Lucide icons](https://lucide.dev/icons/). You can use [lucide-react](https://lucide.dev/guide/packages/lucide-react) to choose a similar icon, if desired.
+React Editor uses [Lucide icons](https://lucide.dev/icons/). You can use [lucide-react](https://lucide.dev/guide/packages/lucide-react) to choose a similar icon, if desired.
 
 ### `label`
 
@@ -90,7 +90,7 @@ const MyPlugin = {
 
 ### `overrides`
 
-Override the render functions for specific portions of the Frontend UI. Implements the [`overrides` API](/docs/api-reference/overrides).
+Override the render functions for specific portions of the React Editor UI. Implements the [`overrides` API](/docs/api-reference/overrides).
 
 ```tsx {2-5}
 const MyPlugin = {

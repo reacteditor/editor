@@ -2,7 +2,7 @@ import { Callout } from "nextra/components";
 
 # Field Transforms
 
-Frontend lets you modify props before rendering in the editor via the [`FieldTransforms` API](/docs/api-reference/field-transforms).
+React Editor lets you modify props before rendering in the editor via the [`FieldTransforms` API](/docs/api-reference/field-transforms).
 
 Use this API to implement custom rendering behavior for specific field types, which can be used to implement features such as inline text editing.
 
@@ -27,7 +27,7 @@ const Example = () => <Editor fieldTransforms={fieldTransforms} />;
 Combine transforms with [Overlay Portals](/docs/integrating-editor/overlay-portals) to make them interactive.
 
 ```tsx
-import { registerOverlayPortal } from "@frontendai/react-editor";
+import { registerOverlayPortal } from "@reacteditor/core";
 
 const EditableText = ({ value }) => {
   const ref = useRef(null);

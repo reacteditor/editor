@@ -7,7 +7,7 @@ import { Editor } from "@/editor";
 
 # \<Editor.Fields\>
 
-Render the fields for the currently selected item in [`<Editor.Preview>`](/docs/api-reference/components/editor-preview) when composing a custom Frontend UI.
+Render the fields for the currently selected item in [`<Editor.Preview>`](/docs/api-reference/components/editor-preview) when composing a custom React Editor UI.
 
 <EditorPreview
   config={{
@@ -22,13 +22,13 @@ Render the fields for the currently selected item in [`<Editor.Preview>`](/docs/
 </EditorPreview>
 
 ```tsx {14} showLineNumbers copy
-import { Editor } from "@frontendai/react-editor";
+import { Editor } from "@reacteditor/core";
 
 export function Editor() {
   return (
     <Editor>
       <Editor.Fields />
-    </Frontend>
+    </Editor>
   );
 }
 ```
@@ -46,13 +46,13 @@ export function Editor() {
 Whether or not the top-level fields should be padded and separated by a a border. Defaults to `true`.
 
 ```tsx {6} copy
-import { Editor } from "@frontendai/react-editor";
+import { Editor } from "@reacteditor/core";
 
 export function Editor() {
   return (
     <Editor>
       <Editor.Fields wrapFields={false} />
-    </Frontend>
+    </Editor>
   );
 }
 ```

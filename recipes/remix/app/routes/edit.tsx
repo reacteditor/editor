@@ -1,5 +1,5 @@
-import { Editor, type Data, type Config } from "@frontendai/react-editor";
-import styles from "@frontendai/react-editor/frontend.css";
+import { Editor, type Data, type Config } from "@reacteditor/core";
+import styles from "@reacteditor/core/react-editor.css";
 import type {
   ActionFunctionArgs,
   LinksFunction,

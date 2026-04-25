@@ -11,7 +11,7 @@
  * NB this route is public, and you will need to add authentication
  */
 
-import "@frontendai/react-editor/frontend.css";
+import "@reacteditor/core/react-editor.css";
 import { Client } from "./client";
 import { Metadata } from "next";
 import { getPage } from "../../../lib/get-page";

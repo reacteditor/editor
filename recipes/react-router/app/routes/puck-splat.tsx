@@ -1,12 +1,12 @@
 import { useFetcher, useLoaderData } from "react-router";
-import type { Data } from "@frontendai/react-editor";
-import { Editor, Render } from "@frontendai/react-editor";
+import type { Data } from "@reacteditor/core";
+import { Editor, Render } from "@reacteditor/core";
 
 import type { Route } from "./+types/editor-splat";
 import { config } from "../../editor.config";
 import { resolveEditorPath } from "~/lib/resolve-editor-path.server";
 import { getPage, savePage } from "~/lib/pages.server";
-import editorStyles from "@frontendai/react-editor/frontend.css?url";
+import editorStyles from "@reacteditor/core/react-editor.css?url";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const pathname = params["*"] ?? "/";

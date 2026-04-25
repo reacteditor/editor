@@ -1,8 +1,8 @@
 module.exports = {
   reactStrictMode: true,
   transpilePackages: [
-    "@frontendai/react-editor",
-    "@frontendai/plugin-tailwind-cdn",
+    "@reacteditor/core",
+    "@reacteditor/plugin-tailwind-cdn",
     "lucide-react",
   ],
 };

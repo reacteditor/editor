@@ -63,7 +63,7 @@ const config = {
 }}
 />
 
-> When inserting components with `resolveData`, the Frontend state will update twice - once for the initial insert, and once more when the method resolves, if it changes the data. This will be reflected in the undo/redo history.
+> When inserting components with `resolveData`, the React Editor state will update twice - once for the initial insert, and once more when the method resolves, if it changes the data. This will be reflected in the undo/redo history.
 
 ### Setting fields as read-only
 
@@ -181,7 +181,7 @@ const config = {
 Resolve data is triggered whenever the props for a component change, or when the [`resolveAllData` utility](/docs/api-reference/functions/resolve-all-data) is used.
 
 ```tsx
-import { resolveAllData } from "@frontendai/react-editor";
+import { resolveAllData } from "@reacteditor/core";
 
 const updatedData = await resolveAllData(data, config);
 ```

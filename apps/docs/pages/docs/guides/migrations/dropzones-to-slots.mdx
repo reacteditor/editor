@@ -106,10 +106,10 @@ The slot data model is inline and recursive. This means that instead of storing 
 
 ### Migrating legacy data
 
-For new slots, you don't need to do anything. If you're migrating existing DropZones to slots, you will need to migrate your the data accordingly. Frontend provides the [`migrate()` helper](/docs/api-reference/functions/migrate) to help with this:
+For new slots, you don't need to do anything. If you're migrating existing DropZones to slots, you will need to migrate your the data accordingly. React Editor provides the [`migrate()` helper](/docs/api-reference/functions/migrate) to help with this:
 
 ```tsx
-import { migrate } from "@frontendai/react-editor";
+import { migrate } from "@reacteditor/core";
 import config from "editor.config.tsx";
 
 const newData = migrate(legacyData, config);

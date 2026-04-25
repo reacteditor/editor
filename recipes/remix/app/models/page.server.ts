@@ -1,4 +1,4 @@
-import { Data } from "@frontendai/react-editor";
+import { Data } from "@reacteditor/core";
 import fs from "fs";
 
 // Replace with call to your database

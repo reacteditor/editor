@@ -1,6 +1,6 @@
-# Contributing to Frontend
+# Contributing to React Editor
 
-Frontend is still under heavy development, having gained significant interest at an early stage. The contribution guidelines are designed to help us balance community engagement with our vision and direction.
+React Editor is still under heavy development, having gained significant interest at an early stage. The contribution guidelines are designed to help us balance community engagement with our vision and direction.
 
 ## Reporting bugs or requesting features
 
@@ -23,7 +23,7 @@ We manage our backlog using labels. Labels can help you understand the status of
 ### Status labels
 
 - **ready** - this ticket has a description and is ready to be worked on.
-- **in triage** - this ticket has been seen by the Frontend team and we are identifying next steps. Tickets may stay in this state until we're ready to process them.
+- **in triage** - this ticket has been seen by the React Editor team and we are identifying next steps. Tickets may stay in this state until we're ready to process them.
 - **blocked** - this ticket is blocked by another ticket. The relationship should be made apparent in the comments.
 
 ### Type labels
@@ -38,7 +38,7 @@ Denoted by the `type:` prefix.
 
 ### Other labels
 
-- **good first issue** - if you're new to contributing on Frontend, this is a good place to start.
+- **good first issue** - if you're new to contributing on React Editor, this is a good place to start.
 - **opinions wanted** - we're looking for opinions on this ticket. Feel free to chime in with comments or suggestions.
 
 ## Contributing code
@@ -63,7 +63,7 @@ PRs without issues may be accepted for small fixes, but larger changes may be re
 
 ### Setting up the environment
 
-Frontend uses:
+React Editor uses:
 
 - TypeScript
 - CSS Modules
@@ -96,7 +96,7 @@ yarn dev
 #### CSS
 
 - Class names must follow the [SUIT CSS](https://suitcss.github.io) methodology. This is a tooling-angostic convention used at [@frontend](https://github.com/frontend-inc/react-editor) for all CSS work.
-- Don't rely on global styles. Frontend is deployed into hostile third-party environments and we have no control over what CSS may be running on the page.
+- Don't rely on global styles. React Editor is deployed into hostile third-party environments and we have no control over what CSS may be running on the page.
 
 #### Commits
 

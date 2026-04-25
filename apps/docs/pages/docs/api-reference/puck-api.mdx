@@ -6,7 +6,7 @@ import { Callout } from "nextra/components";
 
 # EditorApi
 
-`EditorApi` exposes Frontend's internals to enable extension and modification to Frontend's core behavior. It can be accessed by the [`useEditor`](/docs/api-reference/functions/use-editor) and [`useGetEditor`](/docs/api-reference/functions/use-get-editor) hooks.
+`EditorApi` exposes React Editor's internals to enable extension and modification to React Editor's core behavior. It can be accessed by the [`useEditor`](/docs/api-reference/functions/use-editor) and [`useGetEditor`](/docs/api-reference/functions/use-get-editor) hooks.
 
 <Callout type="info">
   `EditorApi` can currently only be accessed through
@@ -33,7 +33,7 @@ import { Callout } from "nextra/components";
 
 ### `appState`
 
-The current [application state](/docs/api-reference/data-model/app-state) for this Frontend instance.
+The current [application state](/docs/api-reference/data-model/app-state) for this React Editor instance.
 
 ```tsx
 console.log(appState.data);
@@ -42,7 +42,7 @@ console.log(appState.data);
 
 ### `dispatch(action)`
 
-Execute an [action](/docs/api-reference/actions) to mutate the Frontend [application state](/docs/api-reference/data-model/app-state).
+Execute an [action](/docs/api-reference/actions) to mutate the React Editor [application state](/docs/api-reference/data-model/app-state).
 
 ```tsx
 dispatch({

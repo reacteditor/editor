@@ -1,13 +1,13 @@
 # `remix` recipe
 
-The `remix` recipe showcases a Remix Run app with Frontend, using it to provide an authoring tool for any root-level route in your Remix app.
+The `remix` recipe showcases a Remix Run app with React Editor, using it to provide an authoring tool for any root-level route in your Remix app.
 
 ## Demonstrates
 
 - Remix Run V2 implementation
 - JSON database implementation with HTTP API
 - Dynamic routes to use editor for any root-level route on the platform
-- Option to disable client-side JavaScript for Frontend pages
+- Option to disable client-side JavaScript for React Editor pages
 
 ## Usage
 
@@ -23,7 +23,7 @@ Start the server
 yarn dev
 ```
 
-Navigate to the homepage at https://localhost:3000. To edit the homepage, access the Frontend editor at https://localhost:3000/edit.
+Navigate to the homepage at https://localhost:3000. To edit the homepage, access the React Editor editor at https://localhost:3000/edit.
 
 You can do this for any **base** route on the application, **even if the page doesn't exist**. For example, visit https://localhost:3000/hello-world and you'll receive a 404. You can author and publish a page by visiting https://localhost:3000/hello-world/edit. After publishing, go back to the original URL to see your page.
 
@@ -31,11 +31,11 @@ You can do this for any **base** route on the application, **even if the page do
 
 To adopt this recipe you will need to:
 
-- **IMPORTANT** Add authentication to `/edit` routes. This can be done by modifying the example routes `/app/routes/_index.tsx` and `/app/routes/edit.tsx` or the example model in `/app/models/page.server.ts`. **If you don't do this, Frontend will be completely public.**
+- **IMPORTANT** Add authentication to `/edit` routes. This can be done by modifying the example routes `/app/routes/_index.tsx` and `/app/routes/edit.tsx` or the example model in `/app/models/page.server.ts`. **If you don't do this, React Editor will be completely public.**
 - Integrate your database into the API calls in `/app/models/page.server.ts`
 - Implement a custom editor configuration in `/app/editor.config.tsx`
 
-By default, this recipe will have JavaScript enable on all routes - like a usual react app. If you know that your Frontend content doesn't need react, then you can disable JS uncommenting the relevant code in `/app/root.tsx` and the example route `/app/routes/_index.tsx`. Check the network tab for no JS downloads, and verify that the page still works.
+By default, this recipe will have JavaScript enable on all routes - like a usual react app. If you know that your React Editor content doesn't need react, then you can disable JS uncommenting the relevant code in `/app/root.tsx` and the example route `/app/routes/_index.tsx`. Check the network tab for no JS downloads, and verify that the page still works.
 
 ## Disabling JavaScript
 

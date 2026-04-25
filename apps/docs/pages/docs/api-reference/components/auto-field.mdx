@@ -7,7 +7,7 @@ import { AutoField } from "@/editor";
 
 # \<AutoField\>
 
-Render a Frontend field based on a [Field](/docs/api-reference/fields) object. Use this when building [custom fields](/docs/extending-editor/custom-fields) that need to use Frontend-style fields internally.
+Render a React Editor field based on a [Field](/docs/api-reference/fields) object. Use this when building [custom fields](/docs/extending-editor/custom-fields) that need to use React Editor-style fields internally.
 
 <ConfigPreview
   label="Example"
@@ -36,7 +36,7 @@ Render a Frontend field based on a [Field](/docs/api-reference/fields) object. U
 />
 
 ```tsx {1,4} copy
-import { Autofield } from "@frontendai/react-editor";
+import { Autofield } from "@reacteditor/core";
 
 const CustomField = ({ onChange, value }) => (
   <AutoField field={{ type: "text" }} onChange={onChange} value={value} />

@@ -1,5 +1,5 @@
 {
-  "name": "@frontendai/react-editor",
+  "name": "@reacteditor/core",
   "version": "0.1.0",
   "description": "The open-source visual editor for React",
   "author": "Rami Bitar <rami@frontend.co>",
@@ -50,7 +50,7 @@
       "import": "./dist/internal.mjs",
       "require": "./dist/internal.js"
     },
-    "./frontend.css": "./dist/index.css",
+    "./react-editor.css": "./dist/index.css",
     "./no-external.css": "./dist/no-external.css",
     "./dist/index.css": "./dist/index.css",
     "./package.json": "./package.json"

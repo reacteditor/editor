@@ -38,7 +38,7 @@ Implement a field with a custom UI. Extends [Base](base).
 />
 
 ```tsx {7-16} copy showLineNumbers
-import { FieldLabel } from "@frontendai/react-editor";
+import { FieldLabel } from "@reacteditor/core";
 
 const config = {
   components: {
@@ -105,7 +105,7 @@ const config = {
 Render the custom field.
 
 ```tsx {9-14} showLineNumbers copy
-import { FieldLabel } from "@frontendai/react-editor";
+import { FieldLabel } from "@reacteditor/core";
 
 const config = {
   components: {
@@ -140,7 +140,7 @@ const config = {
 
 ##### onChange(value, [ui])
 
-Set the value of the field and optionally update the [Frontend UI state](/docs/api-reference/data-model/app-state#ui).
+Set the value of the field and optionally update the [React Editor UI state](/docs/api-reference/data-model/app-state#ui).
 
 | Param   | Example                       | Type                                                   | Status   |
 | ------- | ----------------------------- | ------------------------------------------------------ | -------- |

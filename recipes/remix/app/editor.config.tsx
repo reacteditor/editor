@@ -1,4 +1,4 @@
-import type { Config } from "@frontendai/react-editor";
+import type { Config } from "@reacteditor/core";
 import { Heading } from "lucide-react";
 
 type Props = {

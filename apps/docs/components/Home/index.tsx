@@ -37,7 +37,7 @@ export const Home = () => {
         </div>
         <div style={{ paddingTop: 32 }} />
         <pre style={{ padding: 0, margin: 0 }}>
-          <span style={{ userSelect: "none" }}>~ </span>npm i @frontendai/react-editor
+          <span style={{ userSelect: "none" }}>~ </span>npm i @reacteditor/core
           --save
         </pre>
       </div>

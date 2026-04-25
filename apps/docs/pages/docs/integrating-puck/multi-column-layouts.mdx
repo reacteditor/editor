@@ -8,7 +8,7 @@ import { Callout } from "nextra/components";
 
 # Multi-column Layouts
 
-Frontend supports nested and multi-column layouts across any CSS layout using the [`slot` field](/docs/api-reference/fields/slot).
+React Editor supports nested and multi-column layouts across any CSS layout using the [`slot` field](/docs/api-reference/fields/slot).
 
 <Callout type="info">Slots replace the [`<DropZone>` component](/docs/api-reference/components/drop-zone) component, which will soon be deprecated and removed. For migration notes, see [these docs](/docs/guides/migrations/dropzones-to-slots).</Callout>
 
@@ -202,7 +202,7 @@ const config = {
 
 ## Fluid layouts
 
-Apply the [CSS display](https://developer.mozilla.org/en-US/docs/Web/CSS/display) property to a slot via the [`style`](/docs/api-reference/components/drop-zone#style) or [`className`](/docs/api-reference/components/drop-zone#className) props to arrange your components in different layouts. Frontend supports drag-and-drop for all `display` values, including `grid` and `flex`.
+Apply the [CSS display](https://developer.mozilla.org/en-US/docs/Web/CSS/display) property to a slot via the [`style`](/docs/api-reference/components/drop-zone#style) or [`className`](/docs/api-reference/components/drop-zone#className) props to arrange your components in different layouts. React Editor supports drag-and-drop for all `display` values, including `grid` and `flex`.
 
 ```tsx {12-15} showLineNumbers copy
 const config = {
@@ -292,7 +292,7 @@ const config = {
 
 ## Removing the wrapper
 
-By default, Frontend will wrap your components in a `div` element. For some layouts, you may need to eliminate the wrapping element and treat the child component as a direct descendant of its' parent slot.
+By default, React Editor will wrap your components in a `div` element. For some layouts, you may need to eliminate the wrapping element and treat the child component as a direct descendant of its' parent slot.
 
 For example, this is required if you wish to use CSS rules like `flex-grow`, `grid-column`, or `grid-row`.
 
@@ -319,10 +319,10 @@ const config = {
       ),
     },
     Card: {
-      inline: true, // Enable inline mode, removing the Frontend wrapper
+      inline: true, // Enable inline mode, removing the React Editor wrapper
       render: ({ text, spanCol, spanRow, editor }) => (
         <div
-          ref={editor.dragRef} // Let Frontend know this element is draggable
+          ref={editor.dragRef} // Let React Editor know this element is draggable
           style={{
             gridColumn: `span ${spanCol}`,
             gridRow: `span ${spanRow}`,
@@ -371,7 +371,7 @@ const config = {
                 gridColumn: `span ${spanCol}`,
                 gridRow: `span ${spanRow}`,
               }}
-              // Let Frontend know this element is draggable
+              // Let React Editor know this element is draggable
               ref={editor.dragRef}
             >
               {content}

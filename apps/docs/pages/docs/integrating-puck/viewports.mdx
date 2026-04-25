@@ -1,10 +1,10 @@
 # Viewports
 
-The Frontend preview renders in a same-origin iframe that can be resized to simulate different viewports.
+The React Editor preview renders in a same-origin iframe that can be resized to simulate different viewports.
 
 ## Default viewports
 
-Frontend provides 4 viewports [by default](/docs/api-reference/components/editor#default-viewports):
+React Editor provides 4 viewports [by default](/docs/api-reference/components/editor#default-viewports):
 
 1. Small: 360px wide
 2. Medium: 768px wide
@@ -26,7 +26,7 @@ export function Editor() {
           width: 1440,
           height: "auto", // Optional height. Can be numeric or "auto". Defaults to "auto".
           label: "My Viewport", // Optional. Shown in tooltip.
-          icon: <svg />, // Optional. Use lucide-icons to align with Frontend UI.
+          icon: <svg />, // Optional. Use lucide-icons to align with React Editor UI.
         },
       ]}
       // ...
@@ -61,7 +61,7 @@ When implementing a [compositional interface](/docs/extending-editor/composition
 CSS transforms can be used to zoom the viewport without impacting drag-and-drop behaviour.
 
 ```tsx {6-8}
-import { Editor } from "@frontendai/react-editor";
+import { Editor } from "@reacteditor/core";
 
 export function Editor() {
   return (
@@ -69,7 +69,7 @@ export function Editor() {
       <div style={{ transform: "scale(0.5)", width: 1280 }}>
         <Editor.Preview />
       </div>
-    </Frontend>
+    </Editor>
   );
 }
 ```

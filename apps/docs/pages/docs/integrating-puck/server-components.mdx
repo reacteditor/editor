@@ -2,30 +2,30 @@ import { Callout } from "nextra/components";
 
 # React Server Components
 
-Frontend provides support for [React Server Components](https://react.dev/reference/react/use-server#use-server) (RSC), but the interactive-nature of Frontend requires special consideration.
+React Editor provides support for [React Server Components](https://react.dev/reference/react/use-server#use-server) (RSC), but the interactive-nature of React Editor requires special consideration.
 
 ## Environments
 
 ### Server
 
-Frontend supports the server environment for the following APIs:
+React Editor supports the server environment for the following APIs:
 
-- The [`<Render>`](/docs/api-reference/components/render) component, for rendering pages produced by Frontend
+- The [`<Render>`](/docs/api-reference/components/render) component, for rendering pages produced by React Editor
 - The [`resolveAllData`](/docs/api-reference/functions/resolve-all-data) lib, for running all [data resolvers](/docs/integrating-editor/dynamic-props)
 
-These APIs can be used in an RSC environment, but in order to do so the Frontend config that they reference must be RSC-friendly.
+These APIs can be used in an RSC environment, but in order to do so the React Editor config that they reference must be RSC-friendly.
 
 This can be done by either avoiding client-only code (React `useState`, etc), or split out client components with the `"use client";` directive.
 
 ### Client
 
-All other Frontend APIs, including the core `<Editor>` component, cannot run in an RSC environment due to their high-degree of interactivity.
+All other React Editor APIs, including the core `<Editor>` component, cannot run in an RSC environment due to their high-degree of interactivity.
 
-As these APIs render on the client, the Frontend config provided must be safe for client-use, avoiding any server-specific logic.
+As these APIs render on the client, the React Editor config provided must be safe for client-use, avoiding any server-specific logic.
 
 ## Implementations
 
-Since the Frontend config can be referenced on the client or the server, we need to consider how to satisfy both environments.
+Since the React Editor config can be referenced on the client or the server, we need to consider how to satisfy both environments.
 
 There are three approaches to this:
 
@@ -46,7 +46,7 @@ Many modern component libraries will require some degree of client-side behaviou
 To achieve this, you must import each of those component from a separate file:
 
 ```tsx copy showLineNumbers filename="editor.config.tsx"
-import type { Config } from "@frontendai/react-editor";
+import type { Config } from "@reacteditor/core";
 import type { HeadingBlockProps } from "./components/HeadingBlock";
 import HeadingBlock from "./components/HeadingBlock";
 
@@ -113,7 +113,7 @@ Alternatively, consider entirely separate configs for the `<Editor>` and `<Rende
 Create a shared config type:
 
 ```tsx copy showLineNumbers filename="editor-types.ts"
-import type { Config } from "@frontendai/react-editor";
+import type { Config } from "@reacteditor/core";
 
 type Props = {
   HeadingBlock: {
@@ -184,4 +184,4 @@ export default async function Page() {
 }
 ```
 
-If your server config omits those render-relevant fields entirely, Frontend cannot infer which props should be transformed before render. In practice this means rich text will be escaped as plain strings, and slot data will not be converted into nested components.
+If your server config omits those render-relevant fields entirely, React Editor cannot infer which props should be transformed before render. In practice this means rich text will be escaped as plain strings, and slot data will not be converted into nested components.

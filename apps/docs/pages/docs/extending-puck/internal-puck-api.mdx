@@ -1,10 +1,10 @@
 ---
-title: Internal Frontend API
+title: Internal React Editor API
 ---
 
-# Internal Frontend API
+# Internal React Editor API
 
-Frontend exposes its internal API as [`EditorApi`](/docs/api-reference/editor-api) for extending Frontend with custom functionality within [custom fields](/docs/extending-editor/custom-fields), [compositional interfaces](/docs/extending-editor/composition) or [UI overrides](/docs/extending-editor/ui-overrides).
+React Editor exposes its internal API as [`EditorApi`](/docs/api-reference/editor-api) for extending React Editor with custom functionality within [custom fields](/docs/extending-editor/custom-fields), [compositional interfaces](/docs/extending-editor/composition) or [UI overrides](/docs/extending-editor/ui-overrides).
 
 ## Accessing the internal API
 
@@ -18,7 +18,7 @@ You can access [`EditorApi`](/docs/api-reference/editor-api) via two hooks:
 To access the API within your render lifecycle, use the `useEditor` hook. You can use a selector to limit re-rendering to a specific part of the API.
 
 ```tsx copy
-import { createUseEditor } from "@frontendai/react-editor";
+import { createUseEditor } from "@reacteditor/core";
 
 const useEditor = createUseEditor();
 
@@ -34,20 +34,20 @@ See the [`useEditor`](/docs/api-reference/functions/use-editor) docs for a full 
 
 ### Outside of the render lifecycle
 
-Often it's not necessary to re-render your component when the EditorApi changes. Frontend provides the `useGetEditor` hook for accessing the latest `EditorApi` at call time.
+Often it's not necessary to re-render your component when the EditorApi changes. React Editor provides the `useGetEditor` hook for accessing the latest `EditorApi` at call time.
 
 ```tsx copy
-import { useGetEditor } from "@frontendai/react-editor";
+import { useGetEditor } from "@reacteditor/core";
 
 const Example = () => {
-  const getFrontend = useGetEditor();
+  const getEditor = useGetEditor();
 
   const handleClick = useCallback(() => {
     // Get the latest EditorApi value
-    const { appState } = getFrontend();
+    const { appState } = getEditor();
 
     console.log(appState);
-  }, [getFrontend]);
+  }, [getEditor]);
 
   return <button onClick={handleClick}>Click me</button>;
 };
@@ -59,10 +59,10 @@ See the [`useGetEditor`](/docs/api-reference/functions/use-get-editor) docs for 
 
 Generally, you'll want to combine this with composition, UI overrides or custom fields.
 
-Here's an example using the internal API to log the page data as JSON while retaining the standard Frontend UI:
+Here's an example using the internal API to log the page data as JSON while retaining the standard React Editor UI:
 
 ```tsx
-import { Editor, createUseEditor } from "@frontendai/react-editor";
+import { Editor, createUseEditor } from "@reacteditor/core";
 
 const useEditor = createUseEditor();
 
@@ -78,13 +78,13 @@ const JSONLogger = ({ children }) => {
 
 export function Editor() {
   return (
-    // Render the Frontend context
+    // Render the React Editor context
     <Editor>
       <JSONLogger>
-        {/* Since we're overriding Frontend's children, we restore the standard Frontend UI */}
+        {/* Since we're overriding React Editor's children, we restore the standard React Editor UI */}
         <Editor.Layout />
       </JSONLogger>
-    </Frontend>
+    </Editor>
   );
 }
 ```

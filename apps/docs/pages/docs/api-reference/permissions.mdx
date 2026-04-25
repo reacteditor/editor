@@ -1,8 +1,8 @@
 # Permissions
 
-Permissions enable the [toggling of Frontend features](/docs/integrating-editor/feature-toggling). There are three types of permissions:
+Permissions enable the [toggling of React Editor features](/docs/integrating-editor/feature-toggling). There are three types of permissions:
 
-1. **Global permissions** are shared across the entire Frontend application. Controlled via the `permissions` prop on the `<Editor>` component.
+1. **Global permissions** are shared across the entire React Editor application. Controlled via the `permissions` prop on the `<Editor>` component.
 2. **Component permissions** allow feature control across for all instances of a given component type. Controlled by the `permissions` component config API.
 3. **Dynamic permissions** enable control after each data change, and are ideal for per-instance component permissions. Controlled by the `resolvePermissions` component config API.
 
@@ -52,4 +52,4 @@ Enable insertion of new components. Disabling this will disable the component li
 
 ### `...custom`
 
-Custom permissions enable you to control your own functionality when [extending Frontend](/docs/extending-editor/composition).
+Custom permissions enable you to control your own functionality when [extending React Editor](/docs/extending-editor/composition).

@@ -2,7 +2,7 @@
 
 import { Callout } from "nextra/components";
 
-The [plugin API](/docs/api-reference/plugins) enables developers to share extensions to Frontend.
+The [plugin API](/docs/api-reference/plugins) enables developers to share extensions to React Editor.
 
 Plugins can display dedicated UI in the **Plugin Rail** on the left-hand side of the screen (bottom on mobile), configure their own [overrides](ui-overrides), or apply [field transforms](field-transforms).
 
@@ -19,16 +19,16 @@ These plugins are included in the core package:
 
 ### Enhancements
 
-Frontend provides official plugins that can be installed for common use-cases:
+React Editor provides official plugins that can be installed for common use-cases:
 
-- [`tailwind-cdn`](https://github.com/frontend-inc/react-editor/tree/main/packages/plugin-tailwind-cdn): Inject the Tailwind v4 browser CDN into the Frontend iframe.
+- [`tailwind-cdn`](https://github.com/frontend-inc/react-editor/tree/main/packages/plugin-tailwind-cdn): Inject the Tailwind v4 browser CDN into the React Editor iframe.
 
 ## Loading a Plugin
 
 To load a plugin, provide it to the [`plugins` prop](/docs/api-reference/components/editor#plugins) on the `<Editor>` component.
 
 ```tsx showLineNumbers {2,8}
-import { Editor } from "@frontendai/react-editor";
+import { Editor } from "@reacteditor/core";
 import myPlugin from "my-editor-plugin";
 
 export function Editor() {
@@ -43,7 +43,7 @@ export function Editor() {
 
 ## Developing a Plugin
 
-If you're familiar with Frontend, you can likely already build a Frontend plugin. See the [Plugin API reference](/docs/api-reference/plugins) for a full breakdown of available APIs.
+If you're familiar with React Editor, you can likely already build a React Editor plugin. See the [Plugin API reference](/docs/api-reference/plugins) for a full breakdown of available APIs.
 
 ### Rendering UI in the Plugin Rail
 
@@ -55,16 +55,16 @@ import { Coffee } from "lucide-react";
 const myPlugin = {
   name: "my-plugin", // Globally unique name
   label: "My Plugin", // Human-readable name shown in the rail
-  icon: <Coffee />, // Icon shown in the rail (use lucide to match Frontend)
+  icon: <Coffee />, // Icon shown in the rail (use lucide to match React Editor)
   render: () => <div>My plugin UI</div>, // Component rendered in plugin panel
 };
 ```
 
-You can leverage the [internal Frontend API](internal-editor-api) to integrate Frontend behavior with your plugin:
+You can leverage the [internal React Editor API](internal-editor-api) to integrate React Editor behavior with your plugin:
 
 ```tsx showLineNumbers copy {2, 4, 10-14}
 import { Coffee } from "lucide-react";
-import { createUseEditor } from "@frontendai/react-editor";
+import { createUseEditor } from "@reacteditor/core";
 
 const useEditor = createUseEditor();
 
@@ -95,7 +95,7 @@ const plugin = {
 
 ### Overriding the UI
 
-Plugins support [UI Overrides](/docs/extending-editor/ui-overrides), enabling you to override discrete section of the Frontend interface.
+Plugins support [UI Overrides](/docs/extending-editor/ui-overrides), enabling you to override discrete section of the React Editor interface.
 
 ```tsx showLineNumbers copy
 const plugin = {
@@ -126,7 +126,7 @@ Both the field transforms and overrides let you introduce [entirely new field ty
 This example uses [Overlay Portals](overlay-portals) to create an interactive rich text field that can modified directly in the editor preview.
 
 ```tsx showLineNumbers copy {6-8, 12-20}
-import { registerOverlayPortal } from "@frontendai/react-editor";
+import { registerOverlayPortal } from "@reacteditor/core";
 
 const plugin = {
   overrides: {

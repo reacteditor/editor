@@ -27,7 +27,7 @@ import {
   Unlock,
   Type,
 } from "lucide-react";
-import createTailwindCdnPlugin from "@frontendai/plugin-tailwind-cdn";
+import createTailwindCdnPlugin from "@reacteditor/plugin-tailwind-cdn";
 import createThemeVarsPlugin from "../../../config/plugins/theme-vars";
 
 const editorPlugins = [createTailwindCdnPlugin(), createThemeVarsPlugin()];

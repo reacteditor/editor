@@ -5,10 +5,10 @@
 Install the package
 
 ```sh npm2yarn copy
-npm i @frontendai/react-editor --save
+npm i @reacteditor/core --save
 ```
 
-Or generate a Frontend application using a [recipe](https://github.com/editoreditor/editor#recipes)
+Or generate a React Editor application using a [recipe](https://github.com/editoreditor/editor#recipes)
 
 ```sh copy
 npx create-editor-app my-app
@@ -17,10 +17,10 @@ npx create-editor-app my-app
 ## Render the editor
 
 ```jsx copy filename="Editor.jsx"
-import { Editor } from "@frontendai/react-editor";
-import "@frontendai/react-editor/frontend.css";
+import { Editor } from "@reacteditor/core";
+import "@reacteditor/core/react-editor.css";
 
-// Create Frontend component config
+// Create React Editor component config
 const config = {
   components: {
     HeadingBlock: {
@@ -42,7 +42,7 @@ const initialData = {};
 // Save the data to your database
 const save = (data) => {};
 
-// Render Frontend editor
+// Render React Editor editor
 export function Editor() {
   return <Editor config={config} data={initialData} onPublish={save} />;
 }
@@ -51,7 +51,7 @@ export function Editor() {
 ## Render the page
 
 ```jsx copy filename="Page.jsx"
-import { Render } from "@frontendai/react-editor";
+import { Render } from "@reacteditor/core";
 
 export function Page() {
   return <Render config={config} data={data} />;

@@ -8,18 +8,18 @@ Closes #XXXX
 
 ## Description
 
-This PR adds a `style` prop to the `Frontend` component to allow customization of the editor layout styles.
+This PR adds a `style` prop to the `Editor` component to allow customization of the editor layout styles.
 
 <!--
   Include a concise and clear description of what this PR does.
   Mention any considerations or reasons behind the changes.
   Highlight any breaking changes.
-  Keep the explanation centered around Frontend.
+  Keep the explanation centered around React Editor.
  -->
 
 ## Changes made
 
-- The `Frontend` component now receives an optional `style` prop and passes it to the editor `div` wrapper.
+- The `Editor` component now receives an optional `style` prop and passes it to the editor `div` wrapper.
 
 <!--
   List the key changes made and the reasons behind them.
@@ -27,7 +27,7 @@ This PR adds a `style` prop to the `Frontend` component to allow customization o
 
 ## How to test
 
-- Render the `Frontend` component with a two-column grid layout using the `style` prop and confirm it renders in two columns:
+- Render the `Editor` component with a two-column grid layout using the `style` prop and confirm it renders in two columns:
 
 ```tsx
 <Editor style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }} />

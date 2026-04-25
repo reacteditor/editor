@@ -7,15 +7,15 @@ title: useGetEditor
 A hook that returns a function that retrieves the latest [`EditorApi`](/docs/api-reference/editor-api) at call time. This is useful in callbacks, effects, or any logic that runs outside the component render lifecycle.
 
 ```tsx copy
-import { useGetEditor } from "@frontendai/react-editor";
+import { useGetEditor } from "@reacteditor/core";
 
 const Example = () => {
-  const getFrontend = useGetEditor();
+  const getEditor = useGetEditor();
 
   const handleClick = useCallback(() => {
     // Current EditorApi is always provided
-    const { appState } = getFrontend();
-  }, [getFrontend]);
+    const { appState } = getEditor();
+  }, [getEditor]);
 
   return <button onClick={handleClick}>Click me</button>;
 };

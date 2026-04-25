@@ -9,7 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@frontendai/react-editor": "*",
+    "@reacteditor/core": "*",
     "@tailwindcss/postcss": "^4.1.14",
     "class-variance-authority": "^0.7.1",
     "classnames": "^2.3.2",

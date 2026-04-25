@@ -1,5 +1,5 @@
 {
-  "name": "@frontendai/field-contentful",
+  "name": "@reacteditor/field-contentful",
   "version": "0.1.0",
   "author": "Rami Bitar <rami@frontend.co>",
   "repository": "frontend-inc/react-editor",
@@ -22,7 +22,7 @@
     "dist"
   ],
   "devDependencies": {
-    "@frontendai/react-editor": "^0.1.0",
+    "@reacteditor/core": "^0.1.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "contentful": "^10.8.6",

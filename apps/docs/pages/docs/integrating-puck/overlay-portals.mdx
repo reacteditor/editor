@@ -7,12 +7,12 @@ import { Editor } from "@/editor";
 
 # Overlay Portals
 
-Overlay Portals enable you to disable the Frontend overlay when hovering over specific elements, making them interactive in the editor.
+Overlay Portals enable you to disable the React Editor overlay when hovering over specific elements, making them interactive in the editor.
 
 Use the [`registerOverlayPortal` API](/docs/api-reference/functions/register-overlay-portal) to mark an element as a portal.
 
 ```tsx
-import { registerOverlayPortal } from "@frontendai/react-editor";
+import { registerOverlayPortal } from "@reacteditor/core";
 
 const Example = () => {
   const ref = useRef<HTMLButtonElement>(null);

@@ -3,11 +3,11 @@ import { Callout } from "nextra/components";
 # Theming
 
 <Callout type="info">
-  Theming in Frontend is currently limited in functionality, and being explored via
+  Theming in React Editor is currently limited in functionality, and being explored via
   [#139 on GitHub](https://github.com/editoreditor/editor/issues/139).
 </Callout>
 
-CSS properties for theming the default Frontend user interface.
+CSS properties for theming the default React Editor user interface.
 
 ## Properties
 
@@ -18,11 +18,11 @@ CSS properties for theming the default Frontend user interface.
 
 ### `--editor-font-family`
 
-The font family used for the Frontend interface. Must be used with the `no-external` bundle that stops Frontend from loading the default font.
+The font family used for the React Editor interface. Must be used with the `no-external` bundle that stops React Editor from loading the default font.
 
 ```css
 /* Load bundle without existing font */
-@import "@frontendai/react-editor/no-external.css";
+@import "@reacteditor/core/no-external.css";
 
 :root {
   --editor-font-family: Arial;
@@ -31,11 +31,11 @@ The font family used for the Frontend interface. Must be used with the `no-exter
 
 ### `--editor-font-family-monospaced`
 
-The font family used for monospaced elements of the Frontend interface.
+The font family used for monospaced elements of the React Editor interface.
 
 ```css
 /* Monospaced fonts don't use external files, so the default bundle is safe */
-@import "@frontendai/react-editor/frontend.css";
+@import "@reacteditor/core/react-editor.css";
 
 :root {
   --editor-font-family-monospaced: Menlo;
