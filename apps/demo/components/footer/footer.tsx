@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Github, Linkedin, MousePointer2, Twitter } from "lucide-react";
 
 type Platform = "twitter" | "linkedin" | "github";
 
@@ -37,7 +37,7 @@ export function Footer({
               className="flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground"
             >
               <span className="inline-flex size-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                ◆
+                <MousePointer2 size={14} />
               </span>
               <span>{brand}</span>
             </a>

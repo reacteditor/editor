@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { MousePointer2 } from "lucide-react";
 
 type Props = {
   brand: string;
@@ -15,7 +16,7 @@ export function Navigation({ brand, links, cta }: Props) {
           className="flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground"
         >
           <span className="inline-flex size-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            ◆
+            <MousePointer2 size={14} />
           </span>
           <span>{brand}</span>
         </a>

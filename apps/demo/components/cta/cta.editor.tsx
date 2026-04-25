@@ -19,7 +19,7 @@ export const ctaEditor: ComponentConfig<CTAProps> = {
   category: "sections",
   defaultProps: {
     heading: "Bring visual editing to your stack",
-    subheading: "Free for open source and side projects.",
+    subheading: "Open source and ready for production.",
     variant: "gradient",
     buttons: [
       { label: "Start building", href: "#", variant: "secondary" },
