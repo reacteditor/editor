@@ -19,7 +19,7 @@ export const initialData: Record<string, UserData> = {
     root: { props: { title: "React Editor — visual editing for React" } },
     content: [
       {
-        type: "Navigation",
+        type: "navigation",
         props: {
           id: "nav-home",
           brand: "react-editor",
@@ -28,10 +28,10 @@ export const initialData: Record<string, UserData> = {
         },
       },
       {
-        type: "Hero",
+        type: "hero",
         props: {
           id: "hero-home",
-          eyebrow: "v2 · Visual editing for React",
+          tagline: "v2 · Visual editing for React",
           title: "Ship pages at the speed of thought",
           subtitle:
             "A drag-and-drop editor for your own React components. Own your data, keep your stack, extend anything.",
@@ -41,19 +41,19 @@ export const initialData: Record<string, UserData> = {
         },
       },
       {
-        type: "Logos",
+        type: "logos",
         props: {
           id: "logos-home",
-          eyebrow: "Trusted by teams shipping fast",
+          tagline: "Trusted by teams shipping fast",
           logos: defaultLogos,
           grayscale: "yes",
         },
       },
       {
-        type: "Features",
+        type: "features",
         props: {
           id: "features-home",
-          eyebrow: "Features",
+          tagline: "Features",
           heading: "Everything you need to ship a page",
           subheading:
             "Composable primitives, rich fields, and a preview that mirrors production.",
@@ -62,10 +62,10 @@ export const initialData: Record<string, UserData> = {
         },
       },
       {
-        type: "Testimonials",
+        type: "testimonials",
         props: {
           id: "testimonials-home",
-          eyebrow: "Testimonials",
+          tagline: "Testimonials",
           heading: "Loved by teams that ship",
           subheading:
             "Engineers and marketers building real products with the editor.",
@@ -73,10 +73,10 @@ export const initialData: Record<string, UserData> = {
         },
       },
       {
-        type: "Pricing",
+        type: "pricing",
         props: {
           id: "pricing-home",
-          eyebrow: "Pricing",
+          tagline: "Pricing",
           heading: "Simple, predictable pricing",
           subheading:
             "Start free, upgrade when you need more seats, workspaces, or custom roles.",
@@ -84,10 +84,10 @@ export const initialData: Record<string, UserData> = {
         },
       },
       {
-        type: "Team",
+        type: "team",
         props: {
           id: "team-home",
-          eyebrow: "Team",
+          tagline: "Team",
           heading: "Built by a small, focused team",
           subheading:
             "We come from editor, framework, and design-systems teams. This is the tool we always wanted.",
@@ -95,17 +95,17 @@ export const initialData: Record<string, UserData> = {
         },
       },
       {
-        type: "FAQ",
+        type: "faq",
         props: {
           id: "faq-home",
-          eyebrow: "FAQ",
+          tagline: "FAQ",
           heading: "Frequently asked questions",
           subheading: "Answers to common questions about the editor.",
           items: defaultFAQItems,
         },
       },
       {
-        type: "CTA",
+        type: "cta",
         props: {
           id: "cta-home",
           heading: "Start shipping pages today",
@@ -118,7 +118,7 @@ export const initialData: Record<string, UserData> = {
         },
       },
       {
-        type: "Footer",
+        type: "footer",
         props: {
           id: "footer-home",
           brand: "react-editor",

@@ -3,14 +3,14 @@ import * as React from "react";
 type SlotRender = React.ComponentType<{ className?: string }>;
 
 type Props = {
-  eyebrow: string;
+  tagline: string;
   heading: string;
   subheading: string;
   members: SlotRender;
 };
 
 export function Team({
-  eyebrow,
+  tagline,
   heading,
   subheading,
   members: Members,
@@ -19,9 +19,9 @@ export function Team({
     <section className="w-full bg-background py-24">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <div className="mx-auto max-w-2xl text-center">
-          {eyebrow ? (
+          {tagline ? (
             <p className="text-sm font-medium uppercase tracking-wide text-primary">
-              {eyebrow}
+              {tagline}
             </p>
           ) : null}
           <h2 className="mt-2 text-4xl font-semibold tracking-tight text-foreground md:text-5xl">

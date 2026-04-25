@@ -71,7 +71,7 @@ export const defaultFAQItems = [
 
 export const seededFeatureCards = [
   {
-    type: "FeatureCard" as const,
+    type: "feature-card" as const,
     props: {
       id: "seed-feature-1",
       icon: "sparkles",
@@ -82,7 +82,7 @@ export const seededFeatureCards = [
     },
   },
   {
-    type: "FeatureCard" as const,
+    type: "feature-card" as const,
     props: {
       id: "seed-feature-2",
       icon: "zap",
@@ -93,7 +93,7 @@ export const seededFeatureCards = [
     },
   },
   {
-    type: "FeatureCard" as const,
+    type: "feature-card" as const,
     props: {
       id: "seed-feature-3",
       icon: "rocket",
@@ -107,7 +107,7 @@ export const seededFeatureCards = [
 
 export const seededTestimonialCards = [
   {
-    type: "TestimonialCard" as const,
+    type: "testimonial-card" as const,
     props: {
       id: "seed-testimonial-1",
       quote:
@@ -118,7 +118,7 @@ export const seededTestimonialCards = [
     },
   },
   {
-    type: "TestimonialCard" as const,
+    type: "testimonial-card" as const,
     props: {
       id: "seed-testimonial-2",
       quote:
@@ -129,7 +129,7 @@ export const seededTestimonialCards = [
     },
   },
   {
-    type: "TestimonialCard" as const,
+    type: "testimonial-card" as const,
     props: {
       id: "seed-testimonial-3",
       quote:
@@ -143,7 +143,7 @@ export const seededTestimonialCards = [
 
 export const seededPriceCards = [
   {
-    type: "PriceCard" as const,
+    type: "price-card" as const,
     props: {
       id: "seed-tier-starter",
       name: "Starter",
@@ -160,7 +160,7 @@ export const seededPriceCards = [
     },
   },
   {
-    type: "PriceCard" as const,
+    type: "price-card" as const,
     props: {
       id: "seed-tier-team",
       name: "Team",
@@ -182,7 +182,7 @@ export const seededPriceCards = [
     },
   },
   {
-    type: "PriceCard" as const,
+    type: "price-card" as const,
     props: {
       id: "seed-tier-enterprise",
       name: "Enterprise",
@@ -202,7 +202,7 @@ export const seededPriceCards = [
 
 export const seededTeamCards = [
   {
-    type: "TeamCard" as const,
+    type: "team-card" as const,
     props: {
       id: "seed-member-1",
       avatarUrl: "",
@@ -216,7 +216,7 @@ export const seededTeamCards = [
     },
   },
   {
-    type: "TeamCard" as const,
+    type: "team-card" as const,
     props: {
       id: "seed-member-2",
       avatarUrl: "",
@@ -230,7 +230,7 @@ export const seededTeamCards = [
     },
   },
   {
-    type: "TeamCard" as const,
+    type: "team-card" as const,
     props: {
       id: "seed-member-3",
       avatarUrl: "",
@@ -244,7 +244,7 @@ export const seededTeamCards = [
     },
   },
   {
-    type: "TeamCard" as const,
+    type: "team-card" as const,
     props: {
       id: "seed-member-4",
       avatarUrl: "",

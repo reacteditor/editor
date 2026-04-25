@@ -1,27 +1,27 @@
-import { Typography } from "./components/Typography";
-import { Image } from "./components/Image";
-import { Button } from "./components/Button";
-import { Section } from "./components/Section";
-import { Container } from "./components/Container";
-import { Grid } from "./components/Grid";
-import { Stack } from "./components/Stack";
-import { Row } from "./components/Row";
-import { Columns } from "./components/Columns";
-import { Accordion } from "./components/Accordion";
-import { FeatureCard } from "./components/FeatureCard";
-import { TestimonialCard } from "./components/TestimonialCard";
-import { PriceCard } from "./components/PriceCard";
-import { TeamCard } from "./components/TeamCard";
-import { Hero } from "./components/Hero";
-import { Logos } from "./components/Logos";
-import { Features } from "./components/Features";
-import { Testimonials } from "./components/Testimonials";
-import { Pricing } from "./components/Pricing";
-import { Team } from "./components/Team";
-import { CTA } from "./components/CTA";
-import { FAQ } from "./components/FAQ";
-import { Navigation } from "./components/Navigation";
-import { Footer } from "./components/Footer";
+import { Typography } from "./components/typography";
+import { Image } from "./components/image";
+import { Button } from "./components/button";
+import { Section } from "./components/section";
+import { Container } from "./components/container";
+import { Grid } from "./components/grid";
+import { Stack } from "./components/stack";
+import { Row } from "./components/row";
+import { Columns } from "./components/columns";
+import { Accordion } from "./components/accordion";
+import { FeatureCard } from "./components/feature-card";
+import { TestimonialCard } from "./components/testimonial-card";
+import { PriceCard } from "./components/price-card";
+import { TeamCard } from "./components/team-card";
+import { Hero } from "./components/hero";
+import { Logos } from "./components/logos";
+import { Features } from "./components/features";
+import { Testimonials } from "./components/testimonials";
+import { Pricing } from "./components/pricing";
+import { Team } from "./components/team";
+import { CTA } from "./components/cta";
+import { FAQ } from "./components/faq";
+import { Navigation } from "./components/navigation";
+import { Footer } from "./components/footer";
 
 import Root from "./root";
 import { UserConfig } from "./types";
@@ -37,30 +37,30 @@ export const conf: UserConfig = {
     elements: { title: "Elements" },
   },
   components: {
-    Typography,
-    Image,
-    Button,
-    Section,
-    Container,
-    Grid,
-    Stack,
-    Row,
-    Columns,
-    Accordion,
-    FeatureCard,
-    TestimonialCard,
-    PriceCard,
-    TeamCard,
-    Hero,
-    Logos,
-    Features,
-    Testimonials,
-    Pricing,
-    Team,
-    CTA,
-    FAQ,
-    Navigation,
-    Footer,
+    "typography": Typography,
+    "image": Image,
+    "button": Button,
+    "section": Section,
+    "container": Container,
+    "grid": Grid,
+    "stack": Stack,
+    "row": Row,
+    "columns": Columns,
+    "accordion": Accordion,
+    "feature-card": FeatureCard,
+    "testimonial-card": TestimonialCard,
+    "price-card": PriceCard,
+    "team-card": TeamCard,
+    "hero": Hero,
+    "logos": Logos,
+    "features": Features,
+    "testimonials": Testimonials,
+    "pricing": Pricing,
+    "team": Team,
+    "cta": CTA,
+    "faq": FAQ,
+    "navigation": Navigation,
+    "footer": Footer,
   },
 };
 

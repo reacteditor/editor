@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 type Align = "left" | "center";
@@ -23,7 +22,7 @@ export function Hero({
 }: Props) {
   return (
     <section className="relative w-full overflow-hidden bg-background py-24 md:py-32">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,theme(colors.muted.DEFAULT)_0%,theme(colors.background)_60%)]" />
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,var(--muted)_0%,var(--background)_60%)]" />
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <div
           className={cn(
@@ -32,9 +31,9 @@ export function Hero({
           )}
         >
           {tagline ? (
-            <Badge variant="outline" className="rounded-full px-3 py-1">
+            <span className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium text-foreground">
               {tagline}
-            </Badge>
+            </span>
           ) : null}
           <h1
             className={cn(

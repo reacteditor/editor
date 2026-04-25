@@ -3,7 +3,7 @@ import { MessageSquareQuote } from "lucide-react";
 import { Testimonials as TestimonialsComponent } from "@/components/testimonials";
 
 export type TestimonialsProps = {
-  eyebrow: string;
+  tagline: string;
   heading: string;
   subheading: string;
   items: Slot;
@@ -14,7 +14,7 @@ export const Testimonials: ComponentConfig<TestimonialsProps> = {
   icon: <MessageSquareQuote size={16} />,
   category: "sections",
   defaultProps: {
-    eyebrow: "Testimonials",
+    tagline: "Testimonials",
     heading: "Loved by teams that ship",
     subheading:
       "Engineers and marketers building real products with the editor.",
@@ -55,7 +55,7 @@ export const Testimonials: ComponentConfig<TestimonialsProps> = {
     ],
   },
   fields: {
-    eyebrow: {
+    tagline: {
       type: "text",
       contentEditable: true,
     },
@@ -69,9 +69,9 @@ export const Testimonials: ComponentConfig<TestimonialsProps> = {
     },
     items: { type: "slot" },
   },
-  render: ({ eyebrow, heading, subheading, items }) => (
+  render: ({ tagline, heading, subheading, items }) => (
     <TestimonialsComponent
-      eyebrow={eyebrow}
+      tagline={tagline}
       heading={heading}
       subheading={subheading}
       items={items}

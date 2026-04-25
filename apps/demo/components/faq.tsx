@@ -7,20 +7,20 @@ import {
 } from "@/components/ui/accordion";
 
 type Props = {
-  eyebrow: string;
+  tagline: string;
   heading: string;
   subheading: string;
   items: Array<{ question: string; answer: string }>;
 };
 
-export function FAQ({ eyebrow, heading, subheading, items }: Props) {
+export function FAQ({ tagline, heading, subheading, items }: Props) {
   return (
     <section className="w-full bg-background py-24">
       <div className="mx-auto max-w-3xl px-6 md:px-10">
         <div className="text-center">
-          {eyebrow ? (
+          {tagline ? (
             <p className="text-sm font-medium uppercase tracking-wide text-primary">
-              {eyebrow}
+              {tagline}
             </p>
           ) : null}
           <h2 className="mt-2 text-4xl font-semibold tracking-tight text-foreground md:text-5xl">

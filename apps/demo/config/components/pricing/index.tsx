@@ -3,7 +3,7 @@ import { CreditCard } from "lucide-react";
 import { Pricing as PricingComponent } from "@/components/pricing";
 
 export type PricingProps = {
-  eyebrow: string;
+  tagline: string;
   heading: string;
   subheading: string;
   tiers: Slot;
@@ -14,7 +14,7 @@ export const Pricing: ComponentConfig<PricingProps> = {
   icon: <CreditCard size={16} />,
   category: "sections",
   defaultProps: {
-    eyebrow: "Pricing",
+    tagline: "Pricing",
     heading: "Simple, predictable pricing",
     subheading:
       "Start free, upgrade when you need more seats, workspaces, or custom roles.",
@@ -86,7 +86,7 @@ export const Pricing: ComponentConfig<PricingProps> = {
     ],
   },
   fields: {
-    eyebrow: { type: "text", contentEditable: true },
+    tagline: { type: "text", contentEditable: true },
     heading: {
       type: "text",
       contentEditable: true,
@@ -97,9 +97,9 @@ export const Pricing: ComponentConfig<PricingProps> = {
     },
     tiers: { type: "slot" },
   },
-  render: ({ eyebrow, heading, subheading, tiers }) => (
+  render: ({ tagline, heading, subheading, tiers }) => (
     <PricingComponent
-      eyebrow={eyebrow}
+      tagline={tagline}
       heading={heading}
       subheading={subheading}
       tiers={tiers}
