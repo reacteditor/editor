@@ -1,9 +1,9 @@
-import { ComponentConfig } from "@/core";
+import type { ComponentConfig } from "@reacteditor/core";
 import { Rocket } from "lucide-react";
 import { Hero as HeroComponent } from "@/components/hero";
 
 export type HeroProps = {
-  eyebrow: string;
+  tagline: string;
   title: string;
   subtitle: string;
   primaryCta: { label: string; href: string };
@@ -14,9 +14,8 @@ export type HeroProps = {
 export const Hero: ComponentConfig<HeroProps> = {
   label: "Hero",
   icon: <Rocket size={16} />,
-  category: "sections",
   defaultProps: {
-    eyebrow: "v2 · Visual editing for React",
+    tagline: "v1 · Visual editing for React",
     title: "Ship pages at the speed of thought",
     subtitle:
       "A drag-and-drop editor for your own React components. Own your data, keep your stack, extend anything.",
@@ -25,9 +24,8 @@ export const Hero: ComponentConfig<HeroProps> = {
     align: "center",
   },
   fields: {
-    eyebrow: {
+    tagline: {
       type: "text",
-      placeholder: "New · v2",
       contentEditable: true,
     },
     title: {
@@ -61,7 +59,7 @@ export const Hero: ComponentConfig<HeroProps> = {
     },
   },
   render: ({
-    eyebrow,
+    tagline,
     title,
     subtitle,
     primaryCta,
@@ -69,7 +67,7 @@ export const Hero: ComponentConfig<HeroProps> = {
     align,
   }) => (
     <HeroComponent
-      eyebrow={eyebrow}
+      tagline={tagline}
       title={title}
       subtitle={subtitle}
       primaryCta={primaryCta}

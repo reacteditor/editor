@@ -4,7 +4,7 @@ import { FAQ as FAQComponent } from "@/components/faq";
 import { defaultFAQItems } from "../../seeds";
 
 export type FAQProps = {
-  eyebrow: string;
+  tagline: string;
   heading: string;
   subheading: string;
   items: Array<{ question: string; answer: string }>;
@@ -15,13 +15,13 @@ export const FAQ: ComponentConfig<FAQProps> = {
   icon: <HelpCircle size={16} />,
   category: "sections",
   defaultProps: {
-    eyebrow: "FAQ",
+    tagline: "FAQ",
     heading: "Frequently asked questions",
     subheading: "Answers to common questions about the editor.",
     items: defaultFAQItems,
   },
   fields: {
-    eyebrow: { type: "text", contentEditable: true },
+    tagline: { type: "text", contentEditable: true },
     heading: {
       type: "text",
       contentEditable: true,
@@ -40,9 +40,9 @@ export const FAQ: ComponentConfig<FAQProps> = {
       },
     },
   },
-  render: ({ eyebrow, heading, subheading, items }) => (
+  render: ({ tagline, heading, subheading, items }) => (
     <FAQComponent
-      eyebrow={eyebrow}
+      tagline={tagline}
       heading={heading}
       subheading={subheading}
       items={items}

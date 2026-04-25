@@ -1,18 +1,18 @@
 import { cn } from "@/lib/utils";
 
 type Props = {
-  eyebrow: string;
+  tagline: string;
   logos: Array<{ alt: string; src: string }>;
   grayscale: "yes" | "no";
 };
 
-export function Logos({ eyebrow, logos, grayscale }: Props) {
+export function Logos({ tagline, logos, grayscale }: Props) {
   return (
     <section className="w-full border-y border-border bg-muted/30 py-12">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
-        {eyebrow ? (
+        {tagline ? (
           <p className="text-center text-sm font-medium uppercase tracking-wide text-muted-foreground">
-            {eyebrow}
+            {tagline}
           </p>
         ) : null}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-80">

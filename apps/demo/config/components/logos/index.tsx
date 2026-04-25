@@ -3,7 +3,7 @@ import { Tag } from "lucide-react";
 import { Logos as LogosComponent } from "@/components/logos";
 
 export type LogosProps = {
-  eyebrow: string;
+  tagline: string;
   logos: Array<{ alt: string; src: string }>;
   grayscale: "yes" | "no";
 };
@@ -13,7 +13,7 @@ export const Logos: ComponentConfig<LogosProps> = {
   icon: <Tag size={16} />,
   category: "sections",
   defaultProps: {
-    eyebrow: "Trusted by teams shipping fast",
+    tagline: "Trusted by teams shipping fast",
     logos: [
       { alt: "Vercel", src: "https://cdn.simpleicons.org/vercel" },
       { alt: "Next.js", src: "https://cdn.simpleicons.org/nextdotjs" },
@@ -25,7 +25,7 @@ export const Logos: ComponentConfig<LogosProps> = {
     grayscale: "yes",
   },
   fields: {
-    eyebrow: {
+    tagline: {
       type: "text",
       contentEditable: true,
     },
@@ -46,7 +46,7 @@ export const Logos: ComponentConfig<LogosProps> = {
       ],
     },
   },
-  render: ({ eyebrow, logos, grayscale }) => (
-    <LogosComponent eyebrow={eyebrow} logos={logos} grayscale={grayscale} />
+  render: ({ tagline, logos, grayscale }) => (
+    <LogosComponent tagline={tagline} logos={logos} grayscale={grayscale} />
   ),
 };

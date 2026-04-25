@@ -1,25 +1,13 @@
 import type { Config } from "@reacteditor/core";
-import { Heading } from "lucide-react";
+import { Hero, type HeroProps } from "@/config/components/hero";
 
 type Props = {
-  HeadingBlock: { title: string };
+  "hero": HeroProps;
 };
 
 export const config: Config<Props> = {
   components: {
-    HeadingBlock: {
-      label: "Heading",
-      icon: <Heading size={16} />,
-      defaultProps: { title: "Heading" },
-      fields: {
-        title: { type: "text" },
-      },
-      render: ({ title }) => (
-        <div style={{ padding: 64 }}>
-          <h1>{title}</h1>
-        </div>
-      ),
-    },
+    "hero": Hero,
   },
 };
 

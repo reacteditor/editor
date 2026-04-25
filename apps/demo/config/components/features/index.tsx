@@ -3,7 +3,7 @@ import { LayoutTemplate } from "lucide-react";
 import { Features as FeaturesComponent } from "@/components/features";
 
 export type FeaturesProps = {
-  eyebrow: string;
+  tagline: string;
   heading: string;
   subheading: string;
   columns: "2" | "3" | "4";
@@ -15,7 +15,7 @@ export const Features: ComponentConfig<FeaturesProps> = {
   icon: <LayoutTemplate size={16} />,
   category: "sections",
   defaultProps: {
-    eyebrow: "Features",
+    tagline: "Features",
     heading: "Everything you need to ship a page",
     subheading:
       "Composable primitives, rich fields, and a preview that mirrors production.",
@@ -57,7 +57,7 @@ export const Features: ComponentConfig<FeaturesProps> = {
     ],
   },
   fields: {
-    eyebrow: { type: "text", contentEditable: true },
+    tagline: { type: "text", contentEditable: true },
     heading: {
       type: "text",
       contentEditable: true,
@@ -76,9 +76,9 @@ export const Features: ComponentConfig<FeaturesProps> = {
     },
     items: { type: "slot" },
   },
-  render: ({ eyebrow, heading, subheading, columns, items }) => (
+  render: ({ tagline, heading, subheading, columns, items }) => (
     <FeaturesComponent
-      eyebrow={eyebrow}
+      tagline={tagline}
       heading={heading}
       subheading={subheading}
       columns={columns}

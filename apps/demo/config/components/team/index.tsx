@@ -3,7 +3,7 @@ import { Users } from "lucide-react";
 import { Team as TeamComponent } from "@/components/team";
 
 export type TeamProps = {
-  eyebrow: string;
+  tagline: string;
   heading: string;
   subheading: string;
   members: Slot;
@@ -14,7 +14,7 @@ export const Team: ComponentConfig<TeamProps> = {
   icon: <Users size={16} />,
   category: "sections",
   defaultProps: {
-    eyebrow: "Team",
+    tagline: "Team",
     heading: "Built by a small, focused team",
     subheading:
       "We come from editor, framework, and design-systems teams. This is the tool we always wanted.",
@@ -78,7 +78,7 @@ export const Team: ComponentConfig<TeamProps> = {
     ],
   },
   fields: {
-    eyebrow: { type: "text", contentEditable: true },
+    tagline: { type: "text", contentEditable: true },
     heading: {
       type: "text",
       contentEditable: true,
@@ -89,9 +89,9 @@ export const Team: ComponentConfig<TeamProps> = {
     },
     members: { type: "slot" },
   },
-  render: ({ eyebrow, heading, subheading, members }) => (
+  render: ({ tagline, heading, subheading, members }) => (
     <TeamComponent
-      eyebrow={eyebrow}
+      tagline={tagline}
       heading={heading}
       subheading={subheading}
       members={members}
