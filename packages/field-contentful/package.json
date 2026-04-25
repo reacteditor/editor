@@ -1,6 +1,6 @@
 {
   "name": "@reacteditor/field-contentful",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "author": "Rami Bitar <rami@frontend.co>",
   "repository": "frontend-inc/react-editor",
   "bugs": "https://github.com/frontend-inc/react-editor/issues",
@@ -22,7 +22,7 @@
     "dist"
   ],
   "devDependencies": {
-    "@reacteditor/core": "^0.1.0",
+    "@reacteditor/core": "^0.0.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "contentful": "^10.8.6",
