@@ -1,4 +1,4 @@
-import { Layers } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Plugin } from "../../types";
 import { Components } from "../../components/Editor/components/Components";
 import styles from "./styles.module.css";
@@ -14,5 +14,5 @@ export const blocksPlugin: () => Plugin = () => ({
       <Components />
     </div>
   ),
-  icon: <Layers />,
+  icon: <Plus />,
 });

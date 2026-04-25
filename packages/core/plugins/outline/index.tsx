@@ -1,4 +1,4 @@
-import { Component } from "lucide-react";
+import { Layers } from "lucide-react";
 import { Outline } from "../../components/Editor/components/Outline";
 import { Plugin } from "../../types";
 import styles from "./styles.module.css";
@@ -14,5 +14,5 @@ export const outlinePlugin: () => Plugin = () => ({
       <Outline />
     </div>
   ),
-  icon: <Component />,
+  icon: <Layers />,
 });
