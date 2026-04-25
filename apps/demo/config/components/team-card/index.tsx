@@ -27,7 +27,7 @@ export const TeamCard: ComponentConfig<TeamCardProps> = {
     avatarUrl: "",
     name: "Alex Rivera",
     title: "Founding engineer",
-    bio: "Builds the editor runtime and the primitives that compose every page.",
+    bio: "Builds the editor runtime and the primitives that compose every interface.",
     socials: [
       { platform: "twitter", href: "#" },
       { platform: "github", href: "#" },

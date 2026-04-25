@@ -15,7 +15,7 @@ export const TestimonialCard: ComponentConfig<TestimonialCardProps> = {
   category: "cards",
   defaultProps: {
     quote:
-      "<p>This tool changed how our team ships pages. Fast to set up, delightful to use.</p>",
+      "<p>This tool changed how our team builds product surfaces. Fast to set up, delightful to use.</p>",
     author: "Jane Doe",
     role: "Head of Marketing, Acme",
     avatarUrl: "",

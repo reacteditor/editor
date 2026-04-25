@@ -16,9 +16,9 @@ export const Features: ComponentConfig<FeaturesProps> = {
   category: "sections",
   defaultProps: {
     tagline: "Features",
-    heading: "Everything you need to ship a page",
+    heading: "Primitives that mirror production",
     subheading:
-      "Composable primitives, rich fields, and a preview that mirrors production.",
+      "Composable blocks, rich fields, and a live preview — all wired to your real components.",
     columns: "3",
     items: [
       {
@@ -28,7 +28,7 @@ export const Features: ComponentConfig<FeaturesProps> = {
           icon: "sparkles",
           title: "Drag-and-drop authoring",
           description:
-            "Compose pages from your own React components. Fields, validation, and rich text built in.",
+            "Compose any UI from your own React components. Fields, validation, and rich text built in.",
           cta: { label: "", href: "" },
         },
       },
@@ -39,7 +39,7 @@ export const Features: ComponentConfig<FeaturesProps> = {
           icon: "zap",
           title: "Own your stack",
           description:
-            "No vendor runtime. Ships as a React package and stores data as plain JSON.",
+            "No vendor runtime. Installs as a React package and stores data as plain JSON.",
           cta: { label: "", href: "" },
         },
       },

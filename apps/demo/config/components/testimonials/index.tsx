@@ -15,9 +15,9 @@ export const Testimonials: ComponentConfig<TestimonialsProps> = {
   category: "sections",
   defaultProps: {
     tagline: "Testimonials",
-    heading: "Loved by teams that ship",
+    heading: "Built for developers, designers, and marketers",
     subheading:
-      "Engineers and marketers building real products with the editor.",
+      "Teams across every role use the editor to move faster without giving up control.",
     items: [
       {
         type: "TestimonialCard",
@@ -35,7 +35,7 @@ export const Testimonials: ComponentConfig<TestimonialsProps> = {
         props: {
           id: "seed-testimonial-2",
           quote:
-            "<p>Marketing ships landing pages without our help now. The primitives map 1:1 to our design system.</p>",
+            "<p>Marketing edits the site without our help now. The primitives map 1:1 to our design system.</p>",
           author: "Marcus Cole",
           role: "Design systems lead, Tessera",
           avatarUrl: "",

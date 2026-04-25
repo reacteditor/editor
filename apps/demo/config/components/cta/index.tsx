@@ -18,7 +18,7 @@ export const CTA: ComponentConfig<CTAProps> = {
   icon: <Rocket size={16} />,
   category: "sections",
   defaultProps: {
-    heading: "Start shipping pages today",
+    heading: "Bring visual editing to your stack",
     subheading: "Free for open source and side projects.",
     variant: "gradient",
     buttons: [

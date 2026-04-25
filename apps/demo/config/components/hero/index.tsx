@@ -17,7 +17,7 @@ export const Hero: ComponentConfig<HeroProps> = {
   category: "sections",
   defaultProps: {
     tagline: "v2 · Visual editing for React",
-    title: "Ship pages at the speed of thought",
+    title: "Visual editing for your entire React app",
     subtitle:
       "A drag-and-drop editor for your own React components. Own your data, keep your stack, extend anything.",
     primaryCta: { label: "Start building", href: "#" },

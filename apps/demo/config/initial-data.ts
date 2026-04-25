@@ -32,7 +32,7 @@ export const initialData: Record<string, UserData> = {
         props: {
           id: "hero-home",
           tagline: "v2 · Visual editing for React",
-          title: "Ship pages at the speed of thought",
+          title: "Visual editing for your entire React app",
           subtitle:
             "A drag-and-drop editor for your own React components. Own your data, keep your stack, extend anything.",
           primaryCta: { label: "Start building", href: "#" },
@@ -44,7 +44,7 @@ export const initialData: Record<string, UserData> = {
         type: "logos",
         props: {
           id: "logos-home",
-          tagline: "Trusted by teams shipping fast",
+          tagline: "Powering products at fast-moving teams",
           logos: defaultLogos,
           grayscale: "yes",
         },
@@ -54,9 +54,9 @@ export const initialData: Record<string, UserData> = {
         props: {
           id: "features-home",
           tagline: "Features",
-          heading: "Everything you need to ship a page",
+          heading: "Primitives that mirror production",
           subheading:
-            "Composable primitives, rich fields, and a preview that mirrors production.",
+            "Composable blocks, rich fields, and a live preview — all wired to your real components.",
           columns: "3",
           items: seededFeatureCards,
         },
@@ -66,9 +66,9 @@ export const initialData: Record<string, UserData> = {
         props: {
           id: "testimonials-home",
           tagline: "Testimonials",
-          heading: "Loved by teams that ship",
+          heading: "Built for developers, designers, and marketers",
           subheading:
-            "Engineers and marketers building real products with the editor.",
+            "Teams across every role use the editor to move faster without giving up control.",
           items: seededTestimonialCards,
         },
       },
@@ -108,7 +108,7 @@ export const initialData: Record<string, UserData> = {
         type: "cta",
         props: {
           id: "cta-home",
-          heading: "Start shipping pages today",
+          heading: "Bring visual editing to your stack",
           subheading: "Free for open source and side projects.",
           variant: "gradient",
           buttons: [

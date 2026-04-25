@@ -13,7 +13,7 @@ export const Logos: ComponentConfig<LogosProps> = {
   icon: <Tag size={16} />,
   category: "sections",
   defaultProps: {
-    tagline: "Trusted by teams shipping fast",
+    tagline: "Powering products at fast-moving teams",
     logos: [
       { alt: "Vercel", src: "https://cdn.simpleicons.org/vercel" },
       { alt: "Next.js", src: "https://cdn.simpleicons.org/nextdotjs" },

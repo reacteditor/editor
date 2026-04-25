@@ -25,7 +25,7 @@ export const PriceCard: ComponentConfig<PriceCardProps> = {
     price: "$49",
     cadence: "month",
     features: [
-      { text: "Unlimited pages" },
+      { text: "Unlimited content" },
       { text: "Role-based permissions" },
       { text: "Priority support" },
     ],

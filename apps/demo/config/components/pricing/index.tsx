@@ -28,7 +28,7 @@ export const Pricing: ComponentConfig<PricingProps> = {
           cadence: "month",
           features: [
             { text: "Up to 3 editors" },
-            { text: "Unlimited pages" },
+            { text: "Unlimited content" },
             { text: "Community support" },
           ],
           highlighted: "no",

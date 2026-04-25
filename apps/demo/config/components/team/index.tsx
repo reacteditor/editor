@@ -26,7 +26,7 @@ export const Team: ComponentConfig<TeamProps> = {
           avatarUrl: "",
           name: "Riley Chen",
           title: "Founder, editor runtime",
-          bio: "Shipped the original block engine. Previously on a visual builder at a large B2B.",
+          bio: "Built the original block engine. Previously on a visual builder at a large B2B.",
           socials: [
             { platform: "twitter", href: "#" },
             { platform: "github", href: "#" },
@@ -40,7 +40,7 @@ export const Team: ComponentConfig<TeamProps> = {
           avatarUrl: "",
           name: "Sam Okafor",
           title: "Design systems",
-          bio: "Tokens, typography, and the opinionated defaults that make pages look intentional.",
+          bio: "Tokens, typography, and the opinionated defaults that make every screen feel intentional.",
           socials: [
             { platform: "twitter", href: "#" },
             { platform: "linkedin", href: "#" },

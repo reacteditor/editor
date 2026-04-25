@@ -48,6 +48,11 @@ export const defaultSocial = [
 
 export const defaultFAQItems = [
   {
+    question: "What is React Editor?",
+    answer:
+      "<p>A drag-and-drop visual editor that works with your own React components. You keep your stack, own your data, and extend anything.</p>",
+  },
+  {
     question: "How do I register my own components?",
     answer:
       "<p>Export a <code>Config</code> with your components and pass it to the <code>Editor</code>. Every component registers its fields and a render function.</p>",
@@ -55,17 +60,17 @@ export const defaultFAQItems = [
   {
     question: "Where is my data stored?",
     answer:
-      "<p>Wherever you put it. The editor emits JSON; persist to your database, file system, CMS, or browser storage.</p>",
+      "<p>Wherever you put it. The editor emits JSON — persist to your database, file system, or CMS.</p>",
   },
   {
     question: "Does it work with Tailwind?",
     answer:
-      "<p>Yes — this demo uses Tailwind v4 and shadcn. Inside the editor preview iframe, Tailwind is injected via the bundled CDN plugin.</p>",
+      "<p>Yes — you use your own components, so it works with Tailwind, shadcn, Chakra, or any UI library you already have.</p>",
   },
   {
     question: "Is it production-ready?",
     answer:
-      "<p>Use it today for content-driven pages, docs, and marketing surfaces. Custom permissions, roles, and plugins are all supported.</p>",
+      "<p>Use it today for app surfaces, docs, and marketing sites. Custom permissions, roles, and plugins are all supported.</p>",
   },
 ];
 
@@ -77,7 +82,7 @@ export const seededFeatureCards = [
       icon: "sparkles",
       title: "Drag-and-drop authoring",
       description:
-        "Compose pages from your own React components. Fields, validation, and rich text built in.",
+        "Compose any UI from your own React components. Fields, validation, and rich text built in.",
       cta: { label: "", href: "" },
     },
   },
@@ -88,7 +93,7 @@ export const seededFeatureCards = [
       icon: "zap",
       title: "Own your stack",
       description:
-        "No vendor runtime. Ships as a React package and stores data as plain JSON.",
+        "No vendor runtime. Installs as a React package and stores data as plain JSON.",
       cta: { label: "", href: "" },
     },
   },
@@ -122,7 +127,7 @@ export const seededTestimonialCards = [
     props: {
       id: "seed-testimonial-2",
       quote:
-        "<p>Marketing ships landing pages without our help now. The primitives map 1:1 to our design system.</p>",
+        "<p>Marketing edits the site without our help now. The primitives map 1:1 to our design system.</p>",
       author: "Marcus Cole",
       role: "Design systems lead, Tessera",
       avatarUrl: "",
@@ -151,7 +156,7 @@ export const seededPriceCards = [
       cadence: "month" as const,
       features: [
         { text: "Up to 3 editors" },
-        { text: "Unlimited pages" },
+        { text: "Unlimited content" },
         { text: "Community support" },
       ],
       highlighted: "no" as const,
@@ -208,7 +213,7 @@ export const seededTeamCards = [
       avatarUrl: "",
       name: "Riley Chen",
       title: "Founder, editor runtime",
-      bio: "Shipped the original block engine. Previously on a visual builder at a large B2B.",
+      bio: "Built the original block engine. Previously on a visual builder at a large B2B.",
       socials: [
         { platform: "twitter" as const, href: "#" },
         { platform: "github" as const, href: "#" },
@@ -222,7 +227,7 @@ export const seededTeamCards = [
       avatarUrl: "",
       name: "Sam Okafor",
       title: "Design systems",
-      bio: "Tokens, typography, and the opinionated defaults that make pages look intentional.",
+      bio: "Tokens, typography, and the opinionated defaults that make every screen feel intentional.",
       socials: [
         { platform: "twitter" as const, href: "#" },
         { platform: "linkedin" as const, href: "#" },
