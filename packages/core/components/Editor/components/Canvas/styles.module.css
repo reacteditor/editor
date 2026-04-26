@@ -69,7 +69,7 @@
   outline: 1px solid var(--re-border-subtle);
   box-shadow: var(--re-shadow-lg);
   border-radius: 0 0 var(--re-radius-md) var(--re-radius-md);
-  flex: 1 0 auto;
+  flex: 1;
   pointer-events: none;
   opacity: 0;
 }
