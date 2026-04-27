@@ -1,8 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Github, Linkedin, Twitter } from "lucide-react";
-
-type Platform = "twitter" | "linkedin" | "github";
+type Platform = string;
 
 type Props = {
   avatarUrl: string;
@@ -12,11 +10,7 @@ type Props = {
   socials: Array<{ platform: Platform; href: string }>;
 };
 
-const socialIcon = {
-  twitter: Twitter,
-  linkedin: Linkedin,
-  github: Github,
-};
+const socialIcon: Record<string, React.FC<{ className?: string }>> = {};
 
 const initials = (name: unknown) => {
   if (typeof name !== "string" || !name) return "";
@@ -60,7 +54,7 @@ export function TeamCard({ avatarUrl, name, title, bio, socials }: Props) {
                 className="text-muted-foreground transition-colors hover:text-foreground"
                 aria-label={s.platform}
               >
-                <Icon className="size-4" />
+                {Icon ? <Icon className="size-4" /> : s.platform}
               </a>
             );
           })}

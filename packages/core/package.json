@@ -1,6 +1,6 @@
 {
   "name": "@reacteditor/core",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "The open-source visual editor for React",
   "author": "Rami Bitar <rami@frontend.co>",
   "repository": "frontend-inc/react-editor",
@@ -98,8 +98,13 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "@dnd-kit/helpers": "0.1.18",
-    "@dnd-kit/react": "0.1.18",
+    "@dnd-kit/abstract": "0.4.0",
+    "@dnd-kit/collision": "0.4.0",
+    "@dnd-kit/dom": "0.4.0",
+    "@dnd-kit/geometry": "0.4.0",
+    "@dnd-kit/helpers": "0.4.0",
+    "@dnd-kit/react": "0.4.0",
+    "@dnd-kit/state": "0.4.0",
     "@radix-ui/react-popover": "^1.1.15",
     "@radix-ui/react-select": "^2.2.6",
     "@tanstack/react-virtual": "^3.13.9",

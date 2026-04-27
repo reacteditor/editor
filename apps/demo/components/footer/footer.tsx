@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
-import { Github, Linkedin, MousePointer2, Twitter } from "lucide-react";
+import { MousePointer2 } from "lucide-react";
 
-type Platform = "twitter" | "linkedin" | "github";
+type Platform = string;
 
 type Props = {
   brand: string;
@@ -14,11 +14,7 @@ type Props = {
   social: Array<{ platform: Platform; href: string }>;
 };
 
-const socialIcon = {
-  twitter: Twitter,
-  linkedin: Linkedin,
-  github: Github,
-};
+const socialIcon: Record<string, React.FC<{ className?: string }>> = {};
 
 export function Footer({
   brand,
@@ -80,7 +76,7 @@ export function Footer({
                   aria-label={s.platform}
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  <Icon className="size-4" />
+                  {Icon ? <Icon className="size-4" /> : s.platform}
                 </a>
               );
             })}

@@ -3,16 +3,12 @@ import { Plugin } from "@dnd-kit/abstract";
 
 import type { Droppable } from "@dnd-kit/dom";
 
-import { effects, untracked } from "@dnd-kit/state";
+import { getDocuments } from "@dnd-kit/dom/utilities";
 import { throttle } from "../throttle";
 import { ComponentDndData } from "../../components/DraggableComponent";
 import { DropZoneDndData } from "../../components/DropZone";
 import { getFrame } from "../get-frame";
 import { GlobalPosition } from "../global-position";
-import {
-  BubbledPointerEvent,
-  BubbledPointerEventType,
-} from "../bubble-pointer-event";
 import { rootAreaId, rootDroppableId } from "../root-droppable-id";
 
 type NestedDroppablePluginOptions = {
@@ -247,12 +243,8 @@ export const createNestedDroppablePlugin = (
       }
 
       this.registerEffect(() => {
-        const handleMove = (event: BubbledPointerEventType | PointerEvent) => {
-          const target = (
-            event instanceof BubbledPointerEvent // Necessary for Firefox
-              ? event.originalTarget || event.target
-              : event.target
-          ) as HTMLElement;
+        const handleMove = (event: PointerEvent) => {
+          const target = event.target as HTMLElement;
 
           const position = new GlobalPosition(target, {
             x: event.clientX,
@@ -277,14 +269,70 @@ export const createNestedDroppablePlugin = (
           handleMoveThrottled(event);
         };
 
-        document.body.addEventListener("pointermove", handlePointerMove, {
-          capture: true, // dndkit's PointerSensor prevents propagation during drag
+        // Bind to all same-origin documents so iframe-hosted canvases
+        // surface pointermove events to the plugin. We re-discover docs
+        // when iframes are added/loaded since the canvas iframe mounts
+        // after this effect first runs.
+        const bound = new Set<Document>();
+
+        const bind = (doc: Document) => {
+          if (bound.has(doc)) return;
+          bound.add(doc);
+          doc.addEventListener("pointermove", handlePointerMove, {
+            capture: true, // dndkit's PointerSensor prevents propagation during drag
+          });
+        };
+
+        const bindAll = () => {
+          for (const doc of getDocuments()) bind(doc);
+        };
+
+        bindAll();
+
+        // Watch for iframe additions in the parent doc; on each iframe
+        // load, rediscover and bind its contentDocument.
+        const onIframeLoad = () => bindAll();
+        const observed = new Set<HTMLIFrameElement | HTMLFrameElement>();
+        const observeFrame = (el: HTMLIFrameElement | HTMLFrameElement) => {
+          if (observed.has(el)) return;
+          observed.add(el);
+          el.addEventListener("load", onIframeLoad);
+        };
+
+        for (const el of Array.from(
+          document.querySelectorAll<HTMLIFrameElement | HTMLFrameElement>(
+            "iframe, frame"
+          )
+        )) {
+          observeFrame(el);
+        }
+
+        const observer = new MutationObserver((mutations) => {
+          for (const m of mutations) {
+            for (const node of Array.from(m.addedNodes)) {
+              if (
+                node instanceof HTMLIFrameElement ||
+                (typeof HTMLFrameElement !== "undefined" &&
+                  node instanceof HTMLFrameElement)
+              ) {
+                observeFrame(node);
+              }
+            }
+          }
+          bindAll();
         });
+        observer.observe(document.body, { childList: true, subtree: true });
 
         const cleanup = () => {
-          document.body.removeEventListener("pointermove", handlePointerMove, {
-            capture: true,
-          });
+          observer.disconnect();
+          for (const el of observed) {
+            el.removeEventListener("load", onIframeLoad);
+          }
+          for (const doc of bound) {
+            doc.removeEventListener("pointermove", handlePointerMove, {
+              capture: true,
+            });
+          }
         };
 
         return cleanup;

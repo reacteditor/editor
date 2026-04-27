@@ -1,4 +1,4 @@
-import "@/core/styles.css";
+import "@/core/dist/index.css";
 import "./styles.css";
 
 export default function RootLayout({

@@ -25,12 +25,13 @@ import { createPortal } from "react-dom";
 import { dropZoneContext, DropZoneProvider } from "../DropZone";
 import { createDynamicCollisionDetector } from "../../lib/dnd/collision/dynamic";
 import { DragAxis } from "../../types";
-import { UniqueIdentifier } from "@dnd-kit/abstract";
+import { Customizable, Plugins, UniqueIdentifier } from "@dnd-kit/abstract";
 import { getDeepScrollPosition } from "../../lib/get-deep-scroll-position";
 import { DropZoneContext, ZoneStoreContext } from "../DropZone/context";
 import { useShallow } from "zustand/react/shallow";
 import { getItem } from "../../lib/data/get-item";
 import { useSortable } from "@dnd-kit/react/sortable";
+import { Feedback } from "@dnd-kit/dom";
 import { useContextStore } from "../../lib/use-context-store";
 import { useOnDragFinished } from "../../lib/dnd/use-on-drag-finished";
 import { LoadedRichTextMenu } from "../RichTextMenu";
@@ -186,6 +187,14 @@ export const DraggableComponent = ({
     [dragAxis]
   );
 
+  const sortablePlugins = useMemo<Customizable<Plugins>>(
+    () => (defaults) => [
+      ...defaults,
+      Feedback.configure({ feedback: "clone" }),
+    ],
+    []
+  );
+
   const {
     ref: sortableRef,
     isDragging: thisIsDragging,
@@ -212,7 +221,6 @@ export const DraggableComponent = ({
       duration: 200,
       easing: "cubic-bezier(0.2, 0, 0, 1)",
     },
-    feedback: "clone",
   });
 
   useEffect(() => {

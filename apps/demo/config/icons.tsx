@@ -5,7 +5,7 @@ import {
   ChevronRight,
   Download,
   ExternalLink,
-  Github,
+
   Play,
   Rocket,
   Sparkles,
@@ -21,7 +21,7 @@ export const iconMap: Record<string, LucideIcon> = {
   "chevron-right": ChevronRight,
   download: Download,
   "external-link": ExternalLink,
-  github: Github,
+
   play: Play,
   rocket: Rocket,
   sparkles: Sparkles,
@@ -37,7 +37,7 @@ export const iconOptions = [
   { label: "Chevron right", value: "chevron-right" },
   { label: "Download", value: "download" },
   { label: "External link", value: "external-link" },
-  { label: "GitHub", value: "github" },
+
   { label: "Play", value: "play" },
   { label: "Rocket", value: "rocket" },
   { label: "Sparkles", value: "sparkles" },

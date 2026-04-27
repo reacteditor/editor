@@ -19,7 +19,7 @@ import {
   ScrollListener,
   Scroller,
 } from "@dnd-kit/dom";
-import { DragDropEvents } from "@dnd-kit/abstract";
+import { DragDropEventHandlers } from "@dnd-kit/abstract";
 import { DropZoneProvider } from "../DropZone";
 import type { Draggable, Droppable } from "@dnd-kit/dom";
 import { getItem } from "../../lib/data/get-item";
@@ -48,8 +48,9 @@ import { scrollIntoView } from "../../lib/scroll-into-view";
 
 const DEBUG = false;
 
-type Events = DragDropEvents<Draggable, Droppable, DragDropManager>;
-type DragCbs = Partial<{ [eventName in keyof Events]: Events[eventName][] }>;
+type Events = DragDropEventHandlers<Draggable, Droppable, DragDropManager>;
+type EventName = keyof Events & string;
+type DragCbs = Partial<{ [eventName in EventName]: Events[eventName][] }>;
 
 const dragListenerContext = createContext<{
   dragListeners: DragCbs;
@@ -58,11 +59,9 @@ const dragListenerContext = createContext<{
   dragListeners: {},
 });
 
-type EventKeys = keyof Events;
-
-export function useDragListener(
-  type: EventKeys,
-  fn: Events[EventKeys],
+export function useDragListener<K extends EventName>(
+  type: K,
+  fn: Events[K],
   deps: any[] = []
 ) {
   const { setDragListeners } = useContext(dragListenerContext);

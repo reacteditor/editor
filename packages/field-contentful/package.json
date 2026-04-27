@@ -22,7 +22,7 @@
     "dist"
   ],
   "devDependencies": {
-    "@reacteditor/core": "^0.0.1",
+    "@reacteditor/core": "*",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "contentful": "^10.8.6",
