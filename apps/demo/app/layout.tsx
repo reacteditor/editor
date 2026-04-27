@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import "@/core/dist/index.css";
 import "./styles.css";
+
+export const metadata: Metadata = {
+  title: "React Editor - Next.js Demo",
+};
 
 export default function RootLayout({
   children,

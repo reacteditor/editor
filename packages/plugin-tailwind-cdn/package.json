@@ -17,6 +17,7 @@
   "scripts": {
     "lint": "eslint \"**/*.ts*\"",
     "build": "rm -rf dist && tsup index.tsx",
+    "test": "jest",
     "prepare": "yarn build"
   },
   "files": [

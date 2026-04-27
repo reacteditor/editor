@@ -5,12 +5,8 @@ import config from "../../config";
 import { initialData } from "../../config/initial-data";
 import { useDemoData } from "../../lib/use-demo-data";
 import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Type } from "lucide-react";
-import createTailwindCdnPlugin from "@reacteditor/plugin-tailwind-cdn";
-import createThemeVarsPlugin from "../../config/plugins/theme-vars";
-
-const editorPlugins = [createTailwindCdnPlugin(), createThemeVarsPlugin()];
 
 export function Client(props: { path: string; isEdit: boolean }) {
   // Keyed by path so a route change fully remounts — useDemoData's useState
@@ -22,6 +18,7 @@ export function Client(props: { path: string; isEdit: boolean }) {
 
 function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const metadata = {
     example: "Hello, world",
@@ -55,14 +52,11 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
 
   if (!isClient) return null;
 
-  const params = new URL(window.location.href).searchParams;
-
   if (isEdit) {
     return (
       <div>
         <Editor
           config={config}
-          plugins={editorPlugins}
           data={data}
           globalData={globalData}
           onGlobalsChange={(next) => {
@@ -79,7 +73,8 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
             router.push(`${next === "/" ? "" : next}/edit`);
           }}
           iframe={{
-            enabled: params.get("disableIframe") === "true" ? false : true,
+            enabled:
+              searchParams.get("disableIframe") === "true" ? false : true,
           }}
           fieldTransforms={{
             userField: ({ value }) => value, // Included to check types
