@@ -55,12 +55,12 @@ type ComponentConfigInternal<
   permissions?: Partial<Permissions>;
   inline?: boolean;
   /**
-   * When true, every instance of this component type renders from the shared
-   * `globalData[type].props` instead of its own props. The `children` slot is
-   * always extrinsic (supplied by the instance / parent), matching React
-   * conventions and enabling the "AppShell wraps a page" pattern. Marking a
-   * component global is a developer decision that has data-migration
-   * implications; it is not editable from the UI.
+   * When true, instances of this component type can opt into rendering from
+   * the shared `data.globals[type].props` slot instead of their own props.
+   * Newly inserted instances default to `synced: true`; users can detach an
+   * instance via the field panel toggle, which sets `synced: false` and
+   * keeps its props local. Children stay extrinsic, matching React
+   * conventions and enabling the "AppShell wraps a page" pattern.
    */
   global?: boolean;
   resolveFields?: (

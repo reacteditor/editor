@@ -24,12 +24,11 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
     example: "Hello, world",
   };
 
-  const { data, resolvedData, globalData, setGlobalData, key, globalsKey } =
-    useDemoData({
-      path,
-      isEdit,
-      metadata,
-    });
+  const { data, resolvedData, key } = useDemoData({
+    path,
+    isEdit,
+    metadata,
+  });
 
   // Build the routes list from the known initial-data pages. Each route's
   // title comes from that page's Root props (falling back to the path).
@@ -58,11 +57,6 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
         <Editor
           config={config}
           data={data}
-          globalData={globalData}
-          onGlobalsChange={(next) => {
-            setGlobalData(next);
-            localStorage.setItem(globalsKey, JSON.stringify(next));
-          }}
           onPublish={async (data) => {
             localStorage.setItem(key, JSON.stringify(data));
           }}
@@ -120,7 +114,6 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
       <Render
         config={config}
         data={resolvedData}
-        globalData={globalData}
         metadata={metadata}
       />
     );

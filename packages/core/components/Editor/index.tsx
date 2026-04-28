@@ -25,7 +25,6 @@ import type {
   UserGenerics,
   Config,
   Data,
-  GlobalData,
   Metadata,
   Route,
   AsFieldProps,
@@ -53,7 +52,7 @@ import { deepEqual } from "fast-equals";
 import { FieldTransforms } from "../../types/API/FieldTransforms";
 import { populateIds } from "../../lib/data/populate-ids";
 import { resolveGlobals } from "../../lib/resolve-globals";
-import { splitGlobalData } from "../../lib/split-global-data";
+import { splitGlobals } from "../../lib/split-global-data";
 import { toComponent } from "../../lib/data/to-component";
 import { Layout } from "./components/Layout";
 import { useSafeId } from "../../lib/use-safe-id";
@@ -65,10 +64,8 @@ type EditorProps<
   children?: ReactNode;
   config: UserConfig;
   data: Partial<G["UserData"] | Data>;
-  globalData?: GlobalData;
   ui?: Partial<UiState>;
   onChange?: (data: G["UserData"]) => void;
-  onGlobalsChange?: (globalData: GlobalData) => void;
   onPublish?: (data: G["UserData"]) => void;
   onAction?: OnAction<G["UserData"]>;
   permissions?: Partial<Permissions>;
@@ -125,10 +122,8 @@ function EditorProvider<
   const {
     config,
     data: initialData,
-    globalData: initialGlobalData,
     ui: initialUi,
     onChange,
-    onGlobalsChange,
     permissions = {},
     plugins,
     overrides,
@@ -179,26 +174,28 @@ function EditorProvider<
       config
     );
 
-    // Seed globalData with defaultProps-based entries for any global-marked
-    // type that doesn't already have one from the consumer.
-    const seededGlobalData: GlobalData = { ...(initialGlobalData ?? {}) };
+    // Seed data.globals with defaultProps-based entries for any global-marked
+    // type that doesn't already have one in the incoming data.
+    const seededGlobals: NonNullable<Data["globals"]> = {
+      ...(initialData?.globals ?? {}),
+    };
     for (const [type, comp] of Object.entries(config.components ?? {})) {
-      if ((comp as any)?.global && !seededGlobalData[type]) {
-        seededGlobalData[type] = {
+      if ((comp as any)?.global && !seededGlobals[type]) {
+        seededGlobals[type] = {
           props: { ...((comp as any)?.defaultProps ?? {}) },
         };
       }
     }
 
-    // Inline global props into the initial data tree so the editor operates
-    // on a resolved composition. Changes flow back out via splitGlobalData.
+    // Inline global props onto every synced instance so the editor operates
+    // on a fully-resolved composition. Changes flow back out via splitGlobals.
     const composedData = resolveGlobals(
       {
         ...initialData,
         root: { ...initialData?.root, props: root.props },
         content: initialData.content || [],
+        globals: seededGlobals,
       } as Data,
-      seededGlobalData,
       config
     );
 
@@ -344,32 +341,23 @@ function EditorProvider<
   });
 
   const previousData = useRef<Data>(null);
-  const previousGlobalData = useRef<GlobalData>(null);
 
   useEffect(() => {
     return appStore.subscribe(
       (s) => s.state.data,
       (data) => {
-        // Split the resolved tree back into page data + global data so
-        // consumers receive the shapes they passed in (pageData stripped of
-        // global props; globalData holds shared state per type).
-        const split = splitGlobalData(data as Data, config);
+        // Strip shared props off synced instances and harvest them into
+        // `data.globals` so the persisted shape doesn't duplicate global
+        // props on every instance.
+        const split = splitGlobals(data as Data, config);
 
-        if (onChange && !deepEqual(split.data, previousData.current)) {
-          onChange(split.data as G["UserData"]);
-          previousData.current = split.data;
-        }
-
-        if (
-          onGlobalsChange &&
-          !deepEqual(split.globalData, previousGlobalData.current)
-        ) {
-          onGlobalsChange(split.globalData);
-          previousGlobalData.current = split.globalData;
+        if (onChange && !deepEqual(split, previousData.current)) {
+          onChange(split as G["UserData"]);
+          previousData.current = split;
         }
       }
     );
-  }, [onChange, onGlobalsChange, config]);
+  }, [onChange, config]);
 
   useRegisterPermissionsSlice(appStore, permissions);
 

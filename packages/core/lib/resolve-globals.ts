@@ -1,35 +1,30 @@
-import { ComponentData, Config, Data, GlobalData } from "../types";
+import { ComponentData, Config, Data } from "../types";
+
+type GlobalsMap = NonNullable<Data["globals"]>;
 
 /**
- * Recursively resolves a single component node against globalData.
- *
- * Rule: if the node's type is marked `global: true` in config AND has an
- * entry in globalData AND the instance is not explicitly unlinked, replace
- * its props with the global's props. The `children` slot stays from the
- * instance (extrinsic, React-style) and the `id` is preserved.
- *
- * Per-instance unlink: if the instance has `__synced: false` on its props,
- * it opts out of global resolution — its own props are used as-is. Used
- * when a user wants a one-off variant on a specific page.
+ * Recursively resolves a single component node against the data's globals
+ * map. If the node opts in via `synced: true` and its type has an entry in
+ * globals, the node's props are replaced with the global's props (children +
+ * id stay extrinsic, matching React conventions).
  *
  * Cycle guard: if a global's contents transitively reference the same type,
  * leave the inner reference unresolved and warn in dev.
  */
 function resolveItem(
   item: ComponentData,
-  globalData: GlobalData,
+  globals: GlobalsMap,
   config: Config,
   visitedTypes: Set<string>
 ): ComponentData {
   const type = item.type;
   const componentConfig = config.components[type];
-  const globalEntry = globalData[type];
-  const isUnlinked = (item.props as any)?.__synced === false;
+  const globalEntry = globals[type];
   const shouldApplyGlobal = Boolean(
     componentConfig?.global &&
+      item.synced &&
       globalEntry &&
-      !visitedTypes.has(type) &&
-      !isUnlinked
+      !visitedTypes.has(type)
   );
 
   let mergedProps: Record<string, any>;
@@ -42,6 +37,7 @@ function resolveItem(
   } else {
     if (
       componentConfig?.global &&
+      item.synced &&
       globalEntry &&
       visitedTypes.has(type) &&
       typeof process !== "undefined" &&
@@ -68,7 +64,7 @@ function resolveItem(
           typeof child === "object" &&
           "type" in child &&
           "props" in child
-            ? resolveItem(child, globalData, config, nextVisited)
+            ? resolveItem(child, globals, config, nextVisited)
             : child
         );
       }
@@ -79,20 +75,17 @@ function resolveItem(
 }
 
 /**
- * Walks a Data tree and resolves any component node whose type is marked
- * global and has an entry in globalData. Returns a new Data tree with
- * globals inlined. Identity-preserving when globalData is empty or missing.
+ * Walks a Data tree and inlines any synced global entries onto their
+ * matching component instances. Identity-preserving when `data.globals` is
+ * empty or missing.
  */
-export function resolveGlobals<T extends Data>(
-  data: T,
-  globalData: GlobalData | undefined,
-  config: Config
-): T {
-  if (!globalData || Object.keys(globalData).length === 0) return data;
+export function resolveGlobals<T extends Data>(data: T, config: Config): T {
+  const globals = data.globals;
+  if (!globals || Object.keys(globals).length === 0) return data;
 
   const visited = new Set<string>();
   const content = (data.content ?? []).map((item) =>
-    resolveItem(item as ComponentData, globalData, config, visited)
+    resolveItem(item as ComponentData, globals, config, visited)
   );
 
   return { ...data, content } as T;

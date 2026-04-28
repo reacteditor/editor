@@ -14,14 +14,18 @@ export function insertAction<UserData extends Data>(
   appStore: AppStore
 ): PrivateAppState<UserData> {
   const id = action.id || generateId(action.componentType);
+  const componentConfig = appStore.config.components[action.componentType];
+  const isGlobalType = (componentConfig as any)?.global === true;
+  const defaultProps = (componentConfig?.defaultProps || {}) as Record<
+    string,
+    any
+  >;
+
   const emptyComponentData = populateIds(
     {
       type: action.componentType,
-      props: {
-        ...(appStore.config.components[action.componentType].defaultProps ||
-          {}),
-        id,
-      },
+      props: { ...defaultProps, id },
+      ...(isGlobalType ? { synced: true } : {}),
     },
     appStore.config
   );
@@ -29,8 +33,27 @@ export function insertAction<UserData extends Data>(
   const [parentId] = action.destinationZone.split(":");
   const idsInPath = getIdsForParent(action.destinationZone, state);
 
+  // Seed data.globals[type] from defaultProps the first time a global-marked
+  // component lands on the page, so resolveGlobals has something to overlay.
+  let nextData = state.data;
+  if (
+    isGlobalType &&
+    !((nextData as Data).globals ?? {})[action.componentType]
+  ) {
+    nextData = {
+      ...nextData,
+      globals: {
+        ...((nextData as Data).globals ?? {}),
+        [action.componentType]: { props: { ...defaultProps } },
+      },
+    } as UserData;
+  }
+
+  const seededState =
+    nextData === state.data ? state : { ...state, data: nextData };
+
   return walkAppState<UserData>(
-    state,
+    seededState,
     appStore.config,
     (content, zoneCompound) => {
       if (zoneCompound === action.destinationZone) {

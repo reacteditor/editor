@@ -35,6 +35,7 @@ export type ComponentData<
 > = {
   type: Name;
   props: WithDeepSlots<WithId<Props>, Content<Components>>;
+  synced?: boolean;
 } & BaseData<Props>;
 
 export type ComponentDataOptionalId<
@@ -45,6 +46,7 @@ export type ComponentDataOptionalId<
   props: Props & {
     id?: string;
   };
+  synced?: boolean;
 } & BaseData<Props>;
 
 // Backwards compatibility
@@ -73,6 +75,7 @@ export type Data<
   root: WithDeepSlots<RootData<RootProps>, Content<Components>>;
   content: Content<Components>;
   zones?: Record<string, Content<Components>>;
+  globals?: Record<string, { props: Record<string, any> }>;
 };
 
 export type Metadata = { [key: string]: any };

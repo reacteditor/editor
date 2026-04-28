@@ -181,11 +181,10 @@ const FieldsChildMemo = memo(FieldsChild);
 
 /**
  * Full-width button shown above the fields list when the selected component's
- * type has `global: true`. Flips the instance's `__synced` prop between unset
- * (synced with globalData) and `false` (unlinked — uses its own props).
+ * type has `global: true`. Flips the instance's top-level `synced` flag.
  *
- * Re-linking discards local changes on the next render as globalData overlays
- * the instance. Undo restores them if the user changes their mind.
+ * Re-linking discards local changes on the next render as `data.globals`
+ * overlays the instance. Undo restores them if the user changes their mind.
  */
 const GlobalSyncButton = () => {
   const appStore = useAppStoreApi();
@@ -198,23 +197,16 @@ const GlobalSyncButton = () => {
 
   if (!selectedItem || !isGlobalType) return null;
 
-  const isUnlinked = (selectedItem.props as any)?.__synced === false;
+  const isUnlinked = selectedItem.synced === false;
 
   const onClick = async () => {
     const { dispatch, state, resolveComponentData } = appStore.getState();
-
-    const newProps = { ...selectedItem.props } as Record<string, any>;
-    if (isUnlinked) {
-      delete newProps.__synced;
-    } else {
-      newProps.__synced = false;
-    }
 
     const latestSelector = getSelectorForId(state, selectedItem.props.id);
     if (!latestSelector) return;
 
     const resolved = await resolveComponentData(
-      { ...selectedItem, props: newProps as typeof selectedItem.props },
+      { ...selectedItem, synced: isUnlinked ? true : false },
       "replace"
     );
 

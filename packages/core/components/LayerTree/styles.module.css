@@ -165,7 +165,7 @@
   color: var(--re-color-global-strong);
 }
 
-/* Unlinked-from-shared: instance opted out of globalData sync. Renders in
+/* Unlinked-from-shared: instance opted out of data.globals sync. Renders in
    the regular accent tree style (no purple) with a small broken-link glyph
    so users can see it was once shared and can relink. */
 .Layer--isUnlinked > .Layer-inner .Layer-name {

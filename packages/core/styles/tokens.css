@@ -48,9 +48,10 @@
   --re-accent-strong: var(--re-color-azure-04);
   --re-accent-soft: var(--re-color-azure-11);
 
-  /* Global-component accent (purple). Used to mark components whose props
-     come from globalData — signals that edits propagate across every page
-     where the type appears. Mirrors the accent token structure. */
+  /* Global-component accent (purple). Used to mark synced instances of
+     `global: true` components whose props come from data.globals — signals
+     that edits propagate across every page where the instance is synced.
+     Mirrors the accent token structure. */
   --re-color-global: #7c3aed;
   --re-color-global-strong: #5b21b6;
   --re-color-global-soft: #f3e8ff;

@@ -206,9 +206,7 @@ const Layer = forwardRef(function Layer(
     (s) => (s.config.components[node.componentType] as any)?.global === true
   );
   const isUnlinked = useAppStore(
-    (s) =>
-      (s.state.indexes.nodes[node.itemId]?.data?.props as any)?.__synced ===
-      false
+    (s) => s.state.indexes.nodes[node.itemId]?.data?.synced === false
   );
   const containsZone = node.childZones.length > 0;
 
