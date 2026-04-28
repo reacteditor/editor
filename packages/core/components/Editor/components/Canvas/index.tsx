@@ -116,25 +116,23 @@ export const Canvas = () => {
 
   const appStoreApi = useAppStoreApi();
 
-  // Select closest viewport on load
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+  // Cleared once the user explicitly picks a viewport, so resize-driven
+  // auto-detection won't override their choice.
+  const autoSelectingRef = useRef(true);
 
-    // Don't override if user has set a viewport
-    if (uiProp?.viewports?.current) return;
+  const pickClosestViewport = useCallback(() => {
+    if (typeof window === "undefined") return null;
 
     const viewportWidth = window.innerWidth;
     const frameWidth = frameRef.current?.getBoundingClientRect().width;
 
-    if (!viewportWidth) return;
-    if (!frameWidth) return;
-    if (viewportOptions.length === 0) return;
+    if (!viewportWidth) return null;
+    if (!frameWidth) return null;
+    if (viewportOptions.length === 0) return null;
 
     const fullWidthViewport = Object.values(viewportOptions).find(
       (v) => v.width === "100%"
     );
-
-    const containsFullWidthViewport = !!fullWidthViewport;
 
     const viewportDifferences = Object.entries(viewportOptions)
       .filter(([_, value]) => value.width !== "100%")
@@ -148,15 +146,29 @@ export const Canvas = () => {
       }))
       .sort((a, b) => (a.diff > b.diff ? 1 : -1));
 
-    let closestViewport = viewportDifferences[0].value;
+    let closestViewport = viewportDifferences[0]?.value;
+    if (!closestViewport) return null;
 
     // Select full width viewport if it exists, and the closest viewport is smaller than the window
     if (
       (closestViewport.width as number) < frameWidth &&
-      containsFullWidthViewport
+      fullWidthViewport
     ) {
       closestViewport = fullWidthViewport;
     }
+
+    return closestViewport;
+  }, [viewportOptions, frameRef]);
+
+  // Select closest viewport on load
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    // Don't override if user has set a viewport
+    if (uiProp?.viewports?.current) return;
+
+    const closestViewport = pickClosestViewport();
+    if (!closestViewport) return;
 
     if (iframe.enabled) {
       const s = appStoreApi.getState();
@@ -188,11 +200,59 @@ export const Canvas = () => {
       appStoreApi.setState({ ...appState, history });
     }
   }, [
-    viewportOptions,
+    pickClosestViewport,
     frameRef.current,
     iframe,
     appStoreApi,
     uiProp?.viewports?.current,
+  ]);
+
+  // Re-run auto-detection when the canvas frame resizes (e.g. sidebar
+  // toggle), so the preview expands into newly available space.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!iframe.enabled) return;
+    if (uiProp?.viewports?.current) return;
+    const target = frameRef.current;
+    if (!target) return;
+
+    const observer = new ResizeObserver(() => {
+      if (!autoSelectingRef.current) return;
+
+      const closestViewport = pickClosestViewport();
+      if (!closestViewport) return;
+
+      const s = appStoreApi.getState();
+      const current = s.state.ui.viewports.current;
+
+      if (
+        current.width === closestViewport.width &&
+        current.height === (closestViewport.height || "auto")
+      ) {
+        return;
+      }
+
+      setUi({
+        viewports: {
+          ...s.state.ui.viewports,
+          current: {
+            ...current,
+            width: closestViewport.width,
+            height: closestViewport.height || "auto",
+          },
+        },
+      });
+    });
+
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [
+    pickClosestViewport,
+    frameRef,
+    iframe.enabled,
+    uiProp?.viewports?.current,
+    appStoreApi,
+    setUi,
   ]);
 
   return (
@@ -248,6 +308,7 @@ export const Canvas = () => {
             <div className={getClassName("browserBar")}>
               <BrowserBar
                 onViewportChange={(viewport) => {
+                  autoSelectingRef.current = false;
                   setShowTransition(true);
                   isResizingRef.current = true;
 

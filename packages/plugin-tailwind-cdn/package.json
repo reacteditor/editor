@@ -1,6 +1,6 @@
 {
   "name": "@reacteditor/plugin-tailwind-cdn",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Rami Bitar <rami@frontend.co>",
   "repository": "frontend-inc/react-editor",
   "bugs": "https://github.com/frontend-inc/react-editor/issues",
