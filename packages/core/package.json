@@ -1,6 +1,6 @@
 {
   "name": "@reacteditor/core",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "The open-source visual editor for React",
   "author": "Rami Bitar <rami@frontend.co>",
   "repository": "frontend-inc/react-editor",
