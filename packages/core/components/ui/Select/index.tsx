@@ -7,7 +7,7 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { getClassNameFactory } from "../../../lib";
 import styles from "./styles.module.css";
 
-const getClassName = getClassNameFactory("FeSelect", styles);
+const getClassName = getClassNameFactory("EditorSelect", styles);
 
 const joinClassNames = (...values: Array<string | undefined | null | false>) =>
   values.filter(Boolean).join(" ");

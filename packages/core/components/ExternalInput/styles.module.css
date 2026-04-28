@@ -7,53 +7,53 @@
   gap: 8px;
   align-items: center;
   justify-content: center;
-  background-color: var(--re-surface-panel);
-  border: 1px solid var(--re-border-default);
-  border-radius: var(--re-radius-md);
-  color: var(--re-text-accent);
+  background-color: var(--editor-surface-panel);
+  border: 1px solid var(--editor-border-default);
+  border-radius: var(--editor-radius-md);
+  color: var(--editor-text-accent);
   padding: 10px 12px;
   font-weight: 500;
   white-space: nowrap;
   text-overflow: ellipsis;
-  transition: background-color var(--re-motion-fast) var(--re-ease),
-    border-color var(--re-motion-fast) var(--re-ease);
+  transition: background-color var(--editor-motion-fast) var(--editor-ease),
+    border-color var(--editor-motion-fast) var(--editor-ease);
   position: relative;
   overflow: hidden;
   flex-grow: 1;
 }
 
 .ExternalInput--dataSelected .ExternalInput-button {
-  color: var(--re-text-primary);
+  color: var(--editor-text-primary);
   display: block;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
 
 .ExternalInput--readOnly .ExternalInput-button {
-  background-color: var(--re-surface-sunken);
+  background-color: var(--editor-surface-sunken);
 }
 
 .ExternalInput-detachButton {
-  border: 1px solid var(--re-border-default);
-  border-top-right-radius: var(--re-radius-md);
-  border-bottom-right-radius: var(--re-radius-md);
-  background-color: var(--re-surface-sunken);
-  color: var(--re-text-tertiary);
+  border: 1px solid var(--editor-border-default);
+  border-top-right-radius: var(--editor-radius-md);
+  border-bottom-right-radius: var(--editor-radius-md);
+  background-color: var(--editor-surface-sunken);
+  color: var(--editor-text-tertiary);
   display: flex;
   gap: 8px;
   align-items: center;
   justify-content: center;
   padding: 8px 12px;
   position: relative;
-  transition: background-color var(--re-motion-fast) var(--re-ease),
-    color var(--re-motion-fast) var(--re-ease);
+  transition: background-color var(--editor-motion-fast) var(--editor-ease),
+    color var(--editor-motion-fast) var(--editor-ease);
   margin-inline-start: -1px;
 }
 
 .ExternalInput-button:focus-visible,
 .ExternalInput-detachButton:focus-visible {
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: var(--editor-ring);
   z-index: 1;
 }
 
@@ -61,26 +61,26 @@
   .ExternalInput:not(.ExternalInput--readOnly) .ExternalInput-button:hover,
   .ExternalInput:not(.ExternalInput--readOnly)
     .ExternalInput-detachButton:hover {
-    background: var(--re-surface-hover);
-    border-color: var(--re-border-strong);
+    background: var(--editor-surface-hover);
+    border-color: var(--editor-border-strong);
     transition: none;
   }
 
   .ExternalInput:not(.ExternalInput--readOnly)
     .ExternalInput-detachButton:hover {
-    color: var(--re-text-accent);
+    color: var(--editor-text-accent);
   }
 }
 
 .ExternalInput:not(.ExternalInput--readOnly) .ExternalInput-button:active,
 .ExternalInput:not(.ExternalInput--readOnly)
   .ExternalInput-detachButton:active {
-  background: var(--re-accent-soft);
+  background: var(--editor-accent-soft);
   transition: none;
 }
 
 .ExternalInputModal {
-  color: var(--re-color-black);
+  color: var(--editor-color-black);
   display: grid;
   grid-template-rows: min-content minmax(128px, 100%) min-content;
   grid-template-columns: 100%;
@@ -106,7 +106,7 @@
 }
 
 .ExternalInputModal-filters {
-  border-bottom: 1px solid var(--re-border-subtle);
+  border-bottom: 1px solid var(--editor-border-subtle);
 }
 
 .ExternalInputModal--filtersToggled .ExternalInputModal-filters {
@@ -115,7 +115,7 @@
 
 @media (min-width: 458px) {
   .ExternalInputModal-filters {
-    border-inline-end: 1px solid var(--re-border-subtle);
+    border-inline-end: 1px solid var(--editor-border-subtle);
     display: none;
   }
 
@@ -125,8 +125,8 @@
 }
 
 .ExternalInputModal-masthead {
-  background-color: var(--re-surface-sunken);
-  border-bottom: 1px solid var(--re-border-subtle);
+  background-color: var(--editor-surface-sunken);
+  border-bottom: 1px solid var(--editor-border-subtle);
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
@@ -143,29 +143,29 @@
 .ExternalInputModal-table {
   border-collapse: unset;
   border-spacing: 0px;
-  color: var(--re-text-primary);
+  color: var(--editor-text-primary);
   position: relative;
   z-index: 0;
   min-width: 100%;
 }
 
 .ExternalInputModal-thead {
-  background-color: var(--re-surface-panel);
+  background-color: var(--editor-surface-panel);
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
 .ExternalInputModal-th {
-  border-bottom: 1px solid var(--re-border-subtle);
-  color: var(--re-text-secondary);
+  border-bottom: 1px solid var(--editor-border-subtle);
+  color: var(--editor-text-secondary);
   font-weight: 500;
   font-size: 14px;
   padding: 16px 24px;
 }
 
 .ExternalInputModal-td {
-  border-bottom: 1px solid var(--re-border-subtle);
+  border-bottom: 1px solid var(--editor-border-subtle);
   padding: 16px 24px;
 }
 
@@ -177,8 +177,8 @@
 
 @media (hover: hover) and (pointer: fine) {
   .ExternalInputModal-tbody .ExternalInputModal-tr:hover {
-    background: var(--re-surface-hover);
-    color: var(--re-text-accent);
+    background: var(--editor-surface-hover);
+    color: var(--editor-text-accent);
     cursor: pointer;
     position: relative;
     margin-inline-start: -5px;
@@ -187,7 +187,7 @@
   .ExternalInputModal-tbody
     .ExternalInputModal-tr:hover
     .ExternalInputModal-td:first-of-type {
-    border-inline-start: 4px solid var(--re-text-accent);
+    border-inline-start: 4px solid var(--editor-text-accent);
     padding-inline-start: 20px;
   }
 }
@@ -210,7 +210,7 @@
   display: none;
   background-color: color-mix(
     in srgb,
-    var(--re-surface-panel) 90%,
+    var(--editor-surface-panel) 90%,
     transparent
   );
   padding: 64px;
@@ -242,35 +242,35 @@
 
 .ExternalInputModal-search {
   display: flex;
-  background: var(--re-surface-panel);
+  background: var(--editor-surface-panel);
   border-width: 1px;
   border-style: solid;
-  border-color: var(--re-border-subtle);
+  border-color: var(--editor-border-subtle);
   border-radius: 4px;
   flex-grow: 1;
   transition: border-color 50ms ease-in;
 }
 
 .ExternalInputModal-search:focus-within {
-  border-color: var(--re-border-strong);
-  outline: 2px solid var(--re-accent);
+  border-color: var(--editor-border-strong);
+  outline: 2px solid var(--editor-accent);
   transition: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ExternalInputModal-search:hover {
-    border-color: var(--re-border-strong);
+    border-color: var(--editor-border-strong);
     transition: none;
   }
 }
 
 .ExternalInputModal-searchIcon {
   align-items: center;
-  background: var(--re-surface-sunken);
+  background: var(--editor-surface-sunken);
   border-bottom-left-radius: 4px;
   border-top-left-radius: 4px;
-  border-inline-end: 1px solid var(--re-border-subtle);
-  color: var(--re-text-tertiary);
+  border-inline-end: 1px solid var(--editor-border-subtle);
+  color: var(--editor-text-tertiary);
   display: flex;
   justify-content: center;
   padding: 12px 15px;
@@ -278,13 +278,13 @@
 }
 
 .ExternalInputModal-search:focus-within .ExternalInputModal-searchIcon {
-  color: var(--re-text-secondary);
+  color: var(--editor-text-secondary);
   transition: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ExternalInputModal-search:hover .ExternalInputModal-searchIcon {
-    color: var(--re-text-secondary);
+    color: var(--editor-text-secondary);
     transition: none;
   }
 }
@@ -302,7 +302,7 @@
 .ExternalInputModal-searchInput {
   border: none;
   border-radius: 4px;
-  background: var(--re-surface-panel);
+  background: var(--editor-surface-panel);
   font-family: inherit;
   font-size: 14px;
   padding: 12px 15px;
@@ -331,9 +331,9 @@
 }
 
 .ExternalInputModal-footerContainer {
-  background-color: var(--re-surface-sunken);
-  border-top: 1px solid var(--re-border-subtle);
-  color: var(--re-text-secondary);
+  background-color: var(--editor-surface-sunken);
+  border-top: 1px solid var(--editor-border-subtle);
+  color: var(--editor-text-secondary);
   padding: 16px;
 }
 
@@ -344,7 +344,7 @@
 }
 
 .ExternalInputModal-field {
-  color: var(--re-text-secondary);
+  color: var(--editor-text-secondary);
   margin: 16px;
   margin-bottom: 12px;
   display: block;

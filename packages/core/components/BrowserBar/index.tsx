@@ -1,18 +1,26 @@
 import { Globe, Maximize, Minimize, Monitor, Smartphone } from "lucide-react";
-import { useMemo } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useAppStore } from "../../store";
 import { usePropsContext } from "../Editor";
 import { getClassNameFactory } from "../../lib";
 import { IconButton } from "../IconButton";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-} from "../ui/Select";
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "../ui/Combobox";
 import { Viewport } from "../../types";
 
 import styles from "./styles.module.css";
+
+const normalizeRoute = (raw: string) => {
+  const trimmed = raw.trim();
+  if (!trimmed) return trimmed;
+  return trimmed.startsWith("/") ? trimmed : `/${trimmed}`;
+};
 
 const getClassName = getClassNameFactory("BrowserBar", styles);
 
@@ -62,39 +70,69 @@ export const BrowserBar = ({
   const showRoutePicker =
     !!routes && currentPath !== undefined && !!onRouteChange;
 
-  const selectedTitle = routes?.find((r) => r.path === currentPath)?.title;
+  const [inputValue, setInputValue] = useState(currentPath ?? "");
+
+  // Re-sync the input when the parent navigates externally.
+  const lastSyncedPath = useRef(currentPath);
+  if (lastSyncedPath.current !== currentPath) {
+    lastSyncedPath.current = currentPath;
+    setInputValue(currentPath ?? "");
+  }
+
+  const submit = (raw: string) => {
+    const next = normalizeRoute(raw);
+    if (!next || next === currentPath) return;
+    void onRouteChange?.(next);
+  };
 
   return (
     <div className={getClassName()}>
       {showRoutePicker ? (
-        <Select
+        <Combobox<string>
+          items={routes!.map((r) => r.path)}
           value={currentPath}
           onValueChange={(next) => {
-            void onRouteChange?.(next);
+            if (typeof next === "string") submit(next);
           }}
+          inputValue={inputValue}
+          onInputValueChange={(next) => setInputValue(next)}
+          autoHighlight={false}
         >
-          <SelectTrigger className={getClassName("urlTrigger")}>
+          <form
+            className={getClassName("urlTrigger")}
+            onSubmit={(event) => {
+              event.preventDefault();
+              submit(inputValue);
+            }}
+          >
             <Globe className={getClassName("urlIcon")} size={14} />
-            <span className={getClassName("urlText")}>
-              <span className={getClassName("urlPath")}>{currentPath}</span>
-              {selectedTitle ? (
-                <span className={getClassName("urlTitle")}>
-                  {selectedTitle}
-                </span>
-              ) : null}
-            </span>
-          </SelectTrigger>
-          <SelectContent>
-            {routes!.some((r) => r.path === currentPath) ? null : (
-              <SelectItem value={currentPath!}>{currentPath}</SelectItem>
-            )}
-            {routes!.map((route) => (
-              <SelectItem key={route.path} value={route.path}>
-                {route.title}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+            <ComboboxInput
+              className={getClassName("urlInput")}
+              placeholder="/"
+              spellCheck={false}
+              autoCorrect="off"
+              autoCapitalize="off"
+            />
+          </form>
+          <ComboboxContent>
+            <ComboboxEmpty>Press Enter to go to this path</ComboboxEmpty>
+            <ComboboxList>
+              {(path: string) => {
+                const route = routes!.find((r) => r.path === path);
+                return (
+                  <ComboboxItem key={path} value={path}>
+                    <span className={getClassName("itemPath")}>{path}</span>
+                    {route?.title ? (
+                      <span className={getClassName("itemTitle")}>
+                        {route.title}
+                      </span>
+                    ) : null}
+                  </ComboboxItem>
+                );
+              }}
+            </ComboboxList>
+          </ComboboxContent>
+        </Combobox>
       ) : (
         <div className={getClassName("urlTrigger")}>
           <Globe className={getClassName("urlIcon")} size={14} />

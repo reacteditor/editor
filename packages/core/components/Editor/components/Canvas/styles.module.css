@@ -1,21 +1,21 @@
 .EditorCanvas {
-  background: var(--re-surface-sunken);
+  background: var(--editor-surface-sunken);
   display: flex;
   grid-area: editor;
   flex-direction: column;
-  padding: calc(var(--re-space-px) * 0.5);
+  padding: calc(var(--editor-space-px) * 0.5);
   position: relative;
   overflow: hidden;
 }
 
 @media (min-width: 1198px) {
   .EditorCanvas {
-    padding: calc(var(--re-space-px) * 0.75);
-    padding-top: calc(var(--re-space-px) * 0.25);
+    padding: calc(var(--editor-space-px) * 0.75);
+    padding-top: calc(var(--editor-space-px) * 0.25);
   }
 
   .EditorCanvas:not(.EditorCanvas:has(.EditorCanvas-controls)) {
-    padding-top: calc(var(--re-space-px) * 0.75);
+    padding-top: calc(var(--editor-space-px) * 0.75);
   }
 }
 
@@ -65,10 +65,10 @@
 }
 
 .EditorCanvas-root {
-  background: var(--re-surface-panel);
-  outline: 1px solid var(--re-border-subtle);
-  box-shadow: var(--re-shadow-lg);
-  border-radius: 0 0 var(--re-radius-md) var(--re-radius-md);
+  background: var(--editor-surface-panel);
+  outline: 1px solid var(--editor-border-subtle);
+  box-shadow: var(--editor-shadow-lg);
+  border-radius: 0 0 var(--editor-radius-md) var(--editor-radius-md);
   flex: 1;
   pointer-events: none;
   opacity: 0;
@@ -87,7 +87,7 @@
 
 .EditorCanvas-loader {
   align-items: center;
-  color: var(--re-text-tertiary);
+  color: var(--editor-text-tertiary);
   display: flex;
   inset: 0;
   justify-content: center;
@@ -113,11 +113,11 @@
 
 .EditorCanvas-zoomControls {
   align-items: center;
-  background: var(--re-surface-panel);
-  border: 1px solid var(--re-border-subtle);
-  border-radius: var(--re-radius-md);
+  background: var(--editor-surface-panel);
+  border: 1px solid var(--editor-border-subtle);
+  border-radius: var(--editor-radius-md);
   bottom: 16px;
-  box-shadow: var(--re-shadow-md);
+  box-shadow: var(--editor-shadow-md);
   display: flex;
   gap: 2px;
   padding: 4px;

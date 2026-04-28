@@ -22,7 +22,7 @@
 
 /* Placeholder */
 [data-dnd-placeholder] {
-  background: var(--re-color-azure-06) !important;
+  background: var(--editor-color-azure-06) !important;
   border: none !important;
   color: #00000000 !important;
   opacity: 0.3 !important;
@@ -38,6 +38,6 @@
 
 [data-dnd-dragging][data-editor-component] {
   pointer-events: none !important;
-  outline: 2px var(--re-color-azure-09) solid !important;
+  outline: 2px var(--editor-color-azure-09) solid !important;
   outline-offset: -2px !important;
 }

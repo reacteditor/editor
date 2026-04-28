@@ -3,7 +3,7 @@
 }
 
 [data-dnd-placeholder] {
-  background: var(--re-color-azure-09) !important;
+  background: var(--editor-color-azure-09) !important;
   border: none !important;
   color: #00000000 !important;
   opacity: 0.3 !important;

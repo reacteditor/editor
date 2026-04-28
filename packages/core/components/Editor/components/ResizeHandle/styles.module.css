@@ -10,7 +10,7 @@
   }
 
   .ResizeHandle:hover {
-    background: var(--re-accent-soft);
+    background: var(--editor-accent-soft);
   }
 
   .ResizeHandle--left {

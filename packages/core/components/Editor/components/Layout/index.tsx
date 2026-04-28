@@ -232,11 +232,11 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   const layoutOptions: Record<string, any> = {};
 
   if (leftWidth) {
-    layoutOptions["--re-user-left-side-bar-width"] = `${leftWidth}px`;
+    layoutOptions["--editor-user-left-side-bar-width"] = `${leftWidth}px`;
   }
 
   if (rightWidth) {
-    layoutOptions["--re-user-right-side-bar-width"] = `${rightWidth}px`;
+    layoutOptions["--editor-user-right-side-bar-width"] = `${rightWidth}px`;
   }
 
   const setUi = useAppStore((s) => s.setUi);
@@ -415,7 +415,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
 
   const mobilePanelStyle: Record<string, string> = {};
   if (mobilePanelHeight && leftSideBarVisible) {
-    mobilePanelStyle["--re-mobile-panel-height"] = `${mobilePanelHeight}px`;
+    mobilePanelStyle["--editor-mobile-panel-height"] = `${mobilePanelHeight}px`;
   }
 
   return (

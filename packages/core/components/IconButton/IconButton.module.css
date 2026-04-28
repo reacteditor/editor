@@ -2,37 +2,37 @@
   align-items: center;
   background: transparent;
   border: none;
-  border-radius: var(--re-radius-md);
+  border-radius: var(--editor-radius-md);
   color: currentColor;
   display: flex;
-  font-family: var(--re-font-family);
+  font-family: var(--editor-font-family);
   justify-content: center;
   padding: 4px;
-  transition: background-color var(--re-motion-fast) var(--re-ease),
-    color var(--re-motion-fast) var(--re-ease);
+  transition: background-color var(--editor-motion-fast) var(--editor-ease),
+    color var(--editor-motion-fast) var(--editor-ease);
 }
 
 .IconButton--active {
-  color: var(--re-text-accent);
-  background: var(--re-accent-soft);
+  color: var(--editor-text-accent);
+  background: var(--editor-accent-soft);
 }
 
 .IconButton:focus-visible {
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: var(--editor-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .IconButton:hover:not(.IconButton--disabled) {
-    background: var(--re-surface-hover);
-    color: var(--re-text-accent);
+    background: var(--editor-surface-hover);
+    color: var(--editor-text-accent);
     cursor: pointer;
     transition: none;
   }
 }
 
 .IconButton:active {
-  background: var(--re-accent-soft);
+  background: var(--editor-accent-soft);
   transition: none;
 }
 
@@ -47,5 +47,5 @@
 }
 
 .IconButton--disabled {
-  color: var(--re-text-tertiary);
+  color: var(--editor-text-tertiary);
 }

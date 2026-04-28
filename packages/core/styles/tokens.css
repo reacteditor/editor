@@ -1,83 +1,83 @@
 :root {
   /* Radius */
-  --re-radius-sm: 4px;
-  --re-radius-md: 6px;
-  --re-radius-lg: 8px;
-  --re-radius-xl: 12px;
+  --editor-radius-sm: 4px;
+  --editor-radius-md: 6px;
+  --editor-radius-lg: 8px;
+  --editor-radius-xl: 12px;
 
   /* Elevation */
-  --re-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04),
+  --editor-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04),
     0 1px 1px rgba(15, 23, 42, 0.03);
-  --re-shadow-md: 0 2px 4px rgba(15, 23, 42, 0.05),
+  --editor-shadow-md: 0 2px 4px rgba(15, 23, 42, 0.05),
     0 1px 2px rgba(15, 23, 42, 0.04);
-  --re-shadow-lg: 0 8px 16px rgba(15, 23, 42, 0.08),
+  --editor-shadow-lg: 0 8px 16px rgba(15, 23, 42, 0.08),
     0 2px 4px rgba(15, 23, 42, 0.04);
-  --re-shadow-xl: 0 20px 40px rgba(15, 23, 42, 0.12),
+  --editor-shadow-xl: 0 20px 40px rgba(15, 23, 42, 0.12),
     0 4px 8px rgba(15, 23, 42, 0.06);
 
   /* Motion */
-  --re-motion-fast: 120ms;
-  --re-motion-base: 150ms;
-  --re-motion-slow: 220ms;
-  --re-ease: cubic-bezier(0.2, 0, 0.1, 1);
+  --editor-motion-fast: 120ms;
+  --editor-motion-base: 150ms;
+  --editor-motion-slow: 220ms;
+  --editor-ease: cubic-bezier(0.2, 0, 0.1, 1);
 
   /* Focus ring */
-  --re-ring-color: var(--re-color-azure-05);
-  --re-ring-offset: 2px;
-  --re-ring-width: 2px;
-  --re-ring: 0 0 0 var(--re-ring-width) var(--re-ring-color);
+  --editor-ring-color: var(--editor-color-azure-05);
+  --editor-ring-offset: 2px;
+  --editor-ring-width: 2px;
+  --editor-ring: 0 0 0 var(--editor-ring-width) var(--editor-ring-color);
 
   /* Semantic surface/border tokens (light) */
-  --re-surface-app: #fafafb;
-  --re-surface-panel: #ffffff;
-  --re-surface-raised: #ffffff;
-  --re-surface-sunken: #f4f5f7;
-  --re-surface-hover: var(--re-color-azure-11);
+  --editor-surface-app: #fafafb;
+  --editor-surface-panel: #ffffff;
+  --editor-surface-raised: #ffffff;
+  --editor-surface-sunken: #f4f5f7;
+  --editor-surface-hover: var(--editor-color-azure-11);
 
-  --re-border-subtle: #ececf0;
-  --re-border-default: #e2e3e8;
-  --re-border-strong: #cfd1d8;
+  --editor-border-subtle: #ececf0;
+  --editor-border-default: #e2e3e8;
+  --editor-border-strong: #cfd1d8;
 
-  --re-text-primary: #1b1d22;
-  --re-text-secondary: #555863;
-  --re-text-tertiary: #878a93;
-  --re-text-inverse: #ffffff;
-  --re-text-accent: var(--re-color-azure-04);
+  --editor-text-primary: #1b1d22;
+  --editor-text-secondary: #555863;
+  --editor-text-tertiary: #878a93;
+  --editor-text-inverse: #ffffff;
+  --editor-text-accent: var(--editor-color-azure-04);
 
-  --re-accent: var(--re-color-azure-05);
-  --re-accent-strong: var(--re-color-azure-04);
-  --re-accent-soft: var(--re-color-azure-11);
+  --editor-accent: var(--editor-color-azure-05);
+  --editor-accent-strong: var(--editor-color-azure-04);
+  --editor-accent-soft: var(--editor-color-azure-11);
 
   /* Global-component accent (purple). Used to mark synced instances of
      `global: true` components whose props come from data.globals — signals
      that edits propagate across every page where the instance is synced.
      Mirrors the accent token structure. */
-  --re-color-global: #7c3aed;
-  --re-color-global-strong: #5b21b6;
-  --re-color-global-soft: #f3e8ff;
+  --editor-color-global: #7c3aed;
+  --editor-color-global-strong: #5b21b6;
+  --editor-color-global-soft: #f3e8ff;
 
   /* Neutral primary (shadcn-style): dark in light theme, light in dark theme.
      Use for strong high-contrast surfaces like the action bar and Publish
      button — inverts with theme instead of tracking the blue accent. */
-  --re-primary: #1b1d22;
-  --re-primary-hover: #2a2d34;
-  --re-primary-foreground: #ffffff;
+  --editor-primary: #1b1d22;
+  --editor-primary-hover: #2a2d34;
+  --editor-primary-foreground: #ffffff;
 }
 
 /* Warmer, slightly-tinted greys (overrides of base palette) */
 :root {
-  --re-color-grey-01: #1b1d22;
-  --re-color-grey-02: #2a2d34;
-  --re-color-grey-03: #42454d;
-  --re-color-grey-04: #555863;
-  --re-color-grey-05: #747780;
-  --re-color-grey-06: #9093a0;
-  --re-color-grey-07: #abaeba;
-  --re-color-grey-08: #c5c7d0;
-  --re-color-grey-09: #dcdee3;
-  --re-color-grey-10: #eceef2;
-  --re-color-grey-11: #f4f5f7;
-  --re-color-grey-12: #fafafb;
+  --editor-color-grey-01: #1b1d22;
+  --editor-color-grey-02: #2a2d34;
+  --editor-color-grey-03: #42454d;
+  --editor-color-grey-04: #555863;
+  --editor-color-grey-05: #747780;
+  --editor-color-grey-06: #9093a0;
+  --editor-color-grey-07: #abaeba;
+  --editor-color-grey-08: #c5c7d0;
+  --editor-color-grey-09: #dcdee3;
+  --editor-color-grey-10: #eceef2;
+  --editor-color-grey-11: #f4f5f7;
+  --editor-color-grey-12: #fafafb;
 }
 
 /* Dark mode token overrides — applied at `.Editor[data-theme="dark"]` root so
@@ -86,67 +86,67 @@
    on its own. Dark mode is driven by the theme toggle (stored in
    localStorage) which also reflects system preference when set to "system". */
 .Editor[data-theme="dark"] {
-  color: var(--re-text-primary);
-    --re-surface-app: #0f1115;
-    --re-surface-panel: #161a20;
-    --re-surface-raised: #1c2028;
-    --re-surface-sunken: #0b0d11;
-    --re-surface-hover: #1f2834;
+  color: var(--editor-text-primary);
+    --editor-surface-app: #0f1115;
+    --editor-surface-panel: #161a20;
+    --editor-surface-raised: #1c2028;
+    --editor-surface-sunken: #0b0d11;
+    --editor-surface-hover: #1f2834;
 
-    --re-border-subtle: #1f232b;
-    --re-border-default: #262c35;
-    --re-border-strong: #353c48;
+    --editor-border-subtle: #1f232b;
+    --editor-border-default: #262c35;
+    --editor-border-strong: #353c48;
 
-    --re-text-primary: #e7e9ee;
-    --re-text-secondary: #a7abb5;
-    --re-text-tertiary: #8f939e;
-    --re-text-inverse: #0f1115;
-    --re-text-accent: #8ab3ee;
+    --editor-text-primary: #e7e9ee;
+    --editor-text-secondary: #a7abb5;
+    --editor-text-tertiary: #8f939e;
+    --editor-text-inverse: #0f1115;
+    --editor-text-accent: #8ab3ee;
 
-    --re-accent: #6f9fe3;
-    --re-accent-strong: #8ab3ee;
-    --re-accent-soft: #192233;
+    --editor-accent: #6f9fe3;
+    --editor-accent-strong: #8ab3ee;
+    --editor-accent-soft: #192233;
 
-    --re-color-global: #a78bfa;
-    --re-color-global-strong: #c4b5fd;
-    --re-color-global-soft: #2e1065;
+    --editor-color-global: #a78bfa;
+    --editor-color-global-strong: #c4b5fd;
+    --editor-color-global-soft: #2e1065;
 
-    --re-primary: #f4f5f7;
-    --re-primary-hover: #dcdee3;
-    --re-primary-foreground: #0f1115;
+    --editor-primary: #f4f5f7;
+    --editor-primary-hover: #dcdee3;
+    --editor-primary-foreground: #0f1115;
 
-    --re-ring-color: #8ab3ee;
+    --editor-ring-color: #8ab3ee;
 
-    --re-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --re-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.5);
-    --re-shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.55);
-    --re-shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.6);
+    --editor-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --editor-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.5);
+    --editor-shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.55);
+    --editor-shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.6);
 
     /* Remap grey scale to dark-mode-appropriate values so existing components
-       (that reference --re-color-grey-*) still look correct. */
-    --re-color-grey-01: #f4f5f7;
-    --re-color-grey-02: #e7e9ee;
-    --re-color-grey-03: #cfd1d8;
-    --re-color-grey-04: #a7abb5;
-    --re-color-grey-05: #8a8e99;
-    --re-color-grey-06: #70747f;
-    --re-color-grey-07: #555863;
-    --re-color-grey-08: #3a3e48;
-    --re-color-grey-09: #262c35;
-    --re-color-grey-10: #1c2028;
-    --re-color-grey-11: #161a20;
-    --re-color-grey-12: #0f1115;
+       (that reference --editor-color-grey-*) still look correct. */
+    --editor-color-grey-01: #f4f5f7;
+    --editor-color-grey-02: #e7e9ee;
+    --editor-color-grey-03: #cfd1d8;
+    --editor-color-grey-04: #a7abb5;
+    --editor-color-grey-05: #8a8e99;
+    --editor-color-grey-06: #70747f;
+    --editor-color-grey-07: #555863;
+    --editor-color-grey-08: #3a3e48;
+    --editor-color-grey-09: #262c35;
+    --editor-color-grey-10: #1c2028;
+    --editor-color-grey-11: #161a20;
+    --editor-color-grey-12: #0f1115;
 
-    --re-color-white: #0f1115;
-    --re-color-black: #e7e9ee;
+    --editor-color-white: #0f1115;
+    --editor-color-black: #e7e9ee;
 
-    --re-color-azure-11: #192233;
-    --re-color-azure-12: #121a28;
-    --re-color-azure-10: #1e2a40;
-    --re-color-azure-09: #24344f;
-    --re-color-azure-08: #2c4166;
-    --re-color-azure-07: #3a5684;
-    --re-color-azure-06: #5375a3;
-    --re-color-azure-05: #6f9fe3;
-    --re-color-azure-04: #8ab3ee;
+    --editor-color-azure-11: #192233;
+    --editor-color-azure-12: #121a28;
+    --editor-color-azure-10: #1e2a40;
+    --editor-color-azure-09: #24344f;
+    --editor-color-azure-08: #2c4166;
+    --editor-color-azure-07: #3a5684;
+    --editor-color-azure-06: #5375a3;
+    --editor-color-azure-05: #6f9fe3;
+    --editor-color-azure-04: #8ab3ee;
 }

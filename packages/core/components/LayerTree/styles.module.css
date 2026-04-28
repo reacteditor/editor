@@ -1,7 +1,7 @@
 .LayerTree {
-  color: var(--re-text-primary);
-  font-family: var(--re-font-family);
-  font-size: var(--re-font-size-xxs);
+  color: var(--editor-text-primary);
+  font-family: var(--editor-font-family);
+  font-size: var(--editor-font-size-xxs);
   margin: 0;
   position: relative;
   list-style: none;
@@ -9,18 +9,18 @@
 }
 
 .LayerTree-zoneTitle {
-  color: var(--re-color-azure-05);
-  font-family: var(--re-font-family-monospaced);
-  font-size: var(--re-font-size-xxxs);
+  color: var(--editor-color-azure-05);
+  font-family: var(--editor-font-family-monospaced);
+  font-size: var(--editor-font-size-xxxs);
 }
 
 .LayerTree-helper {
   text-align: center;
-  color: var(--re-accent-strong);
-  background: var(--re-accent-soft);
-  border-radius: var(--re-radius-md);
-  font-family: var(--re-font-family-monospaced);
-  font-size: var(--re-font-size-xxxs);
+  color: var(--editor-accent-strong);
+  background: var(--editor-accent-soft);
+  border-radius: var(--editor-radius-md);
+  font-family: var(--editor-font-family-monospaced);
+  font-size: var(--editor-font-size-xxxs);
   padding: 8px;
   margin: 4px 4px 8px;
 }
@@ -28,15 +28,15 @@
 .Layer {
   position: relative;
   border: 1px solid transparent;
-  border-radius: var(--re-radius-md);
+  border-radius: var(--editor-radius-md);
 }
 
 .Layer-inner {
   border: 1px solid transparent;
-  border-radius: var(--re-radius-md);
-  transition: background-color var(--re-motion-fast) var(--re-ease),
-    color var(--re-motion-fast) var(--re-ease),
-    border-color var(--re-motion-fast) var(--re-ease);
+  border-radius: var(--editor-radius-md);
+  transition: background-color var(--editor-motion-fast) var(--editor-ease),
+    color var(--editor-motion-fast) var(--editor-ease),
+    border-color var(--editor-motion-fast) var(--editor-ease);
 }
 
 .Layer--containsZone > .Layer-inner {
@@ -47,7 +47,7 @@
   align-items: center;
   background: none;
   border: 0;
-  border-radius: var(--re-radius-md);
+  border-radius: var(--editor-radius-md);
   color: inherit;
   cursor: pointer;
   display: flex;
@@ -59,27 +59,27 @@
 
 .Layer-clickable:focus-visible {
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: var(--editor-ring);
   position: relative;
   z-index: 1;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .Layer:not(.Layer--isSelected) > .Layer-inner:hover {
-    background: var(--re-surface-hover);
-    color: var(--re-text-accent);
+    background: var(--editor-surface-hover);
+    color: var(--editor-text-accent);
     transition: none;
   }
 }
 
 .Layer--isSelected > .Layer-inner {
-  background: var(--re-accent-soft);
-  color: var(--re-text-accent);
+  background: var(--editor-accent-soft);
+  color: var(--editor-text-accent);
 }
 
 .Layer--isSelected > .Layer-inner .Layer-icon,
 .Layer--isSelected > .Layer-inner .Layer-zoneIcon {
-  color: var(--re-accent-strong);
+  color: var(--editor-accent-strong);
 }
 
 .Layer-chevron {
@@ -89,8 +89,8 @@
   flex: 0 0 auto;
   width: 12px;
   margin-inline-end: 4px;
-  transition: transform var(--re-motion-base) var(--re-ease);
-  color: var(--re-text-tertiary);
+  transition: transform var(--editor-motion-base) var(--editor-ease);
+  color: var(--editor-text-tertiary);
 }
 
 .Layer--isSelected > .Layer-inner > .Layer-clickable > .Layer-chevron,
@@ -102,7 +102,7 @@
   display: none;
   margin-inline-start: 14px;
   padding-inline-start: 16px;
-  border-inline-start: 1px solid var(--re-border-subtle);
+  border-inline-start: 1px solid var(--editor-border-subtle);
 }
 
 .Layer--isSelected > .Layer-zones,
@@ -134,13 +134,13 @@
 }
 
 .Layer-icon {
-  color: var(--re-accent);
+  color: var(--editor-accent);
   display: flex;
   align-items: center;
 }
 
 .Layer-zoneIcon {
-  color: var(--re-text-tertiary);
+  color: var(--editor-text-tertiary);
   display: flex;
   align-items: center;
 }
@@ -148,21 +148,21 @@
 /* Global-marked components render with the purple accent everywhere — icon,
    label, selected state — so users see at a glance that edits propagate. */
 .Layer--isGlobal > .Layer-inner .Layer-icon {
-  color: var(--re-color-global);
+  color: var(--editor-color-global);
 }
 
 .Layer--isGlobal > .Layer-inner .Layer-name {
-  color: var(--re-color-global);
+  color: var(--editor-color-global);
 }
 
 .Layer--isGlobal.Layer--isSelected > .Layer-inner {
-  background: var(--re-color-global-soft);
-  color: var(--re-color-global-strong);
+  background: var(--editor-color-global-soft);
+  color: var(--editor-color-global-strong);
 }
 
 .Layer--isGlobal.Layer--isSelected > .Layer-inner .Layer-icon,
 .Layer--isGlobal.Layer--isSelected > .Layer-inner .Layer-name {
-  color: var(--re-color-global-strong);
+  color: var(--editor-color-global-strong);
 }
 
 /* Unlinked-from-shared: instance opted out of data.globals sync. Renders in
@@ -173,7 +173,7 @@
 }
 
 .Layer-unlinkedGlyph {
-  color: var(--re-color-global);
+  color: var(--editor-color-global);
   display: flex;
   align-items: center;
   margin-inline-start: 4px;
@@ -181,6 +181,6 @@
 }
 
 .Layer--isUnlinked.Layer--isSelected > .Layer-inner .Layer-unlinkedGlyph {
-  color: var(--re-accent-strong);
+  color: var(--editor-accent-strong);
   opacity: 1;
 }

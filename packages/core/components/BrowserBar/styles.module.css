@@ -1,56 +1,55 @@
 .BrowserBar {
   align-items: center;
-  background: var(--re-surface-panel);
-  border: 1px solid var(--re-border-subtle);
+  background: var(--editor-surface-panel);
+  border: 1px solid var(--editor-border-subtle);
   border-bottom: 0;
-  border-radius: var(--re-radius-md) var(--re-radius-md) 0 0;
+  border-radius: var(--editor-radius-md) var(--editor-radius-md) 0 0;
   display: flex;
   gap: 8px;
   padding: 8px 10px;
   width: 100%;
 }
 
-/* The URL trigger is a full-flex pill. When the Select is active it IS the
-   trigger button; when it's a static fallback it's just a div with the same
-   look. Overrides the Select defaults to strip the border / bg. */
+/* The URL trigger is a full-flex pill. With the Combobox it's a <form>
+   wrapping the Globe icon and a real <input>; the static fallback is a
+   <div> with the same look. */
 .BrowserBar-urlTrigger {
-  align-items: center !important;
-  background: var(--re-surface-sunken) !important;
-  border: 1px solid var(--re-border-subtle) !important;
-  border-radius: 9999px !important;
-  color: var(--re-text-primary) !important;
-  display: inline-flex !important;
-  flex: 1 !important;
-  font-size: var(--re-font-size-xxs) !important;
-  gap: 8px !important;
-  justify-content: flex-start !important;
-  min-width: 0 !important;
-  overflow: hidden !important;
-  padding: 4px 12px !important;
-  width: 100% !important;
+  align-items: center;
+  background: var(--editor-surface-sunken);
+  border: 1px solid var(--editor-border-subtle);
+  border-radius: 9999px;
+  color: var(--editor-text-primary);
+  display: inline-flex;
+  flex: 1;
+  font-size: var(--editor-font-size-xxs);
+  gap: 8px;
+  justify-content: flex-start;
+  min-width: 0;
+  overflow: hidden;
+  padding: 4px 12px;
+  width: 100%;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .BrowserBar-urlTrigger:hover {
-    background: var(--re-surface-hover) !important;
-    border-color: var(--re-border-default) !important;
+    background: var(--editor-surface-hover);
+    border-color: var(--editor-border-default);
   }
 }
 
-.BrowserBar-urlTrigger[data-state="open"],
-.BrowserBar-urlTrigger:focus-visible {
-  border-color: var(--re-border-default) !important;
-  box-shadow: var(--re-ring) !important;
-  outline: none !important;
+.BrowserBar-urlTrigger:focus-within {
+  border-color: var(--editor-border-default);
+  box-shadow: var(--editor-ring);
+  outline: none;
 }
 
 .BrowserBar-urlIcon {
-  color: var(--re-text-tertiary);
+  color: var(--editor-text-tertiary);
   flex-shrink: 0;
 }
 
 .BrowserBar-urlText {
-  color: var(--re-text-primary);
+  color: var(--editor-text-primary);
   display: inline-flex;
   flex: 1;
   gap: 8px;
@@ -61,22 +60,23 @@
   white-space: nowrap;
 }
 
-.BrowserBar-urlPath {
-  color: var(--re-text-tertiary);
+.BrowserBar-urlInput {
+  color: var(--editor-text-primary);
+  flex: 1;
+  min-width: 0;
+}
+
+.BrowserBar-itemPath {
+  color: var(--editor-text-primary);
   flex-shrink: 0;
 }
 
-.BrowserBar-urlTitle {
-  color: var(--re-text-primary);
+.BrowserBar-itemTitle {
+  color: var(--editor-text-tertiary);
+  margin-left: auto;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-/* Hide the Select primitive's trailing chevron — the URL bar is a text-like
-   input, not a visible dropdown. Keyboard users still get the popover on
-   Enter/ArrowDown via Radix. */
-.BrowserBar-urlTrigger > svg:last-child {
-  display: none;
+  white-space: nowrap;
 }
 
 .BrowserBar-actions {
@@ -87,6 +87,6 @@
 }
 
 .BrowserBar-deviceIcon {
-  color: var(--re-text-primary);
+  color: var(--editor-text-primary);
   display: inline-flex;
 }

@@ -1,71 +1,71 @@
-/* shadcn-inspired Select primitive, restyled with fe-* design tokens. */
+/* shadcn-inspired Select primitive, restyled with editor-* design tokens. */
 
-.FeSelect-trigger {
+.EditorSelect-trigger {
   align-items: center;
-  background: var(--re-surface-panel);
-  border: 1px solid var(--re-border-subtle);
-  border-radius: var(--re-radius-md);
-  color: var(--re-text-primary);
+  background: var(--editor-surface-panel);
+  border: 1px solid var(--editor-border-subtle);
+  border-radius: var(--editor-radius-md);
+  color: var(--editor-text-primary);
   cursor: pointer;
   display: inline-flex;
   font: inherit;
-  font-size: var(--re-font-size-xxs);
+  font-size: var(--editor-font-size-xxs);
   gap: 8px;
   justify-content: space-between;
   outline: none;
   padding: 9px 10px;
-  transition: background-color var(--re-motion-fast) var(--re-ease),
-    border-color var(--re-motion-fast) var(--re-ease),
-    box-shadow var(--re-motion-fast) var(--re-ease);
+  transition: background-color var(--editor-motion-fast) var(--editor-ease),
+    border-color var(--editor-motion-fast) var(--editor-ease),
+    box-shadow var(--editor-motion-fast) var(--editor-ease);
   white-space: nowrap;
   width: fit-content;
 }
 
-.FeSelect-trigger[data-size="sm"] {
+.EditorSelect-trigger[data-size="sm"] {
   padding: 6px 8px;
 }
 
-.FeSelect-trigger[data-placeholder] {
-  color: var(--re-text-tertiary);
+.EditorSelect-trigger[data-placeholder] {
+  color: var(--editor-text-tertiary);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .FeSelect-trigger:hover {
-    background: var(--re-surface-hover);
-    border-color: var(--re-border-default);
+  .EditorSelect-trigger:hover {
+    background: var(--editor-surface-hover);
+    border-color: var(--editor-border-default);
   }
 }
 
-.FeSelect-trigger:focus-visible,
-.FeSelect-trigger[data-state="open"] {
-  border-color: var(--re-border-default);
-  box-shadow: var(--re-ring);
+.EditorSelect-trigger:focus-visible,
+.EditorSelect-trigger[data-state="open"] {
+  border-color: var(--editor-border-default);
+  box-shadow: var(--editor-ring);
 }
 
-.FeSelect-trigger:disabled {
+.EditorSelect-trigger:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
 
-.FeSelect-trigger[aria-invalid="true"] {
-  border-color: var(--re-color-red-05, #d04040);
+.EditorSelect-trigger[aria-invalid="true"] {
+  border-color: var(--editor-color-red-05, #d04040);
 }
 
-.FeSelect-triggerIcon {
-  color: var(--re-text-tertiary);
+.EditorSelect-triggerIcon {
+  color: var(--editor-text-tertiary);
   flex-shrink: 0;
   pointer-events: none;
 }
 
 /* Content panel (the dropdown) */
-.FeSelect-content {
-  background: var(--re-surface-raised);
-  border: 1px solid var(--re-border-subtle);
-  border-radius: var(--re-radius-md);
-  box-shadow: var(--re-shadow-md);
-  color: var(--re-text-primary);
-  font-family: var(--re-font-family);
-  font-size: var(--re-font-size-xxs);
+.EditorSelect-content {
+  background: var(--editor-surface-raised);
+  border: 1px solid var(--editor-border-subtle);
+  border-radius: var(--editor-radius-md);
+  box-shadow: var(--editor-shadow-md);
+  color: var(--editor-text-primary);
+  font-family: var(--editor-font-family);
+  font-size: var(--editor-font-size-xxs);
   max-height: var(--radix-select-content-available-height);
   min-width: 9rem;
   overflow: hidden;
@@ -73,30 +73,30 @@
   z-index: 50;
 }
 
-.FeSelect-content[data-position="popper"][data-side="bottom"] {
+.EditorSelect-content[data-position="popper"][data-side="bottom"] {
   margin-top: 4px;
 }
 
-.FeSelect-content[data-position="popper"][data-side="top"] {
+.EditorSelect-content[data-position="popper"][data-side="top"] {
   margin-bottom: 4px;
 }
 
-.FeSelect-viewport {
+.EditorSelect-viewport {
   padding: 4px;
 }
 
-.FeSelect-content[data-position="popper"] .FeSelect-viewport {
+.EditorSelect-content[data-position="popper"] .EditorSelect-viewport {
   min-width: var(--radix-select-trigger-width);
 }
 
 /* Items */
-.FeSelect-item {
+.EditorSelect-item {
   align-items: center;
-  border-radius: var(--re-radius-sm);
+  border-radius: var(--editor-radius-sm);
   cursor: pointer;
   display: flex;
   font: inherit;
-  font-size: var(--re-font-size-xxs);
+  font-size: var(--editor-font-size-xxs);
   gap: 8px;
   outline: none;
   padding: 6px 8px 6px 28px;
@@ -104,21 +104,21 @@
   user-select: none;
 }
 
-.FeSelect-item[data-highlighted],
-.FeSelect-item[data-state="checked"] {
-  background: var(--re-accent-soft);
-  color: var(--re-text-accent);
+.EditorSelect-item[data-highlighted],
+.EditorSelect-item[data-state="checked"] {
+  background: var(--editor-accent-soft);
+  color: var(--editor-text-accent);
 }
 
-.FeSelect-item[data-disabled] {
+.EditorSelect-item[data-disabled] {
   cursor: not-allowed;
   opacity: 0.5;
   pointer-events: none;
 }
 
-.FeSelect-itemIndicator {
+.EditorSelect-itemIndicator {
   align-items: center;
-  color: var(--re-accent-strong);
+  color: var(--editor-accent-strong);
   display: inline-flex;
   justify-content: center;
   left: 8px;
@@ -128,31 +128,31 @@
 }
 
 /* Label / group / separator */
-.FeSelect-group {
+.EditorSelect-group {
   padding: 4px 0;
 }
 
-.FeSelect-label {
-  color: var(--re-text-tertiary);
-  font-size: var(--re-font-size-xxxs);
+.EditorSelect-label {
+  color: var(--editor-text-tertiary);
+  font-size: var(--editor-font-size-xxxs);
   font-weight: 600;
   letter-spacing: 0.04em;
   padding: 6px 8px 4px;
   text-transform: uppercase;
 }
 
-.FeSelect-separator {
-  background: var(--re-border-subtle);
+.EditorSelect-separator {
+  background: var(--editor-border-subtle);
   height: 1px;
   margin: 4px;
   pointer-events: none;
 }
 
 /* Scroll buttons (only appear when content overflows) */
-.FeSelect-scrollButton {
+.EditorSelect-scrollButton {
   align-items: center;
-  background: var(--re-surface-raised);
-  color: var(--re-text-tertiary);
+  background: var(--editor-surface-raised);
+  color: var(--editor-text-tertiary);
   cursor: default;
   display: flex;
   justify-content: center;

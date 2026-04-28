@@ -2,7 +2,7 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  color: var(--re-text-primary);
+  color: var(--editor-text-primary);
 }
 
 .SidebarSection:last-of-type {
@@ -10,10 +10,10 @@
 }
 
 .SidebarSection-title {
-  background: var(--re-surface-panel);
+  background: var(--editor-surface-panel);
   padding: 12px 16px;
-  border-bottom: 1px solid var(--re-border-subtle);
-  border-top: 1px solid var(--re-border-subtle);
+  border-bottom: 1px solid var(--editor-border-subtle);
+  border-top: 1px solid var(--editor-border-subtle);
   overflow-x: auto;
 }
 
@@ -33,29 +33,29 @@
 .SidebarSection-breadcrumbLabel {
   background: none;
   border: 0;
-  border-radius: var(--re-radius-sm);
-  color: var(--re-text-accent);
+  border-radius: var(--editor-radius-sm);
+  color: var(--editor-text-accent);
   cursor: pointer;
   font: inherit;
   flex-shrink: 0;
   padding: 0;
-  transition: color var(--re-motion-fast) var(--re-ease);
+  transition: color var(--editor-motion-fast) var(--editor-ease);
 }
 
 .SidebarSection-breadcrumbLabel:focus-visible {
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: var(--editor-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .SidebarSection-breadcrumbLabel:hover {
-    color: var(--re-accent-strong);
+    color: var(--editor-accent-strong);
     transition: none;
   }
 }
 
 .SidebarSection-breadcrumbLabel:active {
-  color: var(--re-accent-strong);
+  color: var(--editor-accent-strong);
   transition: none;
 }
 
@@ -86,7 +86,7 @@
 }
 
 .SidebarSection-loadingOverlay {
-  background: var(--re-surface-panel);
+  background: var(--editor-surface-panel);
   display: flex;
   justify-content: center;
   align-items: center;

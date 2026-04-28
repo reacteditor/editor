@@ -17,9 +17,9 @@
  */
 
 .Editor {
-  --re-space-px: 16px;
-  color: var(--re-text-primary);
-  font-family: var(--re-font-family);
+  --editor-space-px: 16px;
+  color: var(--editor-text-primary);
+  font-family: var(--editor-font-family);
   overflow-x: hidden;
 }
 
@@ -39,22 +39,22 @@
 }
 
 .EditorLayout-inner {
-  --re-frame-width: auto;
-  --re-side-nav-width: min-content;
-  --re-side-bar-width: 0px;
-  --re-left-side-bar-width: var(
-    --re-user-left-side-bar-width,
-    var(--re-side-bar-width)
+  --editor-frame-width: auto;
+  --editor-side-nav-width: min-content;
+  --editor-side-bar-width: 0px;
+  --editor-left-side-bar-width: var(
+    --editor-user-left-side-bar-width,
+    var(--editor-side-bar-width)
   );
-  --re-right-side-bar-width: var(
-    --re-user-right-side-bar-width,
-    var(--re-side-bar-width)
+  --editor-right-side-bar-width: var(
+    --editor-user-right-side-bar-width,
+    var(--editor-side-bar-width)
   );
-  background-color: var(--re-surface-app);
+  background-color: var(--editor-surface-app);
   display: grid;
   grid-template-areas: "editor" "mobilepanel" "left" "right" "sidenav";
-  grid-template-columns: var(--re-frame-width);
-  grid-template-rows: auto 0 0 0 var(--re-side-nav-width);
+  grid-template-columns: var(--editor-frame-width);
+  grid-template-rows: auto 0 0 0 var(--editor-side-nav-width);
   height: 100%;
   position: relative;
   transition: none;
@@ -64,38 +64,38 @@
 
 @media (min-width: 638px) {
   .EditorLayout-inner {
-    --re-side-nav-width: 44px;
+    --editor-side-nav-width: 44px;
     grid-template-areas: "sidenav left editor right";
-    grid-template-columns: var(--re-side-nav-width) 0 var(--re-frame-width) 0;
+    grid-template-columns: var(--editor-side-nav-width) 0 var(--editor-frame-width) 0;
     grid-template-rows: auto;
   }
 
   .Editor--hidePlugins .EditorLayout-inner {
-    --re-side-nav-width: 0;
+    --editor-side-nav-width: 0;
   }
 }
 
 .EditorLayout--mounted .EditorLayout-inner {
-  --re-side-bar-width: 186px;
+  --editor-side-bar-width: 186px;
 }
 
 .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
   .EditorLayout-inner {
-  grid-template-rows: auto 60% 0 0 var(--re-side-nav-width);
+  grid-template-rows: auto 60% 0 0 var(--editor-side-nav-width);
 }
 
 .EditorLayout--mobilePanelCustomHeight.EditorLayout--leftSideBarVisible
   .EditorLayout-inner {
-  grid-template-rows: auto var(--re-mobile-panel-height, 60%) 0 0
-    var(--re-side-nav-width);
+  grid-template-rows: auto var(--editor-mobile-panel-height, 60%) 0 0
+    var(--editor-side-nav-width);
 }
 
 @media (min-width: 638px) {
   .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
     .EditorLayout-inner {
     grid-template-columns:
-      var(--re-side-nav-width) var(--re-left-side-bar-width) var(
-        --re-frame-width
+      var(--editor-side-nav-width) var(--editor-left-side-bar-width) var(
+        --editor-frame-width
       )
       0;
     grid-template-rows: auto;
@@ -104,7 +104,7 @@
 
 .EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible
   .EditorLayout-inner {
-  grid-template-rows: auto min-content 0 0 var(--re-side-nav-width);
+  grid-template-rows: auto min-content 0 0 var(--editor-side-nav-width);
 }
 
 @media (min-width: 638px) {
@@ -115,8 +115,8 @@
   .EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible
     .EditorLayout-inner {
     grid-template-columns:
-      var(--re-side-nav-width) var(--re-left-side-bar-width) var(
-        --re-frame-width
+      var(--editor-side-nav-width) var(--editor-left-side-bar-width) var(
+        --editor-frame-width
       )
       0;
     grid-template-rows: auto;
@@ -126,8 +126,8 @@
 @media (min-width: 638px) {
   .EditorLayout--rightSideBarVisible .EditorLayout-inner {
     grid-template-columns:
-      var(--re-side-nav-width) 0 var(--re-frame-width)
-      var(--re-right-side-bar-width);
+      var(--editor-side-nav-width) 0 var(--editor-frame-width)
+      var(--editor-right-side-bar-width);
   }
 }
 
@@ -135,58 +135,58 @@
   .EditorLayout--leftSideBarVisible.EditorLayout--rightSideBarVisible
     .EditorLayout-inner {
     grid-template-columns:
-      var(--re-side-nav-width) var(--re-left-side-bar-width) var(
-        --re-frame-width
+      var(--editor-side-nav-width) var(--editor-left-side-bar-width) var(
+        --editor-frame-width
       )
-      var(--re-right-side-bar-width);
+      var(--editor-right-side-bar-width);
   }
 }
 
 @media (min-width: 458px) {
   .EditorLayout-mounted .EditorLayout-inner {
-    --re-frame-width: minmax(266px, auto);
+    --editor-frame-width: minmax(266px, auto);
   }
 }
 
 @media (min-width: 638px) {
   .EditorLayout .EditorLayout-inner {
-    --re-side-bar-width: minmax(186px, 250px);
+    --editor-side-bar-width: minmax(186px, 250px);
   }
 }
 
 @media (min-width: 766px) {
   .EditorLayout .EditorLayout-inner {
-    --re-frame-width: auto;
+    --editor-frame-width: auto;
   }
 }
 
 @media (min-width: 990px) {
   .EditorLayout .EditorLayout-inner {
-    --re-side-bar-width: 256px;
+    --editor-side-bar-width: 256px;
   }
 }
 
 @media (min-width: 1198px) {
   .EditorLayout .EditorLayout-inner {
-    --re-side-bar-width: 274px;
+    --editor-side-bar-width: 274px;
   }
 }
 
 @media (min-width: 1398px) {
   .EditorLayout .EditorLayout-inner {
-    --re-side-bar-width: 290px;
+    --editor-side-bar-width: 290px;
   }
 }
 
 @media (min-width: 1598px) {
   .EditorLayout .EditorLayout-inner {
-    --re-side-bar-width: 320px;
+    --editor-side-bar-width: 320px;
   }
 }
 
 .EditorLayout-nav {
-  border-top: 1px solid var(--re-border-subtle);
-  background-color: var(--re-surface-panel);
+  border-top: 1px solid var(--editor-border-subtle);
+  background-color: var(--editor-surface-panel);
   grid-area: sidenav;
   overflow: hidden;
   width: 100%;
@@ -195,15 +195,15 @@
 @media (min-width: 638px) {
   .EditorLayout-nav {
     border-top: 0;
-    border-right: 1px solid var(--re-border-subtle);
+    border-right: 1px solid var(--editor-border-subtle);
     box-sizing: border-box;
   }
 }
 
 .Editor-fieldSideBarToolbar {
   align-items: center;
-  background: var(--re-surface-panel);
-  border-bottom: 1px solid var(--re-border-subtle);
+  background: var(--editor-surface-panel);
+  border-bottom: 1px solid var(--editor-border-subtle);
   display: flex;
   gap: 8px;
   justify-content: space-between;
@@ -211,7 +211,7 @@
 }
 
 .Editor-fieldSideBarHistory {
-  color: var(--re-text-tertiary);
+  color: var(--editor-text-tertiary);
   display: flex;
   gap: 2px;
 }
@@ -224,8 +224,8 @@
 
 .EditorLayout-mobilePanel {
   grid-area: mobilepanel;
-  background: var(--re-surface-panel);
-  border-block-start: 1px solid var(--re-border-subtle);
+  background: var(--editor-surface-panel);
+  border-block-start: 1px solid var(--editor-border-subtle);
   display: none;
   flex-direction: column;
   overflow: hidden;
@@ -267,7 +267,7 @@
   width: 36px;
   height: 4px;
   border-radius: 2px;
-  background-color: var(--re-border-subtle);
+  background-color: var(--editor-border-subtle);
 }
 
 .EditorPluginTab {

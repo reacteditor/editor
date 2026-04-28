@@ -56,15 +56,15 @@
   text-align: center;
   align-items: center;
   justify-content: center;
-  color: var(--re-text-secondary);
+  color: var(--editor-text-secondary);
   display: flex;
   text-decoration: none;
   cursor: pointer;
-  border-radius: var(--re-radius-md);
+  border-radius: var(--editor-radius-md);
   padding: 6px;
   box-sizing: border-box;
-  transition: background-color var(--re-motion-fast) var(--re-ease),
-    color var(--re-motion-fast) var(--re-ease);
+  transition: background-color var(--editor-motion-fast) var(--editor-ease),
+    color var(--editor-motion-fast) var(--editor-ease);
   border: 0;
   width: 38px;
   height: 38px;
@@ -119,13 +119,13 @@
 }
 
 .NavItem--active > .NavItem-link {
-  background-color: var(--re-accent-soft);
-  color: var(--re-text-accent);
+  background-color: var(--editor-accent-soft);
+  color: var(--editor-text-accent);
 }
 
 .NavItem:not(.NavItem--active) > .NavItem-link:hover {
-  background-color: var(--re-surface-hover);
-  color: var(--re-text-accent);
+  background-color: var(--editor-surface-hover);
+  color: var(--editor-text-accent);
 }
 
 @media (min-width: 638px) {

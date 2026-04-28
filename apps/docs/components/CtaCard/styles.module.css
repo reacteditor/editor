@@ -1,5 +1,5 @@
 .CtaCard {
-  background-color: var(--re-color-azure-01);
+  background-color: var(--editor-color-azure-01);
   background-image: url(https://res.cloudinary.com/measuredco/image/upload/v1732634892/site/site-background-top_v8ll2o.png),
     url(https://res.cloudinary.com/measuredco/image/upload/v1732635074/site/site-background-repeat_kjbjx5.png);
   background-position: center -1rem, top;
@@ -12,7 +12,7 @@
   max-width: 544px;
   padding: 32px;
   text-align: left;
-  border: 1px solid var(--re-color-grey-03);
+  border: 1px solid var(--editor-color-grey-03);
   border-radius: 8px;
   margin-top: 32px;
 }

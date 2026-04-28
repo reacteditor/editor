@@ -17,13 +17,13 @@
 .RichTextEditor :global(.rich-text blockquote) {
   margin: 1em 0;
   padding: 0 1em;
-  border-left: 4px solid var(--re-border-default);
+  border-left: 4px solid var(--editor-border-default);
 }
 
 .RichTextEditor :global(.rich-text code) {
-  background-color: var(--re-surface-sunken);
+  background-color: var(--editor-surface-sunken);
   padding: 4px 8px;
-  border-radius: var(--re-radius-sm);
+  border-radius: var(--editor-radius-sm);
 }
 
 .RichTextEditor :global(.rich-text p:empty::before) {
@@ -48,20 +48,20 @@
 }
 
 .RichTextEditor--editor {
-  background: var(--re-surface-panel);
+  background: var(--editor-surface-panel);
   border-width: 1px;
   border-style: solid;
-  border-color: var(--re-border-default);
-  border-radius: var(--re-radius-md);
+  border-color: var(--editor-border-default);
+  border-radius: var(--editor-radius-md);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   font-family: inherit;
-  font-size: var(--re-font-size-xxs);
+  font-size: var(--editor-font-size-xxs);
   resize: vertical;
   text-align: initial;
-  transition: border-color var(--re-motion-fast) var(--re-ease),
-    box-shadow var(--re-motion-fast) var(--re-ease);
+  transition: border-color var(--editor-motion-fast) var(--editor-ease),
+    box-shadow var(--editor-motion-fast) var(--editor-ease);
   width: 100%;
   max-width: 100%;
   min-height: 128px;
@@ -100,14 +100,14 @@
 }
 
 .RichTextEditor--editor:focus-within {
-  border-color: var(--re-accent);
+  border-color: var(--editor-accent);
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: var(--editor-ring);
   transition: none;
 }
 
 .RichTextEditor--editor.RichTextEditor--disabled {
-  background: var(--re-surface-sunken);
+  background: var(--editor-surface-sunken);
 }
 
 .RichTextEditor:not(:focus-within):not(.RichTextEditor--isActive)
@@ -117,12 +117,12 @@
 }
 
 .RichTextEditor-menu {
-  border-bottom: 1px solid var(--re-border-subtle);
+  border-bottom: 1px solid var(--editor-border-subtle);
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
 .RichTextEditor--disabled .RichTextEditor-menu {
-  border-bottom: 1px solid var(--re-border-subtle);
+  border-bottom: 1px solid var(--editor-border-subtle);
 }

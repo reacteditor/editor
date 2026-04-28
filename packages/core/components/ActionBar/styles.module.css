@@ -6,20 +6,20 @@
   padding: 4px;
   padding-inline-start: 0;
   padding-inline-end: 0;
-  border-top-left-radius: var(--re-radius-lg);
-  border-top-right-radius: var(--re-radius-lg);
-  border-radius: var(--re-radius-lg);
-  background: var(--re-primary);
-  color: var(--re-primary-foreground);
-  font-family: var(--re-font-family);
+  border-top-left-radius: var(--editor-radius-lg);
+  border-top-right-radius: var(--editor-radius-lg);
+  border-radius: var(--editor-radius-lg);
+  background: var(--editor-primary);
+  color: var(--editor-primary-foreground);
+  font-family: var(--editor-font-family);
   min-height: 26px;
-  box-shadow: var(--re-shadow-md);
+  box-shadow: var(--editor-shadow-md);
 }
 
 .ActionBar-label {
-  color: var(--re-primary-foreground);
+  color: var(--editor-primary-foreground);
   opacity: 0.85;
-  font-size: var(--re-font-size-xxxs);
+  font-size: var(--editor-font-size-xxxs);
   font-weight: 500;
   padding-inline-start: 8px;
   padding-inline-end: 8px;
@@ -57,19 +57,19 @@
 .ActionBarAction {
   background: transparent;
   border: none;
-  color: var(--re-primary-foreground);
+  color: var(--editor-primary-foreground);
   opacity: 0.85;
   cursor: pointer;
   padding: 6px;
   margin-inline-start: 4px;
   margin-inline-end: 4px;
-  border-radius: var(--re-radius-sm);
+  border-radius: var(--editor-radius-sm);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity var(--re-motion-fast) var(--re-ease),
-    background-color var(--re-motion-fast) var(--re-ease);
+  transition: opacity var(--editor-motion-fast) var(--editor-ease),
+    background-color var(--editor-motion-fast) var(--editor-ease);
 }
 
 .ActionBarAction--disabled {
@@ -83,7 +83,7 @@
 
 .ActionBarAction:focus-visible {
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: var(--editor-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {

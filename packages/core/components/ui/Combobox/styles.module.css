@@ -1,0 +1,115 @@
+/* Base UI Combobox primitive, restyled with re-* design tokens.
+   Mirrors Select's visual language. */
+
+.EditorCombobox-input {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  flex: 1;
+  font: inherit;
+  font-size: var(--editor-font-size-xxs);
+  min-width: 0;
+  outline: none;
+  padding: 0;
+  width: 100%;
+}
+
+.EditorCombobox-input::placeholder {
+  color: var(--editor-text-tertiary);
+}
+
+.EditorCombobox-trigger {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--editor-text-tertiary);
+  cursor: pointer;
+  display: inline-flex;
+  flex-shrink: 0;
+  height: 20px;
+  justify-content: center;
+  outline: none;
+  padding: 0;
+  width: 20px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .EditorCombobox-trigger:hover {
+    color: var(--editor-text-primary);
+  }
+}
+
+.EditorCombobox-triggerIcon {
+  pointer-events: none;
+}
+
+.EditorCombobox-positioner {
+  z-index: 50;
+}
+
+.EditorCombobox-content {
+  background: var(--editor-surface-raised);
+  border: 1px solid var(--editor-border-subtle);
+  border-radius: var(--editor-radius-md);
+  box-shadow: var(--editor-shadow-md);
+  color: var(--editor-text-primary);
+  font-family: var(--editor-font-family);
+  font-size: var(--editor-font-size-xxs);
+  max-height: var(--available-height);
+  min-width: var(--anchor-width);
+  overflow: hidden;
+  transform-origin: var(--transform-origin);
+  z-index: 50;
+}
+
+.EditorCombobox-list {
+  max-height: inherit;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.EditorCombobox-item {
+  align-items: center;
+  border-radius: var(--editor-radius-sm);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: var(--editor-font-size-xxs);
+  gap: 8px;
+  outline: none;
+  padding: 6px 8px 6px 28px;
+  position: relative;
+  user-select: none;
+}
+
+.EditorCombobox-item[data-highlighted],
+.EditorCombobox-item[data-selected] {
+  background: var(--editor-accent-soft);
+  color: var(--editor-text-accent);
+}
+
+.EditorCombobox-item[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.EditorCombobox-itemIndicator {
+  align-items: center;
+  color: var(--editor-accent-strong);
+  display: inline-flex;
+  justify-content: center;
+  left: 8px;
+  pointer-events: none;
+  position: absolute;
+  width: 14px;
+}
+
+/* Empty stays mounted for a11y announcements; only apply visible styling
+   when its children are actually rendered (i.e. when the list is empty). */
+.EditorCombobox-empty:not(:empty) {
+  color: var(--editor-text-tertiary);
+  font-size: var(--editor-font-size-xxs);
+  padding: 12px 8px;
+  text-align: center;
+}

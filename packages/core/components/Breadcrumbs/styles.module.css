@@ -11,36 +11,36 @@
   align-items: center;
   display: flex;
   gap: 6px;
-  color: var(--re-text-tertiary);
+  color: var(--editor-text-tertiary);
 }
 
 .Breadcrumbs-breadcrumbLabel {
   background: none;
   border: 0;
-  border-radius: var(--re-radius-sm);
-  color: var(--re-text-tertiary);
+  border-radius: var(--editor-radius-sm);
+  color: var(--editor-text-tertiary);
   cursor: pointer;
   font: inherit;
   font-weight: 400;
   flex-shrink: 0;
   padding: 0;
-  transition: color var(--re-motion-fast) var(--re-ease);
+  transition: color var(--editor-motion-fast) var(--editor-ease);
 }
 
 .Breadcrumbs-breadcrumbLabel:focus-visible {
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: var(--editor-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .Breadcrumbs-breadcrumbLabel:hover {
-    color: var(--re-text-primary);
+    color: var(--editor-text-primary);
     transition: none;
   }
 }
 
 .Breadcrumbs-breadcrumbLabel:active {
-  color: var(--re-text-primary);
+  color: var(--editor-text-primary);
   transition: none;
 }
 

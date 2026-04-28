@@ -8,7 +8,7 @@
 .Components-searchIcon {
   position: absolute;
   inset-inline-start: 10px;
-  color: var(--re-text-tertiary);
+  color: var(--editor-text-tertiary);
   pointer-events: none;
   display: flex;
 }
@@ -16,29 +16,29 @@
 .Components-searchInput {
   width: 100%;
   font-family: inherit;
-  font-size: var(--re-font-size-xxs);
-  color: var(--re-text-primary);
-  background: var(--re-surface-panel);
-  border: 1px solid var(--re-border-subtle);
-  border-radius: var(--re-radius-md);
+  font-size: var(--editor-font-size-xxs);
+  color: var(--editor-text-primary);
+  background: var(--editor-surface-panel);
+  border: 1px solid var(--editor-border-subtle);
+  border-radius: var(--editor-radius-md);
   padding: 8px 10px 8px 32px;
-  transition: border-color var(--re-motion-fast) var(--re-ease),
-    box-shadow var(--re-motion-fast) var(--re-ease);
+  transition: border-color var(--editor-motion-fast) var(--editor-ease),
+    box-shadow var(--editor-motion-fast) var(--editor-ease);
 }
 
 .Components-searchInput::placeholder {
-  color: var(--re-text-tertiary);
+  color: var(--editor-text-tertiary);
 }
 
 .Components-searchInput:focus {
   outline: none;
-  border-color: var(--re-border-default);
-  box-shadow: var(--re-ring);
+  border-color: var(--editor-border-default);
+  box-shadow: var(--editor-ring);
 }
 
 .Components-empty {
-  color: var(--re-text-tertiary);
-  font-size: var(--re-font-size-xxs);
+  color: var(--editor-text-tertiary);
+  font-size: var(--editor-font-size-xxs);
   padding: 12px 4px;
   text-align: center;
 }

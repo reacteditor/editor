@@ -2,22 +2,22 @@
   appearance: none;
   background: none;
   border: 1px solid transparent;
-  border-radius: var(--re-radius-md);
-  color: var(--re-primary-foreground);
+  border-radius: var(--editor-radius-md);
+  color: var(--editor-primary-foreground);
   display: inline-flex;
   align-items: center;
   gap: 8px;
   letter-spacing: 0.01ch;
-  font-family: var(--re-font-family);
+  font-family: var(--editor-font-family);
   font-size: 13px;
   font-weight: 500;
   box-sizing: border-box;
   line-height: 1;
   text-align: center;
   text-decoration: none;
-  transition: background-color var(--re-motion-fast) var(--re-ease),
-    box-shadow var(--re-motion-fast) var(--re-ease),
-    transform var(--re-motion-fast) var(--re-ease);
+  transition: background-color var(--editor-motion-fast) var(--editor-ease),
+    box-shadow var(--editor-motion-fast) var(--editor-ease),
+    transform var(--editor-motion-fast) var(--editor-ease);
   cursor: pointer;
   white-space: nowrap;
   margin: 0;
@@ -48,41 +48,41 @@
 }
 
 .Button--primary {
-  background: var(--re-primary);
-  color: var(--re-primary-foreground);
+  background: var(--editor-primary);
+  color: var(--editor-primary-foreground);
 }
 
 .Button:focus-visible {
   outline: none;
-  box-shadow: var(--re-ring);
+  box-shadow: var(--editor-ring);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .Button--primary:hover {
-    background-color: var(--re-primary-hover);
+    background-color: var(--editor-primary-hover);
   }
 }
 
 .Button--primary:active {
-  background-color: var(--re-primary-hover);
+  background-color: var(--editor-primary-hover);
   transform: translateY(1px);
 }
 
 .Button--secondary {
-  border: 1px solid var(--re-border-default);
-  color: var(--re-text-primary);
+  border: 1px solid var(--editor-border-default);
+  color: var(--editor-text-primary);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .Button--secondary:hover {
-    background-color: var(--re-surface-hover);
-    color: var(--re-text-primary);
+    background-color: var(--editor-surface-hover);
+    color: var(--editor-text-primary);
   }
 }
 
 .Button--secondary:active {
-  background-color: var(--re-accent-soft);
-  color: var(--re-text-primary);
+  background-color: var(--editor-accent-soft);
+  color: var(--editor-text-primary);
 }
 
 .Button--flush {
@@ -91,8 +91,8 @@
 
 .Button--disabled,
 .Button--disabled:hover {
-  background-color: var(--re-border-subtle);
-  color: var(--re-text-tertiary);
+  background-color: var(--editor-border-subtle);
+  color: var(--editor-text-tertiary);
   cursor: not-allowed;
   box-shadow: none;
 }
