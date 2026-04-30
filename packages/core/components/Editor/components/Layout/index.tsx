@@ -25,6 +25,7 @@ import { useSidebarResize } from "../../../../lib/use-sidebar-resize";
 import { FrameProvider } from "../../../../lib/frame-context";
 import { Sidebar } from "../Sidebar";
 import { useDeleteHotkeys } from "../../../../lib/use-delete-hotkeys";
+import { useClipboardHotkeys } from "../../../../lib/use-clipboard-hotkeys";
 import { MenuItem, Nav } from "../Nav";
 import { IconButton } from "../../../IconButton";
 import {
@@ -228,6 +229,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
 
   usePreviewModeHotkeys();
   useDeleteHotkeys();
+  useClipboardHotkeys();
 
   const layoutOptions: Record<string, any> = {};
 

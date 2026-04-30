@@ -21,13 +21,18 @@ export function insertAction<UserData extends Data>(
     any
   >;
 
+  const sourceData = action.data
+    ? { ...action.data, props: { ...action.data.props, id } }
+    : {
+        type: action.componentType,
+        props: { ...defaultProps, id },
+        ...(isGlobalType ? { synced: true } : {}),
+      };
+
   const emptyComponentData = populateIds(
-    {
-      type: action.componentType,
-      props: { ...defaultProps, id },
-      ...(isGlobalType ? { synced: true } : {}),
-    },
-    appStore.config
+    sourceData,
+    appStore.config,
+    !!action.data
   );
 
   const [parentId] = action.destinationZone.split(":");
