@@ -17,11 +17,12 @@ import { getItem, ItemSelector } from "./data/get-item";
 import { resolveDataById } from "./data/resolve-data-by-id";
 import { resolveDataBySelector } from "./data/resolve-data-by-selector";
 import { getSelectorForId } from "./get-selector-for-id";
+import { EditorCommands, createEditorCommands } from "./editor-commands";
 
 export type UseEditorData<
   UserConfig extends Config = Config,
   G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
-> = {
+> = EditorCommands & {
   appState: G["UserPublicAppState"];
   config: UserConfig;
   dispatch: AppStore["dispatch"];
@@ -63,7 +64,8 @@ type PickedStore = Pick<
 
 export const generateUseEditor = (
   store: PickedStore,
-  getState: ReturnType<typeof useAppStoreApi>["getState"]
+  getState: ReturnType<typeof useAppStoreApi>["getState"],
+  commands: EditorCommands
 ): UseEditorStore => {
   const history: UseEditorStore["history"] = {
     back: store.history.back,
@@ -77,6 +79,7 @@ export const generateUseEditor = (
   };
 
   const storeData: EditorApi = {
+    ...commands,
     appState: makeStatePublic(store.state),
     config: store.config,
     dispatch: store.dispatch,
@@ -128,11 +131,14 @@ const convertToPickedStore = (store: AppStore): PickedStore => {
 export const useRegisterUseEditorStore = (
   appStore: ReturnType<typeof useAppStoreApi>
 ) => {
+  const [commands] = useState(() => createEditorCommands(appStore));
+
   const [useEditorStore] = useState(() =>
     createStore(() =>
       generateUseEditor(
         convertToPickedStore(appStore.getState()),
-        appStore.getState
+        appStore.getState,
+        commands
       )
     )
   );
@@ -142,10 +148,12 @@ export const useRegisterUseEditorStore = (
     return appStore.subscribe(
       (store) => convertToPickedStore(store),
       (pickedStore) => {
-        useEditorStore.setState(generateUseEditor(pickedStore, appStore.getState));
+        useEditorStore.setState(
+          generateUseEditor(pickedStore, appStore.getState, commands)
+        );
       }
     );
-  }, []);
+  }, [commands]);
 
   return useEditorStore;
 };

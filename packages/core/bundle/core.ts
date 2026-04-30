@@ -33,6 +33,11 @@ export {
   type UseEditorData,
   type EditorApi,
 } from "../lib/use-editor";
+export type {
+  EditorCommands,
+  InsertComponentArgs,
+  ItemTarget,
+} from "../lib/editor-commands";
 
 export * from "../plugins/blocks";
 export * from "../plugins/fields";
