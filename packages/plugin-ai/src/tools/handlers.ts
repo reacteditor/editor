@@ -8,19 +8,6 @@ import { serializeConfig } from "./schema";
 // when several mutations chain inside one assistant turn.
 type GetEditor = () => EditorApi;
 
-const ROOT_DROPPABLE_ID = "root:default-zone";
-
-const resolveZone = (
-  getEditor: GetEditor,
-  parentId?: string,
-  slot?: string
-): string => {
-  if (!parentId) return ROOT_DROPPABLE_ID;
-  // Slots on a component live at "<componentId>:<slotName>". With no slot
-  // specified we fall back to the parent's default zone.
-  return `${parentId}:${slot ?? "default-zone"}`;
-};
-
 // Mirrors core's lib/get-frame.ts. The plugin can't import it (not on the
 // public surface) so the lookup is reproduced here.
 const getEditorFrameDoc = (): Document | null => {
@@ -51,6 +38,9 @@ const summarizeComponent = (data: ComponentData) => ({
   props: data.props,
 });
 
+const toParent = (parentId?: string, slot?: string) =>
+  parentId ? { id: parentId, slot: slot ?? "default-zone" } : undefined;
+
 export type Handler<Name extends BuiltinName> = (
   args: z.infer<(typeof schemas)[Name]>,
   ctx: { getEditor: GetEditor; dispatch: (a: EditorAction) => void }
@@ -61,11 +51,12 @@ export const handlers: { [K in BuiltinName]: Handler<K> } = {
 
   getSchema: (_args, { getEditor }) => {
     const { data } = getEditor().appState;
-    // zones is deprecated — exclude
     return { root: data.root, content: data.content, globals: data.globals };
   },
 
   updateSchema: (args, { dispatch }) => {
+    // Bulk replacement of root/content/globals — coarser than the typed
+    // commands, so we keep this on raw dispatch.
     dispatch({
       type: "setData",
       data: (prev) => ({
@@ -79,12 +70,8 @@ export const handlers: { [K in BuiltinName]: Handler<K> } = {
     return { ok: true };
   },
 
-  updateRootProps: (args, { getEditor, dispatch }) => {
-    const root = getEditor().appState.data.root;
-    dispatch({
-      type: "replaceRoot",
-      root: { ...root, props: { ...(root.props ?? {}), ...args.props } },
-    });
+  updateRootProps: (args, { getEditor }) => {
+    getEditor().updateRoot(args.props);
     return { ok: true };
   },
 
@@ -97,10 +84,7 @@ export const handlers: { [K in BuiltinName]: Handler<K> } = {
   searchComponents: (args, { getEditor }) => {
     const { data } = getEditor().appState;
     const items: ComponentData[] = [];
-    const walk = (list: ComponentData[]) => {
-      for (const node of list) items.push(node);
-    };
-    walk(data.content as ComponentData[]);
+    for (const node of data.content as ComponentData[]) items.push(node);
 
     let results = items;
     if (args.type) results = results.filter((c) => c.type === args.type);
@@ -115,130 +99,57 @@ export const handlers: { [K in BuiltinName]: Handler<K> } = {
     return results.map(summarizeComponent);
   },
 
-  updateComponent: (args, { getEditor, dispatch }) => {
+  updateComponent: (args, { getEditor }) => {
     const editor = getEditor();
-    const selector = editor.getSelectorForId(args.id);
-    if (!selector) return { error: "not_found", id: args.id };
-    const item = editor.getItemById(args.id);
-    if (!item) return { error: "not_found", id: args.id };
-
-    dispatch({
-      type: "replace",
-      destinationIndex: selector.index,
-      destinationZone: selector.zone,
-      data: {
-        ...item,
-        props: { ...item.props, ...args.props, id: args.id },
-      },
-      recordHistory: true,
-    } as EditorAction);
+    if (!editor.getItemById(args.id)) return { error: "not_found", id: args.id };
+    editor.updateProps(args.id, args.props);
     return { ok: true, id: args.id };
   },
 
-  addComponent: (args, { getEditor, dispatch }) => {
+  addComponent: (args, { getEditor }) => {
     const editor = getEditor();
-    const id = `${args.type}-${Math.random().toString(36).slice(2, 10)}`;
-
-    const componentConfig = (editor.config.components as Record<string, unknown>)[
-      args.type
-    ] as { defaultProps?: Record<string, unknown> } | undefined;
+    const componentConfig = (
+      editor.config.components as Record<string, unknown>
+    )[args.type] as { defaultProps?: Record<string, unknown> } | undefined;
     if (!componentConfig) {
       return { error: "unknown_type", type: args.type };
     }
 
-    // Root-content insert: write the fully-formed item (defaults + supplied
-    // props + id) in one setData. Avoids reading a node back from the store
-    // before its insert has settled in our captured editor snapshot.
-    if (args.parentId == null) {
-      const newItem = {
-        type: args.type,
-        props: {
-          ...(componentConfig.defaultProps ?? {}),
-          ...(args.props ?? {}),
-          id,
-        },
-      } as ComponentData;
-
-      const content = editor.appState.data.content ?? [];
-      const insertIndex = args.index ?? content.length;
-
-      dispatch({
-        type: "setData",
-        data: (prev) => {
-          const next = [...(prev.content ?? [])];
-          next.splice(insertIndex, 0, newItem);
-          return { ...prev, content: next };
-        },
-        recordHistory: true,
-      });
-
-      // Select the new node + scroll the canvas to it (mirrors what
-      // clicking in the Outline does).
-      dispatch({
-        type: "setUi",
-        ui: {
-          itemSelector: { index: insertIndex, zone: ROOT_DROPPABLE_ID },
-        },
-      });
-      scrollComponentIntoView(id);
-
-      return { ok: true, id };
-    }
-
-    // Slot insert: use the reducer's insert action (it knows how to thread
-    // through nested zones). Props can't be merged in the same dispatch, so
-    // the model should follow up with updateComponent if needed.
-    const zone = resolveZone(getEditor, args.parentId, args.slot);
-    const slotIndex = args.index ?? 0;
-    dispatch({
-      type: "insert",
-      componentType: args.type,
-      destinationIndex: slotIndex,
-      destinationZone: zone,
-      id,
-      recordHistory: true,
-    } as EditorAction);
-
-    dispatch({
-      type: "setUi",
-      ui: { itemSelector: { index: slotIndex, zone } },
-    });
-    scrollComponentIntoView(id);
-
-    return {
-      ok: true,
-      id,
-      note: args.props
-        ? "Inserted into slot with default props; call updateComponent to apply custom props."
-        : undefined,
+    const id = `${args.type}-${Math.random().toString(36).slice(2, 10)}`;
+    const data: ComponentData = {
+      type: args.type,
+      props: {
+        ...(componentConfig.defaultProps ?? {}),
+        ...(args.props ?? {}),
+        id,
+      },
     };
+
+    const result = editor.insertComponent({
+      type: args.type,
+      parent: toParent(args.parentId, args.slot),
+      index: args.index,
+      data,
+    });
+    scrollComponentIntoView(result.id);
+
+    return { ok: true, id: result.id };
   },
 
-  removeComponent: (args, { getEditor, dispatch }) => {
-    const selector = getEditor().getSelectorForId(args.id);
-    if (!selector) return { error: "not_found", id: args.id };
-    dispatch({
-      type: "remove",
-      index: selector.index,
-      zone: selector.zone,
-      recordHistory: true,
-    } as EditorAction);
+  removeComponent: (args, { getEditor }) => {
+    const editor = getEditor();
+    if (!editor.getItemById(args.id)) return { error: "not_found", id: args.id };
+    editor.removeComponent(args.id);
     return { ok: true, id: args.id };
   },
 
-  moveComponent: (args, { getEditor, dispatch }) => {
+  moveComponent: (args, { getEditor }) => {
     const editor = getEditor();
-    const source = editor.getSelectorForId(args.id);
-    if (!source) return { error: "not_found", id: args.id };
-    const destinationZone = resolveZone(getEditor, args.parentId, args.slot);
-    dispatch({
-      type: "move",
-      sourceIndex: source.index,
-      sourceZone: source.zone,
-      destinationIndex: args.index,
-      destinationZone,
-      recordHistory: true,
-    } as EditorAction);
+    if (!editor.getItemById(args.id)) return { error: "not_found", id: args.id };
+    editor.moveComponent(args.id, {
+      parent: toParent(args.parentId, args.slot),
+      index: args.index,
+    });
     return { ok: true, id: args.id };
   },
 };

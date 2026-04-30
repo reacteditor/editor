@@ -36,7 +36,8 @@ export {
 export type {
   EditorCommands,
   InsertComponentArgs,
-  ItemTarget,
+  MoveDestination,
+  Parent,
 } from "../lib/editor-commands";
 
 export * from "../plugins/blocks";

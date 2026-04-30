@@ -1,30 +1,32 @@
 import { ComponentData } from "../types";
 import { DefaultComponentProps, DefaultRootFieldProps } from "../types/Props";
 import { useAppStoreApi } from "../store";
-import { ItemSelector, getItem } from "./data/get-item";
+import { getItem } from "./data/get-item";
 import { getSelectorForId } from "./get-selector-for-id";
 import { generateId } from "./generate-id";
 import { rootDroppableId } from "./root-droppable-id";
 
-export type ItemTarget = string | ItemSelector;
+export type Parent = { id: string; slot: string };
 
 export type InsertComponentArgs = {
   type: string;
-  zone?: string;
+  parent?: Parent;
   index?: number;
   data?: ComponentData;
   select?: boolean;
 };
 
+export type MoveDestination = {
+  parent?: Parent;
+  index: number;
+};
+
 export type EditorCommands = {
   insertComponent: (args: InsertComponentArgs) => { id: string };
-  removeComponent: (target: ItemTarget) => void;
-  duplicateComponent: (target: ItemTarget) => void;
-  moveComponent: (
-    target: ItemTarget,
-    to: { zone: string; index: number }
-  ) => void;
-  replaceComponent: (target: ItemTarget, data: ComponentData) => void;
+  removeComponent: (id: string) => void;
+  duplicateComponent: (id: string) => void;
+  moveComponent: (id: string, to: MoveDestination) => void;
+  replaceComponent: (id: string, data: ComponentData) => void;
   updateProps: (
     id: string,
     updater:
@@ -36,30 +38,29 @@ export type EditorCommands = {
       | Partial<DefaultRootFieldProps>
       | ((prev: DefaultRootFieldProps) => Partial<DefaultRootFieldProps>)
   ) => void;
-  selectComponent: (target: ItemTarget | null) => void;
+  selectComponent: (id: string | null) => void;
 };
+
+const parentToZone = (parent?: Parent): string =>
+  parent ? `${parent.id}:${parent.slot}` : rootDroppableId;
 
 export const createEditorCommands = (
   appStore: ReturnType<typeof useAppStoreApi>
 ): EditorCommands => {
   const { getState } = appStore;
 
-  const resolveSelector = (target: ItemTarget): ItemSelector | undefined => {
-    if (typeof target !== "string") return target;
-    return getSelectorForId(getState().state, target);
-  };
-
   const getZoneLength = (zone: string): number =>
     getState().state.indexes.zones[zone]?.contentIds.length ?? 0;
 
   const insertComponent: EditorCommands["insertComponent"] = ({
     type,
-    zone = rootDroppableId,
+    parent,
     index,
     data,
     select = true,
   }) => {
     const id = data?.props.id ?? generateId(type);
+    const zone = parentToZone(parent);
     const destIndex = index ?? getZoneLength(zone);
     const dispatch = getState().dispatch;
 
@@ -82,14 +83,14 @@ export const createEditorCommands = (
     return { id };
   };
 
-  const removeComponent: EditorCommands["removeComponent"] = (target) => {
-    const sel = resolveSelector(target);
+  const removeComponent: EditorCommands["removeComponent"] = (id) => {
+    const sel = getSelectorForId(getState().state, id);
     if (!sel?.zone) return;
     getState().dispatch({ type: "remove", index: sel.index, zone: sel.zone });
   };
 
-  const duplicateComponent: EditorCommands["duplicateComponent"] = (target) => {
-    const sel = resolveSelector(target);
+  const duplicateComponent: EditorCommands["duplicateComponent"] = (id) => {
+    const sel = getSelectorForId(getState().state, id);
     if (!sel?.zone) return;
     getState().dispatch({
       type: "duplicate",
@@ -98,23 +99,20 @@ export const createEditorCommands = (
     });
   };
 
-  const moveComponent: EditorCommands["moveComponent"] = (target, to) => {
-    const sel = resolveSelector(target);
+  const moveComponent: EditorCommands["moveComponent"] = (id, to) => {
+    const sel = getSelectorForId(getState().state, id);
     if (!sel?.zone) return;
     getState().dispatch({
       type: "move",
       sourceIndex: sel.index,
       sourceZone: sel.zone,
       destinationIndex: to.index,
-      destinationZone: to.zone,
+      destinationZone: parentToZone(to.parent),
     });
   };
 
-  const replaceComponent: EditorCommands["replaceComponent"] = (
-    target,
-    data
-  ) => {
-    const sel = resolveSelector(target);
+  const replaceComponent: EditorCommands["replaceComponent"] = (id, data) => {
+    const sel = getSelectorForId(getState().state, id);
     if (!sel?.zone) return;
     const existing = getItem(sel, getState().state);
     if (!existing) return;
@@ -154,13 +152,13 @@ export const createEditorCommands = (
     });
   };
 
-  const selectComponent: EditorCommands["selectComponent"] = (target) => {
+  const selectComponent: EditorCommands["selectComponent"] = (id) => {
     const dispatch = getState().dispatch;
-    if (target === null) {
+    if (id === null) {
       dispatch({ type: "setUi", ui: { itemSelector: null } });
       return;
     }
-    const sel = resolveSelector(target);
+    const sel = getSelectorForId(getState().state, id);
     if (!sel?.zone) return;
     dispatch({
       type: "setUi",
