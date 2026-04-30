@@ -11,8 +11,7 @@ export const reactEditorTools = BUILTIN_NAMES.reduce(
   (acc, name) => {
     acc[name] = tool({
       description: descriptions[name],
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      inputSchema: schemas[name] as any,
+      inputSchema: schemas[name] as never,
     });
     return acc;
   },
