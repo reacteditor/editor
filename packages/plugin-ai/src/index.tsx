@@ -3,7 +3,7 @@ import type { AiPluginOptions } from "./types";
 import { ChatPanel } from "./panel/ChatPanel";
 import { ChatAiIcon } from "./panel/ChatAiIcon";
 
-export type { AiPluginOptions } from "./types";
+export type { AiPluginOptions, RenderToolParams, ToolRenderState } from "./types";
 export { DEFAULT_LABELS, labelFor, humanize } from "./tools/labels";
 
 export const aiPlugin = (options: AiPluginOptions): Plugin => ({

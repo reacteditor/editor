@@ -447,18 +447,6 @@
   background: rgba(0, 0, 0, 0.75);
 }
 
-/* Inline image preview for assistant-generated images (generateImage tool).
-   Larger square that fills the bubble width up to a sensible max. */
-.AiPanel-imagePreview {
-  display: block;
-  width: 100%;
-  max-width: 240px;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 10px;
-  background: var(--editor-color-grey-12, #f4f4f5);
-}
-
 /* User-attached image: smaller, sits below the text bubble. */
 .AiPanel-userImage {
   display: block;

@@ -21,7 +21,7 @@ type Body = {
 };
 
 // Demo-only mock: server-side tool that returns a static image URL
-// regardless of the prompt. Plugin renders the result inline.
+// regardless of the prompt. The demo renders the result inline via renderTool.
 const generateImage = tool({
   description: "Generate an image from a prompt and return its URL.",
   inputSchema: z.object({

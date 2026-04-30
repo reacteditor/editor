@@ -1,6 +1,20 @@
+import type { ReactNode } from "react";
 import type { UIMessage, ChatTransport, ChatOnToolCallCallback } from "ai";
 
 type OnToolCallEvent = Parameters<ChatOnToolCallCallback<UIMessage>>[0];
+
+export type ToolRenderState =
+  | "input-streaming"
+  | "input-available"
+  | "output-available"
+  | "output-error";
+
+export type RenderToolParams = {
+  name: string;
+  state: ToolRenderState;
+  input: unknown;
+  output: unknown;
+};
 
 export type AiPluginOptions = {
   api: string;
@@ -13,7 +27,9 @@ export type AiPluginOptions = {
   transport?: ChatTransport<UIMessage>;
   onFinish?: (event: { message: UIMessage }) => void;
   onError?: (error: Error) => void;
-  onToolCall?: (event: OnToolCallEvent) => unknown | Promise<unknown> | undefined;
+  onToolCall?: (
+    event: OnToolCallEvent
+  ) => unknown | Promise<unknown> | undefined;
   messages?: UIMessage[];
 
   /**
@@ -23,6 +39,20 @@ export type AiPluginOptions = {
    * sendMessage({ files }) API. Default: `false`.
    */
   attachments?: boolean;
+
+  /**
+   * Optional renderer for tool-call parts. Called for every `tool-*` part
+   * the model emits. Return a ReactNode to override the default rendering
+   * (shimmer "<name>..." while in flight, muted "<name>" once done) for a
+   * specific tool name + state. Return undefined to fall through to the
+   * default rendering.
+   *
+   * Receives the tool name (without the `tool-` prefix), the current state
+   * ("input-streaming", "input-available", "output-available",
+   * "output-error"), the model's `input` arguments, and the tool's `output`
+   * once available.
+   */
+  renderTool?: (params: RenderToolParams) => ReactNode | undefined;
 };
 
 export type EditorContextPayload = {

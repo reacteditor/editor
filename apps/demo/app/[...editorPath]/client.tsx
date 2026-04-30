@@ -61,7 +61,37 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
 
   const plugins = useMemo(
     () => [
-      aiPlugin({ api: "/api/chat", attachments: true }),
+      aiPlugin({
+        api: "/api/chat",
+        attachments: true,
+        renderTool: ({ name, state, output, input }) => {
+          if (name !== "generateImage" || state !== "output-available") {
+            return undefined;
+          }
+
+          const url = (output as { url?: string } | undefined)?.url;
+          if (!url) return undefined;
+
+          return (
+            <img
+              src={url}
+              alt={
+                (input as { prompt?: string } | undefined)?.prompt ??
+                "Generated image"
+              }
+              style={{
+                display: "block",
+                width: "100%",
+                maxWidth: 240,
+                aspectRatio: "1 / 1",
+                objectFit: "cover",
+                borderRadius: 10,
+                background: "var(--editor-color-grey-12, #f4f4f5)",
+              }}
+            />
+          );
+        },
+      }),
       blocksPlugin(),
       outlinePlugin(),
     ],
@@ -130,13 +160,7 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
   }
 
   if (data.content) {
-    return (
-      <Render
-        config={config}
-        data={resolvedData}
-        metadata={metadata}
-      />
-    );
+    return <Render config={config} data={resolvedData} metadata={metadata} />;
   }
 
   return (

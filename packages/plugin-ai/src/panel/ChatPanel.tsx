@@ -5,6 +5,7 @@ import {
   useRef,
   useState,
   type ChangeEvent,
+  Fragment,
   type FormEvent,
   type KeyboardEvent,
 } from "react";
@@ -17,7 +18,11 @@ import {
 import { ArrowDown, CornerDownLeft, Plus, X } from "lucide-react";
 import { StickToBottom, useStickToBottomContext } from "use-stick-to-bottom";
 import { useGetEditor, usePropsContext } from "@reacteditor/core";
-import type { AiPluginOptions, EditorContextPayload } from "../types";
+import type {
+  AiPluginOptions,
+  EditorContextPayload,
+  ToolRenderState,
+} from "../types";
 import { callBuiltin } from "../tools/handlers";
 import { labelFor } from "../tools/labels";
 import { ChatAiIcon } from "./ChatAiIcon";
@@ -229,7 +234,9 @@ export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
               </div>
             </div>
           ) : (
-            messages.map((m) => <Message key={m.id} message={m} />)
+            messages.map((m) => (
+              <Message key={m.id} message={m} renderTool={options.renderTool} />
+            ))
           )}
 
           {isLoading && needsThinkingHint(messages) && (
@@ -320,7 +327,13 @@ export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
   );
 };
 
-const Message = ({ message }: { message: UIMessage }) => {
+const Message = ({
+  message,
+  renderTool,
+}: {
+  message: UIMessage;
+  renderTool: AiPluginOptions["renderTool"];
+}) => {
   const isUser = message.role === "user";
   return (
     <div
@@ -342,28 +355,21 @@ const Message = ({ message }: { message: UIMessage }) => {
           const partAny = part as {
             input?: unknown;
             state?: string;
-            output?: { url?: string } | unknown;
+            output?: unknown;
           };
           const args = partAny.input;
           const isActive = partAny.state !== "output-available";
 
-          // Special case: generateImage renders the resulting image inline
-          // once the tool result lands.
-          if (toolName === "generateImage" && !isActive) {
-            const url = (partAny.output as { url?: string } | undefined)?.url;
-            if (url) {
-              return (
-                <img
-                  key={i}
-                  src={url}
-                  alt={
-                    (args as { prompt?: string } | undefined)?.prompt ??
-                    "Generated image"
-                  }
-                  className={styles["AiPanel-imagePreview"]}
-                />
-              );
-            }
+          // Consumer escape hatch — overrides default rendering for any
+          // tool name + state. Returning undefined falls through.
+          const custom = renderTool?.({
+            name: toolName,
+            state: (partAny.state ?? "input-streaming") as ToolRenderState,
+            input: args,
+            output: partAny.output,
+          });
+          if (custom !== undefined) {
+            return <Fragment key={i}>{custom}</Fragment>;
           }
 
           // Default: shimmer while in flight, static muted line once done.
