@@ -53,6 +53,17 @@ export type AiPluginOptions = {
    * once available.
    */
   renderTool?: (params: RenderToolParams) => ReactNode | undefined;
+
+  /**
+   * Optional callback resolving the editor's current route. Invoked on each
+   * outgoing request and forwarded to the server as `editorContext.currentRoute`,
+   * which the default system prompt uses to ground responses. Return `null`
+   * (or omit the callback) to send no route info.
+   */
+  getCurrentRoute?: () =>
+    | { path?: string; title?: string }
+    | null
+    | undefined;
 };
 
 export type EditorContextPayload = {

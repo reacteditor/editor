@@ -18,7 +18,7 @@ import {
 } from "ai";
 import { ArrowDown, CornerDownLeft, Plus, X } from "lucide-react";
 import { StickToBottom, useStickToBottomContext } from "use-stick-to-bottom";
-import { useGetEditor, usePropsContext } from "@reacteditor/core";
+import { useGetEditor } from "@reacteditor/core";
 import type {
   AiPluginOptions,
   EditorContextPayload,
@@ -34,14 +34,11 @@ import styles from "./styles.module.css";
 
 const collectEditorContext = (
   getEditor: ReturnType<typeof useGetEditor>,
-  currentPath?: string,
-  routeTitle?: string
+  currentRoute: { path?: string; title?: string } | null
 ): EditorContextPayload => {
   const editor = getEditor();
   return {
-    currentRoute: currentPath
-      ? { path: currentPath, title: routeTitle }
-      : null,
+    currentRoute,
     selectedComponentId: editor.selectedItem?.props?.id ?? null,
     componentTypes: Object.keys(editor.config.components ?? {}),
   };
@@ -49,13 +46,6 @@ const collectEditorContext = (
 
 export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
   const getEditor = useGetEditor();
-  const props = usePropsContext();
-  const currentPath = (props as { currentPath?: string }).currentPath;
-  const routeTitle = useMemo(() => {
-    const routes = (props as { routes?: { path: string; title: string }[] })
-      .routes;
-    return routes?.find((r) => r.path === currentPath)?.title;
-  }, [props, currentPath]);
 
   // Dynamic header/body resolution lets the user merge or replace headers
   // and body without re-creating the transport on every render.
@@ -70,11 +60,8 @@ export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
       // body is a function of the message list — re-evaluated each request,
       // so editorContext always reflects the current editor state.
       body: () => {
-        const editorContext = collectEditorContext(
-          getEditor,
-          currentPath,
-          routeTitle
-        );
+        const route = options.getCurrentRoute?.() ?? null;
+        const editorContext = collectEditorContext(getEditor, route);
         const userBody =
           typeof options.body === "function"
             ? options.body([])
@@ -82,7 +69,7 @@ export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
         return { editorContext, ...userBody };
       },
     });
-  }, [options, getEditor, currentPath, routeTitle]);
+  }, [options, getEditor]);
 
   const {
     messages,

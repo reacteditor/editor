@@ -1,6 +1,6 @@
 {
   "name": "@reacteditor/plugin-ai",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Rami Bitar <rami@frontend.co>",
   "repository": "frontend-inc/react-editor",
   "bugs": "https://github.com/frontend-inc/react-editor/issues",
@@ -19,7 +19,9 @@
       "types": "./dist/server.d.ts",
       "import": "./dist/server.mjs",
       "require": "./dist/server.js"
-    }
+    },
+    "./dist/index.css": "./dist/index.css",
+    "./styles.css": "./dist/index.css"
   },
   "files": [
     "dist"
