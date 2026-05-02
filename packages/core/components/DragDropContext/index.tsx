@@ -147,24 +147,30 @@ const DragDropContextClient = ({
       scrollToComponent: (id) => {
         const virtualizers = Array.from(rootVirtualizers.values());
 
-        if (virtualizers.length > 0) {
-          for (const handle of virtualizers) {
-            const index = handle.resolveIndex(id);
-
-            if (index < 0) {
-              continue;
+        const scroll = () => {
+          if (virtualizers.length > 0) {
+            for (const handle of virtualizers) {
+              const index = handle.resolveIndex(id);
+              if (index < 0) continue;
+              handle.virtualizer.scrollToIndex(index, {
+                behavior: "smooth",
+                align: "center",
+              });
             }
-
-            handle.virtualizer.scrollToIndex(index, {
-              behavior: "auto", // We avoid smooth scroll as this triggers virtualizer renders
-              align: "auto",
-            });
+            return;
           }
-        } else {
+
           const frame = getFrame();
-          const el = frame?.querySelector(`[data-editor-component="${id}"]`);
-          el?.scrollIntoView({ behavior: "smooth" });
-        }
+          const el = frame?.querySelector(
+            `[data-editor-component="${id}"]`
+          ) as HTMLElement | null;
+          el?.scrollIntoView({ behavior: "smooth", block: "center" });
+        };
+
+        // Wait two animation frames so a fresh insert/update has committed
+        // to the DOM (and the iframe has had a chance to re-render) before
+        // we measure scroll position.
+        requestAnimationFrame(() => requestAnimationFrame(scroll));
       },
     }));
   });

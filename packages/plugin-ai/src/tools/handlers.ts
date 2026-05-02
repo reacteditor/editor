@@ -8,13 +8,12 @@ import { serializeConfig } from "./schema";
 // when several mutations chain inside one assistant turn.
 type GetEditor = () => EditorApi;
 
-// Wait one frame after a state mutation so the canvas re-renders the newly
-// inserted/updated node, then scroll it into view via the editor command.
+// Trigger the editor's scrollToComponent command after a mutation. The
+// command itself waits for the DOM to commit before measuring scroll
+// position, so we don't need to RAF here.
 const scrollAfterMutation = (getEditor: GetEditor, id: string) => {
   if (typeof window === "undefined") return;
-  requestAnimationFrame(() => {
-    getEditor().scrollToComponent(id);
-  });
+  getEditor().scrollToComponent(id);
 };
 
 const summarizeComponent = (data: ComponentData) => ({
