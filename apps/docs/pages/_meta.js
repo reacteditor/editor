@@ -1,7 +1,7 @@
 const menu = {
   index: {
     type: "page",
-    title: "Puck",
+    title: "React Editor",
     display: "hidden",
     theme: {
       layout: "full",

@@ -8,6 +8,7 @@
     "lib": ["ES2015", "DOM"],
     "module": "ESNext",
     "target": "es6",
+    "noEmit": true,
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
   }
 }

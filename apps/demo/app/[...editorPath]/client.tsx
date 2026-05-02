@@ -64,6 +64,10 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
       aiPlugin({
         api: "/api/chat",
         attachments: true,
+        getCurrentRoute: () => ({
+          path,
+          title: routes.find((r) => r.path === path)?.title,
+        }),
         renderTool: ({ name, state, output, input }) => {
           if (name !== "generateImage" || state !== "output-available") {
             return undefined;
@@ -95,7 +99,7 @@ function ClientInner({ path, isEdit }: { path: string; isEdit: boolean }) {
       blocksPlugin(),
       outlinePlugin(),
     ],
-    []
+    [path, routes]
   );
 
   if (!isClient) return null;

@@ -18,7 +18,7 @@ import {
 } from "ai";
 import { ArrowDown, CornerDownLeft, Plus, X } from "lucide-react";
 import { StickToBottom, useStickToBottomContext } from "use-stick-to-bottom";
-import { useGetEditor, usePropsContext } from "@reacteditor/core";
+import { useGetEditor } from "@reacteditor/core";
 import type {
   AiPluginOptions,
   EditorContextPayload,
@@ -34,14 +34,11 @@ import styles from "./styles.module.css";
 
 const collectEditorContext = (
   getEditor: ReturnType<typeof useGetEditor>,
-  currentPath?: string,
-  routeTitle?: string
+  currentRoute: { path?: string; title?: string } | null
 ): EditorContextPayload => {
   const editor = getEditor();
   return {
-    currentRoute: currentPath
-      ? { path: currentPath, title: routeTitle }
-      : null,
+    currentRoute,
     selectedComponentId: editor.selectedItem?.props?.id ?? null,
     componentTypes: Object.keys(editor.config.components ?? {}),
   };
@@ -49,40 +46,22 @@ const collectEditorContext = (
 
 export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
   const getEditor = useGetEditor();
-  const props = usePropsContext();
-  const currentPath = (props as { currentPath?: string }).currentPath;
-  const routeTitle = useMemo(() => {
-    const routes = (props as { routes?: { path: string; title: string }[] })
-      .routes;
-    return routes?.find((r) => r.path === currentPath)?.title;
-  }, [props, currentPath]);
 
-  // Dynamic header/body resolution lets the user merge or replace headers
-  // and body without re-creating the transport on every render.
   const transport = useMemo(() => {
     if (options.transport) return options.transport;
     return new DefaultChatTransport({
-      api: options.api,
-      headers: async () => {
-        if (typeof options.headers === "function") return await options.headers();
-        return options.headers ?? {};
-      },
+      api: options.api ?? "/api/chat",
+      credentials: options.credentials,
+      headers: options.headers,
       // body is a function of the message list — re-evaluated each request,
       // so editorContext always reflects the current editor state.
       body: () => {
-        const editorContext = collectEditorContext(
-          getEditor,
-          currentPath,
-          routeTitle
-        );
-        const userBody =
-          typeof options.body === "function"
-            ? options.body([])
-            : options.body ?? {};
-        return { editorContext, ...userBody };
+        const route = options.getCurrentRoute?.() ?? null;
+        const editorContext = collectEditorContext(getEditor, route);
+        return { editorContext, ...(options.body ?? {}) };
       },
     });
-  }, [options, getEditor, currentPath, routeTitle]);
+  }, [options, getEditor]);
 
   const {
     messages,
@@ -104,7 +83,7 @@ export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
     onToolCall: async ({ toolCall }) => {
       // Stage 1: user-supplied interceptor wins if it returns a defined value.
       if (options.onToolCall) {
-        const result = await options.onToolCall({ toolCall });
+        const result = await options.onToolCall({ toolCall, getEditor });
         if (result !== undefined) {
           // The AI SDK explicitly recommends calling addToolOutput without
           // await here to avoid a deadlock with the streaming loop.
