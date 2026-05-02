@@ -9,6 +9,7 @@ export * from "../types/Fields";
 export * from "../components/ActionBar";
 export { AutoField, FieldLabel } from "../components/AutoField";
 
+export * from "../components/App";
 export * from "../components/Button";
 export { ComponentList } from "../components/ComponentList";
 export { Drawer } from "../components/Drawer";
@@ -17,6 +18,23 @@ export * from "../components/IconButton";
 export { Editor, usePropsContext } from "../components/Editor";
 export * from "../components/Render";
 export { RichTextMenu } from "../components/RichTextMenu/inner";
+
+export {
+  compilePages,
+  resolveRoute as resolvePageRoute,
+} from "../lib/route-resolver";
+export type {
+  AppPages,
+  ResolvedRoute,
+  RouteKey,
+} from "../lib/route-resolver";
+export {
+  getRouteProps,
+  resolveRouteFromString,
+} from "../lib/get-route-props";
+export type { GetRoutePropsOptions } from "../lib/get-route-props";
+export { useBrowserRoute } from "../lib/use-browser-route";
+export { useStableValue } from "../lib/use-stable-value";
 
 export * from "../lib/migrate";
 export * from "../lib/page-metadata";

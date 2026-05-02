@@ -15,6 +15,82 @@ export const getInitialData = (path: string): Partial<UserData> =>
   initialData[path] ?? { content: [], root: { props: { title: "Untitled" } } };
 
 export const initialData: Record<string, UserData> = {
+  "/about": {
+    root: { props: { title: "About — React Editor" } },
+    content: [
+      {
+        type: "navigation",
+        props: {
+          id: "nav-about",
+          brand: "react-editor",
+          links: defaultNavLinks,
+          cta: { label: "Start building", href: "/" },
+        },
+      },
+      {
+        type: "hero",
+        props: {
+          id: "hero-about",
+          tagline: "About",
+          title: "Built for the way React apps are actually shipped",
+          subtitle:
+            "Drop-in primitives that compose with your existing routing, data, and components.",
+          primaryCta: { label: "Get started", href: "/" },
+          secondaryCta: { label: "Learn more", href: "/about" },
+          align: "center",
+        },
+      },
+      {
+        type: "footer",
+        props: {
+          id: "footer-about",
+          brand: "react-editor",
+          tagline: "A visual editor for your React components.",
+          columns: defaultFooterColumns,
+          copyright: "© 2026 react-editor. All rights reserved.",
+          social: defaultSocial,
+        },
+      },
+    ],
+  },
+  "/products/:handle": {
+    root: { props: { title: "Product — React Editor" } },
+    content: [
+      {
+        type: "navigation",
+        props: {
+          id: "nav-product",
+          brand: "react-editor",
+          links: defaultNavLinks,
+          cta: { label: "Start building", href: "/" },
+        },
+      },
+      {
+        type: "hero",
+        props: {
+          id: "hero-product",
+          tagline: "Product template",
+          title: "Dynamic route: /products/:handle",
+          subtitle:
+            "This page is rendered for any /products/* URL. Route matching is handled by <App />.",
+          primaryCta: { label: "Add to cart", href: "#" },
+          secondaryCta: { label: "Back home", href: "/" },
+          align: "center",
+        },
+      },
+      {
+        type: "footer",
+        props: {
+          id: "footer-product",
+          brand: "react-editor",
+          tagline: "A visual editor for your React components.",
+          columns: defaultFooterColumns,
+          copyright: "© 2026 react-editor. All rights reserved.",
+          social: defaultSocial,
+        },
+      },
+    ],
+  },
   "/": {
     root: { props: { title: "React Editor — visual editing for React" } },
     content: [
