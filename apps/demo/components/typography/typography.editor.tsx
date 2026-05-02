@@ -1,12 +1,20 @@
 import { ComponentConfig } from "@/core";
 import { Type } from "lucide-react";
+import { createFieldGoogleFonts } from "@reacteditor/field-google-fonts";
 import { Typography } from "./typography";
 
 export type TypographyProps = {
   variant: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "body1" | "body2";
   content: string;
   align: "left" | "center" | "right";
+  color?: string;
+  fontFamily?: string;
 };
+
+const fontField = createFieldGoogleFonts({
+  apiKey: process.env.NEXT_PUBLIC_GOOGLE_FONTS_KEY,
+  sort: "popularity",
+});
 
 export const typographyEditor: ComponentConfig<TypographyProps> = {
   label: "Typography",
@@ -16,6 +24,8 @@ export const typographyEditor: ComponentConfig<TypographyProps> = {
     variant: "h2",
     content: "",
     align: "left",
+    color: "",
+    fontFamily: "",
   },
   fields: {
     variant: {
@@ -40,8 +50,16 @@ export const typographyEditor: ComponentConfig<TypographyProps> = {
         { label: "Right", value: "right" },
       ],
     },
+    color: { type: "color", label: "Text color", placeholder: "#111111" },
+    fontFamily: { ...fontField, label: "Font family" },
   },
-  render: ({ variant, content, align }) => (
-    <Typography variant={variant} content={content} align={align} />
+  render: ({ variant, content, align, color, fontFamily }) => (
+    <Typography
+      variant={variant}
+      content={content}
+      align={align}
+      color={color}
+      fontFamily={fontFamily}
+    />
   ),
 };

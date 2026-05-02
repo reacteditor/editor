@@ -100,6 +100,10 @@ export type AppStore<
     editor: Editor;
     id: string;
   } | null;
+  // Scroll a component into view in the preview canvas. Wired by
+  // DragDropContext on mount; defaults to a no-op so the API is safe to call
+  // before the canvas has mounted (e.g. during SSR or in tests).
+  scrollToComponent: (id: string) => void;
 };
 
 export type AppStoreApi = StoreApi<AppStore>;
@@ -129,6 +133,7 @@ export const createAppStore = (initialAppStore?: Partial<AppStore>) =>
       _experimentalVirtualization: false,
       metadata: {},
       fieldTransforms: {},
+      scrollToComponent: () => {},
       ...initialAppStore,
       fields: createFieldsSlice(set, get),
       history: createHistorySlice(set, get),

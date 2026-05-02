@@ -1,0 +1,86 @@
+.ColorField {
+  align-items: center;
+  background: var(--editor-surface-panel);
+  border: 1px solid var(--editor-border-default);
+  border-radius: var(--editor-radius-md);
+  box-sizing: border-box;
+  display: flex;
+  gap: 10px;
+  /* Tight padding on top/left/bottom so the swatch sits flush against the
+     container's inner edge; right padding kept for the hex text input. */
+  padding: 4px 12px 4px 4px;
+  transition: border-color var(--editor-motion-fast) var(--editor-ease),
+    box-shadow var(--editor-motion-fast) var(--editor-ease);
+  width: 100%;
+}
+
+.ColorField:focus-within {
+  border-color: var(--editor-accent);
+  box-shadow: var(--editor-ring);
+  outline: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ColorField:hover:not(.ColorField--readOnly) {
+    border-color: var(--editor-border-strong);
+  }
+}
+
+.ColorField--readOnly {
+  background-color: var(--editor-surface-sunken);
+  border-color: var(--editor-border-subtle);
+}
+
+.ColorField-swatch {
+  background-color: currentColor;
+  border: 1px solid var(--editor-border-default);
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  height: 28px;
+  padding: 0;
+  position: relative;
+  width: 28px;
+}
+
+.ColorField-swatch:focus-visible {
+  outline: none;
+  box-shadow: var(--editor-ring);
+}
+
+.ColorField--readOnly .ColorField-swatch {
+  cursor: default;
+}
+
+/* The native picker input is positioned over the swatch but visually hidden,
+   so clicking the swatch triggers the platform color picker. */
+.ColorField-picker {
+  inset: 0;
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.ColorField-text {
+  background: transparent;
+  border: 0;
+  color: var(--editor-text-primary);
+  flex: 1;
+  font-family: inherit;
+  font-size: 16px;
+  min-width: 0;
+  outline: none;
+  padding: 0;
+}
+
+@media (min-width: 458px) {
+  .ColorField-text {
+    font-size: 13px;
+  }
+}
+
+.ColorField-text:disabled,
+.ColorField-text[readonly] {
+  color: var(--editor-text-secondary);
+  cursor: default;
+}

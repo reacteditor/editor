@@ -101,7 +101,11 @@ export const ChatPanel = ({ options }: { options: AiPluginOptions }) => {
       const output = await callBuiltin(
         toolCall.toolName,
         toolCall.input,
-        { getEditor, dispatch: editor.dispatch }
+        {
+          getEditor,
+          dispatch: editor.dispatch,
+          scrollToComponent: options.scrollToComponent !== false,
+        }
       );
       if (output !== undefined) {
         addToolOutput({

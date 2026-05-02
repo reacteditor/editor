@@ -169,6 +169,19 @@ const DragDropContextClient = ({
     }));
   });
 
+  // Expose the zone store's scrollToComponent on the app store so the public
+  // EditorCommands.scrollToComponent has somewhere to dispatch to. Restored to
+  // a no-op on unmount so a stale closure can't fire after the canvas is gone.
+  useEffect(() => {
+    appStore.setState({
+      scrollToComponent: (id: string) =>
+        zoneStore.getState().scrollToComponent(id),
+    });
+    return () => {
+      appStore.setState({ scrollToComponent: () => {} });
+    };
+  }, [appStore, zoneStore]);
+
   const getChanged = useCallback(
     (params: DeepestParams) => {
       const { zoneDepthIndex = {}, areaDepthIndex = {} } =

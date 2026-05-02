@@ -39,6 +39,7 @@ export type EditorCommands = {
       | ((prev: DefaultRootFieldProps) => Partial<DefaultRootFieldProps>)
   ) => void;
   selectComponent: (id: string | null) => void;
+  scrollToComponent: (id: string) => void;
 };
 
 const parentToZone = (parent?: Parent): string =>
@@ -152,6 +153,10 @@ export const createEditorCommands = (
     });
   };
 
+  const scrollToComponent: EditorCommands["scrollToComponent"] = (id) => {
+    getState().scrollToComponent(id);
+  };
+
   const selectComponent: EditorCommands["selectComponent"] = (id) => {
     const dispatch = getState().dispatch;
     if (id === null) {
@@ -175,5 +180,6 @@ export const createEditorCommands = (
     updateProps,
     updateRoot,
     selectComponent,
+    scrollToComponent,
   };
 };
