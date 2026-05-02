@@ -6,10 +6,10 @@ const menu = {
     title: "Getting Started",
   },
   "integrating-editor": {
-    title: "Integrating Puck",
+    title: "Integrating React Editor",
   },
   "extending-editor": {
-    title: "Extending Puck",
+    title: "Extending React Editor",
   },
   "api-reference": {
     title: "API Reference",
