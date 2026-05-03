@@ -8,11 +8,72 @@ Install the package
 npm i @reacteditor/core --save
 ```
 
-Or generate a React Editor application using a [recipe](https://github.com/editoreditor/editor#recipes)
+Or generate a React Editor application using a [recipe](https://github.com/reacteditor/editor#recipes)
 
 ```sh copy
 npx create-editor-app my-app
 ```
+
+## Render the app
+
+Use [`<App>`](/docs/api-reference/components/app) to mount a multi-page, schema-driven app. Each entry in `pages` is rendered through [`<Render>`](/docs/api-reference/components/render); the editor is mounted automatically at `/editor/*`.
+
+```jsx copy filename="App.jsx"
+import { App } from "@reacteditor/core";
+import "@reacteditor/core/react-editor.css";
+
+// Shared component config
+const config = {
+  components: {
+    HeadingBlock: {
+      fields: {
+        children: { type: "text" },
+      },
+      render: ({ children }) => {
+        return <h1>{children}</h1>;
+      },
+    },
+  },
+};
+
+// One Data payload per route
+const pages = {
+  "/": {
+    content: [
+      {
+        type: "HeadingBlock",
+        props: { id: "h-home", children: "Home" },
+      },
+    ],
+    root: {},
+  },
+  "/about": {
+    content: [
+      {
+        type: "HeadingBlock",
+        props: { id: "h-about", children: "About" },
+      },
+    ],
+    root: {},
+  },
+};
+
+// Save the data to your database. `route` is the matched route key.
+const save = (data, route) => {};
+
+export default function MyApp() {
+  return <App config={config} pages={pages} onPublish={save} />;
+}
+```
+
+This mounts:
+
+- `/` and `/about` rendered through `<Render>`.
+- `/editor` (for `/`) and `/editor/about` rendered through `<Editor>`.
+
+Use [`react-router`](https://reactrouter.com) primitives (`<Link>`, `useNavigate`) for in-app navigation between pages — see [Multi-Page Apps](/docs/integrating-editor/multi-page-app) for the full guide.
+
+Or generate a React Editor application using individual [`<Render>`](/docs/api-reference/components/render) and [`<Editor>`](/docs/api-reference/components/editor) components.
 
 ## Render the editor
 

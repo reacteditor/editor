@@ -1,0 +1,273 @@
+---
+title: <App>
+---
+
+# \<App\>
+
+Mount a schema-driven, multi-page React Editor application. `<App>` sets up a React Router instance, then routes each entry in `pages` against the URL — rendering it through [`<Render>`](/docs/api-reference/components/render), or through [`<Editor>`](/docs/api-reference/components/editor) when the URL is under `editorPath`.
+
+For an introduction, see [Multi-Page Apps](/docs/integrating-editor/multi-page-app).
+
+```tsx copy
+import { App } from "@reacteditor/core";
+
+const config = { components: {} };
+
+const pages = {
+  "/": { content: [], root: {} },
+  "/about": { content: [], root: {} },
+};
+
+export function Example() {
+  return <App config={config} pages={pages} />;
+}
+```
+
+## Props
+
+| Param                                 | Example                                | Type                                                                     | Status   |
+| ------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------ | -------- |
+| [`config`](#config)                   | `config: { components: {} }`           | [Config](/docs/api-reference/configuration/config)                       | Required |
+| [`pages`](#pages)                     | `pages: { "/": data }`                 | Record\<string, [Data](/docs/api-reference/data-model/data)\>            | Required |
+| [`children`](#children)               | `children: <App.Render />`             | ReactNode                                                                | -        |
+| [`currentPath`](#currentpath)         | `currentPath: "/about"`                | String                                                                   | -        |
+| [`editorPath`](#editorpath)           | `editorPath: "/admin"`                 | String \| null                                                           | -        |
+| [`fieldTransforms`](#fieldtransforms) | `fieldTransforms: {}`                  | [FieldTransforms](/docs/api-reference/field-transforms)                  | -        |
+| [`iframe`](#iframe)                   | `iframe: { enabled: false }`           | IframeConfig                                                             | -        |
+| [`metadata`](#metadata)               | `metadata: { title: "x" }`             | Object                                                                   | -        |
+| [`onChange()`](#onchangedata)         | `onChange: (data) => {}`               | Function                                                                 | -        |
+| [`onPublish()`](#onpublishdata-route) | `onPublish: (data, route) => {}`       | Function                                                                 | -        |
+| [`overrides`](#overrides)             | `overrides: { header: () => <div /> }` | [Overrides](/docs/api-reference/overrides)                               | -        |
+| [`permissions`](#permissions)         | `permissions: { delete: false }`       | [Permissions\[\]](/docs/api-reference/permissions#supported-permissions) | -        |
+| [`plugins`](#plugins)                 | `plugins: [myPlugin]`                  | [Plugin\[\]](/docs/api-reference/plugin)                                 | -        |
+| [`renderNotFound`](#rendernotfound)   | `renderNotFound: () => <NotFound />`   | Function                                                                 | -        |
+| [`router`](#router)                   | `router: "browser"`                    | `"browser"` \| `"hash"` \| `"memory"`                                    | -        |
+| [`viewports`](#viewports)             | `viewports: [{ width: 1440 }]`         | [Viewport\[\]](/docs/api-reference/components/editor#viewports)          | -        |
+
+## Required props
+
+### `config`
+
+The shared [`Config`](/docs/api-reference/configuration/config) used to render every page in `pages`. See the [`Config` docs](/docs/api-reference/configuration/config) for a full reference.
+
+```tsx {4-9} copy
+export function Example() {
+  return (
+    <App
+      config={{
+        components: {
+          HeadingBlock: {
+            fields: { children: { type: "text" } },
+            render: ({ children }) => <h1>{children}</h1>,
+          },
+        },
+      }}
+      // ...
+    />
+  );
+}
+```
+
+### `pages`
+
+A map from route pattern to [`Data`](/docs/api-reference/data-model/data) payload. Keys use the same path syntax as React Router, so dynamic segments (e.g. `/products/:handle`) are supported.
+
+```tsx {4-12} copy
+export function Example() {
+  return (
+    <App
+      pages={{
+        "/": {
+          content: [
+            { type: "HeadingBlock", props: { id: "h-1", children: "Home" } },
+          ],
+          root: {},
+        },
+        "/about": { content: [], root: {} },
+      }}
+      // ...
+    />
+  );
+}
+```
+
+Inside a rendered page, components can read URL parameters with [`useRouteParams`](/docs/api-reference/functions/use-route-params).
+
+## Optional props
+
+### `children`
+
+Take over the default layout and compose your own. When `children` is provided, `<App>` skips its built-in layout and renders your tree inside the router/context. Use [`App.Render`](#apprender) and [`App.Editor`](#appeditor) to mount the page renderer and editor wherever you want them.
+
+```tsx {4-13} copy
+import { App, Editor } from "@reacteditor/core";
+
+export function Example() {
+  return (
+    <App config={config} pages={pages}>
+      <MyLayout>
+        <App.Render />
+        <App.Editor>
+          <Editor.Preview />
+          <Editor.Fields />
+        </App.Editor>
+      </MyLayout>
+    </App>
+  );
+}
+```
+
+See [Composing your own layout](/docs/integrating-editor/multi-page-app#composing-your-own-layout) for the full pattern.
+
+### `currentPath`
+
+The pathname used by the router on first render. Required for SSR (so the server-rendered markup matches the requested URL) and for the `"memory"` router. Ignored by the default `"browser"` router and by `"hash"`.
+
+```tsx {4} copy
+<App
+  currentPath={req.url}
+  // ...
+/>
+```
+
+### `editorPath`
+
+The URL prefix under which the editor is mounted. Defaults to `"/editor"`. Pass `null` to disable editor mode entirely (render-only build).
+
+```tsx {4} copy
+// Move the editor to /admin
+<App editorPath="/admin" /* ... */ />
+```
+
+```tsx {4} copy
+// Render-only — no editor routes mounted
+<App editorPath={null} /* ... */ />
+```
+
+### `fieldTransforms`
+
+Specify transforms to modify field values before being passed to the editor canvas. Implements the [Field Transforms API](/docs/api-reference/field-transforms). Only applied while editing.
+
+### `iframe`
+
+Configure iframe behaviour for the editor canvas. See [`<Editor>` iframe params](/docs/api-reference/components/editor#iframe).
+
+### `metadata`
+
+An object containing additional data provided to each component's [`render`](/docs/api-reference/configuration/component-config#renderprops) and [`resolveData`](/docs/api-reference/configuration/component-config#resolvedatadata-params) functions. Forwarded to both `<Render>` and `<Editor>`.
+
+```tsx {4} copy
+<App
+  metadata={{ title: "Hello, world" }}
+  // ...
+/>
+```
+
+### `onChange(data)`
+
+Forwarded to [`<Editor>`'s `onChange`](/docs/api-reference/components/editor#onchangedata). Fires on every edit while the user is in editor mode.
+
+### `onPublish(data, route)`
+
+Forwarded to [`<Editor>`'s `onPublish`](/docs/api-reference/components/editor#onpublishdata) with one extra argument: the route key of the page that was published. Use this to scope your save to the right row in your database.
+
+```tsx {4-9} copy
+<App
+  onPublish={async (data, route) => {
+    await fetch("/api/save", {
+      method: "post",
+      body: JSON.stringify({ route, data }),
+    });
+  }}
+  // ...
+/>
+```
+
+### `overrides`
+
+An [`Overrides`](/docs/api-reference/overrides) object defining custom render methods for the editor UI. Only applied while editing.
+
+### `permissions`
+
+Set the global [permissions](/docs/api-reference/permissions) for the editor. Only applied while editing.
+
+### `plugins`
+
+An array of [plugins](/docs/api-reference/plugin) to enhance the editor. Only applied while editing.
+
+### `renderNotFound`
+
+Custom 404 component shown when the URL doesn't match any entry in `pages`. Falls back to a built-in screen.
+
+```tsx {4} copy
+<App
+  renderNotFound={() => <MyCustomNotFound />}
+  // ...
+/>
+```
+
+### `router`
+
+The React Router variant to use on the client. Defaults to `"browser"` (uses real URLs via the History API).
+
+| Value       | When to use                                                                       |
+| ----------- | --------------------------------------------------------------------------------- |
+| `"browser"` | Default. Real URLs (`/about`).                                                    |
+| `"hash"`    | Static hosts that can't rewrite URLs (`/#/about`).                                |
+| `"memory"`  | Embedded previews or environments without a URL bar. Pair with `currentPath`.     |
+
+SSR always uses `StaticRouter` regardless of this value.
+
+### `viewports`
+
+Configure the viewports available in the editor canvas. See [`<Editor>` viewports](/docs/api-reference/components/editor#viewports).
+
+## Composition
+
+`<App>` exposes two compositional primitives. They each handle their own routing — you never write `<Route>` elements yourself.
+
+### `App.Render`
+
+Mounts [`<Render>`](/docs/api-reference/components/render) for the current page when the URL is *not* under `editorPath`. Returns `null` while editing.
+
+```tsx copy
+<App.Render />
+```
+
+#### `App.Render` props
+
+| Param              | Example                              | Type     |
+| ------------------ | ------------------------------------ | -------- |
+| `metadata`         | `metadata: { title: "x" }`           | Object   |
+| `renderNotFound`   | `renderNotFound: () => <NotFound />` | Function |
+
+### `App.Editor`
+
+Mounts [`<Editor>`](/docs/api-reference/components/editor) for the current page when the URL is under `editorPath`. Returns `null` otherwise.
+
+`children` are forwarded to `<Editor>` for [compositional UI](/docs/extending-editor/composition) (`<Editor.Preview>`, `<Editor.Fields>`, `<Editor.Components>`, `<Editor.Outline>`).
+
+```tsx copy
+<App.Editor onPublish={save}>
+  <Editor.Preview />
+  <Editor.Fields />
+</App.Editor>
+```
+
+#### `App.Editor` props
+
+`App.Editor` accepts the same editor pass-through props as `<App>`. When you compose, set them on `App.Editor` rather than on `<App>`.
+
+| Param             | Example                                | Type                                                    |
+| ----------------- | -------------------------------------- | ------------------------------------------------------- |
+| `children`        | `children: <Editor.Preview />`         | ReactNode                                               |
+| `fieldTransforms` | `fieldTransforms: {}`                  | [FieldTransforms](/docs/api-reference/field-transforms) |
+| `iframe`          | `iframe: { enabled: false }`           | IframeConfig                                            |
+| `metadata`        | `metadata: { title: "x" }`             | Object                                                  |
+| `onChange`        | `onChange: (data) => {}`               | Function                                                |
+| `onPublish`       | `onPublish: (data, route) => {}`       | Function                                                |
+| `overrides`       | `overrides: { header: () => <div /> }` | [Overrides](/docs/api-reference/overrides)              |
+| `permissions`     | `permissions: { delete: false }`       | Permissions                                             |
+| `plugins`         | `plugins: [myPlugin]`                  | [Plugin\[\]](/docs/api-reference/plugin)                |
+| `renderNotFound`  | `renderNotFound: () => <NotFound />`   | Function                                                |
+| `viewports`       | `viewports: [{ width: 1440 }]`         | Viewport\[\]                                            |

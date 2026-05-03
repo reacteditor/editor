@@ -1,0 +1,97 @@
+---
+title: aiPlugin
+---
+
+# aiPlugin
+
+Add an AI assistant panel to the editor for generating and editing content with prompts. Built on the [Vercel AI SDK](https://sdk.vercel.ai)'s `useChat`.
+
+```sh npm2yarn copy
+npm i @reacteditor/plugin-ai --save
+```
+
+```tsx copy
+import { Editor } from "@reacteditor/core";
+import { aiPlugin } from "@reacteditor/plugin-ai";
+
+const ai = aiPlugin({
+  api: "/api/ai",
+});
+
+export function Editor() {
+  return <Editor plugins={[ai]} />;
+}
+```
+
+A server companion (`@reacteditor/plugin-ai/server`) provides helpers for wiring the endpoint to your model provider.
+
+## Options
+
+### Transport
+
+Mirrors the `useChat` `DefaultChatTransport` config. Set `transport` to replace the entire transport and ignore the others.
+
+| Param         | Example                          | Type                              |
+| ------------- | -------------------------------- | --------------------------------- |
+| `api`         | `api: "/api/ai"`                 | String                            |
+| `credentials` | `credentials: "include"`         | RequestCredentials                |
+| `headers`     | `headers: { Authorization: "" }` | Record\<string, string\> \| Headers |
+| `body`        | `body: { sessionId: "..." }`     | Object                            |
+| `transport`   | `transport: customTransport`     | `ChatTransport<UIMessage>`        |
+
+### Lifecycle
+
+| Param        | Example                                | Type                                                    |
+| ------------ | -------------------------------------- | ------------------------------------------------------- |
+| `onFinish`   | `onFinish: ({ message }) => {}`        | `(event: { message: UIMessage }) => void`               |
+| `onError`    | `onError: (err) => {}`                 | `(error: Error) => void`                                |
+| `onToolCall` | `onToolCall: ({ getEditor }) => {}`    | `(event) => unknown \| Promise<unknown> \| undefined`   |
+| `messages`   | `messages: [/* persisted UIMessages */]` | `UIMessage[]`                                         |
+
+`onToolCall` is called for every model-emitted tool call before the built-in handlers run. Return a defined value (sync or async) to short-circuit and use that as the tool output; return `undefined` to fall through to the built-ins. `getEditor()` returns the live editor on each call, so reads after `await` always see current state.
+
+### UI
+
+| Param               | Example                                | Type                                                    |
+| ------------------- | -------------------------------------- | ------------------------------------------------------- |
+| `attachments`       | `attachments: true`                    | Boolean                                                 |
+| `renderTool`        | `renderTool: ({ name, state }) => {}`  | `(params: RenderToolParams) => ReactNode \| undefined`  |
+| `scrollToComponent` | `scrollToComponent: false`             | Boolean                                                 |
+| `getCurrentRoute`   | `getCurrentRoute: () => ({ path })`    | `() => { path?: string; title?: string } \| null`       |
+
+#### `attachments`
+
+When `true`, a paperclip button next to the chat input opens an image picker. Selected files are sent with the next message via the AI SDK's `sendMessage({ files })` API. Defaults to `false`.
+
+#### `renderTool`
+
+Optional renderer for tool-call parts. Called for every `tool-*` part the model emits. Return a `ReactNode` to override the default rendering (shimmer `"<name>..."` while in flight, muted `"<name>"` once done) for a specific tool name + state. Return `undefined` to fall through to the default.
+
+```tsx copy
+const ai = aiPlugin({
+  api: "/api/ai",
+  renderTool: ({ name, state, input, output }) => {
+    if (name === "addComponent" && state === "output-available") {
+      return <span>Added {(output as any)?.type}</span>;
+    }
+    return undefined;
+  },
+});
+```
+
+`RenderToolParams`:
+
+| Field    | Type                                                                                            |
+| -------- | ----------------------------------------------------------------------------------------------- |
+| `name`   | `string` — the tool name without the `tool-` prefix                                             |
+| `state`  | `"input-streaming" \| "input-available" \| "output-available" \| "output-error"`                 |
+| `input`  | `unknown` — the model's input arguments                                                         |
+| `output` | `unknown` — the tool's output once available                                                    |
+
+#### `scrollToComponent`
+
+When `true` (the default), the chat panel scrolls newly added or modified components into view in the preview canvas via the editor's `scrollToComponent` command. Set to `false` to disable.
+
+#### `getCurrentRoute`
+
+Optional callback resolving the editor's current route. Invoked on each outgoing request and forwarded to the server as `editorContext.currentRoute`, which the default system prompt uses to ground responses. Return `null` (or omit) to send no route info.

@@ -5,7 +5,7 @@ import { getClassNameFactory } from "@/core/lib";
 
 import styles from "./styles.module.css";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://frontend.co";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://reacteditor.dev";
 
 const { version } = packageJson;
 
@@ -62,7 +62,7 @@ export const ReleaseSwitcher = ({
       onChange={(e) => {
         const newHref = e.currentTarget.value
           ? `/v/${e.currentTarget.value}`
-          : "https://frontend.co";
+          : "https://reacteditor.dev";
 
         if (window.parent) {
           window.parent.location.href = newHref;

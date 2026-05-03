@@ -14,9 +14,6 @@ const menu = {
   "api-reference": {
     title: "API Reference",
   },
-  guides: {
-    title: "Guides",
-  },
 };
 
 export default menu;

@@ -19,14 +19,14 @@ import { AppProvider, type AppProviderProps } from "./AppProvider";
 import { useApp } from "./context";
 import type { RouteKey } from "./context";
 
-export type AppProps<
+/** Editor pass-through props shared by <App> (default layout) and <App.Editor>. */
+type EditorPassthroughProps<
   UserConfig extends Config = Config,
   G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
-> = AppProviderProps<UserConfig, G> & {
+> = {
   /** Called when the editor publishes. `route` is the schema route key. */
   onPublish?: (data: G["UserData"], route?: string) => void;
   onChange?: (data: G["UserData"]) => void;
-  /** Pass-through Editor configuration. */
   plugins?: Plugin<UserConfig>[];
   overrides?: Partial<Overrides<UserConfig>>;
   fieldTransforms?: FieldTransforms<UserConfig>;
@@ -34,9 +34,16 @@ export type AppProps<
   iframe?: IframeConfig;
   viewports?: Viewports;
   permissions?: Partial<Permissions>;
-  /** Optional custom not-found component — falls back to a built-in. */
-  renderNotFound?: () => ReactNode;
 };
+
+export type AppProps<
+  UserConfig extends Config = Config,
+  G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
+> = AppProviderProps<UserConfig, G> &
+  EditorPassthroughProps<UserConfig, G> & {
+    /** Optional custom not-found component — falls back to a built-in. */
+    renderNotFound?: () => ReactNode;
+  };
 
 const joinEditorPath = (editorPath: string, route: RouteKey): string => {
   if (route === "/") return editorPath;
@@ -60,20 +67,7 @@ const DefaultNotFound = () => (
   </div>
 );
 
-type LayoutProps<
-  UserConfig extends Config = Config,
-  G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
-> = Omit<
-  AppProps<UserConfig, G>,
-  | "config"
-  | "pages"
-  | "currentPath"
-  | "editorPath"
-  | "router"
-  | "children"
->;
-
-function RenderRoute<
+function RenderForKey<
   UserConfig extends Config = Config,
   G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
 >({
@@ -87,7 +81,7 @@ function RenderRoute<
   const data = pages[routeKey];
   if (!data) return null;
   // Key by routeKey so navigating between routes that share an element
-  // type (e.g. Routes selecting different <RenderRoute> matches) actually
+  // type (e.g. Routes selecting different <RenderForKey> matches) actually
   // remounts <Render> instead of just re-rendering with new props.
   return (
     <Render<UserConfig>
@@ -99,31 +93,20 @@ function RenderRoute<
   );
 }
 
-function EditorRouteRender<
+function EditorForKey<
   UserConfig extends Config = Config,
   G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
 >({
   routeKey,
-  layoutProps,
+  editorProps,
+  children,
 }: {
   routeKey: RouteKey;
-  layoutProps: LayoutProps<UserConfig, G>;
+  editorProps: EditorPassthroughProps<UserConfig, G>;
+  children?: ReactNode;
 }) {
-  const {
-    onPublish,
-    onChange,
-    plugins,
-    overrides,
-    fieldTransforms,
-    metadata,
-    iframe,
-    viewports,
-    permissions,
-  } = layoutProps;
-
   const { config, pages, routes, navigate } = useApp<UserConfig, G>();
   const data = pages[routeKey];
-
   if (!data) return null;
 
   return (
@@ -135,72 +118,133 @@ function EditorRouteRender<
       key={routeKey}
       config={config}
       data={data}
-      plugins={plugins}
-      overrides={overrides}
-      fieldTransforms={fieldTransforms as FieldTransforms<UserConfig>}
-      metadata={metadata}
-      iframe={iframe}
-      viewports={viewports}
-      permissions={permissions}
-      onChange={onChange}
-      onPublish={onPublish}
+      plugins={editorProps.plugins}
+      overrides={editorProps.overrides}
+      fieldTransforms={
+        editorProps.fieldTransforms as FieldTransforms<UserConfig>
+      }
+      metadata={editorProps.metadata}
+      iframe={editorProps.iframe}
+      viewports={editorProps.viewports}
+      permissions={editorProps.permissions}
+      onChange={editorProps.onChange}
+      onPublish={editorProps.onPublish}
       routes={routes}
       currentRoute={routeKey}
       onRouteChange={(next) => navigate(next)}
-    />
+    >
+      {children}
+    </Editor>
   );
 }
 
-function NotFoundRoute({
-  renderNotFound,
-}: {
+export type AppRenderProps = {
+  metadata?: Metadata;
   renderNotFound?: () => ReactNode;
-}) {
-  return renderNotFound ? <>{renderNotFound()}</> : <DefaultNotFound />;
-}
+};
 
-function AppLayout<
+/**
+ * Mounts <Render> for the current page when the URL is *not* under editorPath.
+ * Returns null while editing — safe to place anywhere inside <App>.
+ */
+function AppRender<
   UserConfig extends Config = Config,
   G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
->(layoutProps: LayoutProps<UserConfig, G>) {
-  const { pages, editorPath } = useApp<UserConfig, G>();
-
-  const renderRoutes = Object.keys(pages);
-
+>({ metadata, renderNotFound }: AppRenderProps) {
+  const { pages, isEditing } = useApp<UserConfig, G>();
+  if (isEditing) return null;
+  const routeKeys = Object.keys(pages);
   return (
     <Routes>
-      {renderRoutes.map((routeKey) => (
+      {routeKeys.map((routeKey) => (
         <Route
           key={`render:${routeKey}`}
           path={routeKey}
           element={
-            <RenderRoute<UserConfig, G>
+            <RenderForKey<UserConfig, G>
               routeKey={routeKey}
-              metadata={layoutProps.metadata}
+              metadata={metadata}
             />
           }
         />
       ))}
-      {editorPath !== null &&
-        renderRoutes.map((routeKey) => (
-          <Route
-            key={`edit:${routeKey}`}
-            path={joinEditorPath(editorPath, routeKey)}
-            element={
-              <EditorRouteRender<UserConfig, G>
-                routeKey={routeKey}
-                layoutProps={layoutProps}
-              />
-            }
-          />
-        ))}
       <Route
         path="*"
         element={
-          <NotFoundRoute renderNotFound={layoutProps.renderNotFound} />
+          renderNotFound ? <>{renderNotFound()}</> : <DefaultNotFound />
         }
       />
     </Routes>
+  );
+}
+
+export type AppEditorProps<
+  UserConfig extends Config = Config,
+  G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
+> = EditorPassthroughProps<UserConfig, G> & {
+  children?: ReactNode;
+  renderNotFound?: () => ReactNode;
+};
+
+/**
+ * Mounts <Editor> for the current page when the URL is under editorPath.
+ * Returns null otherwise. Children are forwarded to <Editor> for compositional
+ * UI (e.g. <Editor.Preview />, <Editor.Fields />).
+ */
+function AppEditor<
+  UserConfig extends Config = Config,
+  G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
+>(props: AppEditorProps<UserConfig, G>) {
+  const { children, renderNotFound, ...editorProps } = props;
+  const { pages, isEditing, editorPath } = useApp<UserConfig, G>();
+  if (!isEditing || editorPath === null) return null;
+  const routeKeys = Object.keys(pages);
+  return (
+    <Routes>
+      {routeKeys.map((routeKey) => (
+        <Route
+          key={`edit:${routeKey}`}
+          path={joinEditorPath(editorPath, routeKey)}
+          element={
+            <EditorForKey<UserConfig, G>
+              routeKey={routeKey}
+              editorProps={editorProps}
+            >
+              {children}
+            </EditorForKey>
+          }
+        />
+      ))}
+      <Route
+        path="*"
+        element={
+          renderNotFound ? <>{renderNotFound()}</> : <DefaultNotFound />
+        }
+      />
+    </Routes>
+  );
+}
+
+type DefaultLayoutProps<
+  UserConfig extends Config = Config,
+  G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
+> = EditorPassthroughProps<UserConfig, G> & {
+  renderNotFound?: () => ReactNode;
+};
+
+function DefaultAppLayout<
+  UserConfig extends Config = Config,
+  G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
+>(props: DefaultLayoutProps<UserConfig, G>) {
+  const { renderNotFound, ...editorProps } = props;
+  return (
+    <>
+      <AppRender<UserConfig, G>
+        metadata={editorProps.metadata}
+        renderNotFound={renderNotFound}
+      />
+      <AppEditor<UserConfig, G> {...editorProps} renderNotFound={renderNotFound} />
+    </>
   );
 }
 
@@ -226,7 +270,10 @@ export function App<
       editorPath={editorPath}
       router={router}
     >
-      {children ?? <AppLayout<UserConfig, G> {...layoutProps} />}
+      {children ?? <DefaultAppLayout<UserConfig, G> {...layoutProps} />}
     </AppProvider>
   );
 }
+
+App.Render = AppRender;
+App.Editor = AppEditor;

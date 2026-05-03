@@ -44,6 +44,9 @@ export function Editor() {
 | [`overrides`](#overrides)                                         | `overrides: { header: () => <div /> }`             | [Overrides](/docs/api-reference/overrides)                               | Experimental |
 | [`permissions`](#permissions)                                     | `permissions: {}`                                  | [Permissions\[\]](/docs/api-reference/permissions#supported-permissions) | -            |
 | [`plugins`](#plugins)                                             | `plugins: [myPlugin]`                              | [Plugin\[\]](/docs/api-reference/plugin)                                 | Experimental |
+| [`routes`](#routes)                                               | `routes: ["/", "/about"]`                          | String\[\]                                                               | -            |
+| [`currentRoute`](#currentroute)                                   | `currentRoute: "/about"`                           | String                                                                   | -            |
+| [`onRouteChange()`](#onroutechangepath)                           | `onRouteChange: (path) => {}`                      | Function                                                                 | -            |
 | [`ui`](#ui)                                                       | `ui: {leftSideBarVisible: false}`                  | [AppState.ui](/docs/api-reference/data-model/app-state#ui)               | -            |
 | [`viewports`](#viewports)                                         | `viewports: [{ width: 1440 }]`                     | [Viewport\[\]](#viewport-params)                                         | -            |
 | [`_experimentalFullScreenCanvas`](#_experimentalfullscreencanvas) | `_experimentalFullScreenCanvas: true`              | Boolean                                                                  | Experimental |
@@ -408,6 +411,48 @@ export function Editor() {
   return (
     <Editor
       plugins={[tailwindCdn]}
+      // ...
+    />
+  );
+}
+```
+
+### `routes`
+
+A list of route keys to expose in the editor's page switcher. When `routes` and `currentRoute` are provided, the editor renders a dropdown alongside the header that lets the user move between pages.
+
+Pair with [`onRouteChange`](#onroutechangepath) to control navigation. Most apps don't set this directly — [`<App>`](/docs/api-reference/components/app) wires it up automatically based on the keys in its `pages` map.
+
+```tsx {4-5,7-9} copy
+export function Editor() {
+  return (
+    <Editor
+      routes={["/", "/about"]}
+      currentRoute="/"
+      onRouteChange={(next) => {
+        // navigate your router to `next`
+      }}
+      // ...
+    />
+  );
+}
+```
+
+### `currentRoute`
+
+The route key currently being edited. Used together with [`routes`](#routes) to highlight the active entry in the editor's page switcher.
+
+### `onRouteChange(path)`
+
+Callback fired when the user picks a different route from the page switcher. Receives the destination route key. Use it to navigate your router to the new page; the editor itself doesn't perform navigation.
+
+```tsx {4-7} copy
+export function Editor() {
+  return (
+    <Editor
+      onRouteChange={(path) => {
+        router.push(path);
+      }}
       // ...
     />
   );

@@ -1,0 +1,49 @@
+---
+title: field-contentful
+---
+
+# field-contentful
+
+A pre-built [external field](/docs/api-reference/fields/external) for selecting Contentful entries.
+
+```sh npm2yarn copy
+npm i @reacteditor/field-contentful --save
+```
+
+## `createFieldContentful`
+
+```tsx copy
+import { createFieldContentful } from "@reacteditor/field-contentful";
+
+const config = {
+  components: {
+    BlogCard: {
+      fields: {
+        post: createFieldContentful("blogPost", {
+          space: process.env.CONTENTFUL_SPACE!,
+          accessToken: process.env.CONTENTFUL_TOKEN!,
+        }),
+      },
+      render: ({ post }) => <h2>{post?.fields.title}</h2>,
+    },
+  },
+};
+```
+
+### Args
+
+| Param         | Example                            | Description                                                                                |
+| ------------- | ---------------------------------- | ------------------------------------------------------------------------------------------ |
+| `contentType` | `"blogPost"`                       | The Contentful content type ID to query. Required.                                         |
+| `options`     | `{ space, accessToken }`           | See [Options](#options) below.                                                             |
+
+### Options
+
+| Param            | Example                                | Description                                                                                |
+| ---------------- | -------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `space`          | `process.env.CONTENTFUL_SPACE`         | Contentful space ID. Required unless `client` is supplied.                                 |
+| `accessToken`    | `process.env.CONTENTFUL_TOKEN`         | Contentful Delivery API access token. Required unless `client` is supplied.                |
+| `client`         | `client: createClient({ ... })`        | Pre-built [`contentful`](https://github.com/contentful/contentful.js) client.              |
+| `titleField`     | `"title"`                              | Entry field used as the row title. Defaults to `"title"`.                                  |
+| `filterFields`   | `filterFields: { ... }`                | Filter UI for the picker.                                                                  |
+| `initialFilters` | `{ category: "news" }`                 | Initial filter values.                                                                     |

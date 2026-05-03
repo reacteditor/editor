@@ -46,4 +46,4 @@ Override the script URL, e.g. to pin a specific version. Defaults to `https://cd
 
 ## License
 
-MIT © [The Frontend Contributors](https://github.com/frontend-inc/react-editor/graphs/contributors)
+MIT © [The React Editor Contributors](https://github.com/reacteditor/editor/graphs/contributors)

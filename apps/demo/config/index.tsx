@@ -25,7 +25,6 @@ import { footerEditor } from "@/components/footer/footer.editor";
 
 import Root from "./root";
 import { UserConfig } from "./types";
-import { initialData } from "./initial-data";
 
 export const conf: UserConfig = {
   root: Root,
@@ -65,7 +64,7 @@ export const conf: UserConfig = {
 };
 
 export const componentKey = Buffer.from(
-  `${Object.keys(conf.components).join("-")}-${JSON.stringify({ initialData })}`
+  Object.keys(conf.components).join("-")
 ).toString("base64");
 
 export default conf;

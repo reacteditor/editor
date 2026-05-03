@@ -1,6 +1,7 @@
 const menu = {
   "component-configuration": {},
   "root-configuration": {},
+  "multi-page-app": { title: "Multi-Page Apps" },
   "multi-column-layouts": {},
   categories: {},
   "rich-text-editing": {},

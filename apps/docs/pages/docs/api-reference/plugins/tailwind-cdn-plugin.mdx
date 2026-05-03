@@ -1,0 +1,38 @@
+---
+title: tailwindCdnPlugin
+---
+
+# tailwindCdnPlugin
+
+Inject the [Tailwind CSS browser CDN](https://tailwindcss.com/blog/tailwindcss-v4#tailwind-cli) into the editor's preview iframe so utility classes work without a build step.
+
+```sh npm2yarn copy
+npm i @reacteditor/plugin-tailwind-cdn --save
+```
+
+```tsx copy
+import { Editor } from "@reacteditor/core";
+import createTailwindCdnPlugin from "@reacteditor/plugin-tailwind-cdn";
+
+const tailwindCdn = createTailwindCdnPlugin();
+
+export function Editor() {
+  return <Editor plugins={[tailwindCdn]} />;
+}
+```
+
+## Options
+
+| Param | Example                          | Type   | Status |
+| ----- | -------------------------------- | ------ | ------ |
+| `src` | `src: "https://cdn..."` | String | -      |
+
+### `src`
+
+Override the CDN URL. Defaults to `https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4`.
+
+```tsx copy
+const tailwindCdn = createTailwindCdnPlugin({
+  src: "https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4",
+});
+```

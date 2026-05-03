@@ -2,7 +2,7 @@ import flat from "flat";
 import { ComponentData, Config, RootData, UserGenerics } from "../../types";
 import { stripSlots } from "./strip-slots";
 
-// Explicitly destructure to account for flat module issues: https://github.com/frontend-inc/react-editor/issues/1089
+// Explicitly destructure to account for flat module issues: https://github.com/reacteditor/editor/issues/1089
 const { flatten, unflatten } = flat;
 
 const isPureObject = (val: any) =>

@@ -4,7 +4,7 @@ React Editor is an open-source, visual editor for your react components. You can
 
 React Editor is a fork from [Puck](https://github.com/puckeditor), which is the foundation for this project. 
 
-React Editor is [licensed under MIT](https://github.com/frontend-inc/react-editor?tab=MIT-1-ov-file#readme).
+React Editor is [licensed under MIT](https://github.com/reacteditor/editor?tab=MIT-1-ov-file#readme).
 
 ## Quick start
 
@@ -63,7 +63,7 @@ export function Page() {
 
 ## Recipes
 
-Use `create-react-editor` to quickly spin up a a pre-configured app based on our provided [recipes](https://github.com/frontend-inc/react-editor/tree/main/recipes):
+Use `create-react-editor` to quickly spin up a a pre-configured app based on our provided [recipes](https://github.com/reacteditor/editor/tree/main/recipes):
 
 ```sh
 npx create-react-editor my-app
@@ -71,15 +71,15 @@ npx create-react-editor my-app
 
 Available recipes include:
 
-- [**next**](https://github.com/frontend-inc/react-editor/tree/main/recipes/next): Next.js example, using App Router and static page generation
-- [**remix**](https://github.com/frontend-inc/react-editor/tree/main/recipes/remix): Remix Run v2 example, using dynamic routes at root-level
-- [**react-router**](https://github.com/frontend-inc/react-editor/tree/main/recipes/react-router): React Router v7 app example, using dynamic routes to create pages at any level
+- [**next**](https://github.com/reacteditor/editor/tree/main/recipes/next): Next.js example, using App Router and static page generation
+- [**remix**](https://github.com/reacteditor/editor/tree/main/recipes/remix): Remix Run v2 example, using dynamic routes at root-level
+- [**react-router**](https://github.com/reacteditor/editor/tree/main/recipes/react-router): React Router v7 app example, using dynamic routes to create pages at any level
 
 ## Get support
 
-If you have any questions about React Editor, please open a [GitHub issue](https://github.com/frontend-inc/react-editor/issues).
+If you have any questions about React Editor, please open a [GitHub issue](https://github.com/reacteditor/editor/issues).
 
 
 ## License
 
-[MIT License](https://github.com/frontend-inc/react-editor/license.MD)
+[MIT License](https://github.com/reacteditor/editor/license.MD)

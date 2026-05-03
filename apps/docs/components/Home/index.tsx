@@ -4,7 +4,6 @@ import styles from "./styles.module.css";
 import getClassNameFactory from "@/core/lib/get-class-name-factory";
 import { Button } from "@/core/components/Button";
 import Link from "next/link";
-import { CtaCard } from "../CtaCard";
 
 const getClassName = getClassNameFactory("Home", styles);
 
@@ -31,7 +30,7 @@ export const Home = () => {
           <Link href="/docs" style={{ display: "flex" }}>
             <Button>Read docs</Button>
           </Link>
-          <Button href="https://demo.frontend.co/edit" variant="secondary">
+          <Button href="https://demo.reacteditor.dev/edit" variant="secondary">
             View demo
           </Button>
         </div>
@@ -41,16 +40,14 @@ export const Home = () => {
           --save
         </pre>
       </div>
-      <div className={getClassName("peakWrapper")}>
-        <div>
-          <div className={getClassName("dot")} />
-          <div className={getClassName("dot")} />
-          <div className={getClassName("dot")} />
-        </div>
-
-        <div className={getClassName("peak")}>
-          <CtaCard />
-        </div>
+      <div style={{ paddingTop: 48 }} />
+      <div className={getClassName("demo")}>
+        <iframe
+          src="https://demo.reacteditor.dev/editor"
+          title="React Editor demo"
+          className={getClassName("demoFrame")}
+          loading="lazy"
+        />
       </div>
     </div>
   );

@@ -279,3 +279,176 @@ The currently selected item, as defined by `appState.ui.itemSelector`.
 console.log(selectedItem);
 // { type: "Heading", props: {id: "my-heading"} }
 ```
+
+## Commands
+
+Higher-level mutation helpers that wrap [`dispatch`](#dispatchaction) for common operations. Each command resolves the target by id and is a no-op if the id isn't found in the tree.
+
+### Accessing commands
+
+Commands live on the [`EditorApi`](#) returned by [`useEditor`](/docs/api-reference/functions/use-editor) (inside render) or [`useGetEditor`](/docs/api-reference/functions/use-get-editor) (inside callbacks and effects). Both hooks must be called from a component rendered inside `<Editor>` — typically through [composition](/docs/extending-editor/composition), [UI overrides](/docs/extending-editor/ui-overrides), or [custom fields](/docs/extending-editor/custom-fields).
+
+```tsx copy
+import { useGetEditor } from "@reacteditor/core";
+
+const RenameButton = () => {
+  const getEditor = useGetEditor();
+
+  return (
+    <button
+      onClick={() => {
+        const editor = getEditor();
+        const id = editor.selectedItem?.props.id;
+        if (id) editor.updateProps(id, { children: "Renamed" });
+      }}
+    >
+      Rename selected
+    </button>
+  );
+};
+```
+
+For UI that must re-render when the editor state changes, use `useEditor` with a selector:
+
+```tsx copy
+import { createUseEditor } from "@reacteditor/core";
+
+const useEditor = createUseEditor();
+
+const PropEditor = () => {
+  const selected = useEditor((s) => s.selectedItem);
+  const updateProps = useEditor((s) => s.updateProps);
+
+  if (!selected) return null;
+
+  return (
+    <input
+      value={selected.props.children ?? ""}
+      onChange={(e) => updateProps(selected.props.id, { children: e.target.value })}
+    />
+  );
+};
+```
+
+| Command                                              | Example                                          | Returns          |
+| ---------------------------------------------------- | ------------------------------------------------ | ---------------- |
+| [`insertComponent`](#insertcomponentargs)            | `insertComponent({ type: "Heading" })`           | `{ id: string }` |
+| [`removeComponent`](#removecomponentid)              | `removeComponent("Heading-123")`                 | `void`           |
+| [`duplicateComponent`](#duplicatecomponentid)        | `duplicateComponent("Heading-123")`              | `void`           |
+| [`moveComponent`](#movecomponentid-to)               | `moveComponent("Heading-123", { index: 2 })`     | `void`           |
+| [`replaceComponent`](#replacecomponentid-data)       | `replaceComponent("Heading-123", data)`          | `void`           |
+| [`updateProps`](#updatepropsid-updater)              | `updateProps("Heading-123", { size: "lg" })`     | `void`           |
+| [`updateRoot`](#updaterootupdater)                   | `updateRoot({ title: "Home" })`                  | `void`           |
+| [`selectComponent`](#selectcomponentid)              | `selectComponent("Heading-123")`                 | `void`           |
+| [`scrollToComponent`](#scrolltocomponentid)          | `scrollToComponent("Heading-123")`               | `void`           |
+
+### `insertComponent(args)`
+
+Insert a new component into the tree. Returns the id of the inserted component.
+
+```tsx
+const { id } = insertComponent({
+  type: "HeadingBlock",
+  parent: { id: "Flex-123", slot: "items" },
+  index: 0,
+  data: { type: "HeadingBlock", props: { id: "", children: "Hello" } },
+  select: true,
+});
+```
+
+#### Args
+
+| Param    | Example                                                 | Type                                                                | Status                                                |
+| -------- | ------------------------------------------------------- | ------------------------------------------------------------------- | ----------------------------------------------------- |
+| `type`   | `type: "HeadingBlock"`                                  | String                                                              | Required                                              |
+| `parent` | `parent: { id: "Flex-123", slot: "items" }`             | `{ id: string; slot: string }`                                      | Defaults to the root drop zone                        |
+| `index`  | `index: 0`                                              | Number                                                              | Defaults to the end of the target zone                |
+| `data`   | `data: { type: "HeadingBlock", props: { children: "" }}` | [ComponentData](/docs/api-reference/data-model/data#content-1)      | Defaults to a new component with [`defaultProps`](/docs/api-reference/configuration/component-config#defaultprops) |
+| `select` | `select: false`                                         | Boolean                                                             | Defaults to `true` — auto-selects the inserted component |
+
+### `removeComponent(id)`
+
+Remove the component with the given id from the tree.
+
+```tsx
+removeComponent("HeadingBlock-1234");
+```
+
+### `duplicateComponent(id)`
+
+Duplicate the component with the given id, inserting the copy immediately after it.
+
+```tsx
+duplicateComponent("HeadingBlock-1234");
+```
+
+### `moveComponent(id, to)`
+
+Move the component to a different position or zone.
+
+```tsx
+moveComponent("HeadingBlock-1234", {
+  parent: { id: "Flex-123", slot: "items" },
+  index: 0,
+});
+```
+
+#### `to` params
+
+| Param    | Example                                     | Type                           | Status                          |
+| -------- | ------------------------------------------- | ------------------------------ | ------------------------------- |
+| `parent` | `parent: { id: "Flex-123", slot: "items" }` | `{ id: string; slot: string }` | Defaults to the root drop zone  |
+| `index`  | `index: 2`                                  | Number                         | Required                        |
+
+### `replaceComponent(id, data)`
+
+Replace the component's data while preserving its existing id and position.
+
+```tsx
+replaceComponent("HeadingBlock-1234", {
+  type: "HeadingBlock",
+  props: { children: "Replaced" },
+});
+```
+
+### `updateProps(id, updater)`
+
+Patch a component's props. Pass an object to merge keys, or a function that receives the previous props and returns a partial.
+
+```tsx
+// Object form — merge
+updateProps("HeadingBlock-1234", { size: "lg" });
+
+// Function form — read previous props
+updateProps("HeadingBlock-1234", (prev) => ({
+  count: (prev.count ?? 0) + 1,
+}));
+```
+
+The component's `id` is preserved regardless of what the updater returns.
+
+### `updateRoot(updater)`
+
+Patch the root props. Same shape as [`updateProps`](#updatepropsid-updater).
+
+```tsx
+updateRoot({ title: "Home" });
+updateRoot((prev) => ({ visited: (prev.visited ?? 0) + 1 }));
+```
+
+### `selectComponent(id)`
+
+Select the component with the given id, or pass `null` to clear the selection.
+
+```tsx
+selectComponent("HeadingBlock-1234");
+selectComponent(null); // clear selection
+```
+
+### `scrollToComponent(id)`
+
+Scroll the preview canvas so the component with the given id is in view.
+
+```tsx
+scrollToComponent("HeadingBlock-1234");
+```

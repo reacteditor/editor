@@ -3,9 +3,9 @@
   "version": "0.0.10",
   "description": "The open-source visual editor for React",
   "author": "Rami Bitar <rami@frontend.co>",
-  "repository": "frontend-inc/react-editor",
-  "bugs": "https://github.com/frontend-inc/react-editor/issues",
-  "homepage": "https://frontend.co",
+  "repository": "reacteditor/editor",
+  "bugs": "https://github.com/reacteditor/editor/issues",
+  "homepage": "https://reacteditor.dev",
   "keywords": [
     "editor",
     "visual",

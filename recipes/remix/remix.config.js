@@ -6,7 +6,7 @@ export default {
   // publicPath: "/build/",
   // serverBuildPath: "build/index.js",
   /**
-   * @see https://github.com/frontend-inc/react-editor/issues/112
+   * @see https://github.com/reacteditor/editor/issues/112
    */
   browserNodeBuiltinsPolyfill: { modules: { crypto: true } },
 };

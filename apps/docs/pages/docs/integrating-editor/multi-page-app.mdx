@@ -1,0 +1,175 @@
+# Multi-Page Apps
+
+[`<Editor>`](/docs/api-reference/components/editor) and [`<Render>`](/docs/api-reference/components/render) each work on a single [`Data`](/docs/api-reference/data-model/data) payload at a time. To ship an entire schema-driven app — multiple pages, shared chrome, and an editor mounted at `/editor/...` — use [`<App>`](/docs/api-reference/components/app).
+
+`<App>` is a thin wrapper that:
+
+1. Sets up a [React Router v7](https://reactrouter.com) instance for you.
+2. Routes any `pages` entry against the current URL and renders it through [`<Render>`](/docs/api-reference/components/render).
+3. Mirrors the same routes under `/editor` (configurable) and renders them through [`<Editor>`](/docs/api-reference/components/editor).
+
+## Mounting an app
+
+Pass a [`Config`](/docs/api-reference/configuration/config) and a `pages` map, where each key is a route pattern and each value is the [`Data`](/docs/api-reference/data-model/data) for that page.
+
+```tsx copy filename="App.tsx"
+import { App } from "@reacteditor/core";
+import "@reacteditor/core/react-editor.css";
+
+const config = {
+  components: {
+    HeadingBlock: {
+      fields: { children: { type: "text" } },
+      render: ({ children }) => <h1>{children}</h1>,
+    },
+  },
+};
+
+const pages = {
+  "/": {
+    content: [{ type: "HeadingBlock", props: { id: "h-1", children: "Home" } }],
+    root: {},
+  },
+  "/about": {
+    content: [{ type: "HeadingBlock", props: { id: "h-2", children: "About" } }],
+    root: {},
+  },
+};
+
+const save = (data, route) => {
+  // route is the matched pattern, e.g. "/" or "/products/:handle"
+};
+
+export default function MyApp() {
+  return <App config={config} pages={pages} onPublish={save} />;
+}
+```
+
+With this in place:
+
+- `/` renders the home page through `<Render>`.
+- `/about` renders the about page.
+- `/editor` opens the editor for `/`, `/editor/about` opens the editor for `/about`, etc.
+
+Page keys use the same path-pattern syntax as React Router, so dynamic segments work out of the box:
+
+```tsx
+const pages = {
+  "/products/:handle": productPageData,
+};
+```
+
+## Navigating between pages
+
+Components rendered inside an `<App>` live inside a real React Router tree. **Use react-router primitives for any in-app navigation** — don't reach for `<a href>` or `window.location`, which trigger a full page reload and tear down the editor state.
+
+```tsx copy
+import { Link, useNavigate } from "react-router";
+
+const NavBar = {
+  render: () => (
+    <nav>
+      <Link to="/">Home</Link>
+      <Link to="/about">About</Link>
+    </nav>
+  ),
+};
+
+const ProductCard = {
+  fields: { handle: { type: "text" } },
+  render: ({ handle }) => {
+    const navigate = useNavigate();
+    return <button onClick={() => navigate(`/products/${handle}`)}>Open</button>;
+  },
+};
+```
+
+The same applies to anything you render through `overrides`, custom fields, or `<Render>` children — once you're under `<App>`, treat `react-router` as the source of truth for navigation.
+
+### Reading dynamic params
+
+For pages with dynamic segments (e.g. `/products/:handle`), read the resolved values inside a component with [`useRouteParams`](/docs/api-reference/functions/use-route-params):
+
+```tsx copy
+import { useRouteParams } from "@reacteditor/core";
+
+const ProductDetails = {
+  render: () => {
+    const { handle } = useRouteParams<{ handle: string }>();
+    return <h1>Product: {handle}</h1>;
+  },
+};
+```
+
+`useRouteParams` is a typed re-export of React Router's `useParams()` — use whichever you prefer.
+
+### Switching pages from inside the editor
+
+`<App>` automatically wires the editor's page switcher to its routes. When the user picks a different page in the editor sidebar, the URL is updated to `/editor/<route>` and `<Editor>` is remounted with that page's data. You don't need to handle this yourself.
+
+## Disabling editor mode
+
+Pass `editorPath={null}` when you want to ship a render-only build (e.g. the public production site):
+
+```tsx copy
+<App config={config} pages={pages} editorPath={null} />
+```
+
+Or move the editor under a different prefix:
+
+```tsx copy
+<App config={config} pages={pages} editorPath="/admin" />
+```
+
+## Server-side rendering
+
+`<App>` chooses a router automatically: `BrowserRouter` on the client, `StaticRouter` on the server. For SSR, pass the requested pathname as `currentPath` so the first paint matches the URL:
+
+```tsx copy
+<App
+  config={config}
+  pages={pages}
+  currentPath={req.url}
+/>
+```
+
+For client-only environments where there is no real URL bar (e.g. an embedded preview), pick a different router:
+
+```tsx copy
+<App config={config} pages={pages} router="memory" currentPath="/" />
+```
+
+## Composing your own layout
+
+By default, `<App>` renders the page with `<Render>` and the editor with `<Editor>`'s standard layout. To wrap everything in your own chrome — or to customize the editor UI the same way you would with [`<Editor>`'s compositional children](/docs/extending-editor/composition) — pass `children` to `<App>` and use the `App.Render` and `App.Editor` primitives:
+
+```tsx copy
+import { App, Editor } from "@reacteditor/core";
+
+export default function MyApp() {
+  return (
+    <App config={config} pages={pages} onPublish={save}>
+      <MyLayout>
+        {/* Renders the matched page when not editing */}
+        <App.Render />
+
+        {/* Renders the editor when the URL is under editorPath.
+            Children compose the editor UI, just like <Editor>. */}
+        <App.Editor>
+          <Editor.Preview />
+          <Editor.Fields />
+        </App.Editor>
+      </MyLayout>
+    </App>
+  );
+}
+```
+
+Key points:
+
+- `App.Render` and `App.Editor` each route themselves — you never write `<Route>` elements yourself.
+- They're mutually exclusive: `App.Render` returns `null` while editing, `App.Editor` returns `null` otherwise. You can safely place them as siblings.
+- `App.Editor` accepts the same editor pass-through props as `<App>` (`plugins`, `overrides`, `viewports`, `permissions`, `iframe`, `fieldTransforms`, `metadata`, `onChange`, `onPublish`). When you compose, set them on `App.Editor` rather than `<App>`.
+- Omit `App.Editor` entirely to ship a render-only app under custom chrome.
+
+See the [`<App>` reference](/docs/api-reference/components/app) for the full prop list.

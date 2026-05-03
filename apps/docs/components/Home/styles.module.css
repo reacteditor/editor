@@ -45,6 +45,13 @@
   gap: 16px;
 }
 
+:global(html.dark) .Home-actions {
+  --editor-text-primary: #f5f5f7;
+  --editor-border-default: rgba(255, 255, 255, 0.18);
+  --editor-surface-hover: rgba(255, 255, 255, 0.08);
+  --editor-accent-soft: rgba(255, 255, 255, 0.14);
+}
+
 .Home-builtBy {
   color: currentColor;
   display: flex;
@@ -79,4 +86,30 @@
   margin-top: 32px;
   text-align: center;
   width: 100%;
+}
+
+.Home-demo {
+  width: 100%;
+  max-width: 1280px;
+  padding-inline: 16px;
+}
+
+.Home-demoFrame {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border: 1px solid var(--nextra-border-color, rgba(0, 0, 0, 0.1));
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.25);
+}
+
+@media (min-width: 768px) {
+  .Home-demoFrame {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+:global(html.dark) .Home-demoFrame {
+  background: #1a1a1a;
+  border-color: rgba(255, 255, 255, 0.1);
 }
