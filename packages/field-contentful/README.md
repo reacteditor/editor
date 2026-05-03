@@ -129,4 +129,4 @@ const config: Config<MyProps> = {
 
 ## License
 
-MIT © [The Frontend Contributors](https://github.com/editoreditor/editor/graphs/contributors)
+MIT © [The React Editor Contributors](https://github.com/reacteditor/editor/graphs/contributors)

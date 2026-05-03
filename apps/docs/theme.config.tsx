@@ -10,7 +10,7 @@ const Head = () => {
   const { asPath, defaultLocale, locale } = useRouter();
   const { frontMatter, title } = useConfig();
 
-  const siteUrl = "https://frontend.co";
+  const siteUrl = "https://reacteditor.dev";
   const url =
     siteUrl + (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
 
@@ -60,7 +60,7 @@ const Head = () => {
       "@context" : "https://schema.org",
       "@type" : "WebSite",
       "name" : "Editor",
-      "url" : "https://frontend.co/"
+      "url" : "https://reacteditor.dev/"
     }`,
         }}
       />
@@ -96,7 +96,7 @@ const theme: DocsThemeConfig = {
             style={{ textDecoration: "underline" }}
             href="https://github.com/reacteditor/editor/graphs/contributors"
           >
-            The Editor Contributors
+            The React Editor Contributors
           </a>
         </p>
       </div>

@@ -36,4 +36,4 @@ To adopt this recipe you will need to:
 
 ## License
 
-MIT © [The Frontend Contributors](https://github.com/frontend-inc/react-editor/graphs/contributors).
+MIT © [The React Editor Contributors](https://github.com/reacteditor/editor/graphs/contributors).

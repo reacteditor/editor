@@ -360,16 +360,6 @@ export const DropZoneEdit = forwardRef<HTMLDivElement, DropZoneProps>(
       }
     }, [zoneType, appStoreApi]);
 
-    useEffect(() => {
-      if (zoneType === "dropzone") {
-        if (zoneCompound !== rootDroppableId) {
-          console.warn(
-            "DropZones have been deprecated in favor of slot fields and will be removed in a future version of Editor. Please see the migration guide: https://www.frontend.co/docs/guides/migrations/dropzones-to-slots"
-          );
-        }
-      }
-    }, [zoneType]);
-
     const contentIds = useMemo(() => {
       return zoneContentIds || [];
     }, [zoneContentIds]);
