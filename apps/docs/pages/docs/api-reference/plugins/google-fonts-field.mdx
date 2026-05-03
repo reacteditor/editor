@@ -1,0 +1,45 @@
+---
+title: field-google-fonts
+---
+
+# field-google-fonts
+
+A pre-built [external field](/docs/api-reference/fields/external) for picking a Google Font family. The stored value is the font family name (e.g. `"Inter"`) — drop it straight into a CSS `font-family` declaration.
+
+```sh npm2yarn copy
+npm i @reacteditor/field-google-fonts --save
+```
+
+## `createFieldGoogleFonts`
+
+```tsx copy
+import { createFieldGoogleFonts } from "@reacteditor/field-google-fonts";
+
+const config = {
+  components: {
+    HeadingBlock: {
+      fields: {
+        font: createFieldGoogleFonts(),
+      },
+      render: ({ font, children }) => (
+        <h1 style={{ fontFamily: font }}>{children}</h1>
+      ),
+    },
+  },
+};
+```
+
+Without an API key the field uses a static snapshot of the full Google Fonts catalog (~1700 families). Pass `apiKey` to fetch the live catalog.
+
+### Options
+
+| Param            | Example                                | Description                                                                                                        |
+| ---------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `apiKey`         | `apiKey: process.env.GOOGLE_FONTS_KEY` | [Google Fonts Developer API](https://developers.google.com/fonts/docs/developer_api) key. Optional.                |
+| `families`       | `families: [{ family: "Inter" }]`      | Pre-supplied font list — wins over `apiKey`. Useful for tests or when proxying the catalog through your backend.   |
+| `sort`           | `sort: "popularity"`                   | `"alpha" \| "popularity" \| "trending" \| "date" \| "style"`. Defaults to `"popularity"`.                          |
+| `subset`         | `subset: "latin"`                      | Restrict to fonts containing this subset (e.g. `"latin"`, `"cyrillic"`).                                           |
+| `placeholder`    | `placeholder: "Pick a font"`           | Placeholder shown when no font is selected. Defaults to `"Select a Google font"`.                                  |
+| `pageSize`       | `pageSize: 100`                        | Number of fonts loaded per page in the picker.                                                                     |
+| `filterFields`   | `filterFields: { ... }`                | Filter UI for the picker.                                                                                          |
+| `initialFilters` | `{ category: "sans-serif" }`           | Initial filter values.                                                                                             |

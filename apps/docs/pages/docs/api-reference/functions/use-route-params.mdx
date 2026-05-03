@@ -1,0 +1,34 @@
+---
+title: useRouteParams
+---
+
+# useRouteParams
+
+Read the URL parameters extracted from a dynamic [`<App>`](/docs/api-reference/components/app) route. A typed re-export of React Router's [`useParams`](https://reactrouter.com/api/hooks/useParams).
+
+```tsx copy
+import { useRouteParams } from "@reacteditor/core";
+
+const ProductDetails = {
+  render: () => {
+    const { handle } = useRouteParams<{ handle: string }>();
+    return <h1>Product: {handle}</h1>;
+  },
+};
+```
+
+Use this from any component rendered inside a page whose route key contains dynamic segments (e.g. `/products/:handle`). Returns an empty object when no page matched.
+
+## Type parameters
+
+| Param | Description                                                              |
+| ----- | ------------------------------------------------------------------------ |
+| `P`   | The expected shape of the params object. Defaults to `Record<string, string \| undefined>`. |
+
+## Returns
+
+A read-only object containing the resolved param values.
+
+| Type                                            |
+| ----------------------------------------------- |
+| `Readonly<Record<string, string \| undefined>>` |

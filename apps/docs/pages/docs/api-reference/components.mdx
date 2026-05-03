@@ -4,12 +4,15 @@ React Editor provides several components to support different integration approa
 
 ## Core
 
+- [\<App\>](components/app) - Mount a multi-page, schema-driven app with the editor mounted at `/editor/*`.
 - [\<DropZone\>](components/drop-zone) - Place droppable regions (zones) inside other components to enable nested components.
 - [\<Editor\>](components/editor) - Render the React Editor editor.
 - [\<Render\>](components/render) - Render a [`Data`](/docs/api-reference/data-model/data) object for a given [`Config`](/docs/api-reference/configuration/config).
 
 ## Compositional
 
+- [\<App.Editor\>](components/app#appeditor) - Routed `<Editor>` inside an `<App>`. Children are forwarded to the editor for compositional UI.
+- [\<App.Render\>](components/app#apprender) - Routed `<Render>` inside an `<App>`.
 - [\<Editor.Components\>](components/editor-components) - A draggable list of components when composing a custom React Editor UI.
 - [\<Editor.Fields\>](components/editor-fields) - The fields for the currently selected item when composing a custom React Editor UI.
 - [\<Editor.Layout\>](components/editor-layout) - The standard React Editor layout.

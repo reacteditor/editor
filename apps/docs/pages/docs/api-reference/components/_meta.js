@@ -1,4 +1,5 @@
 const menu = {
+  app: {},
   "action-bar": {},
   "action-bar-action": {},
   "action-bar-group": {},

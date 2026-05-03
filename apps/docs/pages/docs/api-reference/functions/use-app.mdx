@@ -1,0 +1,65 @@
+---
+title: useApp
+---
+
+# useApp
+
+Read the routing context inside an [`<App>`](/docs/api-reference/components/app). Returns the resolved [`Config`](/docs/api-reference/configuration/config), the `pages` map, and live values from React Router (current path, matched route, params, navigation helper).
+
+```tsx copy
+import { useApp } from "@reacteditor/core";
+
+const PageTitle = () => {
+  const { matched } = useApp();
+  if (!matched) return null;
+  return <h1>You are on {matched.route}</h1>;
+};
+```
+
+`useApp` must be called from a component rendered inside `<App>` (or [`<AppProvider>`](#advanced-using-without-app)). Calling it outside throws.
+
+## Returns
+
+| Property      | Type                                                          | Description                                                                                          |
+| ------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `config`      | [Config](/docs/api-reference/configuration/config)            | The shared config passed to `<App>`.                                                                 |
+| `pages`       | Record\<string, [Data](/docs/api-reference/data-model/data)\> | The pages map passed to `<App>`.                                                                     |
+| `routes`      | string\[\]                                                    | All page route keys, in declaration order.                                                           |
+| `editorPath`  | string \| null                                                | The configured editor URL prefix. `null` if editor mode is disabled.                                 |
+| `currentPath` | string                                                        | The live pathname from React Router.                                                                 |
+| `isEditing`   | boolean                                                       | `true` when `currentPath` is under `editorPath`.                                                     |
+| `matchRoute`  | string                                                        | The path to match against `pages` — equal to `currentPath`, but stripped of `editorPath` if editing. |
+| `matched`     | `AppMatched \| null`                                          | The matched page, or `null` for a 404. See [AppMatched](#appmatched).                                |
+| `navigate`    | `(route: string) => void`                                     | Navigate to a route key. Wraps with `editorPath` automatically while editing.                        |
+
+### `AppMatched`
+
+| Property | Type                                              | Description                                                          |
+| -------- | ------------------------------------------------- | -------------------------------------------------------------------- |
+| `route`  | string                                            | The route key from `pages` that matched (e.g. `"/products/:handle"`). |
+| `params` | `Record<string, string \| undefined>`             | Concrete URL params (e.g. `{ handle: "abc" }`).                      |
+| `data`   | [Data](/docs/api-reference/data-model/data)       | The page data for the matched route.                                 |
+
+## Example: navigating between pages
+
+```tsx copy
+import { useApp } from "@reacteditor/core";
+
+const PageSwitcher = {
+  render: () => {
+    const { routes, navigate, matched } = useApp();
+    return (
+      <select
+        value={matched?.route ?? ""}
+        onChange={(e) => navigate(e.target.value)}
+      >
+        {routes.map((r) => (
+          <option key={r} value={r}>
+            {r}
+          </option>
+        ))}
+      </select>
+    );
+  },
+};
+```

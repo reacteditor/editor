@@ -1,0 +1,98 @@
+import { ConfigPreview } from "@/docs/components/Preview";
+
+# Color
+
+Render a `color` picker. Extends [Base](base). The stored value is a CSS color string (e.g. `"#0070f3"`).
+
+<ConfigPreview
+  label="Example"
+  componentConfig={{
+    fields: {
+      background: {
+        type: "color",
+      },
+    },
+    defaultProps: { background: "#0070f3" },
+    render: ({ background }) => {
+      return (
+        <div
+          style={{
+            background,
+            color: "white",
+            padding: 16,
+            borderRadius: 4,
+          }}
+        >
+          {background}
+        </div>
+      );
+    },
+  }}
+/>
+
+```tsx {5-7} copy
+const config = {
+  components: {
+    Example: {
+      fields: {
+        background: {
+          type: "color",
+        },
+      },
+      render: ({ background }) => {
+        return <div style={{ background }}>Hello, world</div>;
+      },
+    },
+  },
+};
+```
+
+## Params
+
+| Param                         | Example                  | Type    | Status   |
+| ----------------------------- | ------------------------ | ------- | -------- |
+| [`type`](#type)               | `type: "color"`          | "color" | Required |
+| [`placeholder`](#placeholder) | `placeholder: "#000000"` | String  | -        |
+
+## Required params
+
+### `type`
+
+The type of the field. Must be `"color"` for Color fields.
+
+```tsx {6} copy
+const config = {
+  components: {
+    Example: {
+      fields: {
+        background: {
+          type: "color",
+        },
+      },
+      // ...
+    },
+  },
+};
+```
+
+## Optional params
+
+### Placeholder
+
+The placeholder text to display when the field is empty.
+
+```tsx {7} copy
+const config = {
+  components: {
+    Example: {
+      fields: {
+        background: {
+          type: "color",
+          placeholder: "#000000",
+        },
+      },
+      // ...
+    },
+  },
+};
+```

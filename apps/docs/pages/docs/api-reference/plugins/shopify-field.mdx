@@ -1,0 +1,59 @@
+---
+title: field-shopify
+---
+
+# field-shopify
+
+Pre-built [external fields](/docs/api-reference/fields/external) for selecting Shopify products and collections via the Storefront API.
+
+```sh npm2yarn copy
+npm i @reacteditor/field-shopify --save
+```
+
+## `createFieldShopifyProduct`
+
+Returns an `external` field that lists products from a Shopify store.
+
+```tsx copy
+import { createFieldShopifyProduct } from "@reacteditor/field-shopify";
+
+const config = {
+  components: {
+    ProductCard: {
+      fields: {
+        product: createFieldShopifyProduct({
+          storeDomain: "my-store.myshopify.com",
+          storefrontAccessToken: process.env.SHOPIFY_STOREFRONT_TOKEN!,
+        }),
+      },
+      render: ({ product }) => <h2>{product?.title}</h2>,
+    },
+  },
+};
+```
+
+### Options
+
+| Param                   | Example                                    | Description                                                                                |
+| ----------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `storeDomain`           | `"my-store.myshopify.com"`                 | Shopify store domain. Required unless `client` is supplied.                                |
+| `storefrontAccessToken` | `process.env.SHOPIFY_TOKEN`                | Storefront API access token. Required unless `client` is supplied.                         |
+| `apiVersion`            | `"2024-10"`                                | Storefront API version.                                                                    |
+| `client`                | `client: createStorefrontApiClient(...)`   | Pre-built [`@shopify/storefront-api-client`](https://github.com/Shopify/shopify-app-js).   |
+| `first`                 | `first: 50`                                | Number of products to fetch per page. Defaults to `20`.                                    |
+| `titleField`            | `"title"`                                  | Field key used for the row title and item summary. Defaults to `"title"`.                  |
+| `filterFields`          | `filterFields: { vendor: { type: "text" } }` | Filter UI for the picker.                                                                  |
+| `initialFilters`        | `{ vendor: "Acme" }`                       | Initial filter values.                                                                     |
+
+## `createFieldShopifyCollection`
+
+Same shape as `createFieldShopifyProduct`, but lists Shopify collections.
+
+```tsx copy
+import { createFieldShopifyCollection } from "@reacteditor/field-shopify";
+
+const collection = createFieldShopifyCollection({
+  storeDomain: "my-store.myshopify.com",
+  storefrontAccessToken: process.env.SHOPIFY_STOREFRONT_TOKEN!,
+});
+```
