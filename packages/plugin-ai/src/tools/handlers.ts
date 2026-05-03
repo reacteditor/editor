@@ -8,28 +8,12 @@ import { serializeConfig } from "./schema";
 // when several mutations chain inside one assistant turn.
 type GetEditor = () => EditorApi;
 
-// Mirrors core's lib/get-frame.ts. The plugin can't import it (not on the
-// public surface) so the lookup is reproduced here.
-const getEditorFrameDoc = (): Document | null => {
-  if (typeof window === "undefined") return null;
-  const frameEl = document.querySelector("#preview-frame");
-  if (frameEl?.tagName === "IFRAME") {
-    return (frameEl as HTMLIFrameElement).contentDocument ?? document;
-  }
-  return frameEl?.ownerDocument ?? document;
-};
-
-// Wait one frame after a state mutation so the iframe re-renders the newly
-// inserted node, then scroll it into view.
-const scrollComponentIntoView = (id: string) => {
+// Trigger the editor's scrollToComponent command after a mutation. The
+// command itself waits for the DOM to commit before measuring scroll
+// position, so we don't need to RAF here.
+const scrollAfterMutation = (getEditor: GetEditor, id: string) => {
   if (typeof window === "undefined") return;
-  requestAnimationFrame(() => {
-    const doc = getEditorFrameDoc();
-    const el = doc?.querySelector(
-      `[data-editor-component="${id}"]`
-    ) as HTMLElement | null;
-    el?.scrollIntoView({ behavior: "smooth", block: "center" });
-  });
+  getEditor().scrollToComponent(id);
 };
 
 const summarizeComponent = (data: ComponentData) => ({
@@ -41,9 +25,15 @@ const summarizeComponent = (data: ComponentData) => ({
 const toParent = (parentId?: string, slot?: string) =>
   parentId ? { id: parentId, slot: slot ?? "default-zone" } : undefined;
 
+export type HandlerCtx = {
+  getEditor: GetEditor;
+  dispatch: (a: EditorAction) => void;
+  scrollToComponent: boolean;
+};
+
 export type Handler<Name extends BuiltinName> = (
   args: z.infer<(typeof schemas)[Name]>,
-  ctx: { getEditor: GetEditor; dispatch: (a: EditorAction) => void }
+  ctx: HandlerCtx
 ) => unknown | Promise<unknown>;
 
 export const handlers: { [K in BuiltinName]: Handler<K> } = {
@@ -99,14 +89,15 @@ export const handlers: { [K in BuiltinName]: Handler<K> } = {
     return results.map(summarizeComponent);
   },
 
-  updateComponent: (args, { getEditor }) => {
+  updateComponent: (args, { getEditor, scrollToComponent }) => {
     const editor = getEditor();
     if (!editor.getItemById(args.id)) return { error: "not_found", id: args.id };
     editor.updateProps(args.id, args.props);
+    if (scrollToComponent) scrollAfterMutation(getEditor, args.id);
     return { ok: true, id: args.id };
   },
 
-  addComponent: (args, { getEditor }) => {
+  addComponent: (args, { getEditor, scrollToComponent }) => {
     const editor = getEditor();
     const componentConfig = (
       editor.config.components as Record<string, unknown>
@@ -131,7 +122,7 @@ export const handlers: { [K in BuiltinName]: Handler<K> } = {
       index: args.index,
       data,
     });
-    scrollComponentIntoView(result.id);
+    if (scrollToComponent) scrollAfterMutation(getEditor, result.id);
 
     return { ok: true, id: result.id };
   },
@@ -143,13 +134,14 @@ export const handlers: { [K in BuiltinName]: Handler<K> } = {
     return { ok: true, id: args.id };
   },
 
-  moveComponent: (args, { getEditor }) => {
+  moveComponent: (args, { getEditor, scrollToComponent }) => {
     const editor = getEditor();
     if (!editor.getItemById(args.id)) return { error: "not_found", id: args.id };
     editor.moveComponent(args.id, {
       parent: toParent(args.parentId, args.slot),
       index: args.index,
     });
+    if (scrollToComponent) scrollAfterMutation(getEditor, args.id);
     return { ok: true, id: args.id };
   },
 };
@@ -157,7 +149,7 @@ export const handlers: { [K in BuiltinName]: Handler<K> } = {
 export const callBuiltin = async (
   name: string,
   rawArgs: unknown,
-  ctx: { getEditor: GetEditor; dispatch: (a: EditorAction) => void }
+  ctx: HandlerCtx
 ): Promise<unknown> => {
   if (!(name in schemas)) return undefined; // not a built-in
   const key = name as BuiltinName;

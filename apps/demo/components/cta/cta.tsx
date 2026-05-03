@@ -1,5 +1,8 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router";
 
 type Variant = "solid" | "gradient" | "outline";
 type ButtonVariant = "default" | "outline" | "secondary";
@@ -35,7 +38,7 @@ export function CTA({ heading, subheading, variant, buttons }: Props) {
           <div className="flex flex-wrap justify-center gap-3">
             {(buttons ?? []).map((b, i) => (
               <Button key={i} asChild variant={b.variant} size="lg">
-                <a href={b.href || "#"}>{b.label}</a>
+                <Link to={b.href || "#"}>{b.label}</Link>
               </Button>
             ))}
           </div>

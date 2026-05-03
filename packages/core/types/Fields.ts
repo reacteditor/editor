@@ -46,6 +46,11 @@ export interface SelectField extends BaseField {
   options: FieldOptions;
 }
 
+export interface ColorField extends BaseField {
+  type: "color";
+  placeholder?: string;
+}
+
 export interface RadioField extends BaseField {
   type: "radio";
   options: FieldOptions;
@@ -180,6 +185,7 @@ export type Field<ValueType = any, UserField extends {} = {}> =
   | TextareaField
   | SelectField
   | RadioField
+  | ColorField
   | ArrayField<
       ValueType extends { [key: string]: any }[] ? ValueType : never,
       UserField

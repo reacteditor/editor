@@ -36,7 +36,7 @@ export const BrowserBar = ({
 }: {
   onViewportChange?: (viewport: Viewport) => void;
 }) => {
-  const { routes, currentPath, onRouteChange } = usePropsContext();
+  const { routes, currentRoute, onRouteChange } = usePropsContext();
   const viewports = useAppStore((s) => s.state.ui.viewports);
   const dispatch = useAppStore((s) => s.dispatch);
   const leftSideBarVisible = useAppStore((s) => s.state.ui.leftSideBarVisible);
@@ -68,20 +68,20 @@ export const BrowserBar = ({
   };
 
   const showRoutePicker =
-    !!routes && currentPath !== undefined && !!onRouteChange;
+    !!routes && currentRoute !== undefined && !!onRouteChange;
 
-  const [inputValue, setInputValue] = useState(currentPath ?? "");
+  const [inputValue, setInputValue] = useState(currentRoute ?? "");
 
   // Re-sync the input when the parent navigates externally.
-  const lastSyncedPath = useRef(currentPath);
-  if (lastSyncedPath.current !== currentPath) {
-    lastSyncedPath.current = currentPath;
-    setInputValue(currentPath ?? "");
+  const lastSyncedPath = useRef(currentRoute);
+  if (lastSyncedPath.current !== currentRoute) {
+    lastSyncedPath.current = currentRoute;
+    setInputValue(currentRoute ?? "");
   }
 
   const submit = (raw: string) => {
     const next = normalizeRoute(raw);
-    if (!next || next === currentPath) return;
+    if (!next || next === currentRoute) return;
     void onRouteChange?.(next);
   };
 
@@ -89,8 +89,8 @@ export const BrowserBar = ({
     <div className={getClassName()}>
       {showRoutePicker ? (
         <Combobox<string>
-          items={routes!.map((r) => r.path)}
-          value={currentPath}
+          items={routes!}
+          value={currentRoute}
           onValueChange={(next) => {
             if (typeof next === "string") submit(next);
           }}
@@ -117,19 +117,11 @@ export const BrowserBar = ({
           <ComboboxContent>
             <ComboboxEmpty>Press Enter to go to this path</ComboboxEmpty>
             <ComboboxList>
-              {(path: string) => {
-                const route = routes!.find((r) => r.path === path);
-                return (
-                  <ComboboxItem key={path} value={path}>
-                    <span className={getClassName("itemPath")}>{path}</span>
-                    {route?.title ? (
-                      <span className={getClassName("itemTitle")}>
-                        {route.title}
-                      </span>
-                    ) : null}
-                  </ComboboxItem>
-                );
-              }}
+              {(path: string) => (
+                <ComboboxItem key={path} value={path}>
+                  <span className={getClassName("itemPath")}>{path}</span>
+                </ComboboxItem>
+              )}
             </ComboboxList>
           </ComboboxContent>
         </Combobox>

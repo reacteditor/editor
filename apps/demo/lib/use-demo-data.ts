@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import config, { componentKey } from "../config";
-import { getInitialData, initialData } from "../config/initial-data";
+import { getInitialData } from "../config/initial-data";
 import { Metadata, resolveAllData } from "@/core";
 import { Components, UserData } from "../config/types";
 import { RootProps } from "../config/root";
 
 const isBrowser = typeof window !== "undefined";
 
+/**
+ * Legacy helper for the `custom-ui` example. The main demo now drives state
+ * through `<App schema>` + onPublish — see `app/[[...pageParams]]`.
+ */
 export const useDemoData = ({
   path,
   isEdit,
@@ -16,23 +20,16 @@ export const useDemoData = ({
   isEdit: boolean;
   metadata?: Metadata;
 }) => {
-  // unique b64 key that updates each time we add / remove components
   const key = `react-editor-demo:${componentKey}:${path}`;
 
   const [data] = useState<Partial<UserData>>(() => {
     if (isBrowser) {
       const dataStr = localStorage.getItem(key);
-
-      if (dataStr) {
-        return JSON.parse(dataStr);
-      }
-
+      if (dataStr) return JSON.parse(dataStr);
       return getInitialData(path);
     }
   });
 
-  // Normally this would happen on the server, but we can't
-  // do that because we're using local storage as a database
   const [resolvedData, setResolvedData] = useState<Partial<UserData>>(data);
 
   useEffect(() => {

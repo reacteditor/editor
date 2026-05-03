@@ -34,7 +34,7 @@
   color: var(--editor-text-primary);
   font-family: inherit;
   font-size: 16px;
-  padding: 10px 12px;
+  padding: 11px 12px;
   transition: border-color var(--editor-motion-fast) var(--editor-ease),
     box-shadow var(--editor-motion-fast) var(--editor-ease),
     background-color var(--editor-motion-fast) var(--editor-ease);

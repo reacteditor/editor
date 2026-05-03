@@ -77,6 +77,13 @@ export type AiPluginOptions = {
     | { path?: string; title?: string }
     | null
     | undefined;
+
+  /**
+   * When `true` (the default), the chat panel scrolls newly added or
+   * modified components into view in the preview canvas via the editor's
+   * `scrollToComponent` command. Set to `false` to disable.
+   */
+  scrollToComponent?: boolean;
 };
 
 export type EditorContextPayload = {

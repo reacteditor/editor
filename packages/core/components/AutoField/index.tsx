@@ -15,6 +15,7 @@ import {
   SelectField,
   ExternalField,
   ArrayField,
+  ColorField,
   DefaultField,
   TextareaField,
   RichtextField,
@@ -57,6 +58,7 @@ const defaultFields = {
   radio: RadioField,
   text: DefaultField,
   number: DefaultField,
+  color: ColorField,
   richtext: RichtextField,
 };
 
@@ -94,6 +96,7 @@ function AutoFieldInternal<
       radio: overrides.fieldTypes?.radio || defaultFields.radio,
       text: overrides.fieldTypes?.text || defaultFields.text,
       number: overrides.fieldTypes?.number || defaultFields.number,
+      color: overrides.fieldTypes?.color || defaultFields.color,
       richtext: overrides.fieldTypes?.richtext || defaultFields.richtext,
     }),
     [overrides]

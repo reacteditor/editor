@@ -1,6 +1,6 @@
 {
   "name": "@reacteditor/plugin-ai",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Rami Bitar <rami@frontend.co>",
   "repository": "frontend-inc/react-editor",
   "bugs": "https://github.com/frontend-inc/react-editor/issues",

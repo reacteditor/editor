@@ -1,5 +1,8 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { resolveIcon } from "@/config/icons";
+import { Link } from "react-router";
 
 type Props = {
   icon: string;
@@ -24,13 +27,13 @@ export function FeatureCard({ icon, title, description, cta }: Props) {
         {description}
       </CardContent>
       {cta?.label ? (
-        <a
-          href={cta.href || "#"}
+        <Link
+          to={cta.href || "#"}
           className="inline-flex items-center gap-1 px-6 text-sm font-medium text-primary hover:underline"
         >
           {cta.label}
           <span aria-hidden>→</span>
-        </a>
+        </Link>
       ) : null}
     </Card>
   );

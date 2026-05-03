@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "@/core/dist/index.css";
 import "./styles.css";
 
@@ -15,15 +16,15 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-        {process.env.NEXT_PUBLIC_PLAUSIBLE_DATA_DOMAIN && (
-          <script
-            defer
-            data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DATA_DOMAIN}
-            src="https://plausible.io/js/plausible.js"
-          ></script>
-        )}
       </head>
       <body>
+        {process.env.NEXT_PUBLIC_PLAUSIBLE_DATA_DOMAIN && (
+          <Script
+            src="https://plausible.io/js/plausible.js"
+            strategy="afterInteractive"
+            data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DATA_DOMAIN}
+          />
+        )}
         <div>{children}</div>
       </body>
     </html>

@@ -1,5 +1,8 @@
+"use client";
+
 import { Separator } from "@/components/ui/separator";
 import { MousePointer2 } from "lucide-react";
+import { Link } from "react-router";
 
 type Platform = string;
 
@@ -28,15 +31,15 @@ export function Footer({
       <div className="mx-auto max-w-6xl px-6 py-16 md:px-10">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-5">
           <div className="md:col-span-2">
-            <a
-              href="/"
+            <Link
+              to="/"
               className="flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground"
             >
               <span className="inline-flex size-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                 <MousePointer2 size={14} />
               </span>
               <span>{brand}</span>
-            </a>
+            </Link>
             <p className="mt-3 max-w-xs text-sm text-muted-foreground">
               {tagline}
             </p>
@@ -50,12 +53,12 @@ export function Footer({
                 <ul className="flex flex-col gap-2">
                   {(col.links ?? []).map((l, j) => (
                     <li key={j}>
-                      <a
-                        href={l.href}
+                      <Link
+                        to={l.href}
                         className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                       >
                         {l.label}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -70,14 +73,14 @@ export function Footer({
             {(social ?? []).map((s, i) => {
               const Icon = socialIcon[s.platform];
               return (
-                <a
+                <Link
                   key={i}
-                  href={s.href || "#"}
+                  to={s.href || "#"}
                   aria-label={s.platform}
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {Icon ? <Icon className="size-4" /> : s.platform}
-                </a>
+                </Link>
               );
             })}
           </div>
