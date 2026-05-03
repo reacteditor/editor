@@ -22,7 +22,7 @@ export const typographyEditor: ComponentConfig<TypographyProps> = {
   category: "elements",
   defaultProps: {
     variant: "h2",
-    content: "",
+    content: "Enter text...",
     align: "left",
     color: "",
     fontFamily: "",
