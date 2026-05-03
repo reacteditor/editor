@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import "@/core/styles.css";
+import "@reacteditor/core/react-editor.css";
 import "./styles.css";
 
 export const metadata: Metadata = {
