@@ -40,6 +40,15 @@ export const Home = () => {
           --save
         </pre>
       </div>
+      <div style={{ paddingTop: 48 }} />
+      <div className={getClassName("demo")}>
+        <iframe
+          src="https://demo.reacteditor.dev/editor"
+          title="React Editor demo"
+          className={getClassName("demoFrame")}
+          loading="lazy"
+        />
+      </div>
     </div>
   );
 };

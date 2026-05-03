@@ -1,9 +1,8 @@
 export const defaultNavLinks = [
-  { label: "About", href: "/about" },
   { label: "Features", href: "#features" },
   { label: "Pricing", href: "#pricing" },
   { label: "Team", href: "#team" },
-  { label: "Docs", href: "#docs" },
+  { label: "FAQ", href: "#faq" },
 ];
 
 export const defaultLogos = [
