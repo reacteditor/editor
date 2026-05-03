@@ -1,5 +1,5 @@
 export { App } from "./App";
-export type { AppProps, AppPublishContext } from "./App";
+export type { AppProps } from "./App";
 export { AppProvider } from "./AppProvider";
 export type { AppProviderProps, AppRouterVariant } from "./AppProvider";
 export {

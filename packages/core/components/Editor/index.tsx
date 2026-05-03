@@ -66,7 +66,7 @@ type EditorProps<
   data: Partial<G["UserData"] | Data>;
   ui?: Partial<UiState>;
   onChange?: (data: G["UserData"]) => void;
-  onPublish?: (data: G["UserData"]) => void;
+  onPublish?: (data: G["UserData"], route?: string) => void;
   onAction?: OnAction<G["UserData"]>;
   permissions?: Partial<Permissions>;
   plugins?: Plugin<UserConfig>[];

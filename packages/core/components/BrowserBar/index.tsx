@@ -89,7 +89,7 @@ export const BrowserBar = ({
     <div className={getClassName()}>
       {showRoutePicker ? (
         <Combobox<string>
-          items={routes!.map((r) => r.path)}
+          items={routes!}
           value={currentPath}
           onValueChange={(next) => {
             if (typeof next === "string") submit(next);
@@ -117,19 +117,11 @@ export const BrowserBar = ({
           <ComboboxContent>
             <ComboboxEmpty>Press Enter to go to this path</ComboboxEmpty>
             <ComboboxList>
-              {(path: string) => {
-                const route = routes!.find((r) => r.path === path);
-                return (
-                  <ComboboxItem key={path} value={path}>
-                    <span className={getClassName("itemPath")}>{path}</span>
-                    {route?.title ? (
-                      <span className={getClassName("itemTitle")}>
-                        {route.title}
-                      </span>
-                    ) : null}
-                  </ComboboxItem>
-                );
-              }}
+              {(path: string) => (
+                <ComboboxItem key={path} value={path}>
+                  <span className={getClassName("itemPath")}>{path}</span>
+                </ComboboxItem>
+              )}
             </ComboboxList>
           </ComboboxContent>
         </Combobox>

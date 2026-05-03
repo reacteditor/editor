@@ -47,7 +47,7 @@ const getPluginTabClassName = getClassNameFactory("EditorPluginTab", styles);
 
 const FieldSideBarToolbar = () => {
   const appStore = useAppStoreApi();
-  const { onPublish } = usePropsContext();
+  const { onPublish, currentPath } = usePropsContext();
 
   const back = useAppStore((s) => s.history.back);
   const forward = useAppStore((s) => s.history.forward);
@@ -83,7 +83,7 @@ const FieldSideBarToolbar = () => {
           <Button
             onClick={() => {
               const data = appStore.getState().state.data;
-              onPublish && onPublish(data);
+              onPublish && onPublish(data, currentPath);
             }}
           >
             Publish

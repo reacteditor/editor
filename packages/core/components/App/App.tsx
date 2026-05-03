@@ -1,16 +1,14 @@
 "use client";
 
-import { ReactNode, useCallback, useMemo } from "react";
-import { Route, Routes, useLocation, useNavigate } from "react-router";
+import { ReactNode } from "react";
+import { Route, Routes } from "react-router";
 import type {
   Config,
-  Data,
   IframeConfig,
   Metadata,
   Overrides,
   Permissions,
   Plugin,
-  Route as EditorRoute,
   UserGenerics,
   Viewports,
 } from "../../types";
@@ -21,17 +19,12 @@ import { AppProvider, type AppProviderProps } from "./AppProvider";
 import { useApp } from "./context";
 import type { RouteKey } from "./context";
 
-export type AppPublishContext = {
-  /** The route key string — load-bearing persistence identifier. */
-  route: RouteKey;
-};
-
 export type AppProps<
   UserConfig extends Config = Config,
   G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
 > = AppProviderProps<UserConfig, G> & {
-  /** Called when the editor publishes. Receives the route key. */
-  onPublish?: (data: G["UserData"], ctx: AppPublishContext) => void;
+  /** Called when the editor publishes. `route` is the schema route key. */
+  onPublish?: (data: G["UserData"], route?: string) => void;
   onChange?: (data: G["UserData"]) => void;
   /** Pass-through Editor configuration. */
   plugins?: Plugin<UserConfig>[];
@@ -43,13 +36,6 @@ export type AppProps<
   permissions?: Partial<Permissions>;
   /** Optional custom not-found component — falls back to a built-in. */
   renderNotFound?: () => ReactNode;
-};
-
-const titleFor = (route: RouteKey, data: Partial<Data>): string => {
-  const root = data?.root as { props?: { title?: string }; title?: string } | undefined;
-  const title = root?.props?.title ?? root?.title;
-  if (typeof title === "string" && title) return title;
-  return route === "/" ? "Home" : route;
 };
 
 const joinEditorPath = (editorPath: string, route: RouteKey): string => {
@@ -135,25 +121,8 @@ function EditorRouteRender<
     permissions,
   } = layoutProps;
 
-  const { config, pages, navigate } = useApp<UserConfig, G>();
+  const { config, pages, routes, navigate } = useApp<UserConfig, G>();
   const data = pages[routeKey];
-
-  const routes = useMemo<EditorRoute[]>(
-    () =>
-      Object.keys(pages).map((route) => ({
-        path: route,
-        title: titleFor(route, pages[route] as Partial<Data>),
-      })),
-    [pages]
-  );
-
-  const handlePublish = useCallback(
-    (next: G["UserData"]) => {
-      if (!onPublish) return;
-      onPublish(next, { route: routeKey });
-    },
-    [onPublish, routeKey]
-  );
 
   if (!data) return null;
 
@@ -174,7 +143,7 @@ function EditorRouteRender<
       viewports={viewports}
       permissions={permissions}
       onChange={onChange}
-      onPublish={handlePublish}
+      onPublish={onPublish}
       routes={routes}
       currentPath={routeKey}
       onRouteChange={(next) => navigate(next)}

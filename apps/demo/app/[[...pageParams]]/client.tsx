@@ -52,9 +52,10 @@ export function Client({ currentRoute }: { currentRoute: string }) {
   }, []);
 
   const handlePublish = useCallback(
-    (data: UserData, ctx: { route: string }) => {
+    (data: UserData, route?: string) => {
+      if (!route) return;
       setPages((prev) => {
-        const next = { ...(prev ?? initialData), [ctx.route]: data };
+        const next = { ...(prev ?? initialData), [route]: data };
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
         return next;
       });
