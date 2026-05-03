@@ -94,6 +94,18 @@
   padding-inline: 16px;
 }
 
+@media (min-width: 1280px) {
+  .Home-demo {
+    max-width: 1600px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .Home-demo {
+    max-width: 1920px;
+  }
+}
+
 .Home-demoFrame {
   width: 100%;
   aspect-ratio: 9 / 16;
