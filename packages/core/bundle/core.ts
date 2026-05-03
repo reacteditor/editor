@@ -20,20 +20,10 @@ export * from "../components/Render";
 export { RichTextMenu } from "../components/RichTextMenu/inner";
 
 export {
-  compilePages,
-  resolveRoute as resolvePageRoute,
-} from "../lib/route-resolver";
-export type {
-  AppPages,
-  ResolvedRoute,
-  RouteKey,
-} from "../lib/route-resolver";
-export {
   getRouteProps,
   resolveRouteFromString,
 } from "../lib/get-route-props";
 export type { GetRoutePropsOptions } from "../lib/get-route-props";
-export { useBrowserRoute } from "../lib/use-browser-route";
 export { useStableValue } from "../lib/use-stable-value";
 
 export * from "../lib/migrate";

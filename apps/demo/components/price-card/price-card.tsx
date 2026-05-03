@@ -1,8 +1,11 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
+import { Link } from "react-router";
 
 type Cadence = "month" | "year" | "once";
 type Highlighted = "yes" | "no";
@@ -76,7 +79,7 @@ export function PriceCard({
             variant={isHighlighted ? "default" : cta.variant}
             className="w-full"
           >
-            <a href={cta.href || "#"}>{cta.label}</a>
+            <Link to={cta.href || "#"}>{cta.label}</Link>
           </Button>
         </div>
       ) : null}

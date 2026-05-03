@@ -1,6 +1,9 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router";
 
 type Align = "left" | "center";
 
@@ -60,12 +63,12 @@ export function Hero({
           >
             {primaryCta?.label ? (
               <Button asChild size="lg">
-                <a href={primaryCta.href || "#"}>{primaryCta.label}</a>
+                <Link to={primaryCta.href || "#"}>{primaryCta.label}</Link>
               </Button>
             ) : null}
             {secondaryCta?.label ? (
               <Button asChild variant="outline" size="lg">
-                <a href={secondaryCta.href || "#"}>{secondaryCta.label}</a>
+                <Link to={secondaryCta.href || "#"}>{secondaryCta.label}</Link>
               </Button>
             ) : null}
           </div>

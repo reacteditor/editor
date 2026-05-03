@@ -1,26 +1,28 @@
 "use client";
 
-import { ReactNode, useCallback, useMemo } from "react";
-import type { Config, Data, UserGenerics } from "../../types";
+import { ReactNode, useMemo } from "react";
 import {
-  compilePages,
-  resolveRoute,
-  type RouteKey,
-} from "../../lib/route-resolver";
-import { useBrowserRoute } from "../../lib/use-browser-route";
+  BrowserRouter,
+  HashRouter,
+  MemoryRouter,
+  StaticRouter,
+} from "react-router";
+import type { Config, Data, UserGenerics } from "../../types";
 import { useStableValue } from "../../lib/use-stable-value";
-import { appContext, type AppContextValue } from "./context";
+import { appConfigContext, type RouteKey } from "./context";
 
-const DEFAULT_EDITOR_PATH = "/editor";
+/**
+ * The hardcoded editor URL prefix. Routes under "/editor/..." are routed
+ * to <Editor>, everything else goes to <Render>. Power users who need
+ * a different prefix should compose <AppProvider> with their own <Routes>
+ * and skip the default layout (see docs).
+ */
+export const EDITOR_PATH = "/editor";
 
-const stripPrefix = (path: string, prefix: string): string => {
-  if (!path.startsWith(prefix)) return path;
-  const rest = path.slice(prefix.length);
-  if (!rest) return "/";
-  return rest.startsWith("/") ? rest : `/${rest}`;
-};
+const isServer = typeof window === "undefined";
 
-const isBrowser = typeof window !== "undefined";
+/** Which RR router variant to use on the client. SSR always uses StaticRouter. */
+export type AppRouterVariant = "browser" | "hash" | "memory";
 
 export type AppProviderProps<
   UserConfig extends Config = Config,
@@ -28,12 +30,16 @@ export type AppProviderProps<
 > = {
   config: UserConfig;
   pages: Record<RouteKey, Partial<G["UserData"] | Data>>;
-  /** Optional — falls back to window.location.pathname via useBrowserRoute. */
-  currentRoute?: string;
   /** Defaults to "/editor". Pass null to disable editor mode. */
   editorPath?: string | null;
-  /** Navigate to a target URL. Defaults to history.pushState. */
-  onNavigate?: (url: string) => void;
+  /** Client-side router variant. Defaults to "browser". */
+  router?: AppRouterVariant;
+  /**
+   * Initial pathname for SSR (StaticRouter) or MemoryRouter.
+   * Required during SSR so the first paint matches the requested URL.
+   * Ignored for BrowserRouter and HashRouter on the client (they read window).
+   */
+  currentRoute?: string;
   children?: ReactNode;
 };
 
@@ -43,85 +49,45 @@ export function AppProvider<
 >({
   config,
   pages,
-  currentRoute: currentRouteProp,
-  editorPath = DEFAULT_EDITOR_PATH,
-  onNavigate,
+  editorPath = EDITOR_PATH,
+  router = "browser",
+  currentRoute,
   children,
 }: AppProviderProps<UserConfig, G>) {
-  // Only run the browser-route hook when host hasn't supplied a route.
-  // Hooks always run, but the listener installation is gated.
-  const browserRoute = useBrowserRoute({
-    enabled: currentRouteProp === undefined,
-  });
-  const currentRoute = currentRouteProp ?? browserRoute;
-
-  // Structurally stabilize so users can pass inline pages={{ ... }} without
-  // re-compiling routes on every parent render.
+  // Structurally stabilize so inline pages={{ ... }} doesn't churn matchers.
   const stablePages = useStableValue(pages);
-  const compiled = useMemo(() => compilePages(stablePages), [stablePages]);
-  const routes = useMemo(() => compiled.map((r) => r.key), [compiled]);
 
   const resolvedEditorPath =
-    editorPath === null ? null : editorPath || DEFAULT_EDITOR_PATH;
+    editorPath === null ? null : editorPath || EDITOR_PATH;
 
-  const isEditing =
-    resolvedEditorPath !== null &&
-    (currentRoute === resolvedEditorPath ||
-      currentRoute.startsWith(`${resolvedEditorPath}/`));
-
-  const matchRoute = isEditing
-    ? stripPrefix(currentRoute, resolvedEditorPath as string)
-    : currentRoute;
-
-  const matched = useMemo(
-    () => resolveRoute(compiled, matchRoute),
-    [compiled, matchRoute]
-  );
-
-  const navigate = useCallback(
-    (route: RouteKey) => {
-      const target =
-        isEditing && resolvedEditorPath
-          ? `${resolvedEditorPath}${route === "/" ? "" : route}` || "/"
-          : route;
-      const url = target || "/";
-      if (onNavigate) {
-        onNavigate(url);
-      } else if (isBrowser) {
-        window.history.pushState(null, "", url);
-      }
-    },
-    [isEditing, resolvedEditorPath, onNavigate]
-  );
-
-  const value: AppContextValue<UserConfig, G> = useMemo(
+  const ctxValue = useMemo(
     () => ({
       config,
       pages: stablePages,
-      routes,
-      currentRoute,
       editorPath: resolvedEditorPath,
-      isEditing,
-      matchRoute,
-      matched,
-      navigate,
     }),
-    [
-      config,
-      stablePages,
-      routes,
-      currentRoute,
-      resolvedEditorPath,
-      isEditing,
-      matchRoute,
-      matched,
-      navigate,
-    ]
+    [config, stablePages, resolvedEditorPath]
   );
 
-  return (
-    <appContext.Provider value={value as AppContextValue}>
+  const inner = (
+    <appConfigContext.Provider value={ctxValue as any}>
       {children}
-    </appContext.Provider>
+    </appConfigContext.Provider>
   );
+
+  if (isServer) {
+    return <StaticRouter location={currentRoute ?? "/"}>{inner}</StaticRouter>;
+  }
+
+  if (router === "hash") {
+    return <HashRouter>{inner}</HashRouter>;
+  }
+  if (router === "memory") {
+    return (
+      <MemoryRouter initialEntries={[currentRoute ?? "/"]}>
+        {inner}
+      </MemoryRouter>
+    );
+  }
+  return <BrowserRouter>{inner}</BrowserRouter>;
 }

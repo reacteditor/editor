@@ -55,7 +55,7 @@ export async function action({ params, request }: Route.ActionArgs) {
   await savePage(path, body.data);
 }
 
-function Editor() {
+function EditorView() {
   const loaderData = useLoaderData<typeof loader>();
   const fetcher = useFetcher<typeof action>();
 
@@ -86,7 +86,7 @@ export default function EditorSplatRoute({ loaderData }: Route.ComponentProps) {
   return (
     <div>
       {loaderData.isEditorRoute ? (
-        <Editor />
+        <EditorView />
       ) : (
         <Render config={config} data={loaderData.data} />
       )}

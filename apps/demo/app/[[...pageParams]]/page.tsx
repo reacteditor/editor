@@ -10,14 +10,11 @@ export async function generateMetadata({
   params: Promise<{ pageParams?: string[] }>;
 }): Promise<Metadata> {
   const resolved = await params;
-  const route = nextjsResolveRoute(resolved);
-  const isEdit = route === "/editor" || route.startsWith("/editor/");
-  const props = getRouteProps<{ title?: string }>(initialData, route);
+  const { isEditor, matchRoute } = nextjsResolveRoute(resolved);
 
-  if (isEdit) {
-    const editingRoute = route === "/editor" ? "/" : route.slice("/editor".length);
-    return { title: `Editing: ${editingRoute}` };
-  }
+  if (isEditor) return { title: `Editing: ${matchRoute}` };
+
+  const props = getRouteProps<{ title?: string }>(initialData, matchRoute);
   return { title: props?.title ?? "" };
 }
 
@@ -27,8 +24,8 @@ export default async function Page({
   params: Promise<{ pageParams?: string[] }>;
 }) {
   const resolved = await params;
-  const currentRoute = nextjsResolveRoute(resolved);
-  return <Client currentRoute={currentRoute} />;
+  const { route } = nextjsResolveRoute(resolved);
+  return <Client currentRoute={route} />;
 }
 
 export const dynamic = "force-dynamic";

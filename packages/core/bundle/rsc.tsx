@@ -5,16 +5,8 @@ export * from "../lib/transform-props";
 export * from "../lib/migrate";
 export { walkTree } from "../lib/data/walk-tree";
 
-// Route helpers — pure JS, server-safe.
-export {
-  compilePages,
-  resolveRoute as resolvePageRoute,
-} from "../lib/route-resolver";
-export type {
-  AppPages,
-  ResolvedRoute,
-  RouteKey,
-} from "../lib/route-resolver";
+// Route helpers — server-safe (matchRoutes from `react-router` is a pure
+// non-React function, no DOM/window required).
 export {
   getRouteProps,
   resolveRouteFromString,

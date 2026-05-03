@@ -1,5 +1,8 @@
+"use client";
+
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Link } from "react-router";
 type Platform = string;
 
 type Props = {
@@ -48,14 +51,14 @@ export function TeamCard({ avatarUrl, name, title, bio, socials }: Props) {
           {(socials ?? []).map((s, i) => {
             const Icon = socialIcon[s.platform];
             return (
-              <a
+              <Link
                 key={i}
-                href={s.href || "#"}
+                to={s.href || "#"}
                 className="text-muted-foreground transition-colors hover:text-foreground"
                 aria-label={s.platform}
               >
                 {Icon ? <Icon className="size-4" /> : s.platform}
-              </a>
+              </Link>
             );
           })}
         </div>

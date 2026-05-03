@@ -1,5 +1,8 @@
+"use client";
+
 import { Button as UIButton } from "@/components/ui/button";
 import { resolveIcon } from "@/config/icons";
+import { Link } from "react-router";
 
 type Variant = "default" | "secondary" | "outline" | "ghost" | "link";
 type Size = "sm" | "default" | "lg";
@@ -25,11 +28,11 @@ export function Button({
   const Icon = resolveIcon(icon);
   return (
     <UIButton asChild variant={variant} size={size}>
-      <a href={href}>
+      <Link to={href}>
         {Icon && iconPosition === "leading" ? <Icon /> : null}
         {label}
         {Icon && iconPosition === "trailing" ? <Icon /> : null}
-      </a>
+      </Link>
     </UIButton>
   );
 }

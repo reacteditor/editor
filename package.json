@@ -40,5 +40,8 @@
   "version": "0.0.1",
   "engines": {
     "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "react-router": "^7.0.0"
   }
 }

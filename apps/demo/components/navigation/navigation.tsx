@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { MousePointer2 } from "lucide-react";
-import Link from "next/link";
+import { Link } from "react-router";
 
 type Props = {
   brand: string;
@@ -10,14 +10,12 @@ type Props = {
   cta: { label: string; href: string };
 };
 
-const isInternal = (href: string) => href.startsWith("/");
-
 export function Navigation({ brand, links, cta }: Props) {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/70 bg-background/80 backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-6 md:px-10">
         <Link
-          href="/"
+          to="/"
           className="flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground"
         >
           <span className="inline-flex size-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
@@ -26,34 +24,20 @@ export function Navigation({ brand, links, cta }: Props) {
           <span>{brand}</span>
         </Link>
         <nav className="hidden flex-1 items-center justify-center gap-6 text-sm md:flex">
-          {(links ?? []).map((l, i) =>
-            isInternal(l.href) ? (
-              <Link
-                key={i}
-                href={l.href}
-                className="text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {l.label}
-              </Link>
-            ) : (
-              <a
-                key={i}
-                href={l.href}
-                className="text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {l.label}
-              </a>
-            )
-          )}
+          {(links ?? []).map((l, i) => (
+            <Link
+              key={i}
+              to={l.href}
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {l.label}
+            </Link>
+          ))}
         </nav>
         <div className="ml-auto flex items-center gap-2">
           {cta?.label ? (
             <Button asChild size="sm">
-              {isInternal(cta.href || "") ? (
-                <Link href={cta.href}>{cta.label}</Link>
-              ) : (
-                <a href={cta.href || "#"}>{cta.label}</a>
-              )}
+              <Link to={cta.href || "#"}>{cta.label}</Link>
             </Button>
           ) : null}
         </div>

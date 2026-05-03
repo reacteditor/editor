@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode, useCallback, useMemo } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router";
 import type {
   Config,
   Data,
@@ -9,7 +10,7 @@ import type {
   Overrides,
   Permissions,
   Plugin,
-  Route,
+  Route as EditorRoute,
   UserGenerics,
   Viewports,
 } from "../../types";
@@ -18,7 +19,7 @@ import { Editor } from "../Editor";
 import { Render } from "../Render";
 import { AppProvider, type AppProviderProps } from "./AppProvider";
 import { useApp } from "./context";
-import type { RouteKey } from "../../lib/route-resolver";
+import type { RouteKey } from "./context";
 
 export type AppPublishContext = {
   /** The route key string — load-bearing persistence identifier. */
@@ -51,6 +52,11 @@ const titleFor = (route: RouteKey, data: Partial<Data>): string => {
   return route === "/" ? "Home" : route;
 };
 
+const joinEditorPath = (editorPath: string, route: RouteKey): string => {
+  if (route === "/") return editorPath;
+  return `${editorPath}${route}`;
+};
+
 const DefaultNotFound = () => (
   <div
     style={{
@@ -68,88 +74,164 @@ const DefaultNotFound = () => (
   </div>
 );
 
-function AppLayout<
+type LayoutProps<
   UserConfig extends Config = Config,
   G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
->({
-  onPublish,
-  onChange,
-  plugins,
-  overrides,
-  fieldTransforms,
-  metadata,
-  iframe,
-  viewports,
-  permissions,
-  renderNotFound,
-}: Omit<
+> = Omit<
   AppProps<UserConfig, G>,
   | "config"
   | "pages"
   | "currentRoute"
   | "editorPath"
-  | "onNavigate"
+  | "router"
   | "children"
->) {
-  const {
-    config,
-    pages,
-    routes: routeKeys,
-    isEditing,
-    matched,
-    matchRoute,
-    navigate,
-  } = useApp<UserConfig, G>();
+>;
 
-  // Build the page picker list from page entries.
-  const routes = useMemo<Route[]>(
+function RenderRoute<
+  UserConfig extends Config = Config,
+  G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
+>({
+  routeKey,
+  metadata,
+}: {
+  routeKey: RouteKey;
+  metadata?: Metadata;
+}) {
+  const { config, pages } = useApp<UserConfig, G>();
+  const data = pages[routeKey];
+  if (!data) return null;
+  // Key by routeKey so navigating between routes that share an element
+  // type (e.g. Routes selecting different <RenderRoute> matches) actually
+  // remounts <Render> instead of just re-rendering with new props.
+  return (
+    <Render<UserConfig>
+      key={routeKey}
+      config={config}
+      data={data}
+      metadata={metadata}
+    />
+  );
+}
+
+function EditorRouteRender<
+  UserConfig extends Config = Config,
+  G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
+>({
+  routeKey,
+  layoutProps,
+}: {
+  routeKey: RouteKey;
+  layoutProps: LayoutProps<UserConfig, G>;
+}) {
+  const {
+    onPublish,
+    onChange,
+    plugins,
+    overrides,
+    fieldTransforms,
+    metadata,
+    iframe,
+    viewports,
+    permissions,
+  } = layoutProps;
+
+  const { config, pages, navigate } = useApp<UserConfig, G>();
+  const data = pages[routeKey];
+
+  const routes = useMemo<EditorRoute[]>(
     () =>
-      routeKeys.map((route) => ({
+      Object.keys(pages).map((route) => ({
         path: route,
         title: titleFor(route, pages[route] as Partial<Data>),
       })),
-    [routeKeys, pages]
+    [pages]
   );
 
   const handlePublish = useCallback(
-    (data: G["UserData"]) => {
-      if (!matched || !onPublish) return;
-      onPublish(data, { route: matched.route });
+    (next: G["UserData"]) => {
+      if (!onPublish) return;
+      onPublish(next, { route: routeKey });
     },
-    [matched, onPublish]
+    [onPublish, routeKey]
   );
 
-  if (!matched) {
-    return renderNotFound ? <>{renderNotFound()}</> : <DefaultNotFound />;
-  }
-
-  if (isEditing) {
-    return (
-      <Editor<UserConfig>
-        config={config}
-        data={matched.data}
-        plugins={plugins}
-        overrides={overrides}
-        fieldTransforms={fieldTransforms as FieldTransforms<UserConfig>}
-        metadata={metadata}
-        iframe={iframe}
-        viewports={viewports}
-        permissions={permissions}
-        onChange={onChange}
-        onPublish={handlePublish}
-        routes={routes}
-        currentPath={matchRoute}
-        onRouteChange={(next) => navigate(next)}
-      />
-    );
-  }
+  if (!data) return null;
 
   return (
-    <Render<UserConfig>
+    <Editor<UserConfig>
+      // Key by routeKey so React unmounts the old <Editor> and mounts a fresh
+      // one when the route changes. <Editor> snapshots `data` once on mount
+      // and ignores subsequent prop changes, so without this the form fields
+      // would still show the previous page's values.
+      key={routeKey}
       config={config}
-      data={matched.data}
+      data={data}
+      plugins={plugins}
+      overrides={overrides}
+      fieldTransforms={fieldTransforms as FieldTransforms<UserConfig>}
       metadata={metadata}
+      iframe={iframe}
+      viewports={viewports}
+      permissions={permissions}
+      onChange={onChange}
+      onPublish={handlePublish}
+      routes={routes}
+      currentPath={routeKey}
+      onRouteChange={(next) => navigate(next)}
     />
+  );
+}
+
+function NotFoundRoute({
+  renderNotFound,
+}: {
+  renderNotFound?: () => ReactNode;
+}) {
+  return renderNotFound ? <>{renderNotFound()}</> : <DefaultNotFound />;
+}
+
+function AppLayout<
+  UserConfig extends Config = Config,
+  G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
+>(layoutProps: LayoutProps<UserConfig, G>) {
+  const { pages, editorPath } = useApp<UserConfig, G>();
+
+  const renderRoutes = Object.keys(pages);
+
+  return (
+    <Routes>
+      {renderRoutes.map((routeKey) => (
+        <Route
+          key={`render:${routeKey}`}
+          path={routeKey}
+          element={
+            <RenderRoute<UserConfig, G>
+              routeKey={routeKey}
+              metadata={layoutProps.metadata}
+            />
+          }
+        />
+      ))}
+      {editorPath !== null &&
+        renderRoutes.map((routeKey) => (
+          <Route
+            key={`edit:${routeKey}`}
+            path={joinEditorPath(editorPath, routeKey)}
+            element={
+              <EditorRouteRender<UserConfig, G>
+                routeKey={routeKey}
+                layoutProps={layoutProps}
+              />
+            }
+          />
+        ))}
+      <Route
+        path="*"
+        element={
+          <NotFoundRoute renderNotFound={layoutProps.renderNotFound} />
+        }
+      />
+    </Routes>
   );
 }
 
@@ -162,7 +244,7 @@ export function App<
     pages,
     currentRoute,
     editorPath,
-    onNavigate,
+    router,
     children,
     ...layoutProps
   } = props;
@@ -173,7 +255,7 @@ export function App<
       pages={pages}
       currentRoute={currentRoute}
       editorPath={editorPath}
-      onNavigate={onNavigate}
+      router={router}
     >
       {children ?? <AppLayout<UserConfig, G> {...layoutProps} />}
     </AppProvider>
