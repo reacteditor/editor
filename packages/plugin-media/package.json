@@ -15,6 +15,11 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
+    "./field": {
+      "types": "./dist/field.d.ts",
+      "import": "./dist/field.mjs",
+      "require": "./dist/field.js"
+    },
     "./dist/index.css": "./dist/index.css",
     "./styles.css": "./dist/index.css"
   },
@@ -23,7 +28,7 @@
   ],
   "scripts": {
     "lint": "eslint \"**/*.ts*\"",
-    "build": "rm -rf dist && tsup src/index.tsx",
+    "build": "rm -rf dist && tsup src/index.tsx src/field.tsx",
     "test": "jest",
     "prepare": "yarn build"
   },

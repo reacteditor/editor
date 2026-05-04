@@ -338,16 +338,9 @@ export const MediaPanel = ({ options }: { options: MediaPluginOptions }) => {
     [uploads, startUpload]
   );
 
-  const onItemSelect = useCallback(
-    (item: MediaItem) => {
-      setSelectedId((prev) => {
-        if (prev === item.id) return null;
-        onSelect?.(item);
-        return item.id;
-      });
-    },
-    [onSelect]
-  );
+  const onItemSelect = useCallback((item: MediaItem) => {
+    setSelectedId((prev) => (prev === item.id ? null : item.id));
+  }, []);
 
   const onItemCopy = useCallback(async (item: MediaItem) => {
     try {
@@ -521,7 +514,7 @@ export const MediaPanel = ({ options }: { options: MediaPluginOptions }) => {
         {hasMore && <div ref={sentinelRef} className={styles["MediaPanel-sentinel"]} />}
       </div>
 
-      {selectedItem && (
+      {selectedItem && (onSelect || adapter.delete) && (
         <div
           className={styles["MediaPanel-footer"]}
           data-mediapanel-footer=""
@@ -548,18 +541,6 @@ export const MediaPanel = ({ options }: { options: MediaPluginOptions }) => {
             </div>
           ) : (
             <div className={styles["MediaPanel-footer-actions"]}>
-              <button
-                type="button"
-                className={styles["MediaPanel-button"]}
-                onClick={() => onItemCopy(selectedItem)}
-              >
-                {copiedId === selectedItem.id ? (
-                  <Check size={12} />
-                ) : (
-                  <Copy size={12} />
-                )}
-                {copiedId === selectedItem.id ? "Copied" : "Copy URL"}
-              </button>
               {adapter.delete && (
                 <button
                   type="button"
@@ -567,6 +548,15 @@ export const MediaPanel = ({ options }: { options: MediaPluginOptions }) => {
                   onClick={() => setConfirmingDelete(true)}
                 >
                   Delete
+                </button>
+              )}
+              {onSelect && (
+                <button
+                  type="button"
+                  className={styles["MediaPanel-button"]}
+                  onClick={() => onSelect(selectedItem)}
+                >
+                  Select
                 </button>
               )}
             </div>

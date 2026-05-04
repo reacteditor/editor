@@ -376,3 +376,109 @@
     transform: rotate(360deg);
   }
 }
+
+.MediaField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.MediaField-thumbWrap {
+  position: relative;
+}
+
+.MediaField-thumb,
+.MediaField-thumb-empty {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--editor-radius-md);
+  border: 1px solid var(--editor-border-subtle);
+  background: var(--editor-surface-subtle, #f4f4f5);
+  object-fit: cover;
+  display: block;
+}
+
+.MediaField-thumb-clear {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+}
+
+.MediaField-thumb-clear:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.MediaField-modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.MediaField-modal {
+  width: min(720px, 100%);
+  height: min(560px, 90vh);
+  background: var(--editor-surface-panel);
+  border: 1px solid var(--editor-border-default);
+  border-radius: var(--editor-radius-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+
+.MediaField-modalHeader {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--editor-border-subtle);
+  font-size: var(--editor-font-size-xxs);
+  font-weight: 500;
+  color: var(--editor-text-primary);
+}
+
+.MediaField-modalClose {
+  background: transparent;
+  border: 0;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--editor-text-secondary);
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--editor-radius-md);
+}
+
+.MediaField-modalClose:hover {
+  background: var(--editor-surface-hover);
+  color: var(--editor-text-primary);
+}
+
+.MediaField-modalBody {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.MediaField-modalBody > * {
+  flex: 1 1 auto;
+  min-height: 0;
+}
