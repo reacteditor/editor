@@ -4,6 +4,7 @@ const menu = {
   "outline-plugin": { title: "outlinePlugin" },
   "tailwind-cdn-plugin": { title: "tailwindCdnPlugin" },
   "ai-plugin": { title: "aiPlugin" },
+  "media-plugin": { title: "mediaPlugin" },
   "shopify-field": { title: "field-shopify" },
   "google-fonts-field": { title: "field-google-fonts" },
   "contentful-field": { title: "field-contentful" },

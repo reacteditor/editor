@@ -1,0 +1,205 @@
+---
+title: mediaPlugin
+---
+
+# mediaPlugin
+
+Add a media library panel to the editor for browsing, uploading, copying, and deleting images via a user-supplied adapter. Bring your own storage (S3, Cloudinary, Supabase, your own API, etc.) by implementing a small `MediaAdapter` interface.
+
+```sh npm2yarn copy
+npm i @reacteditor/plugin-media --save
+```
+
+```tsx copy
+import { Editor } from "@reacteditor/core";
+import { mediaPlugin } from "@reacteditor/plugin-media";
+import "@reacteditor/plugin-media/styles.css";
+
+const media = mediaPlugin({
+  adapter: myAdapter,
+  showSearch: true,
+});
+
+export function App() {
+  return <Editor plugins={[media]} />;
+}
+```
+
+The package also ships an [`imageField`](#imagefield) sub-export for using the same adapter inside a component's image field.
+
+## Options
+
+| Param            | Example                            | Type                                                       |
+| ---------------- | ---------------------------------- | ---------------------------------------------------------- |
+| `adapter`        | `adapter: myAdapter`               | [`MediaAdapter`](#mediaadapter)                            |
+| `onSelect`       | `onSelect: (item) => insert(item)` | `(item: MediaItem) => void`                                |
+| `showSearch`     | `showSearch: true`                 | Boolean                                                    |
+| `initialQuery`   | `initialQuery: "logo"`             | String                                                     |
+| `accept`         | `accept: "image/*"`                | String — MIME filter for upload picker / drop. Default `"image/*"`. |
+| `getItemSummary` | `getItemSummary: (item) => item.name` | `(item: MediaItem) => ReactNode`                       |
+| `emptyState`     | `emptyState: <p>No media</p>`      | `ReactNode`                                                |
+
+### `onSelect`
+
+Fires when the user clicks the **Select** button in the panel footer after picking a tile (not on the initial selection click). Use it to insert the image into the canvas, set a context value, etc. If `onSelect` isn't provided, the Select button is hidden — the panel still functions for browse/upload/delete.
+
+```tsx copy
+mediaPlugin({
+  adapter: myAdapter,
+  onSelect: (item) => {
+    editor.dispatch({ type: "insert", componentType: "Image", props: { src: item.url } });
+  },
+});
+```
+
+### `showSearch`
+
+When `true`, renders a search input in the panel header. The query is passed to `adapter.fetchList({ query })` on Enter. When `false` (default), only the unfiltered list is shown.
+
+## `MediaAdapter`
+
+The adapter is the contract between the plugin and your storage. All three methods are async; the plugin handles loading, errors, optimistic uploads, pagination, and aborts for you.
+
+```ts
+type MediaAdapter = {
+  fetchList: (params: {
+    query: string;             // "" when no search submitted
+    cursor?: string;           // pagination cursor returned from a prior page
+    signal?: AbortSignal;      // aborts on query change / unmount
+  }) => Promise<MediaPage | null>;
+
+  upload: (
+    file: File,
+    opts?: {
+      signal?: AbortSignal;
+      onProgress?: (progress: number) => void;  // 0..1
+    }
+  ) => Promise<MediaItem>;
+
+  delete?: (id: string) => Promise<void>;       // optional — hides Delete UI when absent
+};
+
+type MediaPage = {
+  items: MediaItem[];
+  nextCursor?: string;          // omit when there is no next page
+};
+
+type MediaItem = {
+  id: string;
+  url: string;
+  thumbnailUrl?: string;
+  name?: string;
+  width?: number;
+  height?: number;
+  mimeType?: string;
+};
+```
+
+### Example: a simple HTTP adapter
+
+```tsx copy
+import type { MediaAdapter } from "@reacteditor/plugin-media";
+
+export const myMediaAdapter: MediaAdapter = {
+  fetchList: async ({ query, cursor, signal }) => {
+    const url = new URL("/api/media", "https://example.com");
+    if (query) url.searchParams.set("query", query);
+    if (cursor) url.searchParams.set("cursor", cursor);
+    const res = await fetch(url, { signal });
+    if (!res.ok) throw new Error(`List failed: ${res.status}`);
+    return res.json();
+  },
+
+  // XHR is the only way to get upload progress in browsers.
+  upload: (file, opts) =>
+    new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://example.com/api/media");
+      xhr.upload.onprogress = (e) => {
+        if (e.lengthComputable) opts?.onProgress?.(e.loaded / e.total);
+      };
+      xhr.onload = () =>
+        xhr.status < 400
+          ? resolve(JSON.parse(xhr.responseText))
+          : reject(new Error(xhr.responseText));
+      xhr.onerror = () => reject(new Error("Network error"));
+      opts?.signal?.addEventListener("abort", () => xhr.abort());
+      const fd = new FormData();
+      fd.append("file", file);
+      xhr.send(fd);
+    }),
+
+  delete: async (id) => {
+    const res = await fetch(`https://example.com/api/media/${encodeURIComponent(id)}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) throw new Error(`Delete failed: ${res.status}`);
+  },
+};
+```
+
+### Pagination
+
+`fetchList` is called with an opaque `cursor` string (or `undefined` for the first page). Return `nextCursor` to enable infinite scroll; omit it to signal the end of the list. The plugin uses an `IntersectionObserver` on a sentinel element below the grid to fetch the next page automatically.
+
+### Aborts
+
+`fetchList` receives an `AbortSignal` that fires when the search query changes or the panel unmounts. `upload` receives one that fires when the user clicks the **Cancel upload** affordance on an in-flight tile. Honor these to avoid wasted bandwidth.
+
+### Errors
+
+Any thrown error from `fetchList` shows an inline error banner. From `upload`, the failed tile gets a "Failed" overlay with a Retry affordance — the original file is reused so the user doesn't re-pick it. From `delete`, the optimistic removal is rolled back and an error banner shows.
+
+## Panel UX
+
+- **Grid**: responsive `auto-fill` layout, ~100px minimum column.
+- **Selection**: click a tile → ring highlight + footer with `[Delete]` `[Select]` (each only renders when configured). Click again → deselect. Click outside → deselect.
+- **Copy URL**: hover a tile → Copy icon (top-right) writes `item.url` to clipboard.
+- **Upload**: ghost `+` button in the header toggles a dashed-border drop region. Drop or click "Add images". Aggregate progress bar appears below the header during uploads.
+- **Empty state**: when there are no images, the uploader region is auto-expanded (until the user collapses it).
+
+## `imageField`
+
+A `CustomField<string>` for picking a single image into a component prop. Lives in the `/field` sub-export so consumers who only need the field don't pull in the panel code path.
+
+```tsx copy
+import { imageField } from "@reacteditor/plugin-media/field";
+import "@reacteditor/plugin-media/styles.css";
+
+const config = {
+  components: {
+    Hero: {
+      fields: {
+        backgroundImage: imageField({
+          adapter: myMediaAdapter,
+          showSearch: true,
+        }),
+      },
+      render: ({ backgroundImage }) => <img src={backgroundImage} />,
+    },
+  },
+};
+```
+
+The field renders a 16:9 thumbnail preview with a circular `X` clear badge, plus a "Choose image" button below. Clicking the button opens a portal-rendered modal hosting the same `MediaPanel` UI; selecting an item sets the field value to `item.url` and closes the modal.
+
+### Options
+
+| Param          | Example                | Type                              |
+| -------------- | ---------------------- | --------------------------------- |
+| `adapter`      | `adapter: myAdapter`   | [`MediaAdapter`](#mediaadapter)   |
+| `showSearch`   | `showSearch: true`     | Boolean                           |
+| `initialQuery` | `initialQuery: "icon"` | String                            |
+| `accept`       | `accept: "image/*"`    | String                            |
+
+The field's value is the picked item's `url` string. To pre-set a value, supply it as a `defaultProps` entry on your component.
+
+## Styles
+
+The plugin ships its own stylesheet that uses the editor's design tokens (`--editor-*`). Import it once at your app entry:
+
+```tsx copy
+import "@reacteditor/plugin-media/styles.css";
+```
+
+The same CSS bundle covers both the panel and the field modal.
