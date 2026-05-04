@@ -96,3 +96,155 @@ When `true` (the default), the chat panel scrolls newly added or modified compon
 #### `getCurrentRoute`
 
 Optional callback resolving the editor's current route. Invoked on each outgoing request and forwarded to the server as `editorContext.currentRoute`, which the default system prompt uses to ground responses. Return `null` (or omit) to send no route info.
+
+## Chat API server
+
+The plugin's chat panel posts to whatever `api` URL you configure (default `/api/chat`). The endpoint must accept the AI SDK's `UIMessage[]` request shape and return a streamed `UIMessage` response. The `@reacteditor/plugin-ai/server` sub-export ships two helpers — `reactEditorTools` (the built-in tool schemas) and `getEditorContext` (formats the auto-injected editor context into a system prompt block) — so you can stand up the route in ~30 lines.
+
+```sh npm2yarn copy
+npm i ai @ai-sdk/anthropic zod
+```
+
+```bash
+# .env.local
+ANTHROPIC_API_KEY=sk-ant-...
+```
+
+```ts copy
+// app/api/chat/route.ts (Next.js App Router)
+import { anthropic } from "@ai-sdk/anthropic";
+import {
+  convertToModelMessages,
+  stepCountIs,
+  streamText,
+  tool,
+  type UIMessage,
+} from "ai";
+import { z } from "zod";
+import {
+  reactEditorTools,
+  getEditorContext,
+} from "@reacteditor/plugin-ai/server";
+
+export const runtime = "nodejs";
+export const maxDuration = 60;
+
+type Body = {
+  messages: UIMessage[];
+  editorContext?: Parameters<typeof getEditorContext>[0];
+};
+
+// Optional server-executed tool. Add as many as you like alongside the
+// built-ins; client-side tools live in reactEditorTools and execute in
+// the browser via the plugin's onToolCall handler.
+const generateImage = tool({
+  description: "Generate an image from a prompt and return its URL.",
+  inputSchema: z.object({
+    prompt: z.string().describe("Description of the image to generate."),
+    width: z.number().int().positive().optional(),
+    height: z.number().int().positive().optional(),
+  }),
+  execute: async ({ width = 512, height = 512 }) => {
+    return {
+      url: `https://picsum.photos/${width}/${height}?random=${Math.floor(
+        Math.random() * 1_000_000
+      )}`,
+    };
+  },
+});
+
+export async function POST(req: Request) {
+  const { messages, editorContext } = (await req.json()) as Body;
+
+  const result = streamText({
+    model: anthropic("claude-sonnet-4-5"),
+    system: getEditorContext(editorContext),
+    messages: await convertToModelMessages(messages),
+    tools: { ...reactEditorTools, generateImage },
+    // Lets the model loop through tool calls + their results in a single
+    // request instead of stopping after the first tool call.
+    stopWhen: stepCountIs(50),
+  });
+
+  return result.toUIMessageStreamResponse();
+}
+```
+
+### Request shape
+
+The plugin sends `{ messages: UIMessage[], editorContext }` on every request. `editorContext` is auto-injected by the plugin and contains the editor's live state at request time:
+
+```ts
+type EditorContextPayload = {
+  currentRoute: { path?: string; title?: string } | null;
+  selectedComponentId: string | null;
+  componentTypes: string[];
+};
+```
+
+If you set the plugin's `body` option, those keys are merged in alongside the auto-injected ones.
+
+### `getEditorContext`
+
+Turns the `editorContext` payload into a compact system-prompt block (current route, selected component id, available component types, plus a few default instructions about calling `getConfig` before mutating). Use it as `system: getEditorContext(editorContext)` or concatenate with your own prompt for extra grounding:
+
+```ts copy
+const result = streamText({
+  model: anthropic("claude-sonnet-4-5"),
+  system:
+    getEditorContext(editorContext) +
+    "\n\nYou are a marketing copywriter. Prefer short, punchy headlines.",
+  // ...
+});
+```
+
+### `reactEditorTools`
+
+A registry of the built-in tool schemas (no `execute` — these run in the browser via the plugin's client-side `onToolCall` handler). Spread them into your `tools` object alongside any server-executed tools.
+
+| Name                | Mutates | Purpose                                                                                                                            |
+| ------------------- | :-----: | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `getConfig`         |    ·    | Returns every component type, its prop JSON Schema, defaults, label, category. Model should call this before adding/updating.      |
+| `getSchema`         |    ·    | Returns the current document `{ root, content, globals }`.                                                                         |
+| `getComponent`      |    ·    | Returns one component by id with its props.                                                                                        |
+| `searchComponents`  |    ·    | Lists components on the page, optionally filtered by type or substring match.                                                      |
+| `addComponent`      |    ✓    | Insert a component. `parentId+slot` targets a slot; omit to append to the page root. `index` defaults to end.                       |
+| `updateComponent`   |    ✓    | Merge props into the component with the given id.                                                                                  |
+| `removeComponent`   |    ✓    | Remove the component.                                                                                                              |
+| `moveComponent`     |    ✓    | Move to a new position. `parentId+slot` targets a slot; omit to move to the page root.                                             |
+| `updateRootProps`   |    ✓    | Merge props into the page's root (e.g. title, meta).                                                                               |
+| `updateSchema`      |    ✓    | Replace the entire document. Prefer per-component tools when possible.                                                             |
+
+Mutating tools commit one undo step each in the editor's reducer — the user can undo a model action atomically.
+
+### Tool-call loop
+
+`stopWhen: stepCountIs(50)` caps the per-request tool-call loop server-side. The plugin pairs this with `sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls` on the client so tool results re-trigger the model until the loop ends. If you remove `stopWhen`, the model will stop after the first round of tool calls and never see the results.
+
+### Other providers
+
+Any AI SDK provider works — swap `anthropic("claude-sonnet-4-5")` for `openai("gpt-5")`, `google("gemini-3-pro")`, etc. The rest of the route stays the same.
+
+### Auth
+
+Add auth headers on the plugin side and validate them in the route. For a deployed proxy that fronts your model with an API key:
+
+```tsx copy
+aiPlugin({
+  api: "https://your-app.com/api/chat",
+  headers: { Authorization: `Bearer ${userToken}` },
+});
+```
+
+```ts copy
+// app/api/chat/route.ts
+export async function POST(req: Request) {
+  const auth = req.headers.get("authorization");
+  if (!auth || !verifyToken(auth)) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+  // ...rest of the handler
+}
+```
+
+If you're shipping a client-only build (no own server), a CORS-enabled hosted endpoint works too — point `api` at the absolute URL and add the auth header. Note the browser will preflight the POST, so the remote endpoint must allow the `Origin` and the custom header.
