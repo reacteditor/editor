@@ -3,6 +3,7 @@ module.exports = {
   transpilePackages: [
     "@reacteditor/core",
     "@reacteditor/plugin-ai",
+    "@reacteditor/plugin-media",
     "lucide-react",
   ],
 };
