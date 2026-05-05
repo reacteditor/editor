@@ -152,6 +152,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   const rightSideBarVisible = useAppStore(
     (s) => s.state.ui.rightSideBarVisible
   );
+  const navBarVisible = useAppStore((s) => s.state.ui.navBarVisible);
 
   const instanceId = useAppStore((s) => s.instanceId);
 
@@ -450,20 +451,22 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
                   className={getLayoutClassName("inner")}
                   style={{ ...layoutOptions, ...mobilePanelStyle }}
                 >
-                  <div className={getLayoutClassName("nav")}>
-                    <Nav
-                      items={pluginItems}
-                      footer={
-                        <IconButton
-                          type="button"
-                          title={themeLabel}
-                          onClick={toggleTheme}
-                        >
-                          {themeIcon}
-                        </IconButton>
-                      }
-                    />
-                  </div>
+                  {navBarVisible && (
+                    <div className={getLayoutClassName("nav")}>
+                      <Nav
+                        items={pluginItems}
+                        footer={
+                          <IconButton
+                            type="button"
+                            title={themeLabel}
+                            onClick={toggleTheme}
+                          >
+                            {themeIcon}
+                          </IconButton>
+                        }
+                      />
+                    </div>
+                  )}
                   <div
                     ref={mobilePanelRef}
                     className={getLayoutClassName("mobilePanel")}

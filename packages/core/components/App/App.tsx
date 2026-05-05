@@ -1,18 +1,22 @@
 "use client";
 
-import { ReactNode } from "react";
+import { CSSProperties, ReactElement, ReactNode } from "react";
 import { Route, Routes } from "react-router";
 import type {
   Config,
   IframeConfig,
+  InitialHistory,
   Metadata,
+  OnAction,
   Overrides,
   Permissions,
   Plugin,
   UserGenerics,
   Viewports,
 } from "../../types";
+import type { UiState } from "../../types/AppState";
 import { FieldTransforms } from "../../types/API/FieldTransforms";
+import { EditorAction } from "../../reducer";
 import { Editor } from "../Editor";
 import { Render } from "../Render";
 import { AppProvider, type AppProviderProps } from "./AppProvider";
@@ -27,6 +31,8 @@ type EditorPassthroughProps<
   /** Called when the editor publishes. `route` is the schema route key. */
   onPublish?: (data: G["UserData"], route?: string) => void;
   onChange?: (data: G["UserData"]) => void;
+  onAction?: OnAction<G["UserData"]>;
+  ui?: Partial<UiState>;
   plugins?: Plugin<UserConfig>[];
   overrides?: Partial<Overrides<UserConfig>>;
   fieldTransforms?: FieldTransforms<UserConfig>;
@@ -34,6 +40,22 @@ type EditorPassthroughProps<
   iframe?: IframeConfig;
   viewports?: Viewports;
   permissions?: Partial<Permissions>;
+  renderHeader?: (props: {
+    children: ReactNode;
+    dispatch: (action: EditorAction) => void;
+    state: G["UserAppState"];
+  }) => ReactElement;
+  renderHeaderActions?: (props: {
+    state: G["UserAppState"];
+    dispatch: (action: EditorAction) => void;
+  }) => ReactElement;
+  title?: ReactNode;
+  dnd?: { disableAutoScroll?: boolean };
+  initialHistory?: InitialHistory;
+  height?: CSSProperties["height"];
+  fullScreenCanvas?: boolean;
+  disableZoomControls?: boolean;
+  _experimentalVirtualization?: boolean;
 };
 
 export type AppProps<
@@ -118,6 +140,7 @@ function EditorForKey<
       key={routeKey}
       config={config}
       data={data}
+      ui={editorProps.ui}
       plugins={editorProps.plugins}
       overrides={editorProps.overrides}
       fieldTransforms={
@@ -129,6 +152,16 @@ function EditorForKey<
       permissions={editorProps.permissions}
       onChange={editorProps.onChange}
       onPublish={editorProps.onPublish}
+      onAction={editorProps.onAction}
+      renderHeader={editorProps.renderHeader}
+      renderHeaderActions={editorProps.renderHeaderActions}
+      title={editorProps.title}
+      dnd={editorProps.dnd}
+      initialHistory={editorProps.initialHistory}
+      height={editorProps.height}
+      fullScreenCanvas={editorProps.fullScreenCanvas}
+      disableZoomControls={editorProps.disableZoomControls}
+      _experimentalVirtualization={editorProps._experimentalVirtualization}
       routes={routes}
       currentRoute={routeKey}
       onRouteChange={(next) => navigate(next)}

@@ -13,6 +13,7 @@ export type ArrayState = { items: ItemWithId[]; openId: string };
 export type UiState = {
   leftSideBarVisible: boolean;
   rightSideBarVisible: boolean;
+  navBarVisible: boolean;
   leftSideBarWidth?: number | null;
   rightSideBarWidth?: number | null;
   mobilePanelExpanded?: boolean;
