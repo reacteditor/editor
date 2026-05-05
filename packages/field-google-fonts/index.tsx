@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import type { ExternalField } from "@/core/types";
 import googleFontsJson from "./google-fonts.json";
 
@@ -65,15 +65,41 @@ const ensureFontLoaded = (family: string) => {
 };
 
 const FontPreview: React.FC<{ family: string }> = ({ family }) => {
+  const [visible, setVisible] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const ref = useRef<HTMLSpanElement | null>(null);
+
+  // Only inject the <link> once the row is actually on screen — otherwise
+  // opening the picker would fire one stylesheet request per row in the
+  // current page (50+) before the user has even looked at them.
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") {
+      setVisible(true);
+      return;
+    }
+    const node = ref.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setVisible(true);
+            observer.disconnect();
+            break;
+          }
+        }
+      },
+      { rootMargin: "100px" }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
+    if (!visible) return;
     let cancelled = false;
     ensureFontLoaded(family);
 
-    // Use the FontFaceSet API where available so we only flip to the styled
-    // preview once the file has actually rendered. Falls through to "loaded"
-    // immediately on browsers that don't expose document.fonts.
     if (typeof document !== "undefined" && (document as any).fonts?.load) {
       (document as any).fonts
         .load(`16px "${family}"`)
@@ -90,10 +116,11 @@ const FontPreview: React.FC<{ family: string }> = ({ family }) => {
     return () => {
       cancelled = true;
     };
-  }, [family]);
+  }, [family, visible]);
 
   return (
     <span
+      ref={ref}
       style={{
         fontFamily: loaded ? `"${family}", system-ui, sans-serif` : undefined,
         fontSize: 16,
