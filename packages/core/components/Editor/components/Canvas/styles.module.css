@@ -30,6 +30,22 @@
   }
 }
 
+/* Runtime fullscreen mode: pin the canvas to the viewport so it covers the
+   nav rail, sidebars, and any host chrome. `position: fixed` is essential —
+   `absolute` would only reach `.EditorLayout-inner`, whose grid columns
+   can leave it narrower than the viewport. Sidebars stay mounted in the
+   layout underneath; exiting reveals them unchanged. The BrowserBar sits
+   inside Canvas, so it remains visible at the top.
+   `!important` on padding intentionally beats the 1198px rule
+   `.EditorCanvas:not(:has(.EditorCanvas-controls))` (specificity 0,3,0)
+   that always matches because no element renders `.EditorCanvas-controls`. */
+.EditorCanvas--canvasFullScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  padding: 0 !important;
+}
+
 .EditorCanvas-inner {
   display: flex;
   height: 100%;

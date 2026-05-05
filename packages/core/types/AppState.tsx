@@ -32,6 +32,11 @@ export type UiState = {
   rightSideBarVisible: boolean;
   leftSideBarWidth?: number | null;
   rightSideBarWidth?: number | null;
+  /** Runtime: when true, the canvas overlays the entire editor area
+   *  (sidebars stay mounted underneath). Toggled by the BrowserBar fullscreen
+   *  button. Distinct from the static `fullScreenCanvas` Editor prop, which
+   *  removes canvas padding for a chromeless render. */
+  canvasFullScreen?: boolean;
   mobilePanelExpanded?: boolean;
   itemSelector: ItemSelector | null;
   arrayState: Record<string, ArrayState | undefined>;

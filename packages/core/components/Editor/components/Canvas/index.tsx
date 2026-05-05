@@ -59,6 +59,9 @@ export const Canvas = () => {
     }))
   );
   const viewports = useAppStore((s) => s.state.ui.viewports);
+  const canvasFullScreen = useAppStore(
+    (s) => s.state.ui.canvasFullScreen ?? false
+  );
 
   const [canvasZoom, setCanvasZoom] = useState(1);
 
@@ -261,6 +264,7 @@ export const Canvas = () => {
         ready: status === "READY" || !iframe.enabled || !iframe.waitForStyles,
         showLoader,
         fullScreen: fullScreenCanvas,
+        canvasFullScreen,
       })}
       onClick={(e) => {
         const el = e.target as Element;

@@ -40,20 +40,14 @@ export const BrowserBar = ({
   const chrome = useChromeConfig();
   const viewports = useAppStore((s) => s.state.ui.viewports);
   const dispatch = useAppStore((s) => s.dispatch);
-  const leftSideBarVisible = useAppStore((s) => s.state.ui.leftSideBarVisible);
-  const rightSideBarVisible = useAppStore(
-    (s) => s.state.ui.rightSideBarVisible
+  const isFullScreen = useAppStore(
+    (s) => s.state.ui.canvasFullScreen ?? false
   );
-  const isFullScreen = !leftSideBarVisible && !rightSideBarVisible;
 
   const toggleFullScreen = () => {
-    const next = !isFullScreen;
     dispatch({
       type: "setUi",
-      ui: {
-        leftSideBarVisible: !next,
-        rightSideBarVisible: !next,
-      },
+      ui: { canvasFullScreen: !isFullScreen },
     });
   };
 
