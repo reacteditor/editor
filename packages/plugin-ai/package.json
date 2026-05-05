@@ -1,6 +1,6 @@
 {
   "name": "@reacteditor/plugin-ai",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Rami Bitar <rami@frontend.co>",
   "repository": "reacteditor/editor",
   "bugs": "https://github.com/reacteditor/editor/issues",
@@ -38,7 +38,8 @@
     "react-markdown": "^9.0.0",
     "remark-gfm": "^4.0.0",
     "use-stick-to-bottom": "^1.1.1",
-    "zod": "^4.0.0"
+    "zod": "^3.25.76",
+    "zod-to-json-schema": "^3.23.0"
   },
   "devDependencies": {
     "@reacteditor/core": "*",

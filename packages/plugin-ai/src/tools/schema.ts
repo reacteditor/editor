@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { zodToJsonSchema } from "zod-to-json-schema";
 import type { Config, Field, Fields } from "@reacteditor/core";
 
 const fieldToZod = (field: Field): z.ZodTypeAny => {
@@ -70,7 +71,7 @@ export const serializeConfig = (config: Config): SerializedConfig => {
       category: (comp as { category?: string }).category,
       defaultProps: (comp as { defaultProps?: Record<string, unknown> })
         .defaultProps,
-      propsSchema: z.toJSONSchema(fieldsToZod(fields)),
+      propsSchema: zodToJsonSchema(fieldsToZod(fields)),
     };
   }
 
@@ -80,7 +81,7 @@ export const serializeConfig = (config: Config): SerializedConfig => {
         defaultProps: (
           config.root as { defaultProps?: Record<string, unknown> } | undefined
         )?.defaultProps,
-        propsSchema: z.toJSONSchema(fieldsToZod(rootFields)),
+        propsSchema: zodToJsonSchema(fieldsToZod(rootFields)),
       }
     : undefined;
 
