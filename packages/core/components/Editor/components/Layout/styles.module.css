@@ -70,9 +70,14 @@
     grid-template-rows: auto;
   }
 
-  .Editor--hidePlugins .EditorLayout-inner {
+  .Editor--hidePlugins .EditorLayout-inner,
+  .EditorLayout:not(.EditorLayout--navBarVisible) .EditorLayout-inner {
     --editor-side-nav-width: 0;
   }
+}
+
+.EditorLayout:not(.EditorLayout--navBarVisible) .EditorLayout-inner {
+  --editor-side-nav-width: 0;
 }
 
 .EditorLayout--mounted .EditorLayout-inner {

@@ -439,6 +439,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
                   mounted,
                   rightSideBarVisible:
                     !hasDesktopFieldsPlugin && rightSideBarVisible,
+                  navBarVisible,
                   mobilePanelHeightToggle: mobilePanelHeightMode === "toggle",
                   mobilePanelHeightMinContent:
                     mobilePanelHeightMode === "min-content",
