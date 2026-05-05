@@ -19,7 +19,7 @@ npx create-editor-app my-app
 Use [`<App>`](/docs/api-reference/components/app) to mount a multi-page, schema-driven app. Each entry in `pages` is rendered through [`<Render>`](/docs/api-reference/components/render); the editor is mounted automatically at `/editor/*`.
 
 ```jsx copy filename="App.jsx"
-import { App } from "@reacteditor/core";
+import { App, outlinePlugin } from "@reacteditor/core";
 import "@reacteditor/core/react-editor.css";
 
 // Shared component config
@@ -35,6 +35,10 @@ const config = {
     },
   },
 };
+
+// Editor side-panel plugins. blocksPlugin (Components) is auto-injected;
+// outlinePlugin must be passed explicitly to enable the Outline panel.
+const plugins = [outlinePlugin()];
 
 // One Data payload per route
 const pages = {
@@ -62,7 +66,9 @@ const pages = {
 const save = (data, route) => {};
 
 export default function MyApp() {
-  return <App config={config} pages={pages} onPublish={save} />;
+  return (
+    <App config={config} pages={pages} plugins={plugins} onPublish={save} />
+  );
 }
 ```
 
@@ -78,7 +84,7 @@ Or generate a React Editor application using individual [`<Render>`](/docs/api-r
 ## Render the editor
 
 ```jsx copy filename="Editor.jsx"
-import { Editor } from "@reacteditor/core";
+import { Editor, outlinePlugin } from "@reacteditor/core";
 import "@reacteditor/core/react-editor.css";
 
 // Create React Editor component config
@@ -97,6 +103,10 @@ const config = {
   },
 };
 
+// Side-panel plugins. blocksPlugin is auto-injected; outlinePlugin must
+// be passed explicitly to enable the Outline panel.
+const plugins = [outlinePlugin()];
+
 // Describe the initial data
 const initialData = {};
 
@@ -105,7 +115,14 @@ const save = (data) => {};
 
 // Render React Editor editor
 export function Editor() {
-  return <Editor config={config} data={initialData} onPublish={save} />;
+  return (
+    <Editor
+      config={config}
+      data={initialData}
+      plugins={plugins}
+      onPublish={save}
+    />
+  );
 }
 ```
 

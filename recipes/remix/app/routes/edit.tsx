@@ -1,4 +1,9 @@
-import { Editor, type Data, type Config } from "@reacteditor/core";
+import {
+  Editor,
+  outlinePlugin,
+  type Data,
+  type Config,
+} from "@reacteditor/core";
 import styles from "@reacteditor/core/react-editor.css";
 import type {
   ActionFunctionArgs,
@@ -45,6 +50,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [{ title: `Editing: ${title}` }];
 };
 
+const plugins = [outlinePlugin()];
+
 export default function Edit() {
   const { initialData } = useLoaderData<typeof loader>();
   const submit = useSubmit();
@@ -53,6 +60,7 @@ export default function Edit() {
     <Editor
       config={editorConfig as Config}
       data={initialData}
+      plugins={plugins}
       onPublish={async (data: Data) => {
         // Use form data here because it's the usual remix way.
         let formData = new FormData();

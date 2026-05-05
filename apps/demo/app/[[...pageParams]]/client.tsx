@@ -4,7 +4,6 @@ import {
   AutoField,
   Editor,
   FieldLabel,
-  blocksPlugin,
   outlinePlugin,
 } from "@/core";
 import config, { componentKey } from "../../config";
@@ -17,7 +16,7 @@ import type { UserData } from "../../config/types";
 
 const STORAGE_KEY = `react-editor-demo:${componentKey}`;
 
-const plugins = [blocksPlugin(), outlinePlugin()];
+const plugins = [outlinePlugin()];
 
 export function Client() {
   const [data, setData] = useState<UserData | null>(null);

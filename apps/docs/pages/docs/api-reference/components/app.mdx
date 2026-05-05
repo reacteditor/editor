@@ -9,7 +9,7 @@ Mount a schema-driven, multi-page React Editor application. `<App>` sets up a Re
 For an introduction, see [Multi-Page Apps](/docs/integrating-editor/multi-page-app).
 
 ```tsx copy
-import { App } from "@reacteditor/core";
+import { App, outlinePlugin } from "@reacteditor/core";
 
 const config = { components: {} };
 
@@ -18,8 +18,12 @@ const pages = {
   "/about": { content: [], root: {} },
 };
 
+// blocksPlugin is auto-injected; outlinePlugin must be passed explicitly
+// to enable the Outline panel.
+const plugins = [outlinePlugin()];
+
 export function Example() {
-  return <App config={config} pages={pages} />;
+  return <App config={config} pages={pages} plugins={plugins} />;
 }
 ```
 

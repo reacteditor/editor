@@ -7,7 +7,7 @@ title: <Editor>
 Render the React Editor editor.
 
 ```tsx copy
-import { Editor } from "@reacteditor/core";
+import { Editor, outlinePlugin } from "@reacteditor/core";
 
 const config = {
   components: {},
@@ -18,8 +18,12 @@ const initialData = {
   root: {},
 };
 
+// blocksPlugin is auto-injected; outlinePlugin must be passed explicitly
+// to enable the Outline panel.
+const plugins = [outlinePlugin()];
+
 export function Editor() {
-  return <Editor config={config} data={initialData} />;
+  return <Editor config={config} data={initialData} plugins={plugins} />;
 }
 ```
 
@@ -402,15 +406,20 @@ export function Editor() {
 
 An array of plugins to enhance React Editor's behaviour. See the [Plugin API reference](/docs/api-reference/plugin).
 
-```tsx {6} copy
+The [`blocksPlugin`](/docs/api-reference/plugins/blocks-plugin) (Components panel) is **auto-injected** by the editor shell. The [`outlinePlugin`](/docs/api-reference/plugins/outline-plugin) (Outline panel) is **not** — pass it in the array to enable that panel. The fields panel is also auto-added unless you supply a plugin named `"fields"`.
+
+```tsx {1,3,7} copy
+import { Editor, outlinePlugin } from "@reacteditor/core";
 import createTailwindCdnPlugin from "@reacteditor/plugin-tailwind-cdn";
 
 const tailwindCdn = createTailwindCdnPlugin();
 
+const plugins = [outlinePlugin(), tailwindCdn];
+
 export function Editor() {
   return (
     <Editor
-      plugins={[tailwindCdn]}
+      plugins={plugins}
       // ...
     />
   );

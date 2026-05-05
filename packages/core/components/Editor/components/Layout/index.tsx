@@ -37,7 +37,6 @@ import {
 } from "lucide-react";
 import { PluginInternal } from "../../../../types/Internal";
 import { blocksPlugin } from "../../../../plugins/blocks";
-import { outlinePlugin } from "../../../../plugins/outline";
 import { fieldsPlugin } from "../../../../plugins/fields";
 import { Button } from "../../../Button";
 
@@ -349,7 +348,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
     const details: Record<string, MenuItem & { render: () => ReactElement }> =
       {};
 
-    const defaultPlugins: PluginInternal[] = [blocksPlugin(), outlinePlugin()];
+    const defaultPlugins: PluginInternal[] = [blocksPlugin()];
 
     const isLegacy = (plugin: PluginInternal) =>
       plugin.name === "legacy-side-bar" ? -1 : 0;

@@ -1,6 +1,6 @@
 import { useFetcher, useLoaderData } from "react-router";
 import type { Data } from "@reacteditor/core";
-import { Editor, Render } from "@reacteditor/core";
+import { Editor, Render, outlinePlugin } from "@reacteditor/core";
 
 import type { Route } from "./+types/editor-splat";
 import { config } from "../../editor.config";
@@ -55,6 +55,8 @@ export async function action({ params, request }: Route.ActionArgs) {
   await savePage(path, body.data);
 }
 
+const plugins = [outlinePlugin()];
+
 function EditorView() {
   const loaderData = useLoaderData<typeof loader>();
   const fetcher = useFetcher<typeof action>();
@@ -65,6 +67,7 @@ function EditorView() {
       <Editor
         config={config}
         data={loaderData.data}
+        plugins={plugins}
         onPublish={async (data) => {
           await fetcher.submit(
             {
