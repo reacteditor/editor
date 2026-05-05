@@ -31,7 +31,7 @@
 }
 
 .DrawerItem-draggable {
-  background: var(--editor-surface-panel);
+  background: var(--editor-surface-raised);
   cursor: grab;
   padding: 8px 10px;
   display: flex;
