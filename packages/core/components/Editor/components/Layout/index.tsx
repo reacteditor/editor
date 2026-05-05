@@ -9,7 +9,7 @@ import {
 } from "react";
 import { getClassNameFactory } from "../../../../lib";
 import { IframeConfig, UiState } from "../../../../types";
-import { usePropsContext } from "../..";
+import { useChromeConfig, usePropsContext } from "../..";
 import styles from "./styles.module.css";
 import { useInjectGlobalCss } from "../../../../lib/use-inject-css";
 import { useAppStore, useAppStoreApi } from "../../../../store";
@@ -47,6 +47,7 @@ const getPluginTabClassName = getClassNameFactory("EditorPluginTab", styles);
 const FieldSideBarToolbar = () => {
   const appStore = useAppStoreApi();
   const { onPublish, currentRoute } = usePropsContext();
+  const chrome = useChromeConfig();
 
   const back = useAppStore((s) => s.history.back);
   const forward = useAppStore((s) => s.history.forward);
@@ -59,24 +60,28 @@ const FieldSideBarToolbar = () => {
 
   return (
     <div className={getClassName("fieldSideBarToolbar")}>
-      <div className={getClassName("fieldSideBarHistory")}>
-        <IconButton
-          type="button"
-          title="undo"
-          disabled={!hasPast}
-          onClick={back}
-        >
-          <Undo2Icon size={18} />
-        </IconButton>
-        <IconButton
-          type="button"
-          title="redo"
-          disabled={!hasFuture}
-          onClick={forward}
-        >
-          <Redo2Icon size={18} />
-        </IconButton>
-      </div>
+      {chrome.showHistoryControls ? (
+        <div className={getClassName("fieldSideBarHistory")}>
+          <IconButton
+            type="button"
+            title="undo"
+            disabled={!hasPast}
+            onClick={back}
+          >
+            <Undo2Icon size={18} />
+          </IconButton>
+          <IconButton
+            type="button"
+            title="redo"
+            disabled={!hasFuture}
+            onClick={forward}
+          >
+            <Redo2Icon size={18} />
+          </IconButton>
+        </div>
+      ) : (
+        <div />
+      )}
       <div className={getClassName("fieldSideBarActions")}>
         <CustomHeaderActions>
           <Button
@@ -152,7 +157,8 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   const rightSideBarVisible = useAppStore(
     (s) => s.state.ui.rightSideBarVisible
   );
-  const navBarVisible = useAppStore((s) => s.state.ui.navBarVisible);
+  const chrome = useChromeConfig();
+  const navBarVisible = chrome.showNavBar;
 
   const instanceId = useAppStore((s) => s.instanceId);
 
@@ -457,13 +463,15 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
                       <Nav
                         items={pluginItems}
                         footer={
-                          <IconButton
-                            type="button"
-                            title={themeLabel}
-                            onClick={toggleTheme}
-                          >
-                            {themeIcon}
-                          </IconButton>
+                          chrome.showThemeToggle ? (
+                            <IconButton
+                              type="button"
+                              title={themeLabel}
+                              onClick={toggleTheme}
+                            >
+                              {themeIcon}
+                            </IconButton>
+                          ) : undefined
                         }
                       />
                     </div>

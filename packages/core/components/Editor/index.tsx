@@ -16,6 +16,7 @@ import {
 
 import type {
   UiState,
+  EditorChromeConfig,
   IframeConfig,
   OnAction,
   Overrides,
@@ -64,7 +65,13 @@ type EditorProps<
   children?: ReactNode;
   config: UserConfig;
   data: Partial<G["UserData"] | Data>;
-  ui?: Partial<UiState>;
+  /**
+   * Initial runtime UI state plus static chrome flags (`navBar`,
+   * `themeToggle`, `historyControls`, `urlBar`, `deviceToggle`,
+   * `fullScreenToggle`). Chrome flags are read once on mount and cannot be
+   * toggled via `dispatch` — they live on props, not in AppState.
+   */
+  ui?: Partial<UiState> & Partial<EditorChromeConfig>;
   onChange?: (data: G["UserData"]) => void;
   onPublish?: (data: G["UserData"], route?: string) => void;
   onAction?: OnAction<G["UserData"]>;
@@ -100,6 +107,41 @@ type EditorProps<
   _experimentalVirtualization?: boolean;
 };
 
+const CHROME_KEYS: readonly (keyof EditorChromeConfig)[] = [
+  "showNavBar",
+  "showThemeToggle",
+  "showHistoryControls",
+  "showUrlBar",
+  "showDeviceToggle",
+  "showFullScreenToggle",
+];
+
+const DEFAULT_CHROME: EditorChromeConfig = {
+  showNavBar: true,
+  showThemeToggle: true,
+  showHistoryControls: true,
+  showUrlBar: true,
+  showDeviceToggle: true,
+  showFullScreenToggle: true,
+};
+
+/** Split the `ui` prop into runtime UiState overrides vs static chrome flags. */
+const splitUiConfig = (
+  ui?: Partial<UiState> & Partial<EditorChromeConfig>
+): { runtime: Partial<UiState>; chrome: Partial<EditorChromeConfig> } => {
+  const runtime: Record<string, any> = {};
+  const chrome: Record<string, any> = {};
+  if (!ui) return { runtime, chrome };
+  for (const [key, value] of Object.entries(ui)) {
+    if (CHROME_KEYS.includes(key as keyof EditorChromeConfig)) {
+      chrome[key] = value;
+    } else {
+      runtime[key] = value;
+    }
+  }
+  return { runtime, chrome };
+};
+
 const propsContext = createContext<Partial<EditorProps>>({});
 
 function PropsProvider<UserConfig extends Config = Config>(
@@ -114,6 +156,13 @@ function PropsProvider<UserConfig extends Config = Config>(
 
 export const usePropsContext = () =>
   useContext<EditorProps>(propsContext as Context<EditorProps>);
+
+/** Resolve chrome flags from the Editor `ui` prop, defaulting unset keys to `true`. */
+export const useChromeConfig = (): EditorChromeConfig => {
+  const { ui } = usePropsContext();
+  const { chrome } = splitUiConfig(ui);
+  return { ...DEFAULT_CHROME, ...chrome };
+};
 
 function EditorProvider<
   UserConfig extends Config = Config,
@@ -147,7 +196,8 @@ function EditorProvider<
   );
 
   const [generatedAppState] = useState<G["UserAppState"]>(() => {
-    const initial = { ...defaultAppState.ui, ...initialUi };
+    const { runtime: initialUiRuntime } = splitUiConfig(initialUi);
+    const initial = { ...defaultAppState.ui, ...initialUiRuntime };
 
     let clientUiState: Partial<G["UserAppState"]["ui"]> = {};
 

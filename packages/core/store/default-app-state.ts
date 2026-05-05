@@ -6,7 +6,6 @@ export const defaultAppState: PrivateAppState = {
   ui: {
     leftSideBarVisible: true,
     rightSideBarVisible: true,
-    navBarVisible: true,
     arrayState: {},
     itemSelector: null,
     componentList: {},

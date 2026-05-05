@@ -14,7 +14,7 @@ import type {
   UserGenerics,
   Viewports,
 } from "../../types";
-import type { UiState } from "../../types/AppState";
+import type { EditorChromeConfig, UiState } from "../../types/AppState";
 import { FieldTransforms } from "../../types/API/FieldTransforms";
 import { EditorAction } from "../../reducer";
 import { Editor } from "../Editor";
@@ -32,7 +32,7 @@ type EditorPassthroughProps<
   onPublish?: (data: G["UserData"], route?: string) => void;
   onChange?: (data: G["UserData"]) => void;
   onAction?: OnAction<G["UserData"]>;
-  ui?: Partial<UiState>;
+  ui?: Partial<UiState> & Partial<EditorChromeConfig>;
   plugins?: Plugin<UserConfig>[];
   overrides?: Partial<Overrides<UserConfig>>;
   fieldTransforms?: FieldTransforms<UserConfig>;

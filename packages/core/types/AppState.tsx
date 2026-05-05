@@ -10,10 +10,26 @@ export type ItemWithId = {
 
 export type ArrayState = { items: ItemWithId[]; openId: string };
 
+/**
+ * Static UI chrome flags. Mount-once: read when <Editor>/<App> mounts and
+ * never re-evaluated. They decide whether a chrome element exists at all.
+ * Distinct from runtime `*Visible` keys in `UiState`, which the user toggles
+ * via the UI (sidebars, fullscreen). All default to `true`. If all three
+ * BrowserBar flags (`showUrlBar`, `showDeviceToggle`, `showFullScreenToggle`)
+ * are `false`, the browser bar collapses entirely.
+ */
+export type EditorChromeConfig = {
+  showNavBar: boolean;
+  showThemeToggle: boolean;
+  showHistoryControls: boolean;
+  showUrlBar: boolean;
+  showDeviceToggle: boolean;
+  showFullScreenToggle: boolean;
+};
+
 export type UiState = {
   leftSideBarVisible: boolean;
   rightSideBarVisible: boolean;
-  navBarVisible: boolean;
   leftSideBarWidth?: number | null;
   rightSideBarWidth?: number | null;
   mobilePanelExpanded?: boolean;

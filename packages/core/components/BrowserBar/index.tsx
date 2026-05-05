@@ -1,7 +1,7 @@
 import { Globe, Maximize, Minimize, Monitor, Smartphone } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import { useAppStore } from "../../store";
-import { usePropsContext } from "../Editor";
+import { useChromeConfig, usePropsContext } from "../Editor";
 import { getClassNameFactory } from "../../lib";
 import { IconButton } from "../IconButton";
 import {
@@ -37,6 +37,7 @@ export const BrowserBar = ({
   onViewportChange?: (viewport: Viewport) => void;
 }) => {
   const { routes, currentRoute, onRouteChange } = usePropsContext();
+  const chrome = useChromeConfig();
   const viewports = useAppStore((s) => s.state.ui.viewports);
   const dispatch = useAppStore((s) => s.dispatch);
   const leftSideBarVisible = useAppStore((s) => s.state.ui.leftSideBarVisible);
@@ -85,86 +86,102 @@ export const BrowserBar = ({
     void onRouteChange?.(next);
   };
 
+  // Collapse the entire bar when none of its three controls are enabled.
+  if (
+    !chrome.showUrlBar &&
+    !chrome.showDeviceToggle &&
+    !chrome.showFullScreenToggle
+  ) {
+    return null;
+  }
+
   return (
     <div className={getClassName()}>
-      {showRoutePicker ? (
-        <Combobox<string>
-          items={routes!}
-          value={currentRoute}
-          onValueChange={(next) => {
-            if (typeof next === "string") submit(next);
-          }}
-          inputValue={inputValue}
-          onInputValueChange={(next) => setInputValue(next)}
-          autoHighlight={false}
-        >
-          <form
-            className={getClassName("urlTrigger")}
-            onSubmit={(event) => {
-              event.preventDefault();
-              submit(inputValue);
+      {chrome.showUrlBar &&
+        (showRoutePicker ? (
+          <Combobox<string>
+            items={routes!}
+            value={currentRoute}
+            onValueChange={(next) => {
+              if (typeof next === "string") submit(next);
             }}
+            inputValue={inputValue}
+            onInputValueChange={(next) => setInputValue(next)}
+            autoHighlight={false}
           >
+            <form
+              className={getClassName("urlTrigger")}
+              onSubmit={(event) => {
+                event.preventDefault();
+                submit(inputValue);
+              }}
+            >
+              <Globe className={getClassName("urlIcon")} size={14} />
+              <ComboboxInput
+                className={getClassName("urlInput")}
+                placeholder="/"
+                spellCheck={false}
+                autoCorrect="off"
+                autoCapitalize="off"
+              />
+            </form>
+            <ComboboxContent>
+              <ComboboxEmpty>Press Enter to go to this path</ComboboxEmpty>
+              <ComboboxList>
+                {(path: string) => (
+                  <ComboboxItem key={path} value={path}>
+                    <span className={getClassName("itemPath")}>{path}</span>
+                  </ComboboxItem>
+                )}
+              </ComboboxList>
+            </ComboboxContent>
+          </Combobox>
+        ) : (
+          <div className={getClassName("urlTrigger")}>
             <Globe className={getClassName("urlIcon")} size={14} />
-            <ComboboxInput
-              className={getClassName("urlInput")}
-              placeholder="/"
-              spellCheck={false}
-              autoCorrect="off"
-              autoCapitalize="off"
-            />
-          </form>
-          <ComboboxContent>
-            <ComboboxEmpty>Press Enter to go to this path</ComboboxEmpty>
-            <ComboboxList>
-              {(path: string) => (
-                <ComboboxItem key={path} value={path}>
-                  <span className={getClassName("itemPath")}>{path}</span>
-                </ComboboxItem>
-              )}
-            </ComboboxList>
-          </ComboboxContent>
-        </Combobox>
-      ) : (
-        <div className={getClassName("urlTrigger")}>
-          <Globe className={getClassName("urlIcon")} size={14} />
-          <span className={getClassName("urlText")}>/</span>
+            <span className={getClassName("urlText")}>/</span>
+          </div>
+        ))}
+      {(chrome.showDeviceToggle || chrome.showFullScreenToggle) && (
+        <div className={getClassName("actions")}>
+          {chrome.showDeviceToggle && (
+            <IconButton
+              type="button"
+              title={
+                activeDevice === "desktop"
+                  ? "Switch to mobile viewport"
+                  : "Switch to desktop viewport"
+              }
+              onClick={() =>
+                setDevice(activeDevice === "desktop" ? "mobile" : "desktop")
+              }
+            >
+              <span className={getClassName("deviceIcon")}>
+                {activeDevice === "desktop" ? (
+                  <Monitor size={16} />
+                ) : (
+                  <Smartphone size={16} />
+                )}
+              </span>
+            </IconButton>
+          )}
+          {chrome.showFullScreenToggle && (
+            <IconButton
+              type="button"
+              title={isFullScreen ? "Exit full screen" : "Enter full screen"}
+              onClick={toggleFullScreen}
+            >
+              <span className={getClassName("deviceIcon")}>
+                {isFullScreen ? (
+                  <Minimize size={16} />
+                ) : (
+                  <Maximize size={16} />
+                )}
+              </span>
+            </IconButton>
+          )}
         </div>
       )}
-      <div className={getClassName("actions")}>
-        <IconButton
-          type="button"
-          title={
-            activeDevice === "desktop"
-              ? "Switch to mobile viewport"
-              : "Switch to desktop viewport"
-          }
-          onClick={() =>
-            setDevice(activeDevice === "desktop" ? "mobile" : "desktop")
-          }
-        >
-          <span className={getClassName("deviceIcon")}>
-            {activeDevice === "desktop" ? (
-              <Monitor size={16} />
-            ) : (
-              <Smartphone size={16} />
-            )}
-          </span>
-        </IconButton>
-        <IconButton
-          type="button"
-          title={isFullScreen ? "Exit full screen" : "Enter full screen"}
-          onClick={toggleFullScreen}
-        >
-          <span className={getClassName("deviceIcon")}>
-            {isFullScreen ? (
-              <Minimize size={16} />
-            ) : (
-              <Maximize size={16} />
-            )}
-          </span>
-        </IconButton>
-      </div>
     </div>
   );
 };
