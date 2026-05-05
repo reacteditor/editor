@@ -290,7 +290,7 @@
   flex-direction: column;
   border: 1px solid var(--editor-border-default, #e0e0e2);
   border-radius: var(--editor-radius-md, 8px);
-  background: var(--editor-color-white, #fff);
+  background: var(--editor-surface-panel, #fff);
   overflow: hidden;
   transition: border-color var(--editor-motion-fast) var(--editor-ease),
     box-shadow var(--editor-motion-fast) var(--editor-ease);
