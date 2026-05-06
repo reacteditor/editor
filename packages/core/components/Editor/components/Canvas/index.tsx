@@ -1,4 +1,3 @@
-import { getBox } from "css-box-model";
 import {
   ReactNode,
   useCallback,
@@ -13,7 +12,7 @@ import {
   TransformComponent,
   ReactZoomPanPinchRef,
 } from "react-zoom-pan-pinch";
-import { useAppStore, useAppStoreApi } from "../../../../store";
+import { useAppStore } from "../../../../store";
 import { BrowserBar } from "../../../BrowserBar";
 import styles from "./styles.module.css";
 import { getClassNameFactory } from "../../../../lib";
@@ -23,11 +22,9 @@ import { IconButton } from "../../../IconButton";
 import { useShallow } from "zustand/react/shallow";
 import { useCanvasFrame } from "../../../../lib/frame-context";
 import { usePropsContext } from "../..";
-import { defaultViewports } from "../../../ViewportControls/default-viewports";
 
 const getClassName = getClassNameFactory("EditorCanvas", styles);
 
-const ZOOM_STEP = 0.15;
 const MIN_ZOOM = 0.25;
 const MAX_ZOOM = 3;
 const PREVIEW_MAX_WIDTH = 1200;
@@ -35,18 +32,12 @@ const PREVIEW_MAX_WIDTH = 1200;
 export const Canvas = () => {
   const { frameRef } = useCanvasFrame();
 
-  const {
-    viewports: viewportOptions = defaultViewports,
-    ui: uiProp,
-    disableZoomControls,
-  } = usePropsContext();
+  const { disableZoomControls } = usePropsContext();
 
   const {
     dispatch,
     overrides,
     setUi,
-    zoomConfig,
-    setZoomConfig,
     status,
     iframe,
     fullScreenCanvas,
@@ -55,8 +46,6 @@ export const Canvas = () => {
       dispatch: s.dispatch,
       overrides: s.overrides,
       setUi: s.setUi,
-      zoomConfig: s.zoomConfig,
-      setZoomConfig: s.setZoomConfig,
       status: s.status,
       iframe: s.iframe,
       fullScreenCanvas: s.fullScreenCanvas,
@@ -84,27 +73,6 @@ export const Canvas = () => {
     [overrides]
   );
 
-  const getFrameDimensions = useCallback(() => {
-    if (frameRef.current) {
-      const frame = frameRef.current;
-
-      const box = getBox(frame);
-
-      return { width: box.contentBox.width, height: box.contentBox.height };
-    }
-
-    return { width: 0, height: 0 };
-  }, [frameRef]);
-
-  // Keep zoom at 100% and constrain root height to frame
-  useEffect(() => {
-    const { height: frameHeight } = getFrameDimensions();
-
-    if (viewports.current.height === "auto") {
-      setZoomConfig({ ...zoomConfig, zoom: 1, rootHeight: frameHeight });
-    }
-  }, [getFrameDimensions, setZoomConfig, viewports.current.height]);
-
   const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
@@ -112,8 +80,6 @@ export const Canvas = () => {
       setShowLoader(true);
     }, 500);
   }, []);
-
-  const appStoreApi = useAppStoreApi();
 
   const onBrowserBarViewportChange = useCallback(
     (viewport: { width: number | "100%"; height?: number | "auto" }) => {
