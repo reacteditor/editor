@@ -389,29 +389,51 @@ function AutoFrame({
     const iframeEl = frameRef.current;
     if (!doc || !iframeEl || !stylesLoaded) return;
 
+    // Read+write batched on rAF so we measure scrollHeight after layout has
+    // had a frame to settle. Without the defer, observers that fire from
+    // an external width change (e.g. device toggle) read scrollHeight
+    // before the inner content has reflowed.
+    let scheduled = false;
     const update = () => {
-      const html = doc.documentElement;
-      const body = doc.body;
-      if (!html || !body) return;
-      const height = Math.max(
-        body.scrollHeight,
-        body.offsetHeight,
-        html.scrollHeight,
-        html.offsetHeight
-      );
-      if (height > 0) {
-        iframeEl.style.height = `${height}px`;
-      }
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(() => {
+        scheduled = false;
+        const html = doc.documentElement;
+        const body = doc.body;
+        if (!html || !body) return;
+        // Temporarily clear our inline height so the iframe can shrink to
+        // content. Without this, iframeEl.height stays at its previous
+        // (taller) value, body.offsetHeight matches that, and we never
+        // detect that content got shorter.
+        iframeEl.style.height = "0px";
+        const height = Math.max(
+          body.scrollHeight,
+          body.offsetHeight,
+          html.scrollHeight,
+          html.offsetHeight
+        );
+        if (height > 0) {
+          iframeEl.style.height = `${height}px`;
+        }
+      });
     };
 
     update();
 
+    // 1) Body/html size changes (content reflows from inside).
     const observer = new ResizeObserver(update);
     observer.observe(doc.body);
     observer.observe(doc.documentElement);
 
-    // MutationObserver catches DOM changes that don't change layout box
-    // (e.g. font swaps that load after initial styles).
+    // 2) Iframe element size changes (parent canvas changes width on
+    //    device toggle). Defers via rAF inside update() so the inner
+    //    reflow has happened before we measure.
+    const iframeObserver = new ResizeObserver(update);
+    iframeObserver.observe(iframeEl);
+
+    // 3) DOM mutations (font swaps, late hydrations) that don't move the
+    //    layout box but do change scrollHeight.
     const mutationObserver = new MutationObserver(update);
     mutationObserver.observe(doc.body, {
       attributes: true,
@@ -421,6 +443,7 @@ function AutoFrame({
 
     return () => {
       observer.disconnect();
+      iframeObserver.disconnect();
       mutationObserver.disconnect();
     };
   }, [ctx.document, frameRef, stylesLoaded]);
