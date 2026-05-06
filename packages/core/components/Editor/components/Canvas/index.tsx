@@ -537,6 +537,7 @@ export const Canvas = () => {
                 </IconButton>
               </div>
               <TransformComponent
+                infinite
                 wrapperStyle={{ width: "100%", height: "100%" }}
               >
                 {frameContents}
