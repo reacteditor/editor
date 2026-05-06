@@ -15,6 +15,24 @@
   }
 }
 
+/* Horizontal mode: used in the top header. Stays horizontal at all
+   breakpoints, ignoring the vertical default. */
+.Nav--horizontal,
+.Nav--horizontal {
+  align-items: center;
+  flex-direction: row;
+  height: auto;
+  padding: 0;
+}
+@media (min-width: 638px) {
+  .Nav--horizontal {
+    flex-direction: row;
+    height: auto;
+    padding: 0;
+    align-items: center;
+  }
+}
+
 .Nav-list {
   display: flex;
   list-style: none;
@@ -35,6 +53,29 @@
     flex-grow: 1;
     overflow-x: hidden;
     overflow-y: auto;
+    justify-content: flex-start;
+  }
+}
+
+.Nav--horizontal .Nav-list {
+  flex-direction: row;
+  gap: 4px;
+  padding-top: 0;
+  width: auto;
+  flex: 0 0 auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  justify-content: flex-start;
+}
+@media (min-width: 638px) {
+  .Nav--horizontal .Nav-list {
+    flex-direction: row;
+    gap: 4px;
+    padding-top: 0;
+    width: auto;
+    flex: 0 0 auto;
+    overflow-x: auto;
+    overflow-y: hidden;
     justify-content: flex-start;
   }
 }

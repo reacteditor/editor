@@ -1,12 +1,9 @@
+/* Compact URL bar — lives in the editor's top header. Just the pill,
+   no chrome around it (the header itself provides the surface). */
 .BrowserBar {
   align-items: center;
-  background: var(--editor-surface-panel);
-  border: 1px solid var(--editor-border-subtle);
-  border-bottom: 0;
-  border-radius: var(--editor-radius-md) var(--editor-radius-md) 0 0;
   display: flex;
   gap: 8px;
-  padding: 8px 10px;
   width: 100%;
 }
 

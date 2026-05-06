@@ -11,12 +11,12 @@ import {
   Minimize,
   Minus,
   Monitor,
+  Moon,
   Plus,
-  Redo2Icon,
   RotateCcw,
   Smartphone,
+  Sun,
   Tablet,
-  Undo2Icon,
 } from "lucide-react";
 import {
   TransformWrapper,
@@ -26,7 +26,6 @@ import {
   useTransformEffect,
 } from "react-zoom-pan-pinch";
 import { useAppStore, useAppStoreApi } from "../../../../store";
-import { BrowserBar } from "../../../BrowserBar";
 import styles from "./styles.module.css";
 import { getClassNameFactory } from "../../../../lib";
 import { Preview } from "../Preview";
@@ -35,6 +34,7 @@ import { IconButton } from "../../../IconButton";
 import { useShallow } from "zustand/react/shallow";
 import { useCanvasFrame } from "../../../../lib/frame-context";
 import { useChromeConfig, usePropsContext } from "../..";
+import { useEditorTheme } from "../../../../lib/theme-context";
 
 const getClassName = getClassNameFactory("EditorCanvas", styles);
 
@@ -56,9 +56,9 @@ const DEVICE_VIEWPORTS: Record<
 const DEVICE_ORDER: Device[] = ["desktop", "tablet", "mobile"];
 
 const DEVICE_ICONS: Record<Device, ReactNode> = {
-  desktop: <Monitor size={16} />,
-  tablet: <Tablet size={16} />,
-  mobile: <Smartphone size={16} />,
+  desktop: <Monitor size={14} />,
+  tablet: <Tablet size={14} />,
+  mobile: <Smartphone size={14} />,
 };
 
 /**
@@ -116,11 +116,40 @@ export const Canvas = () => {
   const canvasFullScreen = useAppStore(
     (s) => s.state.ui.canvasFullScreen ?? false
   );
-  const back = useAppStore((s) => s.history.back);
-  const forward = useAppStore((s) => s.history.forward);
-  const hasFuture = useAppStore((s) => s.history.hasFuture());
-  const hasPast = useAppStore((s) => s.history.hasPast());
   const chrome = useChromeConfig();
+  const { theme, toggleTheme } = useEditorTheme();
+  const toggleFullScreen = useCallback(
+    () => setUi({ canvasFullScreen: !canvasFullScreen }),
+    [setUi, canvasFullScreen]
+  );
+
+  const activeDevice: Device = useMemo(() => {
+    const w = viewports.current.width;
+    if (w === "100%") return "desktop";
+    if (typeof w === "number" && w <= 640) return "mobile";
+    return "tablet";
+  }, [viewports.current.width]);
+
+  const cycleDevice = useCallback(() => {
+    const next =
+      DEVICE_ORDER[
+        (DEVICE_ORDER.indexOf(activeDevice) + 1) % DEVICE_ORDER.length
+      ];
+    const v = DEVICE_VIEWPORTS[next];
+    setUi({
+      viewports: {
+        ...viewports,
+        current: { width: v.width, height: v.height },
+      },
+    });
+  }, [activeDevice, setUi, viewports]);
+
+  const nextDeviceLabel =
+    DEVICE_VIEWPORTS[
+      DEVICE_ORDER[
+        (DEVICE_ORDER.indexOf(activeDevice) + 1) % DEVICE_ORDER.length
+      ]
+    ].label;
 
   const transformRef = useRef<ReactZoomPanPinchRef | null>(null);
 
@@ -147,49 +176,6 @@ export const Canvas = () => {
     }, 500);
   }, []);
 
-  const onBrowserBarViewportChange = useCallback(
-    (viewport: { width: number | "100%"; height?: number | "auto" }) => {
-      setUi({
-        viewports: {
-          ...viewports,
-          current: {
-            ...viewport,
-            height: viewport.height || "auto",
-          },
-        },
-      });
-      // Centering is handled by the centerFrame useEffect (keyed on
-      // viewports.current.width). Do NOT call ref.resetTransform() here —
-      // its default 200ms animation produces the visible "frame slides
-      // to top-left" behaviour on every device toggle.
-    },
-    [setUi, viewports]
-  );
-
-  // Map current viewport width → device preset (for highlighting + cycling).
-  const activeDevice: Device = useMemo(() => {
-    const w = viewports.current.width;
-    if (w === "100%") return "desktop";
-    if (typeof w === "number" && w <= 640) return "mobile";
-    return "tablet";
-  }, [viewports.current.width]);
-
-  const cycleDevice = useCallback(() => {
-    const idx = DEVICE_ORDER.indexOf(activeDevice);
-    const next = DEVICE_ORDER[(idx + 1) % DEVICE_ORDER.length];
-    onBrowserBarViewportChange(DEVICE_VIEWPORTS[next]);
-  }, [activeDevice, onBrowserBarViewportChange]);
-
-  const toggleFullScreen = useCallback(() => {
-    setUi({ canvasFullScreen: !canvasFullScreen });
-  }, [setUi, canvasFullScreen]);
-
-  const nextDeviceLabel =
-    DEVICE_VIEWPORTS[
-      DEVICE_ORDER[
-        (DEVICE_ORDER.indexOf(activeDevice) + 1) % DEVICE_ORDER.length
-      ]
-    ].label;
 
   // Center the frame: horizontally aligned, anchored 16px from the top,
   // at scale 1. Deferred two frames so the wrapper has finished its
@@ -226,10 +212,13 @@ export const Canvas = () => {
     () => transformRef.current?.zoomOut(),
     []
   );
-  const handleResetZoom = useCallback(
-    () => transformRef.current?.resetTransform(),
-    []
-  );
+  // Reset behavior matches the initial mount centering — horizontally
+  // centered, anchored 16px from the top, scale 1. The library's own
+  // resetTransform() snaps to (0, 0) instead, which lands the frame in
+  // the top-left corner.
+  const handleResetZoom = useCallback(() => {
+    centerFrame();
+  }, [centerFrame]);
 
   // Custom wheel handler: pinch (trackpad pinch / Cmd+wheel / Ctrl+wheel)
   // zooms; plain wheel pans. The library's own wheel handler is disabled
@@ -367,16 +356,13 @@ export const Canvas = () => {
     };
   }, [iframe.enabled, frameRef]);
 
-  // Frame contents: BrowserBar + width-bounded preview column. Both live
-  // inside the TransformWrapper so they zoom/pan together as one frame
-  // (Figma-style). Full-width viewport ("100%") resolves to a fixed
-  // 1440px column — `100%` inside TransformComponent has no concrete
-  // ancestor width to resolve against (the library sizes its component
-  // to its content), so an explicit pixel width is required.
+  // Frame contents: width-bounded preview column inside the panned frame.
   // The rootColumn is held at a fixed PREVIEW_MAX_WIDTH so the library's
   // ResizeObserver doesn't fire on device-toggle (which would snap
   // position back toward 0,0). The inner .frame element carries the
   // *actual* viewport width and is centered horizontally via margin auto.
+  // The URL bar lives in the top header (not here), so it stays at a
+  // constant size regardless of canvas zoom.
   const previewWidth = !iframe.enabled
     ? "100%"
     : viewports.current.width === "100%"
@@ -391,11 +377,6 @@ export const Canvas = () => {
         className={getClassName("frame")}
         style={{ width: previewWidth, margin: "0 auto" }}
       >
-        {iframe.enabled && (
-          <div className={getClassName("browserBar")}>
-            <BrowserBar onViewportChange={onBrowserBarViewportChange} />
-          </div>
-        )}
         <div
           className={getClassName("root")}
           suppressHydrationWarning
@@ -461,57 +442,57 @@ export const Canvas = () => {
             >
               <ZoomConfigSync />
               <div className={getClassName("toolbar")}>
-                {chrome.showHistoryControls && (
+                {chrome.showThemeToggle && (
                   <>
                     <IconButton
                       type="button"
-                      title="Undo"
-                      disabled={!hasPast}
-                      onClick={back}
+                      title={
+                        theme === "dark"
+                          ? "Switch to light mode"
+                          : "Switch to dark mode"
+                      }
+                      onClick={toggleTheme}
                     >
-                      <Undo2Icon size={16} />
+                      {theme === "dark" ? (
+                        <Sun size={14} />
+                      ) : (
+                        <Moon size={14} />
+                      )}
                     </IconButton>
-                    <IconButton
-                      type="button"
-                      title="Redo"
-                      disabled={!hasFuture}
-                      onClick={forward}
-                    >
-                      <Redo2Icon size={16} />
-                    </IconButton>
-                    <div className={getClassName("toolbarDivider")} />
+                    {(chrome.showDeviceToggle ||
+                      chrome.showFullScreenToggle) && (
+                      <div className={getClassName("toolbarDivider")} />
+                    )}
                   </>
                 )}
+                {chrome.showDeviceToggle && (
+                  <IconButton
+                    type="button"
+                    title={`Switch to ${nextDeviceLabel} viewport`}
+                    onClick={cycleDevice}
+                  >
+                    {DEVICE_ICONS[activeDevice]}
+                  </IconButton>
+                )}
+                {chrome.showFullScreenToggle && (
+                  <IconButton
+                    type="button"
+                    title={
+                      canvasFullScreen
+                        ? "Exit full screen"
+                        : "Enter full screen"
+                    }
+                    onClick={toggleFullScreen}
+                  >
+                    {canvasFullScreen ? (
+                      <Minimize size={14} />
+                    ) : (
+                      <Maximize size={14} />
+                    )}
+                  </IconButton>
+                )}
                 {(chrome.showDeviceToggle || chrome.showFullScreenToggle) && (
-                  <>
-                    {chrome.showDeviceToggle && (
-                      <IconButton
-                        type="button"
-                        title={`Switch to ${nextDeviceLabel} viewport`}
-                        onClick={cycleDevice}
-                      >
-                        {DEVICE_ICONS[activeDevice]}
-                      </IconButton>
-                    )}
-                    {chrome.showFullScreenToggle && (
-                      <IconButton
-                        type="button"
-                        title={
-                          canvasFullScreen
-                            ? "Exit full screen"
-                            : "Enter full screen"
-                        }
-                        onClick={toggleFullScreen}
-                      >
-                        {canvasFullScreen ? (
-                          <Minimize size={16} />
-                        ) : (
-                          <Maximize size={16} />
-                        )}
-                      </IconButton>
-                    )}
-                    <div className={getClassName("toolbarDivider")} />
-                  </>
+                  <div className={getClassName("toolbarDivider")} />
                 )}
                 <IconButton
                   type="button"

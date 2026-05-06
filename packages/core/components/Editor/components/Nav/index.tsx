@@ -43,12 +43,14 @@ export const MenuItem = ({
 export const Nav = ({
   items,
   footer,
+  orientation = "vertical",
 }: {
   items: Record<string, MenuItem>;
   footer?: ReactNode;
+  orientation?: "vertical" | "horizontal";
 }) => {
   return (
-    <nav className={getClassName()}>
+    <nav className={getClassName({ horizontal: orientation === "horizontal" })}>
       <ul className={getClassName("list")}>
         {Object.entries(items).map(([key, item]) => (
           <MenuItem key={key} {...item} />

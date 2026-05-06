@@ -19,49 +19,150 @@ import { useDeleteHotkeys } from "../../../../lib/use-delete-hotkeys";
 import { useClipboardHotkeys } from "../../../../lib/use-clipboard-hotkeys";
 import { MenuItem, Nav } from "../Nav";
 import { IconButton } from "../../../IconButton";
-import { Moon, Sun, ToyBrick } from "lucide-react";
+import {
+  Maximize,
+  Minimize,
+  Monitor,
+  Moon,
+  Redo2Icon,
+  Smartphone,
+  Sun,
+  Tablet,
+  ToyBrick,
+  Undo2Icon,
+} from "lucide-react";
 import { PluginInternal } from "../../../../types/Internal";
 import { fieldsPlugin } from "../../../../plugins/fields";
 import { Button } from "../../../Button";
+import { BrowserBar } from "../../../BrowserBar";
+import { ThemeContext } from "../../../../lib/theme-context";
 
 const getClassName = getClassNameFactory("Editor", styles);
 const getLayoutClassName = getClassNameFactory("EditorLayout", styles);
 const getPluginTabClassName = getClassNameFactory("EditorPluginTab", styles);
 
-const FieldSideBarToolbar = () => {
+/** Right-panel body — just fields now. Publish moved to the top header. */
+const FieldSideBarBody = () => (
+  <SidebarSection noBorderTop title={null}>
+    <Fields />
+  </SidebarSection>
+);
+
+/** Top-header publish button. Wired through `headerActions` override
+ *  the same way the old right-panel toolbar was. */
+const HeaderPublish = () => {
   const appStore = useAppStoreApi();
   const { onPublish, currentRoute } = usePropsContext();
-
   const CustomHeaderActions = useAppStore(
     (s) => s.overrides.headerActions || DefaultOverride
   );
-
   return (
-    <div className={getClassName("fieldSideBarToolbar")}>
-      <div className={getClassName("fieldSideBarActions")}>
-        <CustomHeaderActions>
-          <Button
-            onClick={() => {
-              const data = appStore.getState().state.data;
-              onPublish && onPublish(data, currentRoute);
-            }}
-          >
-            Publish
-          </Button>
-        </CustomHeaderActions>
-      </div>
-    </div>
+    <CustomHeaderActions>
+      <Button
+        onClick={() => {
+          const data = appStore.getState().state.data;
+          onPublish && onPublish(data, currentRoute);
+        }}
+      >
+        Publish
+      </Button>
+    </CustomHeaderActions>
   );
 };
 
-const FieldSideBarBody = () => (
-  <>
-    <FieldSideBarToolbar />
-    <SidebarSection noBorderTop title={null}>
-      <Fields />
-    </SidebarSection>
-  </>
-);
+const HEADER_DEVICE_VIEWPORTS: Record<
+  "desktop" | "tablet" | "mobile",
+  { width: number | "100%"; height: "auto"; label: string }
+> = {
+  desktop: { width: "100%", height: "auto", label: "Desktop" },
+  tablet: { width: 768, height: "auto", label: "Tablet" },
+  mobile: { width: 360, height: "auto", label: "Mobile" },
+};
+
+const HEADER_DEVICE_ORDER: Array<"desktop" | "tablet" | "mobile"> = [
+  "desktop",
+  "tablet",
+  "mobile",
+];
+
+const HEADER_DEVICE_ICONS: Record<
+  "desktop" | "tablet" | "mobile",
+  ReactNode
+> = {
+  desktop: <Monitor size={16} />,
+  tablet: <Tablet size={16} />,
+  mobile: <Smartphone size={16} />,
+};
+
+const HeaderDeviceToggle = () => {
+  const setUi = useAppStore((s) => s.setUi);
+  const viewports = useAppStore((s) => s.state.ui.viewports);
+  const active = useMemo<"desktop" | "tablet" | "mobile">(() => {
+    const w = viewports.current.width;
+    if (w === "100%") return "desktop";
+    if (typeof w === "number" && w <= 640) return "mobile";
+    return "tablet";
+  }, [viewports.current.width]);
+  const next =
+    HEADER_DEVICE_ORDER[
+      (HEADER_DEVICE_ORDER.indexOf(active) + 1) % HEADER_DEVICE_ORDER.length
+    ];
+  return (
+    <IconButton
+      type="button"
+      title={`Switch to ${HEADER_DEVICE_VIEWPORTS[next].label} viewport`}
+      onClick={() => {
+        const v = HEADER_DEVICE_VIEWPORTS[next];
+        setUi({
+          viewports: {
+            ...viewports,
+            current: { width: v.width, height: v.height },
+          },
+        });
+      }}
+    >
+      {HEADER_DEVICE_ICONS[active]}
+    </IconButton>
+  );
+};
+
+const HeaderFullScreenToggle = () => {
+  const setUi = useAppStore((s) => s.setUi);
+  const isFullScreen = useAppStore(
+    (s) => s.state.ui.canvasFullScreen ?? false
+  );
+  return (
+    <IconButton
+      type="button"
+      title={isFullScreen ? "Exit full screen" : "Enter full screen"}
+      onClick={() => setUi({ canvasFullScreen: !isFullScreen })}
+    >
+      {isFullScreen ? <Minimize size={16} /> : <Maximize size={16} />}
+    </IconButton>
+  );
+};
+
+const HeaderHistory = () => {
+  const back = useAppStore((s) => s.history.back);
+  const forward = useAppStore((s) => s.history.forward);
+  const hasFuture = useAppStore((s) => s.history.hasFuture());
+  const hasPast = useAppStore((s) => s.history.hasPast());
+  return (
+    <>
+      <IconButton type="button" title="Undo" disabled={!hasPast} onClick={back}>
+        <Undo2Icon size={16} />
+      </IconButton>
+      <IconButton
+        type="button"
+        title="Redo"
+        disabled={!hasFuture}
+        onClick={forward}
+      >
+        <Redo2Icon size={16} />
+      </IconButton>
+    </>
+  );
+};
 
 const PluginTab = ({
   children,
@@ -224,22 +325,8 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   const hasDesktopFieldsPlugin =
     pluginItems["fields"] && pluginItems["fields"].mobileOnly === false;
 
-  // Header titles for the floating panels.
-  const leftPanelTitle = useMemo(() => {
-    if (currentPlugin && pluginItems[currentPlugin]) {
-      return pluginItems[currentPlugin].label;
-    }
-    return "Editor";
-  }, [currentPlugin, pluginItems]);
-
-  const rightPanelTitle = useAppStore((s) =>
-    s.selectedItem
-      ? s.config.components[s.selectedItem.type]?.["label"] ??
-        s.selectedItem.type.toString()
-      : s.config.root?.label || "Page"
-  );
-
   return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
     <div
       className={`Editor ${getClassName({
         hidePlugins: hasLegacySideBarPlugin,
@@ -263,53 +350,37 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
               >
                 <div className={getLayoutClassName("inner")}>
                   {navBarVisible && (
-                    <div className={getLayoutClassName("nav")}>
-                      <Nav
-                        items={pluginItems}
-                        footer={
-                          chrome.showThemeToggle ? (
-                            <IconButton
-                              type="button"
-                              title={themeLabel}
-                              onClick={toggleTheme}
-                            >
-                              {themeIcon}
-                            </IconButton>
-                          ) : undefined
-                        }
-                      />
-                    </div>
+                    <header className={getLayoutClassName("header")}>
+                      <div className={getLayoutClassName("headerStart")}>
+                        <Nav items={pluginItems} orientation="horizontal" />
+                      </div>
+                      <div className={getLayoutClassName("headerCenter")}>
+                        {chrome.showUrlBar && <BrowserBar />}
+                      </div>
+                      <div className={getLayoutClassName("headerEnd")}>
+                        {chrome.showHistoryControls && <HeaderHistory />}
+                        <HeaderPublish />
+                      </div>
+                    </header>
+                  )}
+                  {leftSideBarVisible && (
+                    <Sidebar position="left">
+                      {Object.entries(pluginItems).map(
+                        ([id, { mobileOnly, render: Render }]) => (
+                          <PluginTab
+                            key={id}
+                            visible={currentPlugin === id}
+                            mobileOnly={mobileOnly}
+                          >
+                            <Render />
+                          </PluginTab>
+                        )
+                      )}
+                    </Sidebar>
                   )}
                   <Canvas />
-                  <Sidebar
-                    position="left"
-                    expanded={leftSideBarVisible}
-                    onToggle={() =>
-                      setUi({ leftSideBarVisible: !leftSideBarVisible })
-                    }
-                    title={leftPanelTitle}
-                  >
-                    {Object.entries(pluginItems).map(
-                      ([id, { mobileOnly, render: Render }]) => (
-                        <PluginTab
-                          key={id}
-                          visible={currentPlugin === id}
-                          mobileOnly={mobileOnly}
-                        >
-                          <Render />
-                        </PluginTab>
-                      )
-                    )}
-                  </Sidebar>
-                  {!hasDesktopFieldsPlugin && (
-                    <Sidebar
-                      position="right"
-                      expanded={rightSideBarVisible}
-                      onToggle={() =>
-                        setUi({ rightSideBarVisible: !rightSideBarVisible })
-                      }
-                      title={rightPanelTitle}
-                    >
+                  {!hasDesktopFieldsPlugin && rightSideBarVisible && (
+                    <Sidebar position="right">
                       <FieldSideBarBody />
                     </Sidebar>
                   )}
@@ -321,5 +392,6 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
       </DragDropContext>
       <div id="editor-portal-root" className={getClassName("portal")} />
     </div>
+    </ThemeContext.Provider>
   );
 };
