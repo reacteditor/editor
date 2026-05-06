@@ -1,19 +1,8 @@
 /*
- * Editor's responsive layout uses minimum viewport widths slightly _below_ common
- * framework/device breakpoints, and ensures that the width of the resulting
- * Editor page preview (zoomed at 75%) is slightly _above_ common framework/device
- * breakpoints. This can help alleviate some of the pain when editing responsive
- * pages in a preview area that is narrower than the reported viewport width.
- *
- * Viewport | Editor page @ zoom 0.75
- * --------------------------------
- * -        | 322px
- * 766px    | 322px
- * 990px    | 604px
- * 1022px   | 646px
- * 1198px   | 801px
- * 1398px   | 1025px
- * 1598px   | 1212px
+ * Floating-panel layout: the canvas spans full width minus the plugin rail.
+ * Left and right sidebars are absolutely positioned over the canvas (see
+ * Sidebar/styles.module.css). Below 638px the plugin rail moves to the
+ * bottom and panels become bottom drawers.
  */
 
 .Editor {
@@ -39,25 +28,17 @@
 }
 
 .EditorLayout-inner {
-  --editor-frame-width: auto;
   --editor-side-nav-width: min-content;
-  --editor-side-bar-width: 0px;
-  --editor-left-side-bar-width: var(
-    --editor-user-left-side-bar-width,
-    var(--editor-side-bar-width)
-  );
-  --editor-right-side-bar-width: var(
-    --editor-user-right-side-bar-width,
-    var(--editor-side-bar-width)
-  );
+  /* Height of the BrowserBar pinned to the top of the canvas. Floating
+     panels (Sidebar) read this to offset themselves below the bar. */
+  --editor-canvas-bar-height: 56px;
   background-color: var(--editor-surface-app);
   display: grid;
-  grid-template-areas: "editor" "mobilepanel" "left" "right" "sidenav";
-  grid-template-columns: var(--editor-frame-width);
-  grid-template-rows: auto 0 0 0 var(--editor-side-nav-width);
+  grid-template-areas: "editor" "sidenav";
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr var(--editor-side-nav-width);
   height: 100%;
   position: relative;
-  transition: none;
   z-index: 0;
   overflow: hidden;
 }
@@ -65,9 +46,9 @@
 @media (min-width: 638px) {
   .EditorLayout-inner {
     --editor-side-nav-width: 44px;
-    grid-template-areas: "sidenav left editor right";
-    grid-template-columns: var(--editor-side-nav-width) 0 var(--editor-frame-width) 0;
-    grid-template-rows: auto;
+    grid-template-areas: "sidenav editor";
+    grid-template-columns: var(--editor-side-nav-width) 1fr;
+    grid-template-rows: 1fr;
   }
 
   .Editor--hidePlugins .EditorLayout-inner,
@@ -80,121 +61,13 @@
   --editor-side-nav-width: 0;
 }
 
-.EditorLayout--mounted .EditorLayout-inner {
-  --editor-side-bar-width: 186px;
-}
-
-.EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
-  .EditorLayout-inner {
-  grid-template-rows: auto 60% 0 0 var(--editor-side-nav-width);
-}
-
-.EditorLayout--mobilePanelCustomHeight.EditorLayout--leftSideBarVisible
-  .EditorLayout-inner {
-  grid-template-rows: auto var(--editor-mobile-panel-height, 60%) 0 0
-    var(--editor-side-nav-width);
-}
-
-@media (min-width: 638px) {
-  .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
-    .EditorLayout-inner {
-    grid-template-columns:
-      var(--editor-side-nav-width) var(--editor-left-side-bar-width) var(
-        --editor-frame-width
-      )
-      0;
-    grid-template-rows: auto;
-  }
-}
-
-.EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible
-  .EditorLayout-inner {
-  grid-template-rows: auto min-content 0 0 var(--editor-side-nav-width);
-}
-
-@media (min-width: 638px) {
-  .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
-    .EditorLayout-inner,
-  .EditorLayout--mobilePanelCustomHeight.EditorLayout--leftSideBarVisible
-    .EditorLayout-inner,
-  .EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible
-    .EditorLayout-inner {
-    grid-template-columns:
-      var(--editor-side-nav-width) var(--editor-left-side-bar-width) var(
-        --editor-frame-width
-      )
-      0;
-    grid-template-rows: auto;
-  }
-}
-
-@media (min-width: 638px) {
-  .EditorLayout--rightSideBarVisible .EditorLayout-inner {
-    grid-template-columns:
-      var(--editor-side-nav-width) 0 var(--editor-frame-width)
-      var(--editor-right-side-bar-width);
-  }
-}
-
-@media (min-width: 638px) {
-  .EditorLayout--leftSideBarVisible.EditorLayout--rightSideBarVisible
-    .EditorLayout-inner {
-    grid-template-columns:
-      var(--editor-side-nav-width) var(--editor-left-side-bar-width) var(
-        --editor-frame-width
-      )
-      var(--editor-right-side-bar-width);
-  }
-}
-
-@media (min-width: 458px) {
-  .EditorLayout-mounted .EditorLayout-inner {
-    --editor-frame-width: minmax(266px, auto);
-  }
-}
-
-@media (min-width: 638px) {
-  .EditorLayout .EditorLayout-inner {
-    --editor-side-bar-width: minmax(186px, 250px);
-  }
-}
-
-@media (min-width: 766px) {
-  .EditorLayout .EditorLayout-inner {
-    --editor-frame-width: auto;
-  }
-}
-
-@media (min-width: 990px) {
-  .EditorLayout .EditorLayout-inner {
-    --editor-side-bar-width: 256px;
-  }
-}
-
-@media (min-width: 1198px) {
-  .EditorLayout .EditorLayout-inner {
-    --editor-side-bar-width: 274px;
-  }
-}
-
-@media (min-width: 1398px) {
-  .EditorLayout .EditorLayout-inner {
-    --editor-side-bar-width: 290px;
-  }
-}
-
-@media (min-width: 1598px) {
-  .EditorLayout .EditorLayout-inner {
-    --editor-side-bar-width: 320px;
-  }
-}
-
 .EditorLayout-nav {
-  border-top: 1px solid var(--editor-border-subtle);
   background-color: var(--editor-surface-panel);
+  border-top: 1px solid var(--editor-border-subtle);
   grid-area: sidenav;
   overflow: hidden;
   width: 100%;
+  z-index: 11;
 }
 
 @media (min-width: 638px) {
@@ -205,6 +78,7 @@
   }
 }
 
+/* The right-panel toolbar (publish + history) sits inside the panel body. */
 .Editor-fieldSideBarToolbar {
   align-items: center;
   background: var(--editor-surface-panel);
@@ -227,54 +101,8 @@
   gap: 8px;
 }
 
-.EditorLayout-mobilePanel {
-  grid-area: mobilepanel;
-  background: var(--editor-surface-panel);
-  border-block-start: 1px solid var(--editor-border-subtle);
-  display: none;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.EditorLayout--leftSideBarVisible .EditorLayout-mobilePanel {
-  display: flex;
-}
-
-@media (min-width: 638px) {
-  .EditorLayout-mobilePanel,
-  .EditorLayout--leftSideBarVisible .EditorLayout-mobilePanel {
-    display: none;
-  }
-}
-
-.EditorLayout-mobilePanelContent {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.EditorLayout-mobileDragHandle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 0 4px;
-  cursor: grab;
-  touch-action: none;
-  flex-shrink: 0;
-}
-
-.EditorLayout-mobileDragHandle:active {
-  cursor: grabbing;
-}
-
-.EditorLayout-mobileDragHandlePill {
-  width: 36px;
-  height: 4px;
-  border-radius: 2px;
-  background-color: var(--editor-border-subtle);
-}
-
+/* Plugin tab rendering: the left panel mounts a tab per plugin and shows
+   only the active one. Same pattern used inside the floating Sidebar body. */
 .EditorPluginTab {
   display: none;
   flex-grow: 1;

@@ -1,4 +1,11 @@
-import { Globe, Maximize, Minimize, Monitor, Smartphone } from "lucide-react";
+import {
+  Globe,
+  Maximize,
+  Minimize,
+  Monitor,
+  Smartphone,
+  Tablet,
+} from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import { useAppStore } from "../../store";
 import { useChromeConfig, usePropsContext } from "../Editor";
@@ -24,11 +31,20 @@ const normalizeRoute = (raw: string) => {
 
 const getClassName = getClassNameFactory("BrowserBar", styles);
 
-type Device = "desktop" | "mobile";
+type Device = "desktop" | "tablet" | "mobile";
 
 const DEVICE_VIEWPORTS: Record<Device, Viewport> = {
   desktop: { width: "100%", height: "auto", icon: "Monitor", label: "Desktop" },
+  tablet: { width: 768, height: "auto", icon: "Tablet", label: "Tablet" },
   mobile: { width: 360, height: "auto", icon: "Smartphone", label: "Mobile" },
+};
+
+const DEVICE_ORDER: Device[] = ["desktop", "tablet", "mobile"];
+
+const DEVICE_ICONS: Record<Device, React.ReactNode> = {
+  desktop: <Monitor size={16} />,
+  tablet: <Tablet size={16} />,
+  mobile: <Smartphone size={16} />,
 };
 
 export const BrowserBar = ({
@@ -51,11 +67,13 @@ export const BrowserBar = ({
     });
   };
 
-  // Mobile when current width is a number ≤ 640; everything else treated as desktop.
+  // Map the current viewport width to the closest device preset for
+  // highlighting the active button.
   const activeDevice: Device = useMemo(() => {
     const w = viewports.current.width;
+    if (w === "100%") return "desktop";
     if (typeof w === "number" && w <= 640) return "mobile";
-    return "desktop";
+    return "tablet";
   }, [viewports.current.width]);
 
   const setDevice = (device: Device) => {
@@ -139,25 +157,22 @@ export const BrowserBar = ({
       {(chrome.showDeviceToggle || chrome.showFullScreenToggle) && (
         <div className={getClassName("actions")}>
           {chrome.showDeviceToggle && (
-            <IconButton
-              type="button"
-              title={
-                activeDevice === "desktop"
-                  ? "Switch to mobile viewport"
-                  : "Switch to desktop viewport"
-              }
-              onClick={() =>
-                setDevice(activeDevice === "desktop" ? "mobile" : "desktop")
-              }
-            >
-              <span className={getClassName("deviceIcon")}>
-                {activeDevice === "desktop" ? (
-                  <Monitor size={16} />
-                ) : (
-                  <Smartphone size={16} />
-                )}
-              </span>
-            </IconButton>
+            (() => {
+              const idx = DEVICE_ORDER.indexOf(activeDevice);
+              const next =
+                DEVICE_ORDER[(idx + 1) % DEVICE_ORDER.length];
+              return (
+                <IconButton
+                  type="button"
+                  title={`Switch to ${DEVICE_VIEWPORTS[next].label} viewport`}
+                  onClick={() => setDevice(next)}
+                >
+                  <span className={getClassName("deviceIcon")}>
+                    {DEVICE_ICONS[activeDevice]}
+                  </span>
+                </IconButton>
+              );
+            })()
           )}
           {chrome.showFullScreenToggle && (
             <IconButton

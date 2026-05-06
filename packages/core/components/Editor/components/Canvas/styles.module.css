@@ -3,20 +3,9 @@
   display: flex;
   grid-area: editor;
   flex-direction: column;
-  padding: calc(var(--editor-space-px) * 0.5);
+  padding: 0;
   position: relative;
   overflow: hidden;
-}
-
-@media (min-width: 1198px) {
-  .EditorCanvas {
-    padding: calc(var(--editor-space-px) * 0.75);
-    padding-top: calc(var(--editor-space-px) * 0.25);
-  }
-
-  .EditorCanvas:not(.EditorCanvas:has(.EditorCanvas-controls)) {
-    padding-top: calc(var(--editor-space-px) * 0.75);
-  }
 }
 
 .EditorCanvas--fullScreen {
@@ -48,35 +37,49 @@
 
 .EditorCanvas-inner {
   display: flex;
+  flex-direction: column;
   height: 100%;
-  justify-content: center;
   min-width: 288px;
   position: relative;
   width: 100%;
 }
 
-/* Wraps the browser bar + preview root in one width-bound column so both
-   share the selected viewport width and animate together. Positioned
-   absolute within .EditorCanvas-inner to keep the original layout
-   behaviour (centered, filling vertical space). */
+/* BrowserBar pinned at the top of the canvas, full canvas width. Pan/zoom
+   happens below it so the URL/device controls remain at fixed size and
+   always interactive. */
+.EditorCanvas-bar {
+  flex-shrink: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+/* The pan/zoom viewport: react-zoom-pan-pinch transforms its content within
+   this container; overflow:hidden clips the panned frame. The library
+   manages its own .react-transform-wrapper / .react-transform-component
+   sizing — do not override those classes here, it breaks zoom. */
+.EditorCanvas-zoomViewport {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Fixed-width container the library observes; never resizes on device
+   toggle. The actual viewport-sized .frame lives inside, centered. */
 .EditorCanvas-rootColumn {
   box-sizing: content-box;
+}
+
+/* Width-bounded column matching the chosen viewport. */
+.EditorCanvas-frame {
   display: flex;
   flex-direction: column;
-  min-width: 321px;
-  height: 100%;
-  transform-origin: top;
+  min-width: 288px;
 }
 
 @media (min-width: 1198px) {
-  .EditorCanvas-rootColumn {
+  .EditorCanvas-frame {
     min-width: unset;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .EditorCanvas-rootColumn {
-    transition: none !important;
   }
 }
 
@@ -84,16 +87,12 @@
   background: var(--editor-surface-panel);
   outline: 1px solid var(--editor-border-subtle);
   box-shadow: var(--editor-shadow-lg);
-  border-radius: 0 0 var(--editor-radius-md) var(--editor-radius-md);
+  border-radius: var(--editor-radius-md);
   flex: 1;
   pointer-events: none;
   opacity: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .EditorCanvas-root {
-    transition: none !important;
-  }
+  /* Iframe sets its own height to content; the column grows to match. */
+  min-height: 100%;
 }
 
 .EditorCanvas--ready .EditorCanvas-root {
@@ -122,11 +121,6 @@
   transition: none;
 }
 
-.EditorCanvas-browserBar {
-  flex-shrink: 0;
-  width: 100%;
-}
-
 .EditorCanvas-zoomControls {
   align-items: center;
   background: var(--editor-surface-panel);
@@ -141,3 +135,4 @@
   right: 16px;
   z-index: 10;
 }
+

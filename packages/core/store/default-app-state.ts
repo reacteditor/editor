@@ -13,10 +13,9 @@ export const defaultAppState: PrivateAppState = {
     isDragging: false,
     previewMode: "edit",
     viewports: {
-      current: {
-        width: defaultViewports[0].width,
-        height: defaultViewports[0].height || "auto",
-      },
+      // Default to the tablet viewport (the middle option) so the canvas
+      // opens at a comfortable preview width on most screens.
+      current: { width: 768, height: "auto" },
       options: [],
       controlsVisible: true,
     },

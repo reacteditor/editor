@@ -381,12 +381,56 @@ function AutoFrame({
     }
   }, [frameRef, loaded, stylesLoaded]);
 
+  // Auto-size the iframe to its inner content. Same-origin srcDoc lets us
+  // observe body resizes and mirror scrollHeight onto the host iframe so the
+  // canvas can show the entire page (Figma-style) without inner scrolling.
+  useEffect(() => {
+    const doc = ctx.document;
+    const iframeEl = frameRef.current;
+    if (!doc || !iframeEl || !stylesLoaded) return;
+
+    const update = () => {
+      const html = doc.documentElement;
+      const body = doc.body;
+      if (!html || !body) return;
+      const height = Math.max(
+        body.scrollHeight,
+        body.offsetHeight,
+        html.scrollHeight,
+        html.offsetHeight
+      );
+      if (height > 0) {
+        iframeEl.style.height = `${height}px`;
+      }
+    };
+
+    update();
+
+    const observer = new ResizeObserver(update);
+    observer.observe(doc.body);
+    observer.observe(doc.documentElement);
+
+    // MutationObserver catches DOM changes that don't change layout box
+    // (e.g. font swaps that load after initial styles).
+    const mutationObserver = new MutationObserver(update);
+    mutationObserver.observe(doc.body, {
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
+  }, [ctx.document, frameRef, stylesLoaded]);
+
   return (
     <iframe
       {...props}
       className={className}
       id={id}
-      srcDoc='<!DOCTYPE html><html><head></head><body><div id="frame-root" data-editor-entry></div></body></html>'
+      srcDoc='<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" /></head><body style="touch-action:none"><div id="frame-root" data-editor-entry></div></body></html>'
       ref={frameRef}
       onLoad={() => {
         setLoaded(true);

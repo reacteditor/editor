@@ -8,6 +8,11 @@ import {
   useState,
 } from "react";
 import { Minus, Plus, RotateCcw } from "lucide-react";
+import {
+  TransformWrapper,
+  TransformComponent,
+  ReactZoomPanPinchRef,
+} from "react-zoom-pan-pinch";
 import { useAppStore, useAppStoreApi } from "../../../../store";
 import { BrowserBar } from "../../../BrowserBar";
 import styles from "./styles.module.css";
@@ -25,8 +30,7 @@ const getClassName = getClassNameFactory("EditorCanvas", styles);
 const ZOOM_STEP = 0.15;
 const MIN_ZOOM = 0.25;
 const MAX_ZOOM = 3;
-
-const TRANSITION_DURATION = 150;
+const PREVIEW_MAX_WIDTH = 1200;
 
 export const Canvas = () => {
   const { frameRef } = useCanvasFrame();
@@ -63,15 +67,7 @@ export const Canvas = () => {
     (s) => s.state.ui.canvasFullScreen ?? false
   );
 
-  const [canvasZoom, setCanvasZoom] = useState(1);
-
-  const zoomIn = () => setCanvasZoom((z) => Math.min(z + ZOOM_STEP, MAX_ZOOM));
-  const zoomOut = () =>
-    setCanvasZoom((z) => Math.max(z - ZOOM_STEP, MIN_ZOOM));
-  const resetZoom = () => setCanvasZoom(1);
-
-  const [showTransition, setShowTransition] = useState(false);
-  const isResizingRef = useRef(false);
+  const transformRef = useRef<ReactZoomPanPinchRef | null>(null);
 
   const defaultRender = useMemo<
     React.FunctionComponent<{ children?: ReactNode }>
@@ -119,144 +115,294 @@ export const Canvas = () => {
 
   const appStoreApi = useAppStoreApi();
 
-  // Cleared once the user explicitly picks a viewport, so resize-driven
-  // auto-detection won't override their choice.
-  const autoSelectingRef = useRef(true);
-
-  const pickClosestViewport = useCallback(() => {
-    if (typeof window === "undefined") return null;
-
-    const viewportWidth = window.innerWidth;
-    const frameWidth = frameRef.current?.getBoundingClientRect().width;
-
-    if (!viewportWidth) return null;
-    if (!frameWidth) return null;
-    if (viewportOptions.length === 0) return null;
-
-    const fullWidthViewport = Object.values(viewportOptions).find(
-      (v) => v.width === "100%"
-    );
-
-    const viewportDifferences = Object.entries(viewportOptions)
-      .filter(([_, value]) => value.width !== "100%")
-      .map(([key, value]) => ({
-        key,
-        diff: Math.abs(
-          viewportWidth -
-            (typeof value.width === "string" ? viewportWidth : value.width)
-        ),
-        value,
-      }))
-      .sort((a, b) => (a.diff > b.diff ? 1 : -1));
-
-    let closestViewport = viewportDifferences[0]?.value;
-    if (!closestViewport) return null;
-
-    // Select full width viewport if it exists, and the closest viewport is smaller than the window
-    if (
-      (closestViewport.width as number) < frameWidth &&
-      fullWidthViewport
-    ) {
-      closestViewport = fullWidthViewport;
-    }
-
-    return closestViewport;
-  }, [viewportOptions, frameRef]);
-
-  // Select closest viewport on load
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    // Don't override if user has set a viewport
-    if (uiProp?.viewports?.current) return;
-
-    const closestViewport = pickClosestViewport();
-    if (!closestViewport) return;
-
-    if (iframe.enabled) {
-      const s = appStoreApi.getState();
-
-      const appState = {
-        state: {
-          ...s.state,
-          ui: {
-            ...s.state.ui,
-            viewports: {
-              ...s.state.ui.viewports,
-
-              current: {
-                ...s.state.ui.viewports.current,
-                height: closestViewport?.height || "auto",
-                width: closestViewport?.width,
-              },
-            },
-          },
-        },
-      };
-
-      let history = s.history;
-
-      if (s.history.histories.length === 1) {
-        history = { ...history, histories: [appState] };
-      }
-
-      appStoreApi.setState({ ...appState, history });
-    }
-  }, [
-    pickClosestViewport,
-    frameRef.current,
-    iframe,
-    appStoreApi,
-    uiProp?.viewports?.current,
-  ]);
-
-  // Re-run auto-detection when the canvas frame resizes (e.g. sidebar
-  // toggle), so the preview expands into newly available space.
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (!iframe.enabled) return;
-    if (uiProp?.viewports?.current) return;
-    const target = frameRef.current;
-    if (!target) return;
-
-    const observer = new ResizeObserver(() => {
-      if (!autoSelectingRef.current) return;
-
-      const closestViewport = pickClosestViewport();
-      if (!closestViewport) return;
-
-      const s = appStoreApi.getState();
-      const current = s.state.ui.viewports.current;
-
-      if (
-        current.width === closestViewport.width &&
-        current.height === (closestViewport.height || "auto")
-      ) {
-        return;
-      }
-
+  const onBrowserBarViewportChange = useCallback(
+    (viewport: { width: number | "100%"; height?: number | "auto" }) => {
       setUi({
         viewports: {
-          ...s.state.ui.viewports,
+          ...viewports,
           current: {
-            ...current,
-            width: closestViewport.width,
-            height: closestViewport.height || "auto",
+            ...viewport,
+            height: viewport.height || "auto",
           },
         },
       });
-    });
+      // Re-fit content after viewport change
+      setTimeout(() => transformRef.current?.resetTransform(), 0);
+    },
+    [setUi, viewports]
+  );
 
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, [
-    pickClosestViewport,
-    frameRef,
-    iframe.enabled,
-    uiProp?.viewports?.current,
-    appStoreApi,
-    setUi,
-  ]);
+  // The user's intended transform — kept in sync via the library's
+  // `onPanning`/`onZoom` callbacks (which fire on user interactions only)
+  // and our own wheel handler. Read on viewport changes to restore the
+  // transform after the library's ResizeObserver tries to recalibrate.
+  const intendedTransformRef = useRef({
+    positionX: 0,
+    positionY: 16,
+    scale: 1,
+  });
+  const trackUserTransform = useCallback(
+    (ctx: { state: { positionX: number; positionY: number; scale: number } }) => {
+      // eslint-disable-next-line no-console
+      console.log("[Canvas] onPanning/onZoom →", {
+        x: ctx.state.positionX,
+        y: ctx.state.positionY,
+        scale: ctx.state.scale,
+      });
+      intendedTransformRef.current = {
+        positionX: ctx.state.positionX,
+        positionY: ctx.state.positionY,
+        scale: ctx.state.scale,
+      };
+    },
+    []
+  );
+
+  // [DEBUG] Track viewport changes and snapshot the transform before/after.
+  useEffect(() => {
+    const ref = transformRef.current;
+    if (!ref) return;
+    // eslint-disable-next-line no-console
+    console.log("[Canvas] viewport-change EFFECT (post-commit)", {
+      width: viewports.current.width,
+      stateAtEffect: { ...ref.state },
+      contentW: ref.instance.contentComponent?.clientWidth,
+      contentH: ref.instance.contentComponent?.clientHeight,
+    });
+    const r1 = requestAnimationFrame(() => {
+      const cur = transformRef.current;
+      if (!cur) return;
+      // eslint-disable-next-line no-console
+      console.log("[Canvas] viewport-change rAF1 (post-resize observer)", {
+        width: viewports.current.width,
+        stateAtRaf: { ...cur.state },
+        contentW: cur.instance.contentComponent?.clientWidth,
+        contentH: cur.instance.contentComponent?.clientHeight,
+      });
+    });
+    return () => cancelAnimationFrame(r1);
+  }, [viewports.current.width]);
+
+  // Initial center on mount. The rootColumn is fixed at PREVIEW_MAX_WIDTH,
+  // so this centering doesn't need to re-run on viewport changes.
+  useEffect(() => {
+    let canceled = false;
+    requestAnimationFrame(() => {
+      if (canceled) return;
+      requestAnimationFrame(() => {
+        if (canceled) return;
+        const ref = transformRef.current;
+        const wrapper = ref?.instance.wrapperComponent;
+        if (!ref || !wrapper) return;
+        const wrapperW = wrapper.clientWidth;
+        const x = Math.max(0, (wrapperW - PREVIEW_MAX_WIDTH) / 2);
+        ref.setTransform(x, 16, 1, 0);
+        intendedTransformRef.current = { positionX: x, positionY: 16, scale: 1 };
+      });
+    });
+    return () => {
+      canceled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleZoomIn = useCallback(
+    () => transformRef.current?.zoomIn(),
+    []
+  );
+  const handleZoomOut = useCallback(
+    () => transformRef.current?.zoomOut(),
+    []
+  );
+  const handleResetZoom = useCallback(
+    () => transformRef.current?.resetTransform(),
+    []
+  );
+
+  // Custom wheel handler: pinch (trackpad pinch / Cmd+wheel / Ctrl+wheel)
+  // zooms; plain wheel pans. The library's own wheel handler is disabled
+  // so this is the single source of truth, applied on both the canvas
+  // viewport (cursor over chrome) and the iframe document (cursor over
+  // preview content) — events on the iframe never bubble out.
+  useEffect(() => {
+    const handler = (e: WheelEvent) => {
+      // Always preventDefault — even if the transform ref isn't ready yet,
+      // the browser must not run native page/visual zoom.
+      e.preventDefault();
+
+      const ref = transformRef.current;
+      if (!ref) return;
+
+      // Browser sets ctrlKey on trackpad pinch automatically; Cmd/Ctrl
+      // held during wheel scroll also counts as a pinch intent.
+      const isPinch = e.ctrlKey || e.metaKey;
+
+      if (isPinch) {
+        const wrapper = ref.instance.wrapperComponent;
+        if (!wrapper) return;
+
+        const factor = e.deltaY < 0 ? 1.05 : 1 / 1.05;
+        const currentScale = ref.state.scale;
+        const newScale = Math.max(
+          MIN_ZOOM,
+          Math.min(MAX_ZOOM, currentScale * factor)
+        );
+        if (newScale === currentScale) return;
+
+        // Compute the cursor's position in wrapper-local coordinates.
+        // Events from inside the iframe report clientX/Y in the iframe's
+        // own (pre-transform) coordinate space, so we project them through
+        // the iframe element's bounding rect and the current scale.
+        const wrapperRect = wrapper.getBoundingClientRect();
+        const isIframeEvent =
+          (e.target as Node | null)?.ownerDocument !== document;
+
+        let cursorX: number;
+        let cursorY: number;
+        if (isIframeEvent) {
+          const iframeEl = document.getElementById(
+            "preview-frame"
+          ) as HTMLIFrameElement | null;
+          const iframeRect = iframeEl?.getBoundingClientRect();
+          if (!iframeRect) return;
+          cursorX =
+            iframeRect.left + e.clientX * currentScale - wrapperRect.left;
+          cursorY =
+            iframeRect.top + e.clientY * currentScale - wrapperRect.top;
+        } else {
+          cursorX = e.clientX - wrapperRect.left;
+          cursorY = e.clientY - wrapperRect.top;
+        }
+
+        // Keep the point under the cursor fixed: solve for the new
+        // position such that (cursor - position) / scale stays constant.
+        const ratio = newScale / currentScale;
+        const newPositionX =
+          cursorX - (cursorX - ref.state.positionX) * ratio;
+        const newPositionY =
+          cursorY - (cursorY - ref.state.positionY) * ratio;
+
+        ref.setTransform(newPositionX, newPositionY, newScale, 0);
+        intendedTransformRef.current = {
+          positionX: newPositionX,
+          positionY: newPositionY,
+          scale: newScale,
+        };
+        return;
+      }
+
+      const newPositionX = ref.state.positionX - e.deltaX;
+      const newPositionY = ref.state.positionY - e.deltaY;
+      ref.setTransform(newPositionX, newPositionY, ref.state.scale, 0);
+      intendedTransformRef.current = {
+        positionX: newPositionX,
+        positionY: newPositionY,
+        scale: ref.state.scale,
+      };
+    };
+
+    const cleanups: Array<() => void> = [];
+
+    // Window-level: stop Chrome's native page zoom on pinch. Pinch arrives
+    // as `wheel + ctrlKey` regardless of cursor location, so calling
+    // preventDefault here neutralizes browser zoom even when the cursor is
+    // over a sidebar or the plugin rail (outside the canvas's own
+    // listeners).  Our canvas-scoped handlers below run first via element
+    // listeners and still drive the canvas zoom.
+    const onWindowWheel = (e: WheelEvent) => {
+      if (e.ctrlKey || e.metaKey) e.preventDefault();
+    };
+    window.addEventListener("wheel", onWindowWheel, { passive: false });
+    cleanups.push(() =>
+      window.removeEventListener("wheel", onWindowWheel)
+    );
+
+    // Canvas viewport (cursor over canvas chrome). The first child of
+    // .EditorCanvas-inner is .EditorCanvas-zoomViewport.
+    const viewportEl = frameRef.current
+      ?.firstElementChild as HTMLElement | null;
+    if (viewportEl) {
+      viewportEl.addEventListener("wheel", handler, { passive: false });
+      cleanups.push(() =>
+        viewportEl.removeEventListener("wheel", handler)
+      );
+    }
+
+    // Iframe document + window (cursor over preview content). Attach on
+    // both contentDocument and contentWindow with `capture: true` so we
+    // run before any browser-internal pinch-zoom path can fire.
+    if (iframe.enabled) {
+      const tryAttach = () => {
+        const el = document.getElementById(
+          "preview-frame"
+        ) as HTMLIFrameElement | null;
+        const doc = el?.contentDocument;
+        const win = el?.contentWindow;
+        if (!doc || !win) return false;
+        const opts = { passive: false, capture: true } as AddEventListenerOptions;
+        doc.addEventListener("wheel", handler, opts);
+        win.addEventListener("wheel", handler, opts);
+        cleanups.push(() => {
+          doc.removeEventListener("wheel", handler, opts);
+          win.removeEventListener("wheel", handler, opts);
+        });
+        return true;
+      };
+
+      if (!tryAttach()) {
+        const interval = window.setInterval(() => {
+          if (tryAttach()) window.clearInterval(interval);
+        }, 100);
+        cleanups.push(() => window.clearInterval(interval));
+      }
+    }
+
+    return () => {
+      cleanups.forEach((fn) => fn());
+    };
+  }, [iframe.enabled, frameRef]);
+
+  // Frame contents: BrowserBar + width-bounded preview column. Both live
+  // inside the TransformWrapper so they zoom/pan together as one frame
+  // (Figma-style). Full-width viewport ("100%") resolves to a fixed
+  // 1440px column — `100%` inside TransformComponent has no concrete
+  // ancestor width to resolve against (the library sizes its component
+  // to its content), so an explicit pixel width is required.
+  // The rootColumn is held at a fixed PREVIEW_MAX_WIDTH so the library's
+  // ResizeObserver doesn't fire on device-toggle (which would snap
+  // position back toward 0,0). The inner .frame element carries the
+  // *actual* viewport width and is centered horizontally via margin auto.
+  const previewWidth = !iframe.enabled
+    ? "100%"
+    : viewports.current.width === "100%"
+      ? PREVIEW_MAX_WIDTH
+      : viewports.current.width;
+  const frameContents = (
+    <div
+      className={getClassName("rootColumn")}
+      style={{ width: PREVIEW_MAX_WIDTH }}
+    >
+      <div
+        className={getClassName("frame")}
+        style={{ width: previewWidth, margin: "0 auto" }}
+      >
+        {iframe.enabled && (
+          <div className={getClassName("browserBar")}>
+            <BrowserBar onViewportChange={onBrowserBarViewportChange} />
+          </div>
+        )}
+        <div
+          className={getClassName("root")}
+          suppressHydrationWarning
+          id="editor-canvas-root"
+        >
+          <CustomPreview>
+            <Preview />
+          </CustomPreview>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div
@@ -282,66 +428,75 @@ export const Canvas = () => {
       }}
     >
       <div className={getClassName("inner")} ref={frameRef}>
-        {!disableZoomControls && (
-          <div className={getClassName("zoomControls")}>
-            <IconButton type="button" title="Zoom out" onClick={zoomOut}>
-              <Minus size={14} />
-            </IconButton>
-            <IconButton type="button" title="Reset zoom" onClick={resetZoom}>
-              <RotateCcw size={14} />
-            </IconButton>
-            <IconButton type="button" title="Zoom in" onClick={zoomIn}>
-              <Plus size={14} />
-            </IconButton>
-          </div>
-        )}
-        <div
-          className={getClassName("rootColumn")}
-          style={{
-            width: iframe.enabled ? viewports.current.width : "100%",
-            transform: disableZoomControls ? undefined : `scale(${canvasZoom})`,
-            transformOrigin: disableZoomControls ? undefined : "center center",
-            transition: showTransition
-              ? `width ${TRANSITION_DURATION}ms ease-out, transform ${TRANSITION_DURATION}ms ease-out`
-              : disableZoomControls
-                ? undefined
-                : "transform 150ms ease-out",
-          }}
-        >
-          {iframe.enabled && (
-            <div className={getClassName("browserBar")}>
-              <BrowserBar
-                onViewportChange={(viewport) => {
-                  autoSelectingRef.current = false;
-                  setShowTransition(true);
-                  isResizingRef.current = true;
-
-                  const uiViewport = {
-                    ...viewport,
-                    height: viewport.height || "auto",
-                    zoom: 1,
-                  };
-
-                  setUi({
-                    viewports: { ...viewports, current: uiViewport },
-                  });
-                }}
-              />
-            </div>
+        <div className={getClassName("zoomViewport")}>
+          {disableZoomControls ? (
+            frameContents
+          ) : (
+            <TransformWrapper
+              ref={transformRef}
+              minScale={MIN_ZOOM}
+              maxScale={MAX_ZOOM}
+              initialScale={1}
+              doubleClick={{ disabled: true }}
+              limitToBounds={false}
+              // The library's wheel handler is disabled — a custom handler
+              // (see useEffect below) runs on both the iframe document and
+              // the canvas viewport so pinch-only zoom + wheel-pan behave
+              // consistently regardless of cursor location.
+              // Click-drag panning + native trackPadPanning stay enabled.
+              wheel={{ disabled: true }}
+              pinch={{ step: 5 }}
+              panning={{ velocityDisabled: true }}
+              trackPadPanning={{ velocityDisabled: true }}
+              onPanning={trackUserTransform}
+              onZoom={trackUserTransform}
+              onInit={(ref) => {
+                // eslint-disable-next-line no-console
+                console.log("[Canvas] TransformWrapper onInit", {
+                  state: { ...ref.state },
+                  wrapperW: ref.instance.wrapperComponent?.clientWidth,
+                  contentW: ref.instance.contentComponent?.clientWidth,
+                });
+              }}
+              onTransform={(_ref, state) => {
+                // eslint-disable-next-line no-console
+                console.log("[Canvas] onTransform (ALL, incl. library)", {
+                  x: state.positionX,
+                  y: state.positionY,
+                  scale: state.scale,
+                });
+              }}
+            >
+              <div className={getClassName("zoomControls")}>
+                <IconButton
+                  type="button"
+                  title="Zoom out"
+                  onClick={handleZoomOut}
+                >
+                  <Minus size={14} />
+                </IconButton>
+                <IconButton
+                  type="button"
+                  title="Reset zoom"
+                  onClick={handleResetZoom}
+                >
+                  <RotateCcw size={14} />
+                </IconButton>
+                <IconButton
+                  type="button"
+                  title="Zoom in"
+                  onClick={handleZoomIn}
+                >
+                  <Plus size={14} />
+                </IconButton>
+              </div>
+              <TransformComponent
+                wrapperStyle={{ width: "100%", height: "100%" }}
+              >
+                {frameContents}
+              </TransformComponent>
+            </TransformWrapper>
           )}
-          <div
-            className={getClassName("root")}
-            suppressHydrationWarning
-            id="editor-canvas-root"
-            onTransitionEnd={() => {
-              setShowTransition(false);
-              isResizingRef.current = false;
-            }}
-          >
-            <CustomPreview>
-              <Preview />
-            </CustomPreview>
-          </div>
         </div>
         <div className={getClassName("loader")}>
           <Loader size={24} />

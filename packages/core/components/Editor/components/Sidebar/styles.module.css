@@ -1,50 +1,115 @@
+/* Floating overlay panel: positioned absolute over the canvas with padding
+   from the editor edges. The header pill is always visible; the body is
+   conditionally rendered when `Sidebar--expanded` is set. */
 .Sidebar {
-  border-block-start: 1px solid var(--editor-border-subtle);
-  position: relative;
-  display: none;
-  flex-direction: column;
-  overflow-y: auto;
-}
-
-.Sidebar--isVisible {
+  background: var(--editor-surface-panel);
+  border: 1px solid var(--editor-border-subtle);
+  border-radius: var(--editor-radius-md);
+  box-shadow: var(--editor-shadow-md, 0 4px 12px rgba(0, 0, 0, 0.08));
   display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  pointer-events: auto;
+  position: absolute;
+  z-index: 10;
 }
 
 .Sidebar--left {
-  background: var(--editor-surface-panel);
-  grid-area: left;
-}
-
-@media (min-width: 766px) {
-  .Sidebar--left {
-    border-block-start: 0;
-    border-inline-end: 1px solid var(--editor-border-subtle);
-  }
+  bottom: 16px;
+  left: calc(var(--editor-side-nav-width) + 16px);
+  top: 16px;
+  width: var(--editor-floating-panel-width, 280px);
 }
 
 .Sidebar--right {
-  background: var(--editor-surface-panel);
-  grid-area: right;
+  bottom: 16px;
+  right: 16px;
+  top: 16px;
+  width: var(--editor-floating-panel-width, 280px);
 }
 
-@media (min-width: 766px) {
-  .Sidebar--right {
-    border-block-start: 0;
-    border-inline-start: 1px solid var(--editor-border-subtle);
+/* Collapsed: the panel only takes its header height. */
+.Sidebar:not(.Sidebar--expanded) {
+  bottom: auto;
+  height: auto;
+}
+
+.Sidebar-header {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  flex-shrink: 0;
+  font-family: inherit;
+  font-size: var(--editor-font-size-xs);
+  font-weight: 500;
+  gap: 8px;
+  padding: 10px 12px;
+  text-align: left;
+  width: 100%;
+  color: var(--editor-text-primary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .Sidebar-header:hover {
+    background: var(--editor-surface-hover);
   }
 }
 
-.Sidebar-resizeHandle {
-  position: absolute;
-  height: 100%;
+.Sidebar-header:focus-visible {
+  outline: none;
+  box-shadow: var(--editor-ring) inset;
 }
 
-.Sidebar--left + .Sidebar-resizeHandle {
-  grid-area: left;
-  justify-self: end;
+.Sidebar--expanded .Sidebar-header {
+  border-bottom: 1px solid var(--editor-border-subtle);
 }
 
-.Sidebar--right + .Sidebar-resizeHandle {
-  grid-area: right;
-  justify-self: start;
+.Sidebar-chevron {
+  color: var(--editor-text-tertiary);
+  flex-shrink: 0;
+  transition: transform 150ms ease-out;
+}
+
+.Sidebar--expanded .Sidebar-chevron {
+  transform: rotate(90deg);
+}
+
+.Sidebar-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.Sidebar-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Mobile: panels become full-width bottom drawers under the canvas, plugin
+   rail stays at the bottom. */
+@media (max-width: 637px) {
+  .Sidebar {
+    border-radius: var(--editor-radius-md) var(--editor-radius-md) 0 0;
+    bottom: var(--editor-side-nav-width, 0);
+    left: 0;
+    right: 0;
+    top: auto;
+    width: auto;
+  }
+
+  .Sidebar--right {
+    /* Stack the right panel above the left one when both are expanded. */
+    z-index: 11;
+  }
+
+  .Sidebar--expanded {
+    max-height: 60dvh;
+  }
 }

@@ -1,5 +1,5 @@
-import React from "react";
-import { ResizeHandle } from "../ResizeHandle";
+import React, { ReactNode } from "react";
+import { ChevronRight } from "lucide-react";
 import getClassNameFactory from "../../../../lib/get-class-name-factory";
 import styles from "./styles.module.css";
 
@@ -7,37 +7,43 @@ const getClassName = getClassNameFactory("Sidebar", styles);
 
 interface SidebarProps {
   position: "left" | "right";
-  sidebarRef: { current: HTMLDivElement | null };
-  isVisible: boolean;
-  onResize: (width: number) => void;
-  onResizeEnd: (width: number) => void;
+  expanded: boolean;
+  onToggle: () => void;
+  title: ReactNode;
+  /** Optional content rendered in the header to the right of the title. */
+  headerActions?: ReactNode;
   children: React.ReactNode;
 }
 
+/**
+ * Floating, collapsible panel positioned over the canvas. The header pill
+ * (title + chevron) is always rendered; clicking it toggles `expanded`,
+ * which mounts/unmounts the body.
+ */
 export const Sidebar: React.FC<SidebarProps> = ({
   position,
-  sidebarRef,
-  isVisible,
-  onResize,
-  onResizeEnd,
+  expanded,
+  onToggle,
+  title,
+  headerActions,
   children,
 }) => {
   return (
-    <>
-      <div
-        ref={sidebarRef}
-        className={getClassName({ [position]: true, isVisible })}
+    <aside
+      className={getClassName({ [position]: true, expanded })}
+      aria-expanded={expanded}
+    >
+      <button
+        type="button"
+        className={getClassName("header")}
+        onClick={onToggle}
+        aria-expanded={expanded}
       >
-        {children}
-      </div>
-      <div className={`${getClassName("resizeHandle")}`}>
-        <ResizeHandle
-          position={position}
-          sidebarRef={sidebarRef}
-          onResize={onResize}
-          onResizeEnd={onResizeEnd}
-        />
-      </div>
-    </>
+        <ChevronRight size={14} className={getClassName("chevron")} />
+        <span className={getClassName("title")}>{title}</span>
+        {headerActions}
+      </button>
+      {expanded && <div className={getClassName("body")}>{children}</div>}
+    </aside>
   );
 };

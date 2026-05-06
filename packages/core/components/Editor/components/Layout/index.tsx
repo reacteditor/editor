@@ -1,14 +1,6 @@
-import {
-  ReactElement,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { ReactElement, ReactNode, useEffect, useMemo, useState } from "react";
 import { getClassNameFactory } from "../../../../lib";
-import { IframeConfig, UiState } from "../../../../types";
+import { IframeConfig } from "../../../../types";
 import { useChromeConfig, usePropsContext } from "../..";
 import styles from "./styles.module.css";
 import { useInjectGlobalCss } from "../../../../lib/use-inject-css";
@@ -21,20 +13,13 @@ import { DragDropContext } from "../../../DragDropContext";
 import { SidebarSection } from "../../../SidebarSection";
 import { Canvas } from "../Canvas";
 import { Fields } from "../Fields";
-import { useSidebarResize } from "../../../../lib/use-sidebar-resize";
 import { FrameProvider } from "../../../../lib/frame-context";
 import { Sidebar } from "../Sidebar";
 import { useDeleteHotkeys } from "../../../../lib/use-delete-hotkeys";
 import { useClipboardHotkeys } from "../../../../lib/use-clipboard-hotkeys";
 import { MenuItem, Nav } from "../Nav";
 import { IconButton } from "../../../IconButton";
-import {
-  Moon,
-  Redo2Icon,
-  Sun,
-  ToyBrick,
-  Undo2Icon,
-} from "lucide-react";
+import { Moon, Redo2Icon, Sun, ToyBrick, Undo2Icon } from "lucide-react";
 import { PluginInternal } from "../../../../types/Internal";
 import { blocksPlugin } from "../../../../plugins/blocks";
 import { fieldsPlugin } from "../../../../plugins/fields";
@@ -98,23 +83,14 @@ const FieldSideBarToolbar = () => {
   );
 };
 
-const FieldSideBar = () => {
-  const title = useAppStore((s) =>
-    s.selectedItem
-      ? s.config.components[s.selectedItem.type]?.["label"] ??
-        s.selectedItem.type.toString()
-      : s.config.root?.label || "Page"
-  );
-
-  return (
-    <>
-      <FieldSideBarToolbar />
-      <SidebarSection noBorderTop showBreadcrumbs title={title}>
-        <Fields />
-      </SidebarSection>
-    </>
-  );
-};
+const FieldSideBarBody = () => (
+  <>
+    <FieldSideBarToolbar />
+    <SidebarSection noBorderTop showBreadcrumbs title={null}>
+      <Fields />
+    </SidebarSection>
+  </>
+);
 
 const PluginTab = ({
   children,
@@ -136,7 +112,6 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   const {
     iframe: _iframe,
     dnd,
-    initialHistory: _initialHistory,
     plugins,
     height,
   } = usePropsContext();
@@ -152,7 +127,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
 
   useInjectGlobalCss(iframe.enabled);
 
-  const dispatch = useAppStore((s) => s.dispatch);
+  const setUi = useAppStore((s) => s.setUi);
   const leftSideBarVisible = useAppStore((s) => s.state.ui.leftSideBarVisible);
   const rightSideBarVisible = useAppStore(
     (s) => s.state.ui.rightSideBarVisible
@@ -162,62 +137,12 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
 
   const instanceId = useAppStore((s) => s.instanceId);
 
-  const {
-    width: leftWidth,
-    setWidth: setLeftWidth,
-    sidebarRef: leftSidebarRef,
-    handleResizeEnd: handleLeftSidebarResizeEnd,
-  } = useSidebarResize("left", dispatch);
-
-  const {
-    width: rightWidth,
-    setWidth: setRightWidth,
-    sidebarRef: rightSidebarRef,
-    handleResizeEnd: handleRightSidebarResizeEnd,
-  } = useSidebarResize("right", dispatch);
-
-  useEffect(() => {
-    if (!window.matchMedia("(min-width: 638px)").matches) {
-      dispatch({
-        type: "setUi",
-        ui: {
-          leftSideBarVisible: false,
-          rightSideBarVisible: false,
-        },
-      });
-    }
-
-    const handleResize = () => {
-      if (!window.matchMedia("(min-width: 638px)").matches) {
-        dispatch({
-          type: "setUi",
-          ui: (ui: UiState) => ({
-            ...ui,
-            ...(ui.rightSideBarVisible ? { leftSideBarVisible: false } : {}),
-          }),
-        });
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   const overrides = useAppStore((s) => s.overrides);
 
   const CustomEditor = useMemo(
     () => overrides.editor || DefaultOverride,
     [overrides]
   );
-
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const ready = useAppStore((s) => s.status === "READY");
 
@@ -237,90 +162,8 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   useDeleteHotkeys();
   useClipboardHotkeys();
 
-  const layoutOptions: Record<string, any> = {};
-
-  if (leftWidth) {
-    layoutOptions["--editor-user-left-side-bar-width"] = `${leftWidth}px`;
-  }
-
-  if (rightWidth) {
-    layoutOptions["--editor-user-right-side-bar-width"] = `${rightWidth}px`;
-  }
-
-  const setUi = useAppStore((s) => s.setUi);
   const currentPlugin = useAppStore((s) => s.state.ui.plugin?.current);
   const appStoreApi = useAppStoreApi();
-
-  const [mobilePanelHeightMode, setMobilePanelHeightMode] = useState<
-    "toggle" | "min-content"
-  >("toggle");
-
-  const [mobilePanelHeight, setMobilePanelHeight] = useState<number | null>(
-    null
-  );
-  const mobilePanelRef = useRef<HTMLDivElement>(null);
-  const isDraggingMobile = useRef(false);
-  const dragStartY = useRef(0);
-  const dragStartHeight = useRef(0);
-
-  const handleMobileDragStart = useCallback(
-    (clientY: number) => {
-      isDraggingMobile.current = true;
-      dragStartY.current = clientY;
-      const panel = mobilePanelRef.current;
-      dragStartHeight.current = panel
-        ? panel.getBoundingClientRect().height
-        : 0;
-      document.body.style.userSelect = "none";
-      document.body.style.touchAction = "none";
-    },
-    []
-  );
-
-  const handleMobileDragMove = useCallback((clientY: number) => {
-    if (!isDraggingMobile.current) return;
-    const delta = dragStartY.current - clientY;
-    const viewportHeight = window.innerHeight;
-    const minH = viewportHeight * 0.15;
-    const maxH = viewportHeight * 0.75;
-    const newH = Math.min(maxH, Math.max(minH, dragStartHeight.current + delta));
-    setMobilePanelHeight(newH);
-  }, []);
-
-  const handleMobileDragEnd = useCallback(() => {
-    if (!isDraggingMobile.current) return;
-    isDraggingMobile.current = false;
-    document.body.style.userSelect = "";
-    document.body.style.touchAction = "";
-  }, []);
-
-  useEffect(() => {
-    const onTouchMove = (e: TouchEvent) => {
-      if (isDraggingMobile.current) {
-        e.preventDefault();
-        handleMobileDragMove(e.touches[0].clientY);
-      }
-    };
-    const onTouchEnd = () => handleMobileDragEnd();
-    const onMouseMove = (e: MouseEvent) => {
-      if (isDraggingMobile.current) {
-        e.preventDefault();
-        handleMobileDragMove(e.clientY);
-      }
-    };
-    const onMouseUp = () => handleMobileDragEnd();
-
-    document.addEventListener("touchmove", onTouchMove, { passive: false });
-    document.addEventListener("touchend", onTouchEnd);
-    document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseup", onMouseUp);
-    return () => {
-      document.removeEventListener("touchmove", onTouchMove);
-      document.removeEventListener("touchend", onTouchEnd);
-      document.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("mouseup", onMouseUp);
-    };
-  }, [handleMobileDragMove, handleMobileDragEnd]);
 
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window === "undefined") return "light";
@@ -340,9 +183,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
     setTheme((t) => (t === "dark" ? "light" : "dark"));
   };
 
-  const themeIcon =
-    theme === "dark" ? <Sun size={18} /> : <Moon size={18} />;
-
+  const themeIcon = theme === "dark" ? <Sun size={18} /> : <Moon size={18} />;
   const themeLabel =
     theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
 
@@ -360,8 +201,6 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
     const isLegacy = (plugin: PluginInternal) =>
       plugin.name === "legacy-side-bar" ? -1 : 0;
 
-    // Always place legacy-side-bar first
-    // Stable tie-break ensures consistent order for non-legacy plugins
     const combinedPlugins: PluginInternal[] = [
       ...defaultPlugins,
       ...(plugins ?? []),
@@ -374,7 +213,6 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
     combinedPlugins?.forEach((plugin) => {
       if (plugin.name && plugin.render) {
         if (details[plugin.name]) {
-          // Delete existing plugins with this name to enable user sorting
           delete details[plugin.name];
         }
 
@@ -382,21 +220,15 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
           label: plugin.label ?? plugin.name,
           icon: plugin.icon ?? <ToyBrick />,
           onClick: () => {
-            setMobilePanelHeightMode(plugin.mobilePanelHeight ?? "toggle");
-
+            // Same plugin: toggle expansion of the left panel body.
+            // Different plugin: switch to it and force-expand.
             if (plugin.name === currentPlugin) {
-              if (leftSideBarVisible) {
-                setUi({ leftSideBarVisible: false });
-              } else {
-                setUi({ leftSideBarVisible: true });
-              }
-            } else {
-              if (plugin.name) {
-                setUi({
-                  plugin: { current: plugin.name },
-                  leftSideBarVisible: true,
-                });
-              }
+              setUi({ leftSideBarVisible: !leftSideBarVisible });
+            } else if (plugin.name) {
+              setUi({
+                plugin: { current: plugin.name },
+                leftSideBarVisible: true,
+              });
             }
           },
           isActive: leftSideBarVisible && currentPlugin === plugin.name,
@@ -413,7 +245,6 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   useEffect(() => {
     if (!currentPlugin) {
       const names = Object.keys(pluginItems);
-
       setUi({ plugin: { current: names[0] } });
     }
   }, [pluginItems, currentPlugin]);
@@ -421,10 +252,20 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   const hasDesktopFieldsPlugin =
     pluginItems["fields"] && pluginItems["fields"].mobileOnly === false;
 
-  const mobilePanelStyle: Record<string, string> = {};
-  if (mobilePanelHeight && leftSideBarVisible) {
-    mobilePanelStyle["--editor-mobile-panel-height"] = `${mobilePanelHeight}px`;
-  }
+  // Header titles for the floating panels.
+  const leftPanelTitle = useMemo(() => {
+    if (currentPlugin && pluginItems[currentPlugin]) {
+      return pluginItems[currentPlugin].label;
+    }
+    return "Editor";
+  }, [currentPlugin, pluginItems]);
+
+  const rightPanelTitle = useAppStore((s) =>
+    s.selectedItem
+      ? s.config.components[s.selectedItem.type]?.["label"] ??
+        s.selectedItem.type.toString()
+      : s.config.root?.label || "Page"
+  );
 
   return (
     <div
@@ -442,22 +283,13 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
               <div
                 className={getLayoutClassName({
                   leftSideBarVisible,
-                  mounted,
                   rightSideBarVisible:
                     !hasDesktopFieldsPlugin && rightSideBarVisible,
                   navBarVisible,
-                  mobilePanelHeightToggle: mobilePanelHeightMode === "toggle",
-                  mobilePanelHeightMinContent:
-                    mobilePanelHeightMode === "min-content",
-                  mobilePanelCustomHeight:
-                    mobilePanelHeight !== null && leftSideBarVisible,
                 })}
                 style={{ height }}
               >
-                <div
-                  className={getLayoutClassName("inner")}
-                  style={{ ...layoutOptions, ...mobilePanelStyle }}
-                >
+                <div className={getLayoutClassName("inner")}>
                   {navBarVisible && (
                     <div className={getLayoutClassName("nav")}>
                       <Nav
@@ -476,46 +308,17 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
                       />
                     </div>
                   )}
-                  <div
-                    ref={mobilePanelRef}
-                    className={getLayoutClassName("mobilePanel")}
-                  >
-                    <div
-                      className={getLayoutClassName("mobileDragHandle")}
-                      onTouchStart={(e) =>
-                        handleMobileDragStart(e.touches[0].clientY)
-                      }
-                      onMouseDown={(e) => handleMobileDragStart(e.clientY)}
-                    >
-                      <div
-                        className={getLayoutClassName("mobileDragHandlePill")}
-                      />
-                    </div>
-                    <div
-                      className={getLayoutClassName("mobilePanelContent")}
-                    >
-                      {Object.entries(pluginItems).map(
-                        ([id, { mobileOnly, render: Render }]) => (
-                          <PluginTab
-                            key={id}
-                            visible={currentPlugin === id}
-                            mobileOnly={mobileOnly}
-                          >
-                            <Render />
-                          </PluginTab>
-                        )
-                      )}
-                    </div>
-                  </div>
+                  <Canvas />
                   <Sidebar
                     position="left"
-                    sidebarRef={leftSidebarRef}
-                    isVisible={leftSideBarVisible}
-                    onResize={setLeftWidth}
-                    onResizeEnd={handleLeftSidebarResizeEnd}
+                    expanded={leftSideBarVisible}
+                    onToggle={() =>
+                      setUi({ leftSideBarVisible: !leftSideBarVisible })
+                    }
+                    title={leftPanelTitle}
                   >
                     {Object.entries(pluginItems).map(
-                      ([id, { mobileOnly, render: Render, label }]) => (
+                      ([id, { mobileOnly, render: Render }]) => (
                         <PluginTab
                           key={id}
                           visible={currentPlugin === id}
@@ -526,16 +329,16 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
                       )
                     )}
                   </Sidebar>
-                  <Canvas />
                   {!hasDesktopFieldsPlugin && (
                     <Sidebar
                       position="right"
-                      sidebarRef={rightSidebarRef}
-                      isVisible={rightSideBarVisible}
-                      onResize={setRightWidth}
-                      onResizeEnd={handleRightSidebarResizeEnd}
+                      expanded={rightSideBarVisible}
+                      onToggle={() =>
+                        setUi({ rightSideBarVisible: !rightSideBarVisible })
+                      }
+                      title={rightPanelTitle}
                     >
-                      <FieldSideBar />
+                      <FieldSideBarBody />
                     </Sidebar>
                   )}
                 </div>
