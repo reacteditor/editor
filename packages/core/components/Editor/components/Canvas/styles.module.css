@@ -1,5 +1,12 @@
 .EditorCanvas {
-  background: var(--editor-surface-sunken);
+  background-color: var(--editor-surface-sunken);
+  background-image: radial-gradient(
+    circle,
+    var(--editor-border-default) 1px,
+    transparent 1px
+  );
+  background-size: 16px 16px;
+  background-position: 0 0;
   display: flex;
   grid-area: editor;
   flex-direction: column;
@@ -11,11 +18,6 @@
 @media (min-width: 1198px) {
   .EditorCanvas {
     padding: calc(var(--editor-space-px) * 0.75);
-    padding-top: calc(var(--editor-space-px) * 0.25);
-  }
-
-  .EditorCanvas:not(.EditorCanvas:has(.EditorCanvas-controls)) {
-    padding-top: calc(var(--editor-space-px) * 0.75);
   }
 }
 
@@ -31,14 +33,10 @@
 }
 
 /* Runtime fullscreen mode: pin the canvas to the viewport so it covers the
-   nav rail, sidebars, and any host chrome. `position: fixed` is essential —
+   header, sidebars, and any host chrome. `position: fixed` is essential —
    `absolute` would only reach `.EditorLayout-inner`, whose grid columns
    can leave it narrower than the viewport. Sidebars stay mounted in the
-   layout underneath; exiting reveals them unchanged. The BrowserBar sits
-   inside Canvas, so it remains visible at the top.
-   `!important` on padding intentionally beats the 1198px rule
-   `.EditorCanvas:not(:has(.EditorCanvas-controls))` (specificity 0,3,0)
-   that always matches because no element renders `.EditorCanvas-controls`. */
+   layout underneath; exiting reveals them unchanged. */
 .EditorCanvas--canvasFullScreen {
   position: fixed;
   inset: 0;
@@ -55,10 +53,6 @@
   width: 100%;
 }
 
-/* Wraps the browser bar + preview root in one width-bound column so both
-   share the selected viewport width and animate together. Positioned
-   absolute within .EditorCanvas-inner to keep the original layout
-   behaviour (centered, filling vertical space). */
 .EditorCanvas-rootColumn {
   box-sizing: content-box;
   display: flex;
@@ -84,7 +78,7 @@
   background: var(--editor-surface-panel);
   outline: 1px solid var(--editor-border-subtle);
   box-shadow: var(--editor-shadow-lg);
-  border-radius: 0 0 var(--editor-radius-md) var(--editor-radius-md);
+  border-radius: var(--editor-radius-md);
   flex: 1;
   pointer-events: none;
   opacity: 0;
@@ -122,22 +116,43 @@
   transition: none;
 }
 
-.EditorCanvas-browserBar {
-  flex-shrink: 0;
-  width: 100%;
+.EditorCanvas-bottomBar {
+  align-items: center;
+  bottom: 16px;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  z-index: 10;
 }
 
-.EditorCanvas-zoomControls {
+.EditorCanvas-bottomBarPill {
   align-items: center;
   background: var(--editor-surface-panel);
   border: 1px solid var(--editor-border-subtle);
   border-radius: var(--editor-radius-md);
-  bottom: 16px;
   box-shadow: var(--editor-shadow-md);
+  color: var(--editor-text-primary);
   display: flex;
-  gap: 2px;
-  padding: 4px;
-  position: absolute;
-  right: 16px;
-  z-index: 10;
+  gap: 4px;
+  padding: 4px 8px;
+  pointer-events: auto;
+}
+
+.EditorCanvas-bottomBarDivider {
+  background: var(--editor-border-subtle);
+  height: 18px;
+  margin: 0 4px;
+  width: 1px;
+}
+
+.EditorCanvas-zoomLevel {
+  color: var(--editor-text-secondary);
+  font-size: var(--editor-font-size-xxs);
+  font-variant-numeric: tabular-nums;
+  min-width: 36px;
+  padding: 0 4px;
+  text-align: center;
 }

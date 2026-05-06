@@ -26,7 +26,7 @@ import { FrameProvider } from "../../../../lib/frame-context";
 import { Sidebar } from "../Sidebar";
 import { useDeleteHotkeys } from "../../../../lib/use-delete-hotkeys";
 import { useClipboardHotkeys } from "../../../../lib/use-clipboard-hotkeys";
-import { MenuItem, Nav } from "../Nav";
+import { MenuItem } from "../Nav";
 import { IconButton } from "../../../IconButton";
 import {
   Moon,
@@ -39,12 +39,19 @@ import { PluginInternal } from "../../../../types/Internal";
 import { blocksPlugin } from "../../../../plugins/blocks";
 import { fieldsPlugin } from "../../../../plugins/fields";
 import { Button } from "../../../Button";
+import { UrlBar } from "../../../BrowserBar";
 
 const getClassName = getClassNameFactory("Editor", styles);
 const getLayoutClassName = getClassNameFactory("EditorLayout", styles);
 const getPluginTabClassName = getClassNameFactory("EditorPluginTab", styles);
 
-const FieldSideBarToolbar = () => {
+const getHeaderClassName = getClassNameFactory("EditorHeader", styles);
+
+const TopHeader = ({
+  pluginItems,
+}: {
+  pluginItems: Record<string, MenuItem>;
+}) => {
   const appStore = useAppStoreApi();
   const { onPublish, currentRoute } = usePropsContext();
   const chrome = useChromeConfig();
@@ -58,31 +65,49 @@ const FieldSideBarToolbar = () => {
     (s) => s.overrides.headerActions || DefaultOverride
   );
 
+  const pluginEntries = Object.entries(pluginItems).filter(
+    ([, item]) => !item.mobileOnly
+  );
+
   return (
-    <div className={getClassName("fieldSideBarToolbar")}>
-      {chrome.showHistoryControls ? (
-        <div className={getClassName("fieldSideBarHistory")}>
+    <header className={getHeaderClassName()}>
+      <div className={getHeaderClassName("plugins")}>
+        {pluginEntries.map(([key, item]) => (
           <IconButton
+            key={key}
             type="button"
-            title="undo"
-            disabled={!hasPast}
-            onClick={back}
+            title={item.label}
+            onClick={item.onClick}
+            active={item.isActive}
           >
-            <Undo2Icon size={18} />
+            {item.icon}
           </IconButton>
-          <IconButton
-            type="button"
-            title="redo"
-            disabled={!hasFuture}
-            onClick={forward}
-          >
-            <Redo2Icon size={18} />
-          </IconButton>
-        </div>
-      ) : (
-        <div />
-      )}
-      <div className={getClassName("fieldSideBarActions")}>
+        ))}
+      </div>
+      <div className={getHeaderClassName("urlBarSlot")}>
+        <UrlBar />
+      </div>
+      <div className={getHeaderClassName("actions")}>
+        {chrome.showHistoryControls && (
+          <div className={getHeaderClassName("history")}>
+            <IconButton
+              type="button"
+              title="undo"
+              disabled={!hasPast}
+              onClick={back}
+            >
+              <Undo2Icon size={18} />
+            </IconButton>
+            <IconButton
+              type="button"
+              title="redo"
+              disabled={!hasFuture}
+              onClick={forward}
+            >
+              <Redo2Icon size={18} />
+            </IconButton>
+          </div>
+        )}
         <CustomHeaderActions>
           <Button
             onClick={() => {
@@ -94,7 +119,7 @@ const FieldSideBarToolbar = () => {
           </Button>
         </CustomHeaderActions>
       </div>
-    </div>
+    </header>
   );
 };
 
@@ -107,12 +132,9 @@ const FieldSideBar = () => {
   );
 
   return (
-    <>
-      <FieldSideBarToolbar />
-      <SidebarSection noBorderTop showBreadcrumbs title={title}>
-        <Fields />
-      </SidebarSection>
-    </>
+    <SidebarSection noBorderTop showBreadcrumbs title={title}>
+      <Fields />
+    </SidebarSection>
   );
 };
 
@@ -341,7 +363,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
   };
 
   const themeIcon =
-    theme === "dark" ? <Sun size={18} /> : <Moon size={18} />;
+    theme === "dark" ? <Sun size={14} /> : <Moon size={14} />;
 
   const themeLabel =
     theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
@@ -459,21 +481,8 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
                   style={{ ...layoutOptions, ...mobilePanelStyle }}
                 >
                   {navBarVisible && (
-                    <div className={getLayoutClassName("nav")}>
-                      <Nav
-                        items={pluginItems}
-                        footer={
-                          chrome.showThemeToggle ? (
-                            <IconButton
-                              type="button"
-                              title={themeLabel}
-                              onClick={toggleTheme}
-                            >
-                              {themeIcon}
-                            </IconButton>
-                          ) : undefined
-                        }
-                      />
+                    <div className={getLayoutClassName("header")}>
+                      <TopHeader pluginItems={pluginItems} />
                     </div>
                   )}
                   <div
@@ -526,7 +535,12 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
                       )
                     )}
                   </Sidebar>
-                  <Canvas />
+                  <Canvas
+                    theme={theme}
+                    themeIcon={themeIcon}
+                    themeLabel={themeLabel}
+                    onToggleTheme={toggleTheme}
+                  />
                   {!hasDesktopFieldsPlugin && (
                     <Sidebar
                       position="right"

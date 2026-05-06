@@ -5,6 +5,7 @@
 
 .EditorPreview-frame {
   border: none;
+  border-radius: var(--editor-radius-md);
   height: 100%;
   width: 100%;
 }

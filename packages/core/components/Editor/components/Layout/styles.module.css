@@ -40,7 +40,7 @@
 
 .EditorLayout-inner {
   --editor-frame-width: auto;
-  --editor-side-nav-width: min-content;
+  --editor-header-height: min-content;
   --editor-side-bar-width: 0px;
   --editor-left-side-bar-width: var(
     --editor-user-left-side-bar-width,
@@ -52,9 +52,9 @@
   );
   background-color: var(--editor-surface-app);
   display: grid;
-  grid-template-areas: "editor" "mobilepanel" "left" "right" "sidenav";
+  grid-template-areas: "header" "editor" "mobilepanel" "left" "right";
   grid-template-columns: var(--editor-frame-width);
-  grid-template-rows: auto 0 0 0 var(--editor-side-nav-width);
+  grid-template-rows: var(--editor-header-height) auto 0 0 0;
   height: 100%;
   position: relative;
   transition: none;
@@ -64,20 +64,19 @@
 
 @media (min-width: 638px) {
   .EditorLayout-inner {
-    --editor-side-nav-width: 44px;
-    grid-template-areas: "sidenav left editor right";
-    grid-template-columns: var(--editor-side-nav-width) 0 var(--editor-frame-width) 0;
-    grid-template-rows: auto;
+    grid-template-areas: "header header header" "left editor right";
+    grid-template-columns: 0 var(--editor-frame-width) 0;
+    grid-template-rows: var(--editor-header-height) auto;
   }
 
   .Editor--hidePlugins .EditorLayout-inner,
   .EditorLayout:not(.EditorLayout--navBarVisible) .EditorLayout-inner {
-    --editor-side-nav-width: 0;
+    --editor-header-height: 0;
   }
 }
 
 .EditorLayout:not(.EditorLayout--navBarVisible) .EditorLayout-inner {
-  --editor-side-nav-width: 0;
+  --editor-header-height: 0;
 }
 
 .EditorLayout--mounted .EditorLayout-inner {
@@ -86,30 +85,30 @@
 
 .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
   .EditorLayout-inner {
-  grid-template-rows: auto 60% 0 0 var(--editor-side-nav-width);
+  grid-template-rows: var(--editor-header-height) auto 60% 0 0;
 }
 
 .EditorLayout--mobilePanelCustomHeight.EditorLayout--leftSideBarVisible
   .EditorLayout-inner {
-  grid-template-rows: auto var(--editor-mobile-panel-height, 60%) 0 0
-    var(--editor-side-nav-width);
+  grid-template-rows: var(--editor-header-height) auto var(
+      --editor-mobile-panel-height,
+      60%
+    ) 0 0;
 }
 
 @media (min-width: 638px) {
   .EditorLayout--mobilePanelHeightToggle.EditorLayout--leftSideBarVisible
     .EditorLayout-inner {
     grid-template-columns:
-      var(--editor-side-nav-width) var(--editor-left-side-bar-width) var(
-        --editor-frame-width
-      )
+      var(--editor-left-side-bar-width) var(--editor-frame-width)
       0;
-    grid-template-rows: auto;
+    grid-template-rows: var(--editor-header-height) auto;
   }
 }
 
 .EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible
   .EditorLayout-inner {
-  grid-template-rows: auto min-content 0 0 var(--editor-side-nav-width);
+  grid-template-rows: var(--editor-header-height) auto min-content 0 0;
 }
 
 @media (min-width: 638px) {
@@ -120,18 +119,16 @@
   .EditorLayout--mobilePanelHeightMinContent.EditorLayout--leftSideBarVisible
     .EditorLayout-inner {
     grid-template-columns:
-      var(--editor-side-nav-width) var(--editor-left-side-bar-width) var(
-        --editor-frame-width
-      )
+      var(--editor-left-side-bar-width) var(--editor-frame-width)
       0;
-    grid-template-rows: auto;
+    grid-template-rows: var(--editor-header-height) auto;
   }
 }
 
 @media (min-width: 638px) {
   .EditorLayout--rightSideBarVisible .EditorLayout-inner {
     grid-template-columns:
-      var(--editor-side-nav-width) 0 var(--editor-frame-width)
+      0 var(--editor-frame-width)
       var(--editor-right-side-bar-width);
   }
 }
@@ -140,9 +137,7 @@
   .EditorLayout--leftSideBarVisible.EditorLayout--rightSideBarVisible
     .EditorLayout-inner {
     grid-template-columns:
-      var(--editor-side-nav-width) var(--editor-left-side-bar-width) var(
-        --editor-frame-width
-      )
+      var(--editor-left-side-bar-width) var(--editor-frame-width)
       var(--editor-right-side-bar-width);
   }
 }
@@ -189,42 +184,55 @@
   }
 }
 
-.EditorLayout-nav {
-  border-top: 1px solid var(--editor-border-subtle);
+.EditorLayout-header {
+  grid-area: header;
   background-color: var(--editor-surface-panel);
-  grid-area: sidenav;
+  border-bottom: 1px solid var(--editor-border-subtle);
   overflow: hidden;
+}
+
+.EditorHeader {
+  align-items: center;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: auto 1fr auto;
+  height: 48px;
+  padding: 0 12px;
+}
+
+.EditorHeader-plugins {
+  align-items: center;
+  color: var(--editor-text-secondary);
+  display: flex;
+  gap: 4px;
+}
+
+.EditorHeader-plugins svg {
+  height: 18px;
+  width: 18px;
+}
+
+.EditorHeader-urlBarSlot {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.EditorHeader-urlBarSlot > * {
+  max-width: 560px;
   width: 100%;
 }
 
-@media (min-width: 638px) {
-  .EditorLayout-nav {
-    border-top: 0;
-    border-right: 1px solid var(--editor-border-subtle);
-    box-sizing: border-box;
-  }
-}
-
-.Editor-fieldSideBarToolbar {
+.EditorHeader-actions {
   align-items: center;
-  background: var(--editor-surface-panel);
-  border-bottom: 1px solid var(--editor-border-subtle);
   display: flex;
-  gap: 8px;
-  justify-content: space-between;
-  padding: 8px 12px;
+  gap: 12px;
 }
 
-.Editor-fieldSideBarHistory {
+.EditorHeader-history {
   color: var(--editor-text-tertiary);
   display: flex;
   gap: 2px;
-}
-
-.Editor-fieldSideBarActions {
-  align-items: center;
-  display: flex;
-  gap: 8px;
 }
 
 .EditorLayout-mobilePanel {

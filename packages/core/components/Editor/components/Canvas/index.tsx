@@ -9,8 +9,9 @@ import {
 } from "react";
 import { Minus, Plus, RotateCcw } from "lucide-react";
 import { useAppStore, useAppStoreApi } from "../../../../store";
-import { BrowserBar } from "../../../BrowserBar";
+import { DeviceToggle, FullScreenToggle } from "../../../BrowserBar";
 import styles from "./styles.module.css";
+import { useChromeConfig } from "../..";
 import { getClassNameFactory } from "../../../../lib";
 import { Preview } from "../Preview";
 import { Loader } from "../../../Loader";
@@ -28,8 +29,20 @@ const MAX_ZOOM = 3;
 
 const TRANSITION_DURATION = 150;
 
-export const Canvas = () => {
+type CanvasProps = {
+  theme?: "light" | "dark";
+  themeIcon?: ReactNode;
+  themeLabel?: string;
+  onToggleTheme?: () => void;
+};
+
+export const Canvas = ({
+  themeIcon,
+  themeLabel,
+  onToggleTheme,
+}: CanvasProps = {}) => {
   const { frameRef } = useCanvasFrame();
+  const chrome = useChromeConfig();
 
   const {
     viewports: viewportOptions = defaultViewports,
@@ -282,19 +295,6 @@ export const Canvas = () => {
       }}
     >
       <div className={getClassName("inner")} ref={frameRef}>
-        {!disableZoomControls && (
-          <div className={getClassName("zoomControls")}>
-            <IconButton type="button" title="Zoom out" onClick={zoomOut}>
-              <Minus size={14} />
-            </IconButton>
-            <IconButton type="button" title="Reset zoom" onClick={resetZoom}>
-              <RotateCcw size={14} />
-            </IconButton>
-            <IconButton type="button" title="Zoom in" onClick={zoomIn}>
-              <Plus size={14} />
-            </IconButton>
-          </div>
-        )}
         <div
           className={getClassName("rootColumn")}
           style={{
@@ -308,27 +308,6 @@ export const Canvas = () => {
                 : "transform 150ms ease-out",
           }}
         >
-          {iframe.enabled && (
-            <div className={getClassName("browserBar")}>
-              <BrowserBar
-                onViewportChange={(viewport) => {
-                  autoSelectingRef.current = false;
-                  setShowTransition(true);
-                  isResizingRef.current = true;
-
-                  const uiViewport = {
-                    ...viewport,
-                    height: viewport.height || "auto",
-                    zoom: 1,
-                  };
-
-                  setUi({
-                    viewports: { ...viewports, current: uiViewport },
-                  });
-                }}
-              />
-            </div>
-          )}
           <div
             className={getClassName("root")}
             suppressHydrationWarning
@@ -341,6 +320,62 @@ export const Canvas = () => {
             <CustomPreview>
               <Preview />
             </CustomPreview>
+          </div>
+        </div>
+        <div className={getClassName("bottomBar")}>
+          <div className={getClassName("bottomBarPill")}>
+            {chrome.showThemeToggle && onToggleTheme && (
+              <IconButton
+                type="button"
+                title={themeLabel ?? "Toggle theme"}
+                onClick={onToggleTheme}
+              >
+                {themeIcon}
+              </IconButton>
+            )}
+            <DeviceToggle
+              onViewportChange={(viewport) => {
+                autoSelectingRef.current = false;
+                setShowTransition(true);
+                isResizingRef.current = true;
+
+                const uiViewport = {
+                  ...viewport,
+                  height: viewport.height || "auto",
+                  zoom: 1,
+                };
+
+                setUi({
+                  viewports: { ...viewports, current: uiViewport },
+                });
+              }}
+            />
+            <FullScreenToggle />
+            {!disableZoomControls && (
+              <>
+                <span className={getClassName("bottomBarDivider")} />
+                <IconButton
+                  type="button"
+                  title="Zoom out"
+                  onClick={zoomOut}
+                >
+                  <Minus size={14} />
+                </IconButton>
+                <span className={getClassName("zoomLevel")}>
+                  {Math.round(canvasZoom * 100)}%
+                </span>
+                <IconButton type="button" title="Zoom in" onClick={zoomIn}>
+                  <Plus size={14} />
+                </IconButton>
+                <IconButton
+                  type="button"
+                  title="Reset zoom"
+                  onClick={resetZoom}
+                >
+                  <RotateCcw size={14} />
+                </IconButton>
+              </>
+            )}
           </div>
         </div>
         <div className={getClassName("loader")}>
