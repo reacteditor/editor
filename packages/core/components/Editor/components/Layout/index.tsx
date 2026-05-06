@@ -57,7 +57,7 @@ const FieldSideBarToolbar = () => {
 const FieldSideBarBody = () => (
   <>
     <FieldSideBarToolbar />
-    <SidebarSection noBorderTop showBreadcrumbs title={null}>
+    <SidebarSection noBorderTop title={null}>
       <Fields />
     </SidebarSection>
   </>

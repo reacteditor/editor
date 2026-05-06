@@ -22,18 +22,28 @@ export const SidebarSection = ({
   noBorderTop?: boolean;
   isLoading?: boolean | null;
 }) => {
+  // Title bar is only rendered when there's something to put in it
+  // (a title, breadcrumbs, or both). With both absent we'd otherwise show
+  // an empty padded strip with a border, which looks like a layout bug.
+  const showTitleBar = title !== null && title !== undefined;
+  const showBreadcrumbsRow = !!showBreadcrumbs;
+
   return (
     <div className={getClassName({ noBorderTop })} style={{ background }}>
-      <div className={getClassName("title")}>
-        <div className={getClassName("breadcrumbs")}>
-          {showBreadcrumbs && <Breadcrumbs />}
-          <div className={getClassName("heading")}>
-            <Heading rank="2" size="xs">
-              {title}
-            </Heading>
+      {(showTitleBar || showBreadcrumbsRow) && (
+        <div className={getClassName("title")}>
+          <div className={getClassName("breadcrumbs")}>
+            {showBreadcrumbsRow && <Breadcrumbs />}
+            {showTitleBar && (
+              <div className={getClassName("heading")}>
+                <Heading rank="2" size="xs">
+                  {title}
+                </Heading>
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      )}
       <div className={getClassName("content")}>{children}</div>
       {isLoading && (
         <div className={getClassName("loadingOverlay")}>

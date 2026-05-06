@@ -78,14 +78,14 @@
   }
 }
 
-/* The right-panel toolbar (publish + history) sits inside the panel body. */
+/* The right-panel toolbar (publish button) sits inside the panel body. */
 .Editor-fieldSideBarToolbar {
   align-items: center;
   background: var(--editor-surface-panel);
   border-bottom: 1px solid var(--editor-border-subtle);
   display: flex;
   gap: 8px;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 8px 12px;
 }
 
