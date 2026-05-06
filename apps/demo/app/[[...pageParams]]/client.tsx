@@ -2,10 +2,13 @@
 
 import {
   AutoField,
+  blocksPlugin,
   Editor,
   FieldLabel,
   outlinePlugin,
 } from "@/core";
+import { aiPlugin } from "@reacteditor/plugin-ai";
+import "@reacteditor/plugin-ai/styles.css";
 import config, { componentKey } from "../../config";
 import { initialData } from "../../config/initial-data";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -16,7 +19,11 @@ import type { UserData } from "../../config/types";
 
 const STORAGE_KEY = `react-editor-demo:${componentKey}`;
 
-const plugins = [outlinePlugin()];
+const plugins = [
+  aiPlugin({ api: "/api/chat" }),
+  blocksPlugin(),
+  outlinePlugin(),
+];
 
 export function Client() {
   const [data, setData] = useState<UserData | null>(null);

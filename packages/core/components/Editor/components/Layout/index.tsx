@@ -21,7 +21,6 @@ import { MenuItem, Nav } from "../Nav";
 import { IconButton } from "../../../IconButton";
 import { Moon, Sun, ToyBrick } from "lucide-react";
 import { PluginInternal } from "../../../../types/Internal";
-import { blocksPlugin } from "../../../../plugins/blocks";
 import { fieldsPlugin } from "../../../../plugins/fields";
 import { Button } from "../../../Button";
 
@@ -168,15 +167,16 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
     const details: Record<string, MenuItem & { render: () => ReactElement }> =
       {};
 
-    const defaultPlugins: PluginInternal[] = [blocksPlugin()];
-
     const isLegacy = (plugin: PluginInternal) =>
       plugin.name === "legacy-side-bar" ? -1 : 0;
 
-    const combinedPlugins: PluginInternal[] = [
-      ...defaultPlugins,
-      ...(plugins ?? []),
-    ].sort((a, b) => isLegacy(a) - isLegacy(b));
+    // blocksPlugin and outlinePlugin are both opt-in — consumers register
+    // them explicitly via the `plugins` prop (see demo/client.tsx).
+    // fieldsPlugin is auto-appended only when the consumer hasn't already
+    // provided their own under the same name.
+    const combinedPlugins: PluginInternal[] = [...(plugins ?? [])].sort(
+      (a, b) => isLegacy(a) - isLegacy(b)
+    );
 
     if (!plugins?.some((p) => p.name === "fields")) {
       combinedPlugins.push(fieldsPlugin());
