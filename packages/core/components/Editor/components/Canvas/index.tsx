@@ -437,7 +437,6 @@ export const Canvas = () => {
               // The library otherwise plays a smooth bounds-alignment
               // animation after pan-end and on content-size change. With
               // limitToBounds=false we want no auto-snap, so disable.
-              alignmentAnimation={{ disabled: true } as never}
               autoAlignment={{ disabled: true, sizeX: 0, sizeY: 0 }}
             >
               <ZoomConfigSync />
