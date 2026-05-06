@@ -126,66 +126,18 @@ export const Canvas = () => {
           },
         },
       });
-      // Re-fit content after viewport change
-      setTimeout(() => transformRef.current?.resetTransform(), 0);
+      // Centering is handled by the centerFrame useEffect (keyed on
+      // viewports.current.width). Do NOT call ref.resetTransform() here —
+      // its default 200ms animation produces the visible "frame slides
+      // to top-left" behaviour on every device toggle.
     },
     [setUi, viewports]
   );
 
-  // The user's intended transform — kept in sync via the library's
-  // `onPanning`/`onZoom` callbacks (which fire on user interactions only)
-  // and our own wheel handler. Read on viewport changes to restore the
-  // transform after the library's ResizeObserver tries to recalibrate.
-  const intendedTransformRef = useRef({
-    positionX: 0,
-    positionY: 16,
-    scale: 1,
-  });
-  const trackUserTransform = useCallback(
-    (ctx: { state: { positionX: number; positionY: number; scale: number } }) => {
-      // eslint-disable-next-line no-console
-      console.log("[Canvas] onPanning/onZoom →", {
-        x: ctx.state.positionX,
-        y: ctx.state.positionY,
-        scale: ctx.state.scale,
-      });
-      intendedTransformRef.current = {
-        positionX: ctx.state.positionX,
-        positionY: ctx.state.positionY,
-        scale: ctx.state.scale,
-      };
-    },
-    []
-  );
-
-  // [DEBUG] Track viewport changes and snapshot the transform before/after.
-  useEffect(() => {
-    const ref = transformRef.current;
-    if (!ref) return;
-    // eslint-disable-next-line no-console
-    console.log("[Canvas] viewport-change EFFECT (post-commit)", {
-      width: viewports.current.width,
-      stateAtEffect: { ...ref.state },
-      contentW: ref.instance.contentComponent?.clientWidth,
-      contentH: ref.instance.contentComponent?.clientHeight,
-    });
-    const r1 = requestAnimationFrame(() => {
-      const cur = transformRef.current;
-      if (!cur) return;
-      // eslint-disable-next-line no-console
-      console.log("[Canvas] viewport-change rAF1 (post-resize observer)", {
-        width: viewports.current.width,
-        stateAtRaf: { ...cur.state },
-        contentW: cur.instance.contentComponent?.clientWidth,
-        contentH: cur.instance.contentComponent?.clientHeight,
-      });
-    });
-    return () => cancelAnimationFrame(r1);
-  }, [viewports.current.width]);
-
-  // Initial center on mount. The rootColumn is fixed at PREVIEW_MAX_WIDTH,
-  // so this centering doesn't need to re-run on viewport changes.
-  useEffect(() => {
+  // Center the frame: horizontally aligned, anchored 16px from the top,
+  // at scale 1. Deferred two frames so the wrapper has finished its
+  // layout pass after the rootColumn width settles.
+  const centerFrame = useCallback(() => {
     let canceled = false;
     requestAnimationFrame(() => {
       if (canceled) return;
@@ -197,14 +149,17 @@ export const Canvas = () => {
         const wrapperW = wrapper.clientWidth;
         const x = Math.max(0, (wrapperW - PREVIEW_MAX_WIDTH) / 2);
         ref.setTransform(x, 16, 1, 0);
-        intendedTransformRef.current = { positionX: x, positionY: 16, scale: 1 };
       });
     });
     return () => {
       canceled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Run on mount and on every viewport change.
+  useEffect(() => {
+    return centerFrame();
+  }, [centerFrame, viewports.current.width]);
 
   const handleZoomIn = useCallback(
     () => transformRef.current?.zoomIn(),
@@ -283,22 +238,15 @@ export const Canvas = () => {
           cursorY - (cursorY - ref.state.positionY) * ratio;
 
         ref.setTransform(newPositionX, newPositionY, newScale, 0);
-        intendedTransformRef.current = {
-          positionX: newPositionX,
-          positionY: newPositionY,
-          scale: newScale,
-        };
         return;
       }
 
-      const newPositionX = ref.state.positionX - e.deltaX;
-      const newPositionY = ref.state.positionY - e.deltaY;
-      ref.setTransform(newPositionX, newPositionY, ref.state.scale, 0);
-      intendedTransformRef.current = {
-        positionX: newPositionX,
-        positionY: newPositionY,
-        scale: ref.state.scale,
-      };
+      ref.setTransform(
+        ref.state.positionX - e.deltaX,
+        ref.state.positionY - e.deltaY,
+        ref.state.scale,
+        0
+      );
     };
 
     const cleanups: Array<() => void> = [];
@@ -448,24 +396,11 @@ export const Canvas = () => {
               pinch={{ step: 5 }}
               panning={{ velocityDisabled: true }}
               trackPadPanning={{ velocityDisabled: true }}
-              onPanning={trackUserTransform}
-              onZoom={trackUserTransform}
-              onInit={(ref) => {
-                // eslint-disable-next-line no-console
-                console.log("[Canvas] TransformWrapper onInit", {
-                  state: { ...ref.state },
-                  wrapperW: ref.instance.wrapperComponent?.clientWidth,
-                  contentW: ref.instance.contentComponent?.clientWidth,
-                });
-              }}
-              onTransform={(_ref, state) => {
-                // eslint-disable-next-line no-console
-                console.log("[Canvas] onTransform (ALL, incl. library)", {
-                  x: state.positionX,
-                  y: state.positionY,
-                  scale: state.scale,
-                });
-              }}
+              // The library otherwise plays a smooth bounds-alignment
+              // animation after pan-end and on content-size change. With
+              // limitToBounds=false we want no auto-snap, so disable.
+              alignmentAnimation={{ disabled: true } as never}
+              autoAlignment={{ disabled: true, sizeX: 0, sizeY: 0 }}
             >
               <div className={getClassName("zoomControls")}>
                 <IconButton
