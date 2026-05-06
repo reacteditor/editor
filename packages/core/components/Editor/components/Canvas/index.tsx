@@ -11,8 +11,9 @@ import {
   TransformWrapper,
   TransformComponent,
   ReactZoomPanPinchRef,
+  useTransformEffect,
 } from "react-zoom-pan-pinch";
-import { useAppStore } from "../../../../store";
+import { useAppStore, useAppStoreApi } from "../../../../store";
 import { BrowserBar } from "../../../BrowserBar";
 import styles from "./styles.module.css";
 import { getClassNameFactory } from "../../../../lib";
@@ -28,6 +29,23 @@ const getClassName = getClassNameFactory("EditorCanvas", styles);
 const MIN_ZOOM = 0.25;
 const MAX_ZOOM = 3;
 const PREVIEW_MAX_WIDTH = 1200;
+
+/**
+ * Mirrors the react-zoom-pan-pinch transform scale into `zoomConfig.zoom`
+ * on the editor store. `DraggableComponent` reads that field to
+ * counter-scale its action-bar overlay so it stays at a constant pixel
+ * size regardless of canvas zoom. Must be rendered inside <TransformWrapper>.
+ */
+const ZoomConfigSync = () => {
+  const appStoreApi = useAppStoreApi();
+  useTransformEffect((ref) => {
+    const { zoomConfig, setZoomConfig } = appStoreApi.getState();
+    if (zoomConfig.zoom !== ref.state.scale) {
+      setZoomConfig({ ...zoomConfig, zoom: ref.state.scale });
+    }
+  });
+  return null;
+};
 
 export const Canvas = () => {
   const { frameRef } = useCanvasFrame();
@@ -368,6 +386,7 @@ export const Canvas = () => {
               alignmentAnimation={{ disabled: true } as never}
               autoAlignment={{ disabled: true, sizeX: 0, sizeY: 0 }}
             >
+              <ZoomConfigSync />
               <div className={getClassName("zoomControls")}>
                 <IconButton
                   type="button"
