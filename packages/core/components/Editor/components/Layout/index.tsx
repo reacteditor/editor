@@ -65,23 +65,26 @@ const TopHeader = ({
     (s) => s.overrides.headerActions || DefaultOverride
   );
 
-  const pluginEntries = Object.entries(pluginItems).filter(
-    ([, item]) => !item.mobileOnly
-  );
-
   return (
     <header className={getHeaderClassName()}>
       <div className={getHeaderClassName("plugins")}>
-        {pluginEntries.map(([key, item]) => (
-          <IconButton
+        {Object.entries(pluginItems).map(([key, item]) => (
+          <span
             key={key}
-            type="button"
-            title={item.label}
-            onClick={item.onClick}
-            active={item.isActive}
+            className={getHeaderClassName("pluginItem", {
+              mobileOnly: item.mobileOnly,
+              desktopOnly: item.desktopOnly,
+            })}
           >
-            {item.icon}
-          </IconButton>
+            <IconButton
+              type="button"
+              title={item.label}
+              onClick={item.onClick}
+              active={item.isActive}
+            >
+              {item.icon}
+            </IconButton>
+          </span>
         ))}
       </div>
       <div className={getHeaderClassName("urlBarSlot")}>
