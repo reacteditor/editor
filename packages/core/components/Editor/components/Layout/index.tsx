@@ -19,7 +19,7 @@ import { useDeleteHotkeys } from "../../../../lib/use-delete-hotkeys";
 import { useClipboardHotkeys } from "../../../../lib/use-clipboard-hotkeys";
 import { MenuItem, Nav } from "../Nav";
 import { IconButton } from "../../../IconButton";
-import { Moon, Redo2Icon, Sun, ToyBrick, Undo2Icon } from "lucide-react";
+import { Moon, Sun, ToyBrick } from "lucide-react";
 import { PluginInternal } from "../../../../types/Internal";
 import { blocksPlugin } from "../../../../plugins/blocks";
 import { fieldsPlugin } from "../../../../plugins/fields";
@@ -32,12 +32,6 @@ const getPluginTabClassName = getClassNameFactory("EditorPluginTab", styles);
 const FieldSideBarToolbar = () => {
   const appStore = useAppStoreApi();
   const { onPublish, currentRoute } = usePropsContext();
-  const chrome = useChromeConfig();
-
-  const back = useAppStore((s) => s.history.back);
-  const forward = useAppStore((s) => s.history.forward);
-  const hasFuture = useAppStore((s) => s.history.hasFuture());
-  const hasPast = useAppStore((s) => s.history.hasPast());
 
   const CustomHeaderActions = useAppStore(
     (s) => s.overrides.headerActions || DefaultOverride
@@ -45,28 +39,6 @@ const FieldSideBarToolbar = () => {
 
   return (
     <div className={getClassName("fieldSideBarToolbar")}>
-      {chrome.showHistoryControls ? (
-        <div className={getClassName("fieldSideBarHistory")}>
-          <IconButton
-            type="button"
-            title="undo"
-            disabled={!hasPast}
-            onClick={back}
-          >
-            <Undo2Icon size={18} />
-          </IconButton>
-          <IconButton
-            type="button"
-            title="redo"
-            disabled={!hasFuture}
-            onClick={forward}
-          >
-            <Redo2Icon size={18} />
-          </IconButton>
-        </div>
-      ) : (
-        <div />
-      )}
       <div className={getClassName("fieldSideBarActions")}>
         <CustomHeaderActions>
           <Button

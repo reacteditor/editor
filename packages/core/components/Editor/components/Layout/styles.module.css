@@ -89,12 +89,6 @@
   padding: 8px 12px;
 }
 
-.Editor-fieldSideBarHistory {
-  color: var(--editor-text-tertiary);
-  display: flex;
-  gap: 2px;
-}
-
 .Editor-fieldSideBarActions {
   align-items: center;
   display: flex;

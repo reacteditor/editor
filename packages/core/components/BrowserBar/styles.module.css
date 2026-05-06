@@ -79,17 +79,3 @@
   white-space: nowrap;
 }
 
-.BrowserBar-actions {
-  align-items: center;
-  display: flex;
-  flex-shrink: 0;
-  gap: 2px;
-  /* Push to the right edge when the URL bar is hidden. No-op when the URL bar
-     is present, since its `flex: 1` already consumes the leading space. */
-  margin-left: auto;
-}
-
-.BrowserBar-deviceIcon {
-  color: var(--editor-text-primary);
-  display: inline-flex;
-}

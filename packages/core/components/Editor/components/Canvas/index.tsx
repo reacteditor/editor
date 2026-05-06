@@ -6,11 +6,23 @@ import {
   useRef,
   useState,
 } from "react";
-import { Minus, Plus, RotateCcw } from "lucide-react";
+import {
+  Maximize,
+  Minimize,
+  Minus,
+  Monitor,
+  Plus,
+  Redo2Icon,
+  RotateCcw,
+  Smartphone,
+  Tablet,
+  Undo2Icon,
+} from "lucide-react";
 import {
   TransformWrapper,
   TransformComponent,
   ReactZoomPanPinchRef,
+  useTransformComponent,
   useTransformEffect,
 } from "react-zoom-pan-pinch";
 import { useAppStore, useAppStoreApi } from "../../../../store";
@@ -22,13 +34,32 @@ import { Loader } from "../../../Loader";
 import { IconButton } from "../../../IconButton";
 import { useShallow } from "zustand/react/shallow";
 import { useCanvasFrame } from "../../../../lib/frame-context";
-import { usePropsContext } from "../..";
+import { useChromeConfig, usePropsContext } from "../..";
 
 const getClassName = getClassNameFactory("EditorCanvas", styles);
 
 const MIN_ZOOM = 0.25;
 const MAX_ZOOM = 3;
 const PREVIEW_MAX_WIDTH = 1200;
+
+type Device = "desktop" | "tablet" | "mobile";
+
+const DEVICE_VIEWPORTS: Record<
+  Device,
+  { width: number | "100%"; height: "auto"; label: string }
+> = {
+  desktop: { width: "100%", height: "auto", label: "Desktop" },
+  tablet: { width: 768, height: "auto", label: "Tablet" },
+  mobile: { width: 360, height: "auto", label: "Mobile" },
+};
+
+const DEVICE_ORDER: Device[] = ["desktop", "tablet", "mobile"];
+
+const DEVICE_ICONS: Record<Device, ReactNode> = {
+  desktop: <Monitor size={16} />,
+  tablet: <Tablet size={16} />,
+  mobile: <Smartphone size={16} />,
+};
 
 /**
  * Mirrors the react-zoom-pan-pinch transform scale into `zoomConfig.zoom`
@@ -45,6 +76,18 @@ const ZoomConfigSync = () => {
     }
   });
   return null;
+};
+
+/**
+ * Live zoom-percentage badge for the canvas toolbar. Re-renders only when
+ * the library's transform scale actually changes (selector subscription),
+ * not on every pan event.
+ */
+const ZoomLevel = ({ className }: { className?: string }) => {
+  const scale = useTransformComponent((ctx) => ctx.state.scale);
+  return (
+    <span className={className}>{`${Math.round(scale * 100)}%`}</span>
+  );
 };
 
 export const Canvas = () => {
@@ -73,6 +116,11 @@ export const Canvas = () => {
   const canvasFullScreen = useAppStore(
     (s) => s.state.ui.canvasFullScreen ?? false
   );
+  const back = useAppStore((s) => s.history.back);
+  const forward = useAppStore((s) => s.history.forward);
+  const hasFuture = useAppStore((s) => s.history.hasFuture());
+  const hasPast = useAppStore((s) => s.history.hasPast());
+  const chrome = useChromeConfig();
 
   const transformRef = useRef<ReactZoomPanPinchRef | null>(null);
 
@@ -117,6 +165,31 @@ export const Canvas = () => {
     },
     [setUi, viewports]
   );
+
+  // Map current viewport width → device preset (for highlighting + cycling).
+  const activeDevice: Device = useMemo(() => {
+    const w = viewports.current.width;
+    if (w === "100%") return "desktop";
+    if (typeof w === "number" && w <= 640) return "mobile";
+    return "tablet";
+  }, [viewports.current.width]);
+
+  const cycleDevice = useCallback(() => {
+    const idx = DEVICE_ORDER.indexOf(activeDevice);
+    const next = DEVICE_ORDER[(idx + 1) % DEVICE_ORDER.length];
+    onBrowserBarViewportChange(DEVICE_VIEWPORTS[next]);
+  }, [activeDevice, onBrowserBarViewportChange]);
+
+  const toggleFullScreen = useCallback(() => {
+    setUi({ canvasFullScreen: !canvasFullScreen });
+  }, [setUi, canvasFullScreen]);
+
+  const nextDeviceLabel =
+    DEVICE_VIEWPORTS[
+      DEVICE_ORDER[
+        (DEVICE_ORDER.indexOf(activeDevice) + 1) % DEVICE_ORDER.length
+      ]
+    ].label;
 
   // Center the frame: horizontally aligned, anchored 16px from the top,
   // at scale 1. Deferred two frames so the wrapper has finished its
@@ -387,7 +460,59 @@ export const Canvas = () => {
               autoAlignment={{ disabled: true, sizeX: 0, sizeY: 0 }}
             >
               <ZoomConfigSync />
-              <div className={getClassName("zoomControls")}>
+              <div className={getClassName("toolbar")}>
+                {chrome.showHistoryControls && (
+                  <>
+                    <IconButton
+                      type="button"
+                      title="Undo"
+                      disabled={!hasPast}
+                      onClick={back}
+                    >
+                      <Undo2Icon size={16} />
+                    </IconButton>
+                    <IconButton
+                      type="button"
+                      title="Redo"
+                      disabled={!hasFuture}
+                      onClick={forward}
+                    >
+                      <Redo2Icon size={16} />
+                    </IconButton>
+                    <div className={getClassName("toolbarDivider")} />
+                  </>
+                )}
+                {(chrome.showDeviceToggle || chrome.showFullScreenToggle) && (
+                  <>
+                    {chrome.showDeviceToggle && (
+                      <IconButton
+                        type="button"
+                        title={`Switch to ${nextDeviceLabel} viewport`}
+                        onClick={cycleDevice}
+                      >
+                        {DEVICE_ICONS[activeDevice]}
+                      </IconButton>
+                    )}
+                    {chrome.showFullScreenToggle && (
+                      <IconButton
+                        type="button"
+                        title={
+                          canvasFullScreen
+                            ? "Exit full screen"
+                            : "Enter full screen"
+                        }
+                        onClick={toggleFullScreen}
+                      >
+                        {canvasFullScreen ? (
+                          <Minimize size={16} />
+                        ) : (
+                          <Maximize size={16} />
+                        )}
+                      </IconButton>
+                    )}
+                    <div className={getClassName("toolbarDivider")} />
+                  </>
+                )}
                 <IconButton
                   type="button"
                   title="Zoom out"
@@ -395,19 +520,20 @@ export const Canvas = () => {
                 >
                   <Minus size={14} />
                 </IconButton>
-                <IconButton
-                  type="button"
-                  title="Reset zoom"
-                  onClick={handleResetZoom}
-                >
-                  <RotateCcw size={14} />
-                </IconButton>
+                <ZoomLevel className={getClassName("zoomLevel")} />
                 <IconButton
                   type="button"
                   title="Zoom in"
                   onClick={handleZoomIn}
                 >
                   <Plus size={14} />
+                </IconButton>
+                <IconButton
+                  type="button"
+                  title="Reset zoom"
+                  onClick={handleResetZoom}
+                >
+                  <RotateCcw size={14} />
                 </IconButton>
               </div>
               <TransformComponent

@@ -121,7 +121,11 @@
   transition: none;
 }
 
-.EditorCanvas-zoomControls {
+/* Floating toolbar pinned at the bottom-center of the canvas. Houses
+   undo/redo + zoom controls. Lives inside <TransformWrapper> but is
+   absolutely positioned so it stays at fixed pixel size and screen
+   position regardless of pan/zoom. */
+.EditorCanvas-toolbar {
   align-items: center;
   background: var(--editor-surface-panel);
   border: 1px solid var(--editor-border-subtle);
@@ -130,9 +134,29 @@
   box-shadow: var(--editor-shadow-md);
   display: flex;
   gap: 2px;
+  left: 50%;
   padding: 4px;
   position: absolute;
-  right: 16px;
+  transform: translateX(-50%);
   z-index: 10;
+}
+
+.EditorCanvas-toolbarDivider {
+  background: var(--editor-border-subtle);
+  flex-shrink: 0;
+  height: 20px;
+  margin: 0 4px;
+  width: 1px;
+}
+
+.EditorCanvas-zoomLevel {
+  color: var(--editor-text-secondary);
+  display: inline-flex;
+  font-size: var(--editor-font-size-xxs);
+  font-variant-numeric: tabular-nums;
+  justify-content: center;
+  min-width: 38px;
+  padding: 0 4px;
+  user-select: none;
 }
 
