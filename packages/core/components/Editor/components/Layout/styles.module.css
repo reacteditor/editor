@@ -86,6 +86,14 @@
   min-width: 0;
 }
 
+/* Tighter spacing between Undo / Redo so they read as a paired action,
+   without affecting the gap between this group and Publish. */
+.EditorLayout-headerHistory {
+  align-items: center;
+  display: flex;
+  gap: 2px;
+}
+
 @media (max-width: 637px) {
   .EditorLayout-header {
     /* Compact header for mobile: nav scrolls horizontally, URL bar drops. */

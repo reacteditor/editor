@@ -148,7 +148,7 @@ const HeaderHistory = () => {
   const hasFuture = useAppStore((s) => s.history.hasFuture());
   const hasPast = useAppStore((s) => s.history.hasPast());
   return (
-    <>
+    <div className={getLayoutClassName("headerHistory")}>
       <IconButton type="button" title="Undo" disabled={!hasPast} onClick={back}>
         <Undo2Icon size={16} />
       </IconButton>
@@ -160,7 +160,7 @@ const HeaderHistory = () => {
       >
         <Redo2Icon size={16} />
       </IconButton>
-    </>
+    </div>
   );
 };
 
