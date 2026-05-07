@@ -25,14 +25,30 @@ const getClassNameFactory =
     styles: Record<string, string>,
     config: { baseClass?: string } = { baseClass: "" }
   ) =>
-  (options: Options = {}) => {
+  (options: Options = {}, modifiers?: OptionsObj) => {
     if (typeof options === "string") {
       const descendant = options;
+      const baseKey = `${rootClass}-${descendant}`;
+      const style = styles[baseKey];
 
-      const style = styles[`${rootClass}-${descendant}`];
+      if (modifiers) {
+        const prefixedModifiers: OptionsObj = {};
+        for (let modifier in modifiers) {
+          prefixedModifiers[styles[`${baseKey}--${modifier}`]] =
+            modifiers[modifier];
+        }
+
+        return (
+          config.baseClass +
+          classnames({
+            [style]: !!style,
+            ...prefixedModifiers,
+          })
+        );
+      }
 
       if (style) {
-        return config.baseClass + styles[`${rootClass}-${descendant}`] || "";
+        return config.baseClass + style;
       }
 
       return "";
