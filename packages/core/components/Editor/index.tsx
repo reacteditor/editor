@@ -33,7 +33,13 @@ import type {
 } from "../../types";
 
 import { EditorAction } from "../../reducer";
-import { createAppStore, defaultAppState, appStoreContext } from "../../store";
+import {
+  createAppStore,
+  defaultAppState,
+  appStoreContext,
+  EditorRoute,
+  OnPublish,
+} from "../../store";
 import { Fields } from "./components/Fields";
 import { Components } from "./components/Components";
 import { Preview } from "./components/Preview";
@@ -73,7 +79,7 @@ type EditorProps<
    */
   ui?: Partial<UiState> & Partial<EditorChromeConfig>;
   onChange?: (data: G["UserData"]) => void;
-  onPublish?: (data: G["UserData"], route?: string) => void;
+  onPublish?: OnPublish<G["UserData"]>;
   onAction?: OnAction<G["UserData"]>;
   permissions?: Partial<Permissions>;
   plugins?: Plugin<UserConfig>[];
@@ -92,7 +98,12 @@ type EditorProps<
   headerPath?: string;
   title?: ReactNode;
   routes?: Route[];
-  currentRoute?: string;
+  /**
+   * Routing descriptor for the page being edited. Mirrored into the editor
+   * store and exposed via `useEditor((s) => s.route)`. Set by `<App>` from
+   * `useApp().route`; usually omitted when mounting `<Editor>` standalone.
+   */
+  route?: EditorRoute;
   onRouteChange?: (path: string) => void | Promise<void>;
   viewports?: Viewports;
   iframe?: IframeConfig;
@@ -173,6 +184,7 @@ function EditorProvider<
     data: initialData,
     ui: initialUi,
     onChange,
+    onPublish,
     permissions = {},
     plugins,
     overrides,
@@ -184,6 +196,7 @@ function EditorProvider<
     fieldTransforms,
     fullScreenCanvas,
     _experimentalVirtualization,
+    route,
   } = usePropsContext();
 
   const iframe: IframeConfig = useMemo(
@@ -348,6 +361,8 @@ function EditorProvider<
         onAction,
         metadata,
         fieldTransforms: loadedFieldTransforms,
+        route: route ?? null,
+        onPublish,
       };
     },
     [
@@ -363,6 +378,8 @@ function EditorProvider<
       onAction,
       metadata,
       loadedFieldTransforms,
+      route,
+      onPublish,
     ]
   );
 

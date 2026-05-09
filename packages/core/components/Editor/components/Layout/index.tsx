@@ -53,13 +53,13 @@ const TopHeader = ({
   pluginItems: Record<string, MenuItem>;
 }) => {
   const appStore = useAppStoreApi();
-  const { onPublish, currentRoute } = usePropsContext();
   const chrome = useChromeConfig();
 
   const back = useAppStore((s) => s.history.back);
   const forward = useAppStore((s) => s.history.forward);
   const hasFuture = useAppStore((s) => s.history.hasFuture());
   const hasPast = useAppStore((s) => s.history.hasPast());
+  const isPublishing = useAppStore((s) => s.isPublishing);
 
   const CustomHeaderActions = useAppStore(
     (s) => s.overrides.headerActions || DefaultOverride
@@ -113,12 +113,11 @@ const TopHeader = ({
         )}
         <CustomHeaderActions>
           <Button
-            onClick={() => {
-              const data = appStore.getState().state.data;
-              onPublish && onPublish(data, currentRoute);
-            }}
+            // Returning the publish promise lets Button auto-toggle its
+            // built-in loading spinner until onPublish resolves.
+            onClick={() => appStore.getState().publish()}
           >
-            Publish
+            {isPublishing ? "Publishing…" : "Publish"}
           </Button>
         </CustomHeaderActions>
       </div>

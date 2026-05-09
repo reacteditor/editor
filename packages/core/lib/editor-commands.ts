@@ -40,6 +40,11 @@ export type EditorCommands = {
   ) => void;
   selectComponent: (id: string | null) => void;
   scrollToComponent: (id: string) => void;
+  /**
+   * Invoke the user's `onPublish` callback with the current editor data and
+   * route descriptor. No-op when `onPublish` isn't set on the Editor.
+   */
+  publish: () => void;
 };
 
 const parentToZone = (parent?: Parent): string =>
@@ -171,6 +176,10 @@ export const createEditorCommands = (
     });
   };
 
+  const publish: EditorCommands["publish"] = () => {
+    void getState().publish();
+  };
+
   return {
     insertComponent,
     removeComponent,
@@ -181,5 +190,6 @@ export const createEditorCommands = (
     updateRoot,
     selectComponent,
     scrollToComponent,
+    publish,
   };
 };

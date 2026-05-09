@@ -32,23 +32,24 @@ const DEVICE_VIEWPORTS: Record<Device, Viewport> = {
 };
 
 export const UrlBar = () => {
-  const { routes, currentRoute, onRouteChange } = usePropsContext();
+  const { routes, route, onRouteChange } = usePropsContext();
   const chrome = useChromeConfig();
+  const currentKey = route?.key;
 
   const showRoutePicker =
-    !!routes && currentRoute !== undefined && !!onRouteChange;
+    !!routes && currentKey !== undefined && !!onRouteChange;
 
-  const [inputValue, setInputValue] = useState(currentRoute ?? "");
+  const [inputValue, setInputValue] = useState(currentKey ?? "");
 
-  const lastSyncedPath = useRef(currentRoute);
-  if (lastSyncedPath.current !== currentRoute) {
-    lastSyncedPath.current = currentRoute;
-    setInputValue(currentRoute ?? "");
+  const lastSyncedPath = useRef(currentKey);
+  if (lastSyncedPath.current !== currentKey) {
+    lastSyncedPath.current = currentKey;
+    setInputValue(currentKey ?? "");
   }
 
   const submit = (raw: string) => {
     const next = normalizeRoute(raw);
-    if (!next || next === currentRoute) return;
+    if (!next || next === currentKey) return;
     void onRouteChange?.(next);
   };
 
@@ -58,7 +59,7 @@ export const UrlBar = () => {
     return (
       <Combobox<string>
         items={routes!}
-        value={currentRoute}
+        value={currentKey}
         onValueChange={(next) => {
           if (typeof next === "string") submit(next);
         }}

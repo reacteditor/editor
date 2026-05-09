@@ -68,13 +68,14 @@ export const Button = ({
       href={href}
       {...dataAttrs}
     >
-      {icon && <div className={getClassName("icon")}>{icon}</div>}
-      {children}
-      {loading && (
+      {loading ? (
         <div className={getClassName("spinner")}>
           <Loader size={14} />
         </div>
+      ) : (
+        icon && <div className={getClassName("icon")}>{icon}</div>
       )}
+      {children}
     </ElementType>
   );
 

@@ -5,13 +5,18 @@ import type { Config, Data, UserGenerics } from "../../types";
 /** A route key — the literal pattern used in `pages`. */
 export type RouteKey = string;
 
-export type AppMatched<Data = unknown> = {
-  /** The route key string — stable persistence identifier. */
-  route: RouteKey;
+/**
+ * Routing descriptor for the current page. Pure routing info — no page data
+ * (use `pages[route.key]` for the static initial, or `useEditor((s) => s.appState.data)`
+ * for the live editor data).
+ */
+export type AppRoute = {
+  /** Route key/pattern, e.g. "/posts/:handle". */
+  key: RouteKey;
+  /** Canonical page URL with `editorPath` stripped, e.g. "/posts/abc". */
+  path: string;
   /** Concrete params extracted from the URL (e.g. { handle: "abc" }). */
   params: Readonly<Record<string, string | undefined>>;
-  /** The page's data. */
-  data: Data;
 };
 
 type AppConfigContext<
@@ -50,14 +55,10 @@ export type AppContextValue<
 > = AppConfigContext<UserConfig, G> & {
   /** All page route keys, in declaration order. */
   routes: RouteKey[];
-  /** Resolved current pathname from React Router. */
-  currentPath: string;
-  /** True when currentPath starts with editorPath. */
+  /** True when the live URL is under `editorPath`. */
   isEditing: boolean;
-  /** The URL relative to editorPath when isEditing — what pages are matched against. */
-  matchRoute: string;
-  /** Result of matching matchRoute against pages. Null = 404. */
-  matched: AppMatched<Partial<G["UserData"] | Data>> | null;
+  /** Resolved routing descriptor for the current page. Null = 404. */
+  route: AppRoute | null;
   /** Navigate to a route key. Wraps with editorPath when editing. */
   navigate: (route: RouteKey) => void;
 };
@@ -81,44 +82,41 @@ export const useApp = <
     (currentPath === cfg.editorPath ||
       currentPath.startsWith(`${cfg.editorPath}/`));
 
-  const matchRoute = isEditing
+  const pagePath = isEditing
     ? stripPrefix(currentPath, cfg.editorPath as string)
     : currentPath;
 
-  const matched = useMemo<AppMatched<Partial<G["UserData"] | Data>> | null>(() => {
+  const route = useMemo<AppRoute | null>(() => {
     const routeKeys = Object.keys(cfg.pages);
     if (routeKeys.length === 0) return null;
     const matches = matchRoutes(
       routeKeys.map((path) => ({ path })),
-      matchRoute
+      pagePath
     );
     if (!matches || matches.length === 0) return null;
     const last = matches[matches.length - 1];
-    const key = last.route.path as RouteKey;
     return {
-      route: key,
+      key: last.route.path as RouteKey,
+      path: pagePath,
       params: last.params,
-      data: cfg.pages[key],
     };
-  }, [cfg.pages, matchRoute]);
+  }, [cfg.pages, pagePath]);
 
   const routes = useMemo(() => Object.keys(cfg.pages), [cfg.pages]);
 
-  const navigate = (route: RouteKey) => {
-    const target =
+  const navigate = (target: RouteKey) => {
+    const next =
       isEditing && cfg.editorPath
-        ? `${cfg.editorPath}${route === "/" ? "" : route}` || "/"
-        : route;
-    rrNavigate(target || "/");
+        ? `${cfg.editorPath}${target === "/" ? "" : target}` || "/"
+        : target;
+    rrNavigate(next || "/");
   };
 
   return {
     ...cfg,
     routes,
-    currentPath,
     isEditing,
-    matchRoute,
-    matched,
+    route,
     navigate,
   };
 };

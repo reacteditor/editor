@@ -50,6 +50,25 @@ type ZoomConfig = {
 
 type ComponentState = Record<string, { loadingCount: number }>;
 
+/**
+ * Routing descriptor for the page currently loaded in the editor. Mirrored
+ * from `useApp().route` by `<App>` and exposed via `useEditor((s) => s.route)`.
+ */
+export type EditorRoute = {
+  /** Route key/pattern, e.g. "/posts/:handle". */
+  key: string;
+  /** Canonical page URL (editorPath stripped), e.g. "/posts/abc". */
+  path: string;
+  /** Concrete URL params extracted from the URL. */
+  params: Record<string, string | undefined>;
+};
+
+/** Publish callback signature — receives current data + route descriptor. */
+export type OnPublish<UserData = unknown> = (payload: {
+  data: UserData;
+  route: EditorRoute | null;
+}) => void | Promise<void>;
+
 export type AppStore<
   UserConfig extends Config = Config,
   G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
@@ -104,6 +123,16 @@ export type AppStore<
   // DragDropContext on mount; defaults to a no-op so the API is safe to call
   // before the canvas has mounted (e.g. during SSR or in tests).
   scrollToComponent: (id: string) => void;
+  route: EditorRoute | null;
+  onPublish?: OnPublish<G["UserData"]>;
+  /** True while a `publish()` call is in flight. */
+  isPublishing: boolean;
+  /**
+   * Invoke the user's `onPublish` with the current data + route, awaiting
+   * the result. `isPublishing` flips true for the duration. No-op when
+   * `onPublish` isn't set.
+   */
+  publish: () => Promise<void>;
 };
 
 export type AppStoreApi = StoreApi<AppStore>;
@@ -134,6 +163,18 @@ export const createAppStore = (initialAppStore?: Partial<AppStore>) =>
       metadata: {},
       fieldTransforms: {},
       scrollToComponent: () => {},
+      route: null,
+      isPublishing: false,
+      publish: async () => {
+        const { onPublish, state, route } = get();
+        if (!onPublish) return;
+        set({ isPublishing: true });
+        try {
+          await onPublish({ data: state.data, route });
+        } finally {
+          set({ isPublishing: false });
+        }
+      },
       ...initialAppStore,
       fields: createFieldsSlice(set, get),
       history: createHistorySlice(set, get),

@@ -11,7 +11,8 @@ import {
   seededTeamCards,
 } from "./seeds";
 
-export const getInitialData = (_path: string): Partial<UserData> => initialData;
+export const getInitialData = (path: string): Partial<UserData> =>
+  path === "/pricing" ? initialPricingData : initialData;
 
 export const initialData: UserData = {
   root: { props: { title: "React Editor — visual editing for React" } },
@@ -119,6 +120,66 @@ export const initialData: UserData = {
       type: "footer",
       props: {
         id: "footer-home",
+        brand: "react-editor",
+        tagline: "A visual editor for your React components.",
+        columns: defaultFooterColumns,
+        copyright: "© 2026 react-editor. All rights reserved.",
+        social: defaultSocial,
+      },
+    },
+  ],
+};
+
+export const initialPricingData: UserData = {
+  root: { props: { title: "Pricing — React Editor" } },
+  content: [
+    {
+      type: "navigation",
+      props: {
+        id: "nav-pricing",
+        brand: "react-editor",
+        links: defaultNavLinks,
+        cta: { label: "Start building", href: "#" },
+      },
+    },
+    {
+      type: "hero",
+      props: {
+        id: "hero-pricing",
+        tagline: "Pricing",
+        title: "Pricing built for teams of every size",
+        subtitle:
+          "Start free, scale as you grow. Predictable plans, no surprise fees.",
+        primaryCta: { label: "Start free", href: "#" },
+        secondaryCta: { label: "Talk to sales", href: "#" },
+        align: "center",
+      },
+    },
+    {
+      type: "pricing",
+      props: {
+        id: "pricing-plans",
+        tagline: "Plans",
+        heading: "Pick the plan that fits",
+        subheading:
+          "Every plan ships with the full editor — upgrade for seats, workspaces, and roles.",
+        tiers: seededPriceCards,
+      },
+    },
+    {
+      type: "faq",
+      props: {
+        id: "faq-pricing",
+        tagline: "FAQ",
+        heading: "Pricing FAQ",
+        subheading: "Common questions about billing and plans.",
+        items: defaultFAQItems,
+      },
+    },
+    {
+      type: "footer",
+      props: {
+        id: "footer-pricing",
         brand: "react-editor",
         tagline: "A visual editor for your React components.",
         columns: defaultFooterColumns,

@@ -46,6 +46,7 @@ export type {
   MoveDestination,
   Parent,
 } from "../lib/editor-commands";
+export type { EditorRoute, OnPublish } from "../store";
 
 export * from "../plugins/blocks";
 export * from "../plugins/fields";

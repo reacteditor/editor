@@ -8,7 +8,7 @@ export {
 } from "./context";
 export type {
   AppContextValue,
-  AppMatched,
+  AppRoute,
   RouteKey,
 } from "./context";
 export { useRouteParams } from "./use-route-params";

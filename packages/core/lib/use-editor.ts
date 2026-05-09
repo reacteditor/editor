@@ -5,7 +5,7 @@ import {
   ComponentData,
 } from "../types";
 import { createContext, useContext, useEffect, useState } from "react";
-import { AppStore, useAppStoreApi } from "../store";
+import { AppStore, EditorRoute, useAppStoreApi } from "../store";
 import {
   GetPermissions,
   RefreshPermissions,
@@ -25,6 +25,10 @@ export type UseEditorData<
 > = EditorCommands & {
   appState: G["UserPublicAppState"];
   config: UserConfig;
+  /** Routing descriptor for the page being edited. Null when standalone or 404. */
+  route: EditorRoute | null;
+  /** True while a `publish()` call is in flight. */
+  isPublishing: boolean;
   dispatch: AppStore["dispatch"];
   getPermissions: GetPermissions<UserConfig>;
   refreshPermissions: RefreshPermissions<UserConfig>;
@@ -59,7 +63,14 @@ type UseEditorStore<UserConfig extends Config = Config> = EditorApi<UserConfig>;
 
 type PickedStore = Pick<
   AppStore,
-  "config" | "dispatch" | "selectedItem" | "permissions" | "history" | "state"
+  | "config"
+  | "dispatch"
+  | "selectedItem"
+  | "permissions"
+  | "history"
+  | "state"
+  | "route"
+  | "isPublishing"
 >;
 
 export const generateUseEditor = (
@@ -82,6 +93,8 @@ export const generateUseEditor = (
     ...commands,
     appState: makeStatePublic(store.state),
     config: store.config,
+    route: store.route,
+    isPublishing: store.isPublishing,
     dispatch: store.dispatch,
     getPermissions: store.permissions.getPermissions,
     refreshPermissions: store.permissions.refreshPermissions,
@@ -122,6 +135,8 @@ const convertToPickedStore = (store: AppStore): PickedStore => {
     permissions: store.permissions,
     history: store.history,
     selectedItem: store.selectedItem,
+    route: store.route,
+    isPublishing: store.isPublishing,
   };
 };
 

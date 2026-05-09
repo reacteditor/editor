@@ -21,15 +21,16 @@ import { Editor } from "../Editor";
 import { Render } from "../Render";
 import { AppProvider, type AppProviderProps } from "./AppProvider";
 import { useApp } from "./context";
-import type { RouteKey } from "./context";
+import type { AppRoute, RouteKey } from "./context";
+import type { OnPublish } from "../../store";
 
 /** Editor pass-through props shared by <App> (default layout) and <App.Editor>. */
 type EditorPassthroughProps<
   UserConfig extends Config = Config,
   G extends UserGenerics<UserConfig> = UserGenerics<UserConfig>
 > = {
-  /** Called when the editor publishes. `route` is the schema route key. */
-  onPublish?: (data: G["UserData"], route?: string) => void;
+  /** Called when the editor publishes — receives `{ data, route }`. */
+  onPublish?: OnPublish<G["UserData"]>;
   onChange?: (data: G["UserData"]) => void;
   onAction?: OnAction<G["UserData"]>;
   ui?: Partial<UiState> & Partial<EditorChromeConfig>;
@@ -127,9 +128,19 @@ function EditorForKey<
   editorProps: EditorPassthroughProps<UserConfig, G>;
   children?: ReactNode;
 }) {
-  const { config, pages, routes, navigate } = useApp<UserConfig, G>();
+  const { config, pages, routes, navigate, route } = useApp<UserConfig, G>();
   const data = pages[routeKey];
   if (!data) return null;
+
+  // The editor's route mirrors `useApp().route` for the matched page. We
+  // synthesize the descriptor here (rather than passing route directly) so
+  // that EditorForKey works under <Routes>, where route may resolve before
+  // useApp has the same key.
+  const editorRoute = {
+    key: routeKey,
+    path: route?.key === routeKey ? route.path : routeKey,
+    params: route?.key === routeKey ? route.params : {},
+  };
 
   return (
     <Editor<UserConfig>
@@ -163,7 +174,7 @@ function EditorForKey<
       disableZoomControls={editorProps.disableZoomControls}
       _experimentalVirtualization={editorProps._experimentalVirtualization}
       routes={routes}
-      currentRoute={routeKey}
+      route={editorRoute}
       onRouteChange={(next) => navigate(next)}
     >
       {children}
