@@ -39,6 +39,6 @@ yarn-error.log*
 .idea
 
 dist
-
+apps/test/
 # typescript incremental build artifacts
 *.tsbuildinfo

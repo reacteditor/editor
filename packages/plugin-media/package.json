@@ -1,6 +1,6 @@
 {
   "name": "@reacteditor/plugin-media",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Rami Bitar <rami@frontend.co>",
   "repository": "reacteditor/editor",
   "bugs": "https://github.com/reacteditor/editor/issues",

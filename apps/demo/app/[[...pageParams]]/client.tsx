@@ -1,17 +1,26 @@
 "use client";
 
 import { App, AutoField, FieldLabel, outlinePlugin } from "@/core";
+import { mediaPlugin } from "@reacteditor/plugin-media";
 import config, { componentKey } from "../../config";
 import { initialData, initialPricingData } from "../../config/initial-data";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Type } from "lucide-react";
+import { createDemoMediaAdapter } from "../../lib/media-adapter";
 import type { UserData } from "../../config/types";
 
 const STORAGE_PREFIX = `react-editor-demo:${componentKey}`;
 const storageKeyFor = (route: string) => `${STORAGE_PREFIX}:${route}`;
 
-const plugins = [outlinePlugin()];
+const mediaAdapter = createDemoMediaAdapter();
+const plugins = [
+  outlinePlugin(),
+  mediaPlugin({
+    adapter: mediaAdapter,
+    showSearch: true,
+  }),
+];
 
 const ROUTES = ["/", "/pricing"] as const;
 

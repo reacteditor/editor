@@ -382,7 +382,13 @@ export const MediaPanel = ({ options }: { options: MediaPluginOptions }) => {
 
   return (
     <div className={styles.MediaPanel}>
-      <div className={styles["MediaPanel-header"]}>
+      <div
+        className={
+          showSearch
+            ? styles["MediaPanel-header"]
+            : `${styles["MediaPanel-header"]} ${styles["MediaPanel-header--end"]}`
+        }
+      >
         {showSearch && (
           <SearchForm
             query={query}
@@ -406,9 +412,7 @@ export const MediaPanel = ({ options }: { options: MediaPluginOptions }) => {
           className={styles["MediaPanel-uploadBtn"]}
           onClick={() => setUploaderOpen((v) => !v)}
         >
-          <span className={styles["MediaPanel-uploadBtn-icon"]}>
-            <Plus size={16} />
-          </span>
+          Upload
         </button>
       </div>
 
@@ -514,7 +518,7 @@ export const MediaPanel = ({ options }: { options: MediaPluginOptions }) => {
         {hasMore && <div ref={sentinelRef} className={styles["MediaPanel-sentinel"]} />}
       </div>
 
-      {selectedItem && (onSelect || adapter.delete) && (
+      {selectedItem && (
         <div
           className={styles["MediaPanel-footer"]}
           data-mediapanel-footer=""
@@ -550,13 +554,31 @@ export const MediaPanel = ({ options }: { options: MediaPluginOptions }) => {
                   Delete
                 </button>
               )}
-              {onSelect && (
+              {onSelect ? (
                 <button
                   type="button"
                   className={styles["MediaPanel-button"]}
                   onClick={() => onSelect(selectedItem)}
                 >
                   Select
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className={styles["MediaPanel-button"]}
+                  onClick={() => onItemCopy(selectedItem)}
+                >
+                  {copiedId === selectedItem.id ? (
+                    <>
+                      <Check size={14} />
+                      Copied
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={14} />
+                      Copy URL
+                    </>
+                  )}
                 </button>
               )}
             </div>

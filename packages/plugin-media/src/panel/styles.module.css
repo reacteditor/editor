@@ -14,6 +14,10 @@
   flex-shrink: 0;
 }
 
+.MediaPanel-header--end {
+  justify-content: flex-end;
+}
+
 .MediaPanel-search {
   position: relative;
   flex: 1 1 auto;
@@ -80,17 +84,19 @@
 
 .MediaPanel-uploadBtn {
   flex-shrink: 0;
-  width: 28px;
   height: 28px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font: inherit;
+  font-size: var(--editor-font-size-xxxs);
+  font-weight: 500;
   background: transparent;
   color: var(--editor-text-secondary, #555);
-  border: 0;
+  border: 1px solid var(--editor-border-default, #e0e0e2);
   border-radius: var(--editor-radius-md, 6px);
   cursor: pointer;
-  padding: 0;
+  padding: 0 10px;
   transition: background-color var(--editor-motion-fast) var(--editor-ease),
     color var(--editor-motion-fast) var(--editor-ease);
 }
@@ -99,15 +105,6 @@
 .MediaPanel-uploadBtn:hover {
   background: var(--editor-surface-hover, #f4f4f5);
   color: var(--editor-text-primary, #111);
-}
-
-.MediaPanel-uploadBtn-icon {
-  display: inline-flex;
-  transition: transform var(--editor-motion-fast) var(--editor-ease);
-}
-
-.MediaPanel-uploadBtn[aria-pressed="true"] .MediaPanel-uploadBtn-icon {
-  transform: rotate(45deg);
 }
 
 .MediaPanel-fileInput {

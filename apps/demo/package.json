@@ -12,6 +12,7 @@
     "@ai-sdk/anthropic": "^2.0.0",
     "@reacteditor/core": "*",
     "@reacteditor/plugin-ai": "*",
+    "@reacteditor/plugin-media": "*",
     "@reacteditor/field-google-fonts": "*",
     "ai": "^6.0.0",
     "zod": "^4.1.8",

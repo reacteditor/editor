@@ -9,6 +9,7 @@
       "@reacteditor/core": ["../../packages/core"],
       "@reacteditor/plugin-ai": ["../../packages/plugin-ai/src"],
       "@reacteditor/plugin-ai/server": ["../../packages/plugin-ai/src/server"],
+      "@reacteditor/plugin-media": ["../../packages/plugin-media/src"],
       "@/*": ["./*"]
     }
   },
